@@ -73,6 +73,9 @@
     <None Include="ResetIdetity.sql" />
     <None Include="SeedData\UserProfileInitialData.sql" />
     <None Include="SeedData\DirectionInitialData.sql" />
+    <Build Include="Views\vUserProgress.sql" />
+    <Build Include="Tables\TaskTrack.sql" />
+    <Build Include="Tables\Task.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="SeedData\SampleInitialData.sql" />

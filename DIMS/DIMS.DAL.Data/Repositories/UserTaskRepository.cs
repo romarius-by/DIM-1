@@ -8,7 +8,7 @@ namespace HIMS.EF.DAL.Data.Repositories
 {
     class UserTaskRepository : IRepository<UserTask>
     {
-        private DIMSDBContext _dIMSDBContext;
+        private readonly DIMSDBContext _dIMSDBContext;
 
         public UserTaskRepository(DIMSDBContext dIMSDBContext)
         {

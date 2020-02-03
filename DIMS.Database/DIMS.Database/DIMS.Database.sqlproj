@@ -76,6 +76,10 @@
     <Build Include="Views\vUserProgress.sql" />
     <Build Include="Tables\TaskTrack.sql" />
     <Build Include="Tables\Task.sql" />
+    <Build Include="Views\vTask.sql" />
+    <Build Include="Tables\TaskState.sql" />
+    <Build Include="Views\vUserTask.sql" />
+    <Build Include="Views\vUserTrack.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="SeedData\SampleInitialData.sql" />

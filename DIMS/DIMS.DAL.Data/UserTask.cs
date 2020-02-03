@@ -14,11 +14,19 @@ namespace HIMS.EF.DAL.Data
     
     public partial class UserTask
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public UserTask()
+        {
+            this.TaskTracks = new HashSet<TaskTrack>();
+        }
+    
         public int UserTaskId { get; set; }
         public int TaskId { get; set; }
         public int UserId { get; set; }
         public int StateId { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TaskTrack> TaskTracks { get; set; }
         public virtual UserProfile UserProfile { get; set; }
     }
 }

@@ -14,37 +14,50 @@ namespace HIMS.EF.DAL.Data
     using System.Data.Entity.Infrastructure;
     using System.Data.Entity.Core.Objects;
     using System.Linq;
-    using System.Data.SqlClient;
-    using System.Data;
     using System.Data.Common;
     using System.Data.Entity.Core.EntityClient;
+    using System.Data;
 
-    public partial class HIMSDbContext : DbContext
+    public partial class DIMSDBEntities : DbContext
     {
+
         #region Class Member Declarations
         private readonly DbProviderFactory _factoryToUse = DbProviderFactories.GetFactory("System.Data.SqlClient");
         #endregion
 
-        public HIMSDbContext()
-            : base("name=HIMSDbContext")
+        public DIMSDBEntities()
+            : base("name=DIMSDBEntities")
         {
         }
 
-        public HIMSDbContext(string stringConnection) : base(stringConnection)
+        public DIMSDBEntities(string connectionString) 
+            : base(connectionString)
         {
 
         }
-
+    
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();
         }
-
-        public virtual DbSet<UserProfile> UserProfiles { get; set; }
+    
         public virtual DbSet<Direction> Directions { get; set; }
         public virtual DbSet<Sample> Samples { get; set; }
+        public virtual DbSet<Task> Tasks { get; set; }
+        public virtual DbSet<TaskTrack> TaskTracks { get; set; }
+        public virtual DbSet<UserProfile> UserProfiles { get; set; }
         public virtual DbSet<UserTask> UserTasks { get; set; }
         public virtual DbSet<vUserProfile> vUserProfiles { get; set; }
+        public virtual DbSet<vUserProgress> vUserProgresses { get; set; }
+    
+        public virtual int SampleEntriesAmount(Nullable<bool> isAdmin, ObjectParameter result)
+        {
+            var isAdminParameter = isAdmin.HasValue ?
+                new ObjectParameter("isAdmin", isAdmin) :
+                new ObjectParameter("isAdmin", typeof(bool));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SampleEntriesAmount", isAdminParameter, result);
+        }
 
         /// <summary>Calls the stored procedure '[dbo].[SampleEntriesAmount]'</summary>
         /// <param name="isAdmin">Parameter mapped onto the stored procedure parameter '@isAdmin'</param>
@@ -137,5 +150,7 @@ namespace HIMS.EF.DAL.Data
         {
             return Convert.IsDBNull(parameterValue) ? default(T) : (T)parameterValue;
         }
+
+
     }
 }

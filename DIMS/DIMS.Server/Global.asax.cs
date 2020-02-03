@@ -37,7 +37,7 @@ namespace HIMS.Server
             // dependency injection
             NinjectModule dependencesModule = new DependencesModule();
 
-            NinjectModule serviceModule = new ServicesModule("HIMSDbContext", "HimsIdentityConnection");
+            NinjectModule serviceModule = new ServicesModule("DIMSDBEntities", "HimsIdentityConnection");
 
             var kernel = new StandardKernel(dependencesModule, serviceModule);
 

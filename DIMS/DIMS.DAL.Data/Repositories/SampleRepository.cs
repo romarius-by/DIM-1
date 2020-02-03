@@ -9,9 +9,9 @@ namespace HIMS.EF.DAL.Data.Repositories
 {
     public class SampleRepository : IRepository<Sample>
     {
-        private readonly HIMSDbContext _himsDbContext;
+        private readonly DIMSDBEntities _himsDbContext;
 
-        public SampleRepository(HIMSDbContext himsDbContext)
+        public SampleRepository(DIMSDBEntities himsDbContext)
         {
             _himsDbContext = himsDbContext;
         }

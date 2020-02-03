@@ -12,19 +12,16 @@ namespace HIMS.EF.DAL.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class Task
+    public partial class TaskState
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Task()
+        public TaskState()
         {
             this.UserTasks = new HashSet<UserTask>();
         }
     
-        public int TaskId { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public System.DateTime StartDate { get; set; }
-        public System.DateTime DeadlineDate { get; set; }
+        public int StateId { get; set; }
+        public string StateName { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserTask> UserTasks { get; set; }

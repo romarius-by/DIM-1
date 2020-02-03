@@ -16,6 +16,12 @@
         <AssociationConnector Association="DIMSDBModel.FK_Direction_To_UserProfile" ManuallyRouted="false" />
         <AssociationConnector Association="DIMSDBModel.FK_UserTask_To_TaskTrack" ManuallyRouted="false" />
         <AssociationConnector Association="DIMSDBModel.FK_UserTask_To_UserProfile" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="DIMSDBModel.TaskState" Width="1.5" PointX="5.375" PointY="9.875" />
+        <EntityTypeShape EntityType="DIMSDBModel.vTask" Width="1.5" PointX="7.375" PointY="9.75" />
+        <EntityTypeShape EntityType="DIMSDBModel.vUserTask" Width="1.5" PointX="9.375" PointY="9.75" />
+        <EntityTypeShape EntityType="DIMSDBModel.vUserTrack" Width="1.5" PointX="10.375" PointY="0.75" />
+        <AssociationConnector Association="DIMSDBModel.FK_UserTask_To_Task" />
+        <AssociationConnector Association="DIMSDBModel.FK_UserTask_To_TaskState" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

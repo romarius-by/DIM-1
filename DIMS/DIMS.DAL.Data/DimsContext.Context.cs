@@ -15,8 +15,8 @@ namespace HIMS.EF.DAL.Data
     using System.Data.Entity.Core.Objects;
     using System.Linq;
     using System.Data.Common;
-    using System.Data.Entity.Core.EntityClient;
     using System.Data;
+    using System.Data.Entity.Core.EntityClient;
 
     public partial class DIMSDBContext : DbContext
     {
@@ -29,13 +29,12 @@ namespace HIMS.EF.DAL.Data
             : base("name=DIMSDBContext")
         {
         }
-
-        public DIMSDBContext(string connectionString) 
+    
+        public DIMSDBContext (string connectionString) 
             : base(connectionString)
         {
-
         }
-    
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();
@@ -49,6 +48,10 @@ namespace HIMS.EF.DAL.Data
         public virtual DbSet<UserTask> UserTasks { get; set; }
         public virtual DbSet<vUserProfile> vUserProfiles { get; set; }
         public virtual DbSet<vUserProgress> vUserProgresses { get; set; }
+        public virtual DbSet<TaskState> TaskStates { get; set; }
+        public virtual DbSet<vTask> vTasks { get; set; }
+        public virtual DbSet<vUserTask> vUserTasks { get; set; }
+        public virtual DbSet<vUserTrack> vUserTracks { get; set; }
     
         public virtual int SampleEntriesAmount(Nullable<bool> isAdmin, ObjectParameter result)
         {
@@ -150,7 +153,5 @@ namespace HIMS.EF.DAL.Data
         {
             return Convert.IsDBNull(parameterValue) ? default(T) : (T)parameterValue;
         }
-
-
     }
 }

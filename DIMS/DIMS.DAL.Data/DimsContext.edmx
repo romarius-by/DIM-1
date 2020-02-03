@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="DIMSDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="DIMSDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Direction">
           <Key>
             <PropertyRef Name="DirectionId" />
@@ -30,6 +30,13 @@
           <Property Name="Description" Type="varchar" MaxLength="256" Nullable="false" />
           <Property Name="StartDate" Type="date" Nullable="false" />
           <Property Name="DeadlineDate" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TaskState">
+          <Key>
+            <PropertyRef Name="StateId" />
+          </Key>
+          <Property Name="StateId" Type="int" Nullable="false" />
+          <Property Name="StateName" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="TaskTrack">
           <Key>
@@ -67,6 +74,22 @@
           <Property Name="TaskId" Type="int" Nullable="false" />
           <Property Name="UserId" Type="int" Nullable="false" />
           <Property Name="StateId" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'DIMSDB.dbo.vTask' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vTask">
+          <Key>
+            <PropertyRef Name="TaskId" />
+            <PropertyRef Name="Name" />
+            <PropertyRef Name="Description" />
+            <PropertyRef Name="StartDate" />
+            <PropertyRef Name="DeadlineDate" />
+          </Key>
+          <Property Name="TaskId" Type="int" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="256" Nullable="false" />
+          <Property Name="StartDate" Type="date" Nullable="false" />
+          <Property Name="DeadlineDate" Type="date" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'DIMSDB.dbo.vUserProfile' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -116,6 +139,44 @@ warning 6002: The table/view 'DIMSDB.dbo.vUserProgress' does not have a primary 
           <Property Name="TrackNote" Type="varchar" MaxLength="128" Nullable="false" />
           <Property Name="TrackDate" Type="date" Nullable="false" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'DIMSDB.dbo.vUserTask' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vUserTask">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="TaskId" />
+            <PropertyRef Name="TaskName" />
+            <PropertyRef Name="Description" />
+            <PropertyRef Name="StartDate" />
+            <PropertyRef Name="DeadlineDate" />
+            <PropertyRef Name="State" />
+          </Key>
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="TaskId" Type="int" Nullable="false" />
+          <Property Name="TaskName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="256" Nullable="false" />
+          <Property Name="StartDate" Type="date" Nullable="false" />
+          <Property Name="DeadlineDate" Type="date" Nullable="false" />
+          <Property Name="State" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'DIMSDB.dbo.vUserTrack' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vUserTrack">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="TaskId" />
+            <PropertyRef Name="TaskTrackId" />
+            <PropertyRef Name="TaskName" />
+            <PropertyRef Name="TrackNote" />
+            <PropertyRef Name="TrackDate" />
+          </Key>
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="TaskId" Type="int" Nullable="false" />
+          <Property Name="TaskTrackId" Type="int" Nullable="false" />
+          <Property Name="TaskName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="TrackNote" Type="varchar" MaxLength="128" Nullable="false" />
+          <Property Name="TrackDate" Type="date" Nullable="false" />
+        </EntityType>
         <Association Name="FK_Direction_To_UserProfile">
           <End Role="Direction" Type="Self.Direction" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -127,6 +188,34 @@ warning 6002: The table/view 'DIMSDB.dbo.vUserProgress' does not have a primary 
             </Principal>
             <Dependent Role="UserProfile">
               <PropertyRef Name="DirectionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserTask_To_Task">
+          <End Role="Task" Type="Self.Task" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="UserTask" Type="Self.UserTask" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Task">
+              <PropertyRef Name="TaskId" />
+            </Principal>
+            <Dependent Role="UserTask">
+              <PropertyRef Name="TaskId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserTask_To_TaskState">
+          <End Role="TaskState" Type="Self.TaskState" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="UserTask" Type="Self.UserTask" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TaskState">
+              <PropertyRef Name="StateId" />
+            </Principal>
+            <Dependent Role="UserTask">
+              <PropertyRef Name="StateId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -166,9 +255,19 @@ warning 6002: The table/view 'DIMSDB.dbo.vUserProgress' does not have a primary 
           <EntitySet Name="Direction" EntityType="Self.Direction" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Sample" EntityType="Self.Sample" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Task" EntityType="Self.Task" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TaskState" EntityType="Self.TaskState" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TaskTrack" EntityType="Self.TaskTrack" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserProfile" EntityType="Self.UserProfile" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserTask" EntityType="Self.UserTask" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="vTask" EntityType="Self.vTask" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vTask].[TaskId] AS [TaskId], 
+    [vTask].[Name] AS [Name], 
+    [vTask].[Description] AS [Description], 
+    [vTask].[StartDate] AS [StartDate], 
+    [vTask].[DeadlineDate] AS [DeadlineDate]
+    FROM [dbo].[vTask] AS [vTask]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="vUserProfile" EntityType="Self.vUserProfile" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [vUserProfile].[UserId] AS [UserId], 
@@ -197,9 +296,38 @@ warning 6002: The table/view 'DIMSDB.dbo.vUserProgress' does not have a primary 
     [vUserProgress].[TrackDate] AS [TrackDate]
     FROM [dbo].[vUserProgress] AS [vUserProgress]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="vUserTask" EntityType="Self.vUserTask" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vUserTask].[UserId] AS [UserId], 
+    [vUserTask].[TaskId] AS [TaskId], 
+    [vUserTask].[TaskName] AS [TaskName], 
+    [vUserTask].[Description] AS [Description], 
+    [vUserTask].[StartDate] AS [StartDate], 
+    [vUserTask].[DeadlineDate] AS [DeadlineDate], 
+    [vUserTask].[State] AS [State]
+    FROM [dbo].[vUserTask] AS [vUserTask]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vUserTrack" EntityType="Self.vUserTrack" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vUserTrack].[UserId] AS [UserId], 
+    [vUserTrack].[TaskId] AS [TaskId], 
+    [vUserTrack].[TaskTrackId] AS [TaskTrackId], 
+    [vUserTrack].[TaskName] AS [TaskName], 
+    [vUserTrack].[TrackNote] AS [TrackNote], 
+    [vUserTrack].[TrackDate] AS [TrackDate]
+    FROM [dbo].[vUserTrack] AS [vUserTrack]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK_Direction_To_UserProfile" Association="Self.FK_Direction_To_UserProfile">
             <End Role="Direction" EntitySet="Direction" />
             <End Role="UserProfile" EntitySet="UserProfile" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserTask_To_Task" Association="Self.FK_UserTask_To_Task">
+            <End Role="Task" EntitySet="Task" />
+            <End Role="UserTask" EntitySet="UserTask" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserTask_To_TaskState" Association="Self.FK_UserTask_To_TaskState">
+            <End Role="TaskState" EntitySet="TaskState" />
+            <End Role="UserTask" EntitySet="UserTask" />
           </AssociationSet>
           <AssociationSet Name="FK_UserTask_To_TaskTrack" Association="Self.FK_UserTask_To_TaskTrack">
             <End Role="UserTask" EntitySet="UserTask" />
@@ -210,8 +338,7 @@ warning 6002: The table/view 'DIMSDB.dbo.vUserProgress' does not have a primary 
             <End Role="UserTask" EntitySet="UserTask" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="DIMSDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -241,6 +368,7 @@ warning 6002: The table/view 'DIMSDB.dbo.vUserProgress' does not have a primary 
           <Property Name="Description" Type="String" MaxLength="256" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="DeadlineDate" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="UserTasks" Relationship="DIMSDBModel.FK_UserTask_To_Task" FromRole="Task" ToRole="UserTask" />
         </EntityType>
         <EntityType Name="TaskTrack">
           <Key>
@@ -283,6 +411,8 @@ warning 6002: The table/view 'DIMSDB.dbo.vUserProgress' does not have a primary 
           <Property Name="StateId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="TaskTracks" Relationship="Self.FK_UserTask_To_TaskTrack" FromRole="UserTask" ToRole="TaskTrack" />
           <NavigationProperty Name="UserProfile" Relationship="Self.FK_UserTask_To_UserProfile" FromRole="UserTask" ToRole="UserProfile" />
+          <NavigationProperty Name="Task" Relationship="DIMSDBModel.FK_UserTask_To_Task" FromRole="UserTask" ToRole="Task" />
+          <NavigationProperty Name="TaskState" Relationship="DIMSDBModel.FK_UserTask_To_TaskState" FromRole="UserTask" ToRole="TaskState" />
         </EntityType>
         <EntityType Name="vUserProfile">
           <Key>
@@ -395,7 +525,103 @@ warning 6002: The table/view 'DIMSDB.dbo.vUserProgress' does not have a primary 
             <Parameter Name="isAdmin" Mode="In" Type="Boolean" />
             <Parameter Name="result" Mode="InOut" Type="Int32" />
           </FunctionImport>
+          <EntitySet Name="TaskStates" EntityType="DIMSDBModel.TaskState" />
+          <EntitySet Name="vTasks" EntityType="DIMSDBModel.vTask" />
+          <EntitySet Name="vUserTasks" EntityType="DIMSDBModel.vUserTask" />
+          <EntitySet Name="vUserTracks" EntityType="DIMSDBModel.vUserTrack" />
+          <AssociationSet Name="FK_UserTask_To_Task" Association="DIMSDBModel.FK_UserTask_To_Task">
+            <End Role="Task" EntitySet="Tasks" />
+            <End Role="UserTask" EntitySet="UserTasks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserTask_To_TaskState" Association="DIMSDBModel.FK_UserTask_To_TaskState">
+            <End Role="TaskState" EntitySet="TaskStates" />
+            <End Role="UserTask" EntitySet="UserTasks" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="TaskState">
+          <Key>
+            <PropertyRef Name="StateId" />
+          </Key>
+          <Property Name="StateId" Type="Int32" Nullable="false" />
+          <Property Name="StateName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="UserTasks" Relationship="DIMSDBModel.FK_UserTask_To_TaskState" FromRole="TaskState" ToRole="UserTask" />
+        </EntityType>
+        <EntityType Name="vTask">
+          <Key>
+            <PropertyRef Name="TaskId" />
+            <PropertyRef Name="Name" />
+            <PropertyRef Name="Description" />
+            <PropertyRef Name="StartDate" />
+            <PropertyRef Name="DeadlineDate" />
+          </Key>
+          <Property Name="TaskId" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="DeadlineDate" Type="DateTime" Nullable="false" Precision="0" />
+        </EntityType>
+        <EntityType Name="vUserTask">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="TaskId" />
+            <PropertyRef Name="TaskName" />
+            <PropertyRef Name="Description" />
+            <PropertyRef Name="StartDate" />
+            <PropertyRef Name="DeadlineDate" />
+            <PropertyRef Name="State" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="TaskId" Type="Int32" Nullable="false" />
+          <Property Name="TaskName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="DeadlineDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="State" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="vUserTrack">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="TaskId" />
+            <PropertyRef Name="TaskTrackId" />
+            <PropertyRef Name="TaskName" />
+            <PropertyRef Name="TrackNote" />
+            <PropertyRef Name="TrackDate" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="TaskId" Type="Int32" Nullable="false" />
+          <Property Name="TaskTrackId" Type="Int32" Nullable="false" />
+          <Property Name="TaskName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TrackNote" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="TrackDate" Type="DateTime" Nullable="false" Precision="0" />
+        </EntityType>
+        <Association Name="FK_UserTask_To_Task">
+          <End Type="DIMSDBModel.Task" Role="Task" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="DIMSDBModel.UserTask" Role="UserTask" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Task">
+              <PropertyRef Name="TaskId" />
+            </Principal>
+            <Dependent Role="UserTask">
+              <PropertyRef Name="TaskId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserTask_To_TaskState">
+          <End Type="DIMSDBModel.TaskState" Role="TaskState" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="DIMSDBModel.UserTask" Role="UserTask" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TaskState">
+              <PropertyRef Name="StateId" />
+            </Principal>
+            <Dependent Role="UserTask">
+              <PropertyRef Name="StateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -504,6 +730,50 @@ warning 6002: The table/view 'DIMSDB.dbo.vUserProgress' does not have a primary 
             </EntityTypeMapping>
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="SampleEntriesAmount" FunctionName="DIMSDBModel.Store.SampleEntriesAmount" />
+          <EntitySetMapping Name="TaskStates">
+            <EntityTypeMapping TypeName="DIMSDBModel.TaskState">
+              <MappingFragment StoreEntitySet="TaskState">
+                <ScalarProperty Name="StateName" ColumnName="StateName" />
+                <ScalarProperty Name="StateId" ColumnName="StateId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vTasks">
+            <EntityTypeMapping TypeName="DIMSDBModel.vTask">
+              <MappingFragment StoreEntitySet="vTask">
+                <ScalarProperty Name="DeadlineDate" ColumnName="DeadlineDate" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="TaskId" ColumnName="TaskId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vUserTasks">
+            <EntityTypeMapping TypeName="DIMSDBModel.vUserTask">
+              <MappingFragment StoreEntitySet="vUserTask">
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="DeadlineDate" ColumnName="DeadlineDate" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="TaskName" ColumnName="TaskName" />
+                <ScalarProperty Name="TaskId" ColumnName="TaskId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vUserTracks">
+            <EntityTypeMapping TypeName="DIMSDBModel.vUserTrack">
+              <MappingFragment StoreEntitySet="vUserTrack">
+                <ScalarProperty Name="TrackDate" ColumnName="TrackDate" />
+                <ScalarProperty Name="TrackNote" ColumnName="TrackNote" />
+                <ScalarProperty Name="TaskName" ColumnName="TaskName" />
+                <ScalarProperty Name="TaskTrackId" ColumnName="TaskTrackId" />
+                <ScalarProperty Name="TaskId" ColumnName="TaskId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

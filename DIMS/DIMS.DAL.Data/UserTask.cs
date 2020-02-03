@@ -28,5 +28,7 @@ namespace HIMS.EF.DAL.Data
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TaskTrack> TaskTracks { get; set; }
         public virtual UserProfile UserProfile { get; set; }
+        public virtual Task Task { get; set; }
+        public virtual TaskState TaskState { get; set; }
     }
 }

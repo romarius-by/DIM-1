@@ -97,6 +97,9 @@
     <Compile Include="Task.cs">
       <DependentUpon>DimsContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="TaskState.cs">
+      <DependentUpon>DimsContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="TaskTrack.cs">
       <DependentUpon>DimsContext.tt</DependentUpon>
     </Compile>
@@ -106,10 +109,19 @@
     <Compile Include="UserTask.cs">
       <DependentUpon>DimsContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="vTask.cs">
+      <DependentUpon>DimsContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="vUserProfile.cs">
       <DependentUpon>DimsContext.tt</DependentUpon>
     </Compile>
     <Compile Include="vUserProgress.cs">
+      <DependentUpon>DimsContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vUserTask.cs">
+      <DependentUpon>DimsContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vUserTrack.cs">
       <DependentUpon>DimsContext.tt</DependentUpon>
     </Compile>
   </ItemGroup>

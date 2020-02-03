@@ -11,6 +11,7 @@ namespace HIMS.EF.DAL.Data.Repositories
         private readonly DIMSDBContext _dimsDbContext;
         private SampleRepository _sampleRepository;
         private UserProfileRepository _userProfileRepository;
+        private UserTaskRepository _userTaskRepository;
 
         public EFUnitOfWork(string connectionString)
         {
@@ -20,6 +21,8 @@ namespace HIMS.EF.DAL.Data.Repositories
         public IRepository<Sample> Samples => _sampleRepository ?? new SampleRepository(_dimsDbContext);
 
         public IRepository<UserProfile> UserProfiles => _userProfileRepository ?? new UserProfileRepository(_dimsDbContext);
+
+        public IRepository<UserTask> UserTasks => _userTaskRepository ?? new UserTaskRepository(_dimsDbContext);
 
         public void Save()
         {

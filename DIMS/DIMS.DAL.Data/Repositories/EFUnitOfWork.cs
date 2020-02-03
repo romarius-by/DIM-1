@@ -8,12 +8,12 @@ namespace HIMS.EF.DAL.Data.Repositories
 {
     public class EFUnitOfWork : IUnitOfWork
     {
-        private readonly DIMSDBEntities _himsDbContext;
+        private readonly DIMSDBContext _himsDbContext;
         private SampleRepository _sampleRepository;
 
         public EFUnitOfWork(string connectionString)
         {
-            this._himsDbContext = new DIMSDBEntities(connectionString);
+            this._himsDbContext = new DIMSDBContext(connectionString);
         }
 
         public IRepository<Sample> Samples => _sampleRepository ?? new SampleRepository(_himsDbContext);

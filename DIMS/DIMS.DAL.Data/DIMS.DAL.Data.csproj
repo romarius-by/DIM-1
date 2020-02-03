@@ -87,7 +87,7 @@
     <Compile Include="Repositories\EFUnitOfWork.cs" />
     <Compile Include="Repositories\ProcedureManager.cs" />
     <Compile Include="Repositories\SampleRepository.cs" />
-    <Compile Include="Repositories\UserRepository.cs" />
+    <Compile Include="Repositories\UserProfileRepository.cs" />
     <Compile Include="Sample.cs">
       <DependentUpon>DimsContext.tt</DependentUpon>
     </Compile>

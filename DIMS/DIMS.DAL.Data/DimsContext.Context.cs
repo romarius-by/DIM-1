@@ -18,19 +18,19 @@ namespace HIMS.EF.DAL.Data
     using System.Data.Entity.Core.EntityClient;
     using System.Data;
 
-    public partial class DIMSDBEntities : DbContext
+    public partial class DIMSDBContext : DbContext
     {
 
         #region Class Member Declarations
         private readonly DbProviderFactory _factoryToUse = DbProviderFactories.GetFactory("System.Data.SqlClient");
         #endregion
 
-        public DIMSDBEntities()
-            : base("name=DIMSDBEntities")
+        public DIMSDBContext()
+            : base("name=DIMSDBContext")
         {
         }
 
-        public DIMSDBEntities(string connectionString) 
+        public DIMSDBContext(string connectionString) 
             : base(connectionString)
         {
 

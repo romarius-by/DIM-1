@@ -10,11 +10,11 @@ namespace HIMS.EF.DAL.Data.Repositories
 {
     public class ProcedureManager : IProcedureManager
     {
-        private readonly DIMSDBEntities _dimsDbContext;
+        private readonly DIMSDBContext _dimsDbContext;
 
         public ProcedureManager(string connectionString)
         {
-            _dimsDbContext = new DIMSDBEntities(connectionString);
+            _dimsDbContext = new DIMSDBContext(connectionString);
         }
 
         public int GetSampleEntriesAmount(bool isAdmin)

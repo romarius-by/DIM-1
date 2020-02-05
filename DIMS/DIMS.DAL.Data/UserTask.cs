@@ -11,7 +11,8 @@ namespace HIMS.EF.DAL.Data
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class UserTask
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -19,7 +20,8 @@ namespace HIMS.EF.DAL.Data
         {
             this.TaskTracks = new HashSet<TaskTrack>();
         }
-    
+        
+        [Key]
         public int UserTaskId { get; set; }
         public int TaskId { get; set; }
         public int UserId { get; set; }

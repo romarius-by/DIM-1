@@ -26,19 +26,17 @@ namespace HIMS.EF.DAL.Data
         #endregion
 
         public DIMSDBContext()
-            : base("name=DIMSDBContext")
-        {
-        }
-    
-        public DIMSDBContext (string connectionString) 
-            : base(connectionString)
+            : base("name=DIMSDBEntities")
         {
         }
 
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        public DIMSDBContext(string connectionString) 
+            : base(connectionString)
         {
-            throw new UnintentionalCodeFirstException();
+                    
         }
+    
+       
     
         public virtual DbSet<Direction> Directions { get; set; }
         public virtual DbSet<Sample> Samples { get; set; }

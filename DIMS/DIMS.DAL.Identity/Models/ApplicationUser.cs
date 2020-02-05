@@ -9,5 +9,6 @@ namespace HIMS.EF.DAL.Identity.Models
 {
     public class ApplicationUser : IdentityUser
     {
+
     }
 }

@@ -11,9 +11,11 @@ namespace HIMS.EF.DAL.Data
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class vUserTask
     {
+        [Key]
         public int UserId { get; set; }
         public int TaskId { get; set; }
         public string TaskName { get; set; }

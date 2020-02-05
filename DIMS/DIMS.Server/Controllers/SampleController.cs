@@ -22,7 +22,7 @@ namespace HIMS.Server.Controllers
             _sampleService = sampleService;
         }
 
-        [Authorize(Roles = "admin")]
+        //[Authorize(Roles = "admin")]
         public ActionResult Index()
         {
             IEnumerable<SampleDTO> sampleDtos = _sampleService.GetSamples();

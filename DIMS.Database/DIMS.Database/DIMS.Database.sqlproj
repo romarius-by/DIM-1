@@ -83,7 +83,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="SeedData\SampleInitialData.sql" />
-    <PostDeploy Include="SeedData\Script.PostDeployment.sql" />
+    <None Include="SeedData\Script.PostDeployment.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="DIMS.Database.refactorlog" />

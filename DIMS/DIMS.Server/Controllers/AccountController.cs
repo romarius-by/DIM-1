@@ -33,7 +33,7 @@ namespace HIMS.Server.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginViewModel viewModel)
         {
-            await SetInitialDataAsync().ConfigureAwait(false);
+            //await SetInitialDataAsync().ConfigureAwait(false);
             if (ModelState.IsValid)
             {
                 var userDto = new UserDTO { Email = viewModel.Email, Password = viewModel.Password };

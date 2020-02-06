@@ -11,9 +11,11 @@ namespace HIMS.EF.DAL.Data
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class TaskTrack
     {
+        [Key]
         public int TaskTrackId { get; set; }
         public int UserTaskId { get; set; }
         public System.DateTime TrackDate { get; set; }

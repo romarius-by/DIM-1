@@ -9,9 +9,9 @@ namespace HIMS.EF.DAL.Data.Repositories
     public class EFUnitOfWork : IUnitOfWork
     {
         private readonly DIMSDBContext _dimsDbContext;
-        private SampleRepository _sampleRepository;
-        private UserProfileRepository _userProfileRepository;
-        private UserTaskRepository _userTaskRepository;
+        private readonly SampleRepository _sampleRepository;
+        private readonly UserProfileRepository _userProfileRepository;
+        private readonly UserTaskRepository _userTaskRepository;
 
         public EFUnitOfWork(string connectionString)
         {

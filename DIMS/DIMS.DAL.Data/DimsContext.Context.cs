@@ -34,11 +34,7 @@ namespace HIMS.EF.DAL.Data
 
         }
     
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        {
-            throw new UnintentionalCodeFirstException();
-        }
-    
+       
         public virtual DbSet<Direction> Directions { get; set; }
         public virtual DbSet<Sample> Samples { get; set; }
         public virtual DbSet<Task> Tasks { get; set; }

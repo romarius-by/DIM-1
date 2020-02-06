@@ -21,9 +21,7 @@ namespace HIMS.EF.DAL.Data
     public partial class DIMSDBContext : DbContext
     {
 
-        #region Class Member Declarations
         private readonly DbProviderFactory _factoryToUse = DbProviderFactories.GetFactory("System.Data.SqlClient");
-        #endregion
 
         public DIMSDBContext()
             : base("name=DIMSDBConnection")
@@ -33,21 +31,24 @@ namespace HIMS.EF.DAL.Data
         public DIMSDBContext(string connectionString) 
             : base(connectionString)
         {
-            
+
         }
     
-       
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            throw new UnintentionalCodeFirstException();
+        }
     
         public virtual DbSet<Direction> Directions { get; set; }
         public virtual DbSet<Sample> Samples { get; set; }
         public virtual DbSet<Task> Tasks { get; set; }
+        public virtual DbSet<TaskState> TaskStates { get; set; }
         public virtual DbSet<TaskTrack> TaskTracks { get; set; }
         public virtual DbSet<UserProfile> UserProfiles { get; set; }
         public virtual DbSet<UserTask> UserTasks { get; set; }
+        public virtual DbSet<vTask> vTasks { get; set; }
         public virtual DbSet<vUserProfile> vUserProfiles { get; set; }
         public virtual DbSet<vUserProgress> vUserProgresses { get; set; }
-        public virtual DbSet<TaskState> TaskStates { get; set; }
-        public virtual DbSet<vTask> vTasks { get; set; }
         public virtual DbSet<vUserTask> vUserTasks { get; set; }
         public virtual DbSet<vUserTrack> vUserTracks { get; set; }
     
@@ -59,6 +60,7 @@ namespace HIMS.EF.DAL.Data
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SampleEntriesAmount", isAdminParameter, result);
         }
+
 
         /// <summary>Calls the stored procedure '[dbo].[SampleEntriesAmount]'</summary>
         /// <param name="isAdmin">Parameter mapped onto the stored procedure parameter '@isAdmin'</param>
@@ -151,5 +153,8 @@ namespace HIMS.EF.DAL.Data
         {
             return Convert.IsDBNull(parameterValue) ? default(T) : (T)parameterValue;
         }
+
+
+
     }
 }

@@ -12,7 +12,9 @@ namespace HIMS.EF.DAL.Data
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
 
+    [Table("Sample")]
     public partial class Sample
     {
         [Key]

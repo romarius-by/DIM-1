@@ -26,14 +26,14 @@ namespace HIMS.EF.DAL.Data
         #endregion
 
         public DIMSDBContext()
-            : base("name=DIMSDBEntities")
+            : base("name=DIMSDBConnection")
         {
         }
 
         public DIMSDBContext(string connectionString) 
             : base(connectionString)
         {
-                    
+            
         }
     
        

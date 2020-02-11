@@ -43,12 +43,13 @@ namespace HIMS.Tests
 
         public IEnumerable<Sample> Find(Func<Sample, bool> predicate)
         {
-            throw new NotImplementedException();
+            //return samples.Find(predicate);
+            throw new Exception();
         }
 
         public Sample Get(int id)
         {
-            throw new NotImplementedException();
+            throw new Exception();
         }
 
         public IEnumerable<Sample> GetAll()

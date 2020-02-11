@@ -38,12 +38,11 @@ namespace HIMS.BL.Services
 
         public void DeleteUserProfileByEmail(string email)
         {
-            if (email.Equals(null))
+            if (email == null)
                 throw new ValidationException("The User Profile's email is not set", String.Empty);
             
             _repository.DeleteByEmail(email);
             _userService.DeleteUserByEmail(email);
-
         }
 
         public void Dispose()

@@ -82,7 +82,7 @@ namespace HIMS.BL.Services
 
         public async void DeleteUserByEmail(string email)
         {
-            var user = Database.UserSecurityManager.FindByEmailAsync(email).Result;
+            var user = await Database.UserSecurityManager.FindByEmailAsync(email);
 
             if (user == null)
             {

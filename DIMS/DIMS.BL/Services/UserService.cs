@@ -79,5 +79,19 @@ namespace HIMS.BL.Services
         {
             Database.Dispose();
         }
+
+        public async void DeleteUserByEmail(string email)
+        {
+            var user = Database.UserSecurityManager.FindByEmailAsync(email).Result;
+
+            if (user == null)
+            {
+                throw new ValidationException("User with this email not found", String.Empty);
+            }
+            
+            await Database.UserSecurityManager.DeleteAsync(user);
+
+            await Database.SaveAsync();
+        }
     }
 }

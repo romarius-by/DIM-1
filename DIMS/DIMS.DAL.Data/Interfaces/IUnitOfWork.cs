@@ -9,6 +9,7 @@ namespace HIMS.EF.DAL.Data
     public interface IUnitOfWork : IDisposable
     {
         IRepository<Sample> Samples { get; }
+        IRepository<UserProfile> UserProfiles { get; }
 
         void Save();
     }

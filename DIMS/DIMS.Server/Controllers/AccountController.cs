@@ -103,5 +103,6 @@ namespace HIMS.Server.Controllers
                 Role = "admin",
             }, new List<string> { "user", "admin" }).ConfigureAwait(false);
         }
+
     }
 }

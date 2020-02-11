@@ -52,11 +52,26 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="TestSampleController.cs" />
+    <Compile Include="StubSampleRepository.cs" />
+    <Compile Include="TestSampleRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DIMS.BL\DIMS.BL.csproj">
+      <Project>{67F222E4-888B-4368-97ED-24096FA14E27}</Project>
+      <Name>DIMS.BL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DIMS.DAL.Data\DIMS.DAL.Data.csproj">
+      <Project>{cac997aa-ebe6-4e9f-b4fd-c3cbbd6da146}</Project>
+      <Name>DIMS.DAL.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DIMS.Server\DIMS.Server.csproj">
+      <Project>{8C2B13AC-4876-4C7D-969F-01D8F37BB176}</Project>
+      <Name>DIMS.Server</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

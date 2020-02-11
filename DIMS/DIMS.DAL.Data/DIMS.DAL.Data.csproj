@@ -81,6 +81,7 @@
       <DependentUpon>DimsContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Interfaces\IProcedureManager.cs" />
+    <Compile Include="Interfaces\IViewRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
     <Compile Include="Interfaces\IUnitOfWork.cs" />
@@ -92,6 +93,11 @@
     <Compile Include="Repositories\TaskTrackRepository.cs" />
     <Compile Include="Repositories\UserProfileRepository.cs" />
     <Compile Include="Repositories\UserTaskRepository.cs" />
+    <Compile Include="Repositories\vTaskRepository.cs" />
+    <Compile Include="Repositories\vUserProfileRepository.cs" />
+    <Compile Include="Repositories\vUserProgressRepository.cs" />
+    <Compile Include="Repositories\vUserTaskRepository.cs" />
+    <Compile Include="Repositories\vUserTrackRepository.cs" />
     <Compile Include="Sample.cs">
       <DependentUpon>DimsContext.tt</DependentUpon>
     </Compile>

@@ -69,6 +69,11 @@
     <Compile Include="DTO\TaskTrackDTO.cs" />
     <Compile Include="DTO\UserProfileDTO.cs" />
     <Compile Include="DTO\UserTaskDTO.cs" />
+    <Compile Include="DTO\vTaskDTO.cs" />
+    <Compile Include="DTO\vUserProfileDTO.cs" />
+    <Compile Include="DTO\vUserProgressDTO.cs" />
+    <Compile Include="DTO\vUserTaskDTO.cs" />
+    <Compile Include="DTO\vUserTrackDTO.cs" />
     <Compile Include="Infrastructure\OperationDetails.cs" />
     <Compile Include="Infrastructure\ServicesModule.cs" />
     <Compile Include="Infrastructure\ValidationException.cs" />

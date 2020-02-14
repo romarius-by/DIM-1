@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HIMS.EF.DAL.Data.Interfaces
 {
-    interface IViewRepository<T>
+    public interface IViewRepository<T>
     {
         T Get(int id);
 

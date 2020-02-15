@@ -87,6 +87,7 @@
     <Compile Include="DTO\SampleDTO.cs" />
     <Compile Include="DTO\UserDTO.cs" />
     <Compile Include="Interfaces\IUserTaskService.cs" />
+    <Compile Include="Interfaces\IvTaskService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\DirectionService.cs" />
     <Compile Include="Services\SampleService.cs" />

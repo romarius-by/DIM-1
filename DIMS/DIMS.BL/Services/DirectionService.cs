@@ -62,6 +62,10 @@ namespace HIMS.BL.Services
                 UserProfiles = Mapper.Map<List<UserProfileDTO>, ICollection <UserProfile>>(direction.UserProfiles.ToList())
             };
 
+            dimsDatabase.Directions.Create(_direction);
+
+            dimsDatabase.Save();
+
         }
 
         public void UpdateDireciton(DirectionDTO direction)

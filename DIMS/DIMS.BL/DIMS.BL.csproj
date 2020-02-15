@@ -95,6 +95,7 @@
     <Compile Include="Services\TaskTrackService.cs" />
     <Compile Include="Services\UserProfileService.cs" />
     <Compile Include="Services\UserService.cs" />
+    <Compile Include="Services\UserTaskService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DIMS.DAL.Data\DIMS.DAL.Data.csproj">

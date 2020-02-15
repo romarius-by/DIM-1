@@ -16,6 +16,7 @@ namespace HIMS.BL.DTO
         }
 
         public int UserTaskId { get; set; }
+        public int TaskId { get; set; }
         public int UserId { get; set; }
         public int StateId { get; set; }
 

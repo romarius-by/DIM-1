@@ -89,6 +89,7 @@
     <Compile Include="Services\DirectionService.cs" />
     <Compile Include="Services\SampleService.cs" />
     <Compile Include="Services\TaskService.cs" />
+    <Compile Include="Services\TaskStateService.cs" />
     <Compile Include="Services\UserProfileService.cs" />
     <Compile Include="Services\UserService.cs" />
   </ItemGroup>

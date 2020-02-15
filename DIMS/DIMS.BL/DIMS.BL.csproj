@@ -90,6 +90,7 @@
     <Compile Include="Interfaces\IvTaskService.cs" />
     <Compile Include="Interfaces\IvUserProfileService.cs" />
     <Compile Include="Interfaces\IvUserProgressService.cs" />
+    <Compile Include="Interfaces\IvUserTaskService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\DirectionService.cs" />
     <Compile Include="Services\SampleService.cs" />
@@ -102,6 +103,7 @@
     <Compile Include="Services\vTaskService.cs" />
     <Compile Include="Services\vUserProfileService.cs" />
     <Compile Include="Services\vUserProgressService.cs" />
+    <Compile Include="Services\vUserTaskService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DIMS.DAL.Data\DIMS.DAL.Data.csproj">

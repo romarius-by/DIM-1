@@ -10,7 +10,7 @@ namespace HIMS.BL.Interfaces
     public interface IvTaskService
     {
         vTaskDTO GetVTask(int? id);
-        List<vTaskDTO> GetVTasks();
+        ICollection<vTaskDTO> GetVTasks();
         void Dispose();
     }
 }

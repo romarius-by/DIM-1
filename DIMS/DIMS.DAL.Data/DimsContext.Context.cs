@@ -28,6 +28,17 @@ namespace HIMS.EF.DAL.Data
         {
         }
 
+        /// <summary>
+        ///this constructor is needed only for Effort, as attachment point 
+        ///we will pass connection, fetched from this library as argument
+        /// </summary>
+        /// <param name="connection">enable connection to context</param>
+
+        public DIMSDBContext(DbConnection connection) : base(connection, true)
+        {
+        }
+
+
         public DIMSDBContext(string connectionString) 
             : base(connectionString)
         {

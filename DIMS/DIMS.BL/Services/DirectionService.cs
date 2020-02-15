@@ -66,6 +66,15 @@ namespace HIMS.BL.Services
 
         public void UpdateDireciton(DirectionDTO direction)
         {
+            var _direction = dimsDatabase.Directions.Get(direction.DirectionId);
+
+            if (_direction != null)
+            {
+                Mapper.Map(direction, _direction);
+
+                dimsDatabase.Save();
+            }
+
 
         }
     }

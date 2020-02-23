@@ -33,7 +33,7 @@ namespace HIMS.Server.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginViewModel viewModel)
         {
-            await SetInitialDataAsync().ConfigureAwait(false);
+            //await SetInitialDataAsync().ConfigureAwait(false);
             if (ModelState.IsValid)
             {
                 var userDto = new UserDTO { Email = viewModel.Email, Password = viewModel.Password };
@@ -71,7 +71,7 @@ namespace HIMS.Server.Controllers
         [Authorize(Roles = "admin")]
         public async Task<ActionResult> Register(RegisterViewModel viewModel)
         {
-            await SetInitialDataAsync().ConfigureAwait(false);
+            //await SetInitialDataAsync().ConfigureAwait(false);
             if (ModelState.IsValid)
             {
                 var userDto = new UserDTO
@@ -103,5 +103,6 @@ namespace HIMS.Server.Controllers
                 Role = "admin",
             }, new List<string> { "user", "admin" }).ConfigureAwait(false);
         }
+
     }
 }

@@ -34,11 +34,7 @@ namespace HIMS.BL.Services
                     return new OperationDetails(false, result.Errors.FirstOrDefault(), "");
 
                 // add a role
-                await Database.UserSecurityManager.AddToRoleAsync(user.Id, userDto.Role).ConfigureAwait(false);
-
-                // create user profile
-                //ClientProfile clientProfile = new ClientProfile { Id = user.Id, Address = userDto.Address, Name = userDto.Name };
-                //Database.ClientManager.Create(clientProfile);
+                await Database.UserSecurityManager.AddToRoleAsync(user.Id.ToString(), userDto.Role).ConfigureAwait(false);
 
                 await Database.SaveAsync().ConfigureAwait(false);
                 return new OperationDetails(true, "The registration was done successfully!", "");
@@ -82,6 +78,20 @@ namespace HIMS.BL.Services
         public void Dispose()
         {
             Database.Dispose();
+        }
+
+        public async void DeleteUserByEmail(string email)
+        {
+            var user = await Database.UserSecurityManager.FindByEmailAsync(email);
+
+            if (user == null)
+            {
+                throw new ValidationException("User with this email not found", String.Empty);
+            }
+            
+            await Database.UserSecurityManager.DeleteAsync(user);
+
+            await Database.SaveAsync();
         }
     }
 }

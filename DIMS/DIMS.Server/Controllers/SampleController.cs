@@ -22,7 +22,7 @@ namespace HIMS.Server.Controllers
             _sampleService = sampleService;
         }
 
-        [Authorize(Roles = "admin")]
+        //[Authorize(Roles = "admin")]
         public ActionResult Index()
         {
             IEnumerable<SampleDTO> sampleDtos = _sampleService.GetSamples();
@@ -162,7 +162,7 @@ namespace HIMS.Server.Controllers
             catch (RetryLimitExceededException/* dex */)
             {
                 //Log the error (uncomment dex variable name and add a line here to write a log.
-                return RedirectToAction("Delete", new { id = id, saveChangesError = true });
+                return RedirectToAction("Delete", new { id, saveChangesError = true });
             }
             return RedirectToAction("Index");
         }

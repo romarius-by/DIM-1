@@ -1,0 +1,53 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace HIMS.EF.DAL.Data.Repositories
+{
+    class TaskStateRepository : IRepository<TaskState>
+    {
+        private readonly DIMSDBContext _dIMSDBContext;
+
+        public TaskStateRepository(DIMSDBContext dIMSDBContext)
+        {
+            _dIMSDBContext = dIMSDBContext;
+        }
+
+        public void Create(TaskState item)
+        {
+            _dIMSDBContext.TaskStates.Add(item);
+        }
+
+        public void Delete(int id)
+        {
+            TaskState taskState = _dIMSDBContext.TaskStates.Find(id);
+
+            if (taskState != null)
+            {
+                _dIMSDBContext.TaskStates.Remove(taskState);
+            }
+        }
+
+        public IEnumerable<TaskState> Find(Func<TaskState, bool> predicate)
+        {
+            return _dIMSDBContext.TaskStates.Where(predicate).ToList();
+        }
+
+        public TaskState Get(int id)
+        {
+            return _dIMSDBContext.TaskStates.Find(id);
+        }
+
+        public IEnumerable<TaskState> GetAll()
+        {
+            return _dIMSDBContext.TaskStates;
+        }
+
+        public void Update(TaskState item)
+        {
+            _dIMSDBContext.Entry(item).State = System.Data.Entity.EntityState.Modified;
+        }
+    }
+}

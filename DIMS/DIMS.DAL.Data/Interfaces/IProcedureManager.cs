@@ -8,6 +8,6 @@ namespace HIMS.EF.DAL.Data.Interfaces
 {
     public interface IProcedureManager
     {
-        int GetSampleEntriesAmount(bool isAdmin);
+       int GetSampleEntriesAmount(bool isAdmin);
     }
 }

@@ -18,6 +18,12 @@ namespace HIMS.Server
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
+
+            routes.MapRoute(
+                name: "UserProfile",
+                url: "{controller}/{action}/{id}",
+                defaults: new { controller = "UserProfile", action = "Index", id = UrlParameter.Optional }
+                );
         }
     }
 }

@@ -1,0 +1,70 @@
+﻿@model HIMS.Server.Models.Users.vUserProfilesListViewModel
+
+@{
+    ViewBag.Title = "User Profile Page";
+}
+
+<h2>User Profile CRUD Grid</h2>
+
+
+<p>
+    @Html.ActionLink("Register", "Create", null, new { @class = "btn btn-success" })
+</p>
+
+<table class="table table-striped">
+    <thead class="thead-dark">
+        <tr>
+            <th>
+                Id
+            </th>
+            <th>
+                Full Name
+            </th>
+            <th>
+                Direction
+            </th>
+            <th>
+                Start
+            </th>
+            <th>
+                Age
+            </th>
+
+            <th></th>
+
+
+            @foreach (var item in Model.vUserProfiles)
+            {
+            <tr>
+                <th scope="row">
+                    @Html.DisplayFor(modelItem => item.UserId)
+                </th>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FullName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Direction)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StartDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Age)
+                </td>
+                <td>
+                    <div>
+                        @Html.ActionLink("Progress", "Progress", new { id = item.UserId }, new { @class = "btn btn-default" })
+                        @Html.ActionLink("Tasks", "Tasks", new { id = item.UserId }, new { @class = "btn btn-default" })
+                    </div>
+                    <div>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.UserId }, new { @class = "btn btn-default" })
+                        @Html.ActionLink("Delete", "DeleteById", new { id = item.UserId }, new { @class = "btn btn-danger" })
+                    </div>
+
+                </td>
+            </tr>
+        }
+
+
+        </thead>
+    </table>

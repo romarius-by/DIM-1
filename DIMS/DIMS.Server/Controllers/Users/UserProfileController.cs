@@ -78,7 +78,6 @@ namespace HIMS.Server.Controllers
             if (vuserProfileDto == null)
                 return HttpNotFound();
 
-            //var userProfile = Mapper.Map<UserProfileDTO, UserProfileViewModel>(userProfileDTO);
 
             var vuserProfile = Mapper.Map<vUserProfileDTO, vUserProfileViewModel>(vuserProfileDto);
 
@@ -96,6 +95,38 @@ namespace HIMS.Server.Controllers
             catch (RetryLimitExceededException)
             {
                 return RedirectToAction("DeleteById", new { id, saveChangesError = true });
+            }
+
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult DeleteByEmail(string email, int? id)
+        {
+            if (email == null)
+                return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
+
+            if (!id.HasValue)
+                return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
+
+            var vuserProfileDto = _vUserProfileService.GetVUserProfile(id.Value);
+
+            if (vuserProfileDto == null)
+                return HttpNotFound();
+
+            return PartialView(vuserProfileDto);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteByEmail(string email)
+        {
+            try
+            {
+                _userProfileService.DeleteUserProfileByEmail(email);
+            }
+            catch (RetryLimitExceededException)
+            {
+                return RedirectToAction("DeleteByEmail", new { email, saveChangesError = true });
             }
 
             return RedirectToAction("Index");

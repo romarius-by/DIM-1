@@ -27,6 +27,11 @@ namespace HIMS.EF.DAL.Data.Repositories
             return _dIMSDBContext.vUserProfiles.Find(id);
         }
 
+        public vUserProfile GetByEmail(string email)
+        {
+            return _dIMSDBContext.vUserProfiles.Find(email);
+        }
+
         public IEnumerable<vUserProfile> GetAll()
         {
             return _dIMSDBContext.vUserProfiles;

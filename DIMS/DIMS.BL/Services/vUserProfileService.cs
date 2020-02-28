@@ -39,6 +39,11 @@ namespace HIMS.BL.Services
             return Mapper.Map<vUserProfile, vUserProfileDTO>(_vUserProfile);
         }
 
+        public vUserProfileDTO GetVUserProfileByEmail(string email)
+        {
+            throw new NotImplementedException();
+        }
+
         public ICollection<vUserProfileDTO> GetVUserProfiles()
         {
             return Mapper.Map<List<vUserProfile>, ICollection<vUserProfileDTO>>(

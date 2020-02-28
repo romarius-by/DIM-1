@@ -10,6 +10,7 @@ namespace HIMS.BL.Interfaces
     public interface IvUserProfileService
     {
         vUserProfileDTO GetVUserProfile(int? id);
+        vUserProfileDTO GetVUserProfileByEmail(string email);
         ICollection<vUserProfileDTO> GetVUserProfiles();
 
         void Dispose();

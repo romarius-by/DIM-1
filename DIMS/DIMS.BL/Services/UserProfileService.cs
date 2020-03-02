@@ -18,15 +18,15 @@ namespace HIMS.BL.Services
 
         private IUnitOfWork DimsDatabase { get; }
         private IProcedureManager Pm { get; }
-        private UserService _userService { get; }
-        private UserProfileRepository _repository { get; }
+        private UserService UserService { get; }
+        private UserProfileRepository Repository { get; }
 
         public UserProfileService(IUnitOfWork unitOfWork, IProcedureManager pm, UserProfileRepository userProfileRepository, UserService userService)
         {
             DimsDatabase = unitOfWork;
             Pm = pm;
-            _repository = userProfileRepository;
-            _userService = userService;
+            Repository = userProfileRepository;
+            UserService = userService;
         }
 
 
@@ -43,8 +43,8 @@ namespace HIMS.BL.Services
             if (email == null)
                 throw new ValidationException("The User Profile's email is not set", String.Empty);
             
-            _repository.DeleteByEmail(email);
-            _userService.DeleteUserByEmail(email);
+            Repository.DeleteByEmail(email);
+            UserService.DeleteUserByEmail(email);
         }
 
         public void Dispose()

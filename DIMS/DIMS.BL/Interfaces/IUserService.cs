@@ -16,6 +16,5 @@ namespace HIMS.BL.Interfaces
         Task SetInitialData(UserDTO adminDto, List<string> roles);
         void DeleteUserByEmail(string email);
 
-        //Task GetUserById(int id);
     }
 }

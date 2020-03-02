@@ -10,7 +10,7 @@ namespace HIMS.BL.Interfaces
     public interface IvUserTrackService
     {
         vUserTrackDTO GetVUserTrack(int? id);
-        ICollection<vUserTrackDTO> GetVUserTracks();
+        IEnumerable<vUserTrackDTO> GetVUserTracks();
 
         void Dispose();
     }

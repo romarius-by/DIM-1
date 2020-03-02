@@ -39,7 +39,7 @@ namespace HIMS.BL.Services
             return Mapper.Map<vUserTrack, vUserTrackDTO>(_vUserTrack);
         }
 
-        public ICollection<vUserTrackDTO> GetVUserTracks()
+        public IEnumerable<vUserTrackDTO> GetVUserTracks()
         {
             return Mapper.Map<List<vUserTrack>, ICollection<vUserTrackDTO>>(
                 Database.vUserTracks.GetAll().ToList());

@@ -11,7 +11,7 @@ namespace HIMS.BL.Interfaces
     {
         vUserProfileDTO GetVUserProfile(int? id);
         vUserProfileDTO GetVUserProfileByEmail(string email);
-        ICollection<vUserProfileDTO> GetVUserProfiles();
+        IEnumerable<vUserProfileDTO> GetVUserProfiles();
 
         void Dispose();
     }

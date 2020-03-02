@@ -21,10 +21,12 @@ namespace HIMS.BL.Services
         private UserService _userService { get; }
         private UserProfileRepository _repository { get; }
 
-        public UserProfileService(IUnitOfWork unitOfWork, IProcedureManager pm)
+        public UserProfileService(IUnitOfWork unitOfWork, IProcedureManager pm, UserProfileRepository userProfileRepository, UserService userService)
         {
             DimsDatabase = unitOfWork;
             Pm = pm;
+            _repository = userProfileRepository;
+            _userService = userService;
         }
 
 
@@ -78,7 +80,7 @@ namespace HIMS.BL.Services
             if (userProfile.LastName.Length > 25)
                 throw new ValidationException($"The length of {nameof(userProfile.LastName)} must be less than 25"
                     , nameof(userProfile.LastName));
-            if (userProfile.Address.Length > 255)
+            if (userProfile.Address != null && userProfile.Address.Length > 255)
                 throw new ValidationException($"The length of {nameof(userProfile.Address)} must be less than 25"
                     , nameof(userProfile.Address));
 

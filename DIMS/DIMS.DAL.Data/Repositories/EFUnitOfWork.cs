@@ -39,13 +39,13 @@ namespace HIMS.EF.DAL.Data.Repositories
 
         public IViewRepository<vTask> vTasks => _vTaskRepository ?? new vTaskRepository(_dimsDbContext);
 
-        public IViewRepository<vUserProfile> vUserProfiles => _vUserProfileRepository ?? new vUserProfileRepository(_dimsDbContext);
-
         public IViewRepository<vUserProgress> vUserProgresses => _vUserProgressRepository ?? new vUserProgressRepository(_dimsDbContext);
 
         public IViewRepository<vUserTask> vUserTasks => _vUserTaskRepository ?? new vUserTaskRepository(_dimsDbContext);
 
         public IViewRepository<vUserTrack> vUserTracks => _vUserTrackRepository ?? new vUserTrackRepository(_dimsDbContext);
+
+        public IvUserProfileRepository vUserProfiles => _vUserProfileRepository ?? new vUserProfileRepository(_dimsDbContext);
 
         public EFUnitOfWork(string connectionString)
         {

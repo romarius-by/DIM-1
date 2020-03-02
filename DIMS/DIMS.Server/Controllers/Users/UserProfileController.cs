@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -63,7 +64,7 @@ namespace HIMS.Server.Controllers
             {
                 ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists see your system administrator.");
             }
-            return View(userProfileViewModel);
+            return PartialView(userProfileViewModel);
         }
 
         public ActionResult DeleteById(int? id)
@@ -71,7 +72,6 @@ namespace HIMS.Server.Controllers
             if (!id.HasValue)
                 return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
 
-            //var userProfileDTO = _userProfileService.GetUserProfileById(id.Value);
 
             var vuserProfileDto = _vUserProfileService.GetVUserProfile(id.Value);
 
@@ -100,15 +100,13 @@ namespace HIMS.Server.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult DeleteByEmail(string email, int? id)
+        public ActionResult DeleteByEmail(string email)
         {
             if (email == null)
                 return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
 
-            if (!id.HasValue)
-                return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
 
-            var vuserProfileDto = _vUserProfileService.GetVUserProfile(id.Value);
+            var vuserProfileDto = Mapper.Map<vUserProfileDTO, vUserProfileViewModel>(_vUserProfileService.GetVUserProfileByEmail(email));
 
             if (vuserProfileDto == null)
                 return HttpNotFound();
@@ -118,7 +116,7 @@ namespace HIMS.Server.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteByEmail(string email)
+        public ActionResult DeleteByEmail(string email, int id)
         {
             try
             {

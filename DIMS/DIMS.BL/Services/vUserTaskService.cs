@@ -39,7 +39,7 @@ namespace HIMS.BL.Services
             return Mapper.Map<vUserTask, vUserTaskDTO>(_vUserTask);
         }
 
-        public ICollection<vUserTaskDTO> GetVUserTasks()
+        public IEnumerable<vUserTaskDTO> GetVUserTasks()
         {
             return Mapper.Map<List<vUserTask>, ICollection<vUserTaskDTO>>(
                 Database.vUserTasks.GetAll().ToList());

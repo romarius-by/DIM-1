@@ -10,7 +10,7 @@ namespace HIMS.BL.Interfaces
     public interface IvUserProgressService
     {
         vUserProgressDTO GetVUserProgress(int? id);
-        ICollection<vUserProgressDTO> GetVUserProfiles();
+        IEnumerable<vUserProgressDTO> GetVUserProfiles();
 
         void Dispose();
     }

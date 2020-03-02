@@ -52,7 +52,7 @@ namespace HIMS.BL.Services
             return Mapper.Map<vUserProfile, vUserProfileDTO>(vUserProfile);
         }
 
-        public ICollection<vUserProfileDTO> GetVUserProfiles()
+        public IEnumerable<vUserProfileDTO> GetVUserProfiles()
         {
             return Mapper.Map<List<vUserProfile>, ICollection<vUserProfileDTO>>(
                 Database.vUserProfiles.GetAll().ToList());

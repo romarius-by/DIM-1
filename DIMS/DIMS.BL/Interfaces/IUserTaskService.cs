@@ -14,7 +14,7 @@ namespace HIMS.BL.Interfaces
         void UpdateUserTask(UserTaskDTO userTaskDTO);
         void DeleteUserTask(int? id);
 
-        ICollection<UserTaskDTO> GetUserTask();
+        IEnumerable<UserTaskDTO> GetUserTask();
         TaskDTO GetTask(int? id);
         TaskStateDTO GetTaskState(int? id);
         ICollection<TaskTrackDTO> GetTaskTracks(int? id);

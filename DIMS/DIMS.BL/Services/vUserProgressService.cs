@@ -26,7 +26,7 @@ namespace HIMS.BL.Services
             Database.Dispose();
         }
 
-        public ICollection<vUserProgressDTO> GetVUserProfiles()
+        public IEnumerable<vUserProgressDTO> GetVUserProfiles()
         {
             return Mapper.Map<List<vUserProgress>, ICollection<vUserProgressDTO>>(
                 Database.vUserProgresses.GetAll().ToList());

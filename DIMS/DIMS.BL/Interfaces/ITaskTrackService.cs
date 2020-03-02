@@ -15,7 +15,7 @@ namespace HIMS.BL.Interfaces
         void DeleteTaskTrack(int? id);
 
         UserTaskDTO GetUserTask(int? id);
-        ICollection<TaskTrackDTO> GetTaskTracks();
+        IEnumerable<TaskTrackDTO> GetTaskTracks();
         void Dispose();
     }
 }

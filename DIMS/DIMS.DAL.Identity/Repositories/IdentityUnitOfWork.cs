@@ -52,5 +52,10 @@ namespace HIMS.EF.DAL.Identity.Repositories
                 this.disposed = true;
             }
         }
+
+        public void Save()
+        {
+            _identityDbContext.SaveChanges();
+        }
     }
 }

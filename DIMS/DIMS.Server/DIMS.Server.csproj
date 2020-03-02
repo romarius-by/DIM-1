@@ -214,6 +214,7 @@
     <Content Include="Views\UserProfile\Index.cshtml" />
     <Content Include="Views\UserProfile\DeleteById.cshtml" />
     <Content Include="Views\UserProfile\Create.cshtml" />
+    <Content Include="Views\UserProfile\DeleteByEmail.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

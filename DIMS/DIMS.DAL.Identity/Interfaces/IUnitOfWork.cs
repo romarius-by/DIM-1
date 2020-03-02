@@ -12,5 +12,6 @@ namespace HIMS.EF.DAL.Identity.Interfaces
         ApplicationRoleManager ApplicationRoleManager { get; }
         ApplicationUserManager UserSecurityManager { get; }
         Task SaveAsync();
+        void Save();
     }
 }

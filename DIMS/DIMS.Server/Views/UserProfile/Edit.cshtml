@@ -1,15 +1,15 @@
 ﻿@model HIMS.Server.Models.Users.UserProfilePageViewModel
 
-    <div class="modal-content">
+<div class="modal-content">
 
-        <div class="modal-header">
-            <h2>Register new user</h2>
-        </div>
-        
-        <div class="modal-body">
-            @using (Html.BeginForm())
-            {
-                @Html.AntiForgeryToken()
+    <div class="modal-header">
+        <h2>Register new user</h2>
+    </div>
+
+    <div class="modal-body">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
 
             <div class="form-horizontal">
                 <h4>UserProfileViewModel</h4>
@@ -74,7 +74,7 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.UserProfileViewModel.UniversityAverageScore, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
-                        @Html.EditorFor(model => model.UserProfileViewModel.UniversityAverageScore, new { htmlAttributes = new { @class = "form-control", type="number" } })
+                        @Html.EditorFor(model => model.UserProfileViewModel.UniversityAverageScore, new { htmlAttributes = new { @class = "form-control", type = "number" } })
                         @Html.ValidationMessageFor(model => model.UserProfileViewModel.UniversityAverageScore, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -83,7 +83,7 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.UserProfileViewModel.Education, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
-                        @Html.EditorFor(model => model.UserProfileViewModel.Education, new { htmlAttributes = new { @class = "form-control", type="number" } })
+                        @Html.EditorFor(model => model.UserProfileViewModel.Education, new { htmlAttributes = new { @class = "form-control", type = "number" } })
                         @Html.ValidationMessageFor(model => model.UserProfileViewModel.Education, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -102,7 +102,7 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.UserProfileViewModel.Address, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
-                        @Html.EditorFor(model => model.UserProfileViewModel.Address, new { htmlAttributes = new { @class = "form-control", required="required" } })
+                        @Html.EditorFor(model => model.UserProfileViewModel.Address, new { htmlAttributes = new { @class = "form-control", required = "required" } })
                         @Html.ValidationMessageFor(model => model.UserProfileViewModel.Address, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -120,7 +120,7 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.UserProfileViewModel.StartDate, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
-                        @Html.EditorFor(model => model.UserProfileViewModel.StartDate, new { htmlAttributes = new { @class = "form-control", type="date", required="required" } })
+                        @Html.EditorFor(model => model.UserProfileViewModel.StartDate, new { htmlAttributes = new { @class = "form-control", type = "date", required = "required" } })
                         @Html.ValidationMessageFor(model => model.UserProfileViewModel.StartDate, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -140,20 +140,20 @@
                     </div>
                 </div>
             </div>
-            }
-
-        </div>
-        
-        <div class="modal-footer">
-            @using (Html.BeginForm())
-            {
-                @Html.AntiForgeryToken()
-
-                <div class="form-actions no-color">
-                    <input type="submit" value="Delete" class="btn btn-default" />
-                    @Html.ActionLink("Back to List", "Index")
-                </div>
-            }
-        </div>
+        }
 
     </div>
+
+    <div class="modal-footer">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-actions no-color">
+                <input type="submit" value="Delete" class="btn btn-default" />
+                @Html.ActionLink("Back to List", "Index")
+            </div>
+        }
+    </div>
+
+</div>

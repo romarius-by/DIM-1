@@ -52,7 +52,7 @@ namespace HIMS.BL.Services
                 Database.UserTasks.Get(id.Value).TaskState);
         }
 
-        public ICollection<TaskTrackDTO> GetTaskTracks(int? id)
+        public IEnumerable<TaskTrackDTO> GetTaskTracks(int? id)
         {
             if (!id.HasValue)
                 throw new ValidationException("The user task id value is not set", String.Empty);
@@ -83,7 +83,7 @@ namespace HIMS.BL.Services
             return Mapper.Map<UserTask, UserTaskDTO>(userTask);
         }
 
-        public ICollection<UserTaskDTO> GetUserTask()
+        public IEnumerable<UserTaskDTO> GetUserTask()
         {
             return Mapper.Map<List<UserTask>, ICollection<UserTaskDTO>>(
                 Database.UserTasks.GetAll().ToList());

@@ -2,6 +2,7 @@
 using HIMS.BL.DTO;
 using HIMS.BL.Interfaces;
 using HIMS.Server.Models;
+using HIMS.Server.Models.Directions;
 using HIMS.Server.Models.Users;
 using System;
 using System.Collections.Generic;
@@ -17,10 +18,12 @@ namespace HIMS.Server.Controllers
     {
         private readonly IUserProfileService _userProfileService;
         private readonly IvUserProfileService _vUserProfileService;
-        public UserProfileController(IUserProfileService userProfileService, IvUserProfileService vuserProfileService)
+        private readonly IDirectionService _directionService;
+        public UserProfileController(IUserProfileService userProfileService, IvUserProfileService vuserProfileService, IDirectionService directionService)
         {
             _userProfileService = userProfileService;
             _vUserProfileService = vuserProfileService;
+            _directionService = directionService;
         }
 
         
@@ -39,7 +42,16 @@ namespace HIMS.Server.Controllers
                 vUserProfiles = Mapper.Map<IEnumerable<vUserProfileDTO>, List<vUserProfileViewModel>>(vUserProfileDTOs)
             };
 
-            return View(vuserProfiles);
+            var directions = _directionService.GetDirections();
+
+            var UserProfilesPageViewModel = new UserProfilePageViewModel
+            {
+                UserProfilesListViewModel = new UserProfilesListViewModel { UserProfiles = Mapper.Map<IEnumerable<UserProfileDTO>, List<UserProfileViewModel>>(userProfileDTOs) },
+                vUserProfilesListViewModel = new vUserProfilesListViewModel { vUserProfiles = Mapper.Map<IEnumerable<vUserProfileDTO>, List<vUserProfileViewModel>>(vUserProfileDTOs) },
+                DirectionViewModels = Mapper.Map<IEnumerable<DirectionDTO>, List<DirectionViewModel>>(directions)
+            };
+
+            return View(UserProfilesPageViewModel);
         }
 
         public ActionResult Create()
@@ -49,7 +61,7 @@ namespace HIMS.Server.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Name, LastName, Email, MobilePhone")]UserProfileViewModel userProfileViewModel)
+        public ActionResult Create([Bind(Include = "Name, LastName, Email, MobilePhone, DirectionId, Education, BirthDate, StartDate, Address")]UserProfileViewModel userProfileViewModel)
         {
             try
             {

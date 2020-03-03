@@ -48,7 +48,7 @@ namespace HIMS.BL.Services
             return Mapper.Map<TaskTrack, TaskTrackDTO>(task);
         }
 
-        public ICollection<TaskTrackDTO> GetTaskTracks()
+        public IEnumerable<TaskTrackDTO> GetTaskTracks()
         {
             return Mapper.Map<List<TaskTrack>, ICollection<TaskTrackDTO>>(
                 Database.TaskTracks.GetAll().ToList());

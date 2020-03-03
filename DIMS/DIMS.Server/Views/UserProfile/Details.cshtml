@@ -1,0 +1,125 @@
+﻿@model HIMS.Server.Models.Users.UserProfilePageViewModel
+
+<div class="modal-content">
+
+    <div class="modal-header">
+        <h2>@Html.DisplayFor(model => model.vUserProfileViewModel.FullName)'s Details</h2>
+    </div>
+
+    <div class="modal-body">
+        <div>
+            <h4>SampleViewModel</h4>
+            <hr />
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.vUserProfileViewModel.FullName)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.vUserProfileViewModel.FullName)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.vUserProfileViewModel.Email)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.vUserProfileViewModel.Email)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.vUserProfileViewModel.Direction)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.vUserProfileViewModel.Direction)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.vUserProfileViewModel.Age)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.vUserProfileViewModel.Age)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.vUserProfileViewModel.Address)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.vUserProfileViewModel.Address)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.vUserProfileViewModel.Direction)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.vUserProfileViewModel.Direction)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.vUserProfileViewModel.Education)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.vUserProfileViewModel.Education)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.vUserProfileViewModel.MathScore)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.vUserProfileViewModel.MathScore)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.vUserProfileViewModel.UniversityAverageScore)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.vUserProfileViewModel.UniversityAverageScore)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.vUserProfileViewModel.Sex)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.vUserProfileViewModel.Sex)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.vUserProfileViewModel.Skype)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.vUserProfileViewModel.Skype)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.vUserProfileViewModel.StartDate)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.vUserProfileViewModel.StartDate)
+                </dd>
+
+            </dl>
+        </div>
+    </div>
+    <div class="modal-footer">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-actions no-color">
+                <input type="submit" value="Delete" class="btn btn-default" />
+                @Html.ActionLink("Back to List", "Index")
+            </div>
+        }
+    </div>
+
+</div>

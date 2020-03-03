@@ -45,7 +45,7 @@ namespace HIMS.BL.Services
 
         }
 
-        public ICollection<UserTaskDTO> GetUserTasks(int? id)
+        public IEnumerable<UserTaskDTO> GetUserTasks(int? id)
         {
             if (!id.HasValue)
                 throw new ValidationException("The task state id value is not set", String.Empty);

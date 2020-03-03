@@ -13,19 +13,26 @@ namespace HIMS.Server.Controllers.Users
     public class UserProgressController : Controller
     {
         private readonly IvUserProgressService _userProgressService;
+        private readonly IvUserProfileService _userProfileService;
 
-        public UserProgressController(IvUserProgressService userProgressService)
+        public UserProgressController(IvUserProgressService userProgressService, IvUserProfileService userProfileService)
         {
             _userProgressService = userProgressService;
+            _userProfileService = userProfileService;
         }
 
         public ActionResult Index(int? id)
         {
-            var vUserProgresses = Mapper.Map<IEnumerable<vUserProgressDTO>, List<vUserProgressViewModel>>
-                    (_userProgressService.GetVUserProgressesByUserId(id.Value));
 
-            return View(vUserProgresses);
-                
+            var UserProgresses = new vUserProgressesListViewModel
+            {
+                vUserProgresses = Mapper.Map<IEnumerable<vUserProgressDTO>, List<vUserProgressViewModel>>(
+                    _userProgressService.GetVUserProgressesByUserId(id.Value)),
+                vUserProfile = Mapper.Map<vUserProfileDTO, vUserProfileViewModel>(
+                    _userProfileService.GetVUserProfile(id.Value))
+        };
+
+            return View(UserProgresses);       
         }
 
     }

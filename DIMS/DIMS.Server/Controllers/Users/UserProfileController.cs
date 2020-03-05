@@ -19,14 +19,17 @@ namespace HIMS.Server.Controllers
         private readonly IUserProfileService _userProfileService;
         private readonly IvUserProfileService _vUserProfileService;
         private readonly IDirectionService _directionService;
+
+        private UserProfilePageViewModel UserProfilesPageViewModel;
         public UserProfileController(IUserProfileService userProfileService, IvUserProfileService vuserProfileService, IDirectionService directionService)
         {
             _userProfileService = userProfileService;
             _vUserProfileService = vuserProfileService;
             _directionService = directionService;
+            UserProfilesPageViewModel = new UserProfilePageViewModel();
         }
 
-        
+
 
         public ActionResult Index()
         {
@@ -44,24 +47,27 @@ namespace HIMS.Server.Controllers
 
             var directions = _directionService.GetDirections();
 
-            var UserProfilesPageViewModel = new UserProfilePageViewModel
-            {
-                UserProfilesListViewModel = new UserProfilesListViewModel { UserProfiles = Mapper.Map<IEnumerable<UserProfileDTO>, List<UserProfileViewModel>>(userProfileDTOs) },
-                vUserProfilesListViewModel = new vUserProfilesListViewModel { vUserProfiles = Mapper.Map<IEnumerable<vUserProfileDTO>, List<vUserProfileViewModel>>(vUserProfileDTOs) },
-                DirectionViewModels = Mapper.Map<IEnumerable<DirectionDTO>, List<DirectionViewModel>>(directions)
-            };
+            UserProfilesPageViewModel.UserProfilesListViewModel = new UserProfilesListViewModel
+            { UserProfiles = Mapper.Map<IEnumerable<UserProfileDTO>, List<UserProfileViewModel>>(userProfileDTOs) };
+            UserProfilesPageViewModel.vUserProfilesListViewModel = new vUserProfilesListViewModel 
+            { vUserProfiles = Mapper.Map<IEnumerable<vUserProfileDTO>, List<vUserProfileViewModel>>(vUserProfileDTOs) };
+            UserProfilesPageViewModel.DirectionViewModels = Mapper.Map<IEnumerable<DirectionDTO>, List<DirectionViewModel>>(directions);
+
 
             return View(UserProfilesPageViewModel);
         }
 
-        public ActionResult Create()
+        public ActionResult Create(UserProfileViewModel userProfileViewModel)
         {
-            return View();
+            UserProfilesPageViewModel.UserProfileViewModel = userProfileViewModel;
+            UserProfilesPageViewModel.DirectionViewModels = Mapper.Map<IEnumerable<DirectionDTO>, List<DirectionViewModel>>
+                (_directionService.GetDirections());
+            return View(UserProfilesPageViewModel);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Name, LastName, Email, MobilePhone, DirectionId, Education, BirthDate, StartDate, Address")]UserProfileViewModel userProfileViewModel)
+        public ActionResult Create([Bind(Include = "Name, LastName, Email, MobilePhone, DirectionId, Education, UniversityAverageScore, MathScore, BirthDate, Address, Skype, StartDate, Sex")]UserProfileViewModel userProfileViewModel, int id)
         {
             try
             {
@@ -69,14 +75,20 @@ namespace HIMS.Server.Controllers
                 {
                     var userProfileDTO = Mapper.Map<UserProfileViewModel, UserProfileDTO>(userProfileViewModel);
                     _userProfileService.SaveUserProfile(userProfileDTO);
+
+                    UserProfilesPageViewModel.UserProfileViewModel = userProfileViewModel;
                     return RedirectToAction("Index");
                 }
             }
+
+            
             catch (RetryLimitExceededException)
             {
                 ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists see your system administrator.");
             }
-            return PartialView(userProfileViewModel);
+
+
+            return PartialView(UserProfilesPageViewModel);
         }
 
         public ActionResult DeleteById(int? id)

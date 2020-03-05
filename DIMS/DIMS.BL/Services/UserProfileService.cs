@@ -89,6 +89,7 @@ namespace HIMS.BL.Services
                 Name = userProfile.Name,
                 Email = userProfile.Email,
                 LastName = userProfile.LastName,
+                DirectionId = userProfile.DirectionId,
                 Sex = userProfile.Sex,
                 Education = userProfile.Education,
                 BirthDate = userProfile.BirthDate,

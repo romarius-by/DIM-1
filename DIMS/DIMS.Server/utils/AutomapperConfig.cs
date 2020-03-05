@@ -26,11 +26,9 @@ namespace HIMS.Server.utils
                 cfg.CreateMap<UserProfileDTO, UserProfile>();
                 cfg.CreateMap<DirectionDTO, Direction>();
                 cfg.CreateMap<Direction, DirectionDTO>();
-                cfg.CreateMap<DirectionDTO, DirectionViewModel>()
-                    .ForMember(dest => dest.UserProfiles, opt => opt.MapFrom(s => Mapper.Map<IEnumerable<UserProfileDTO>, List<UserProfileViewModel>>(s.UserProfiles)))
-                    .ReverseMap();
+                cfg.CreateMap<DirectionDTO, DirectionViewModel>();
                 cfg.CreateMap<DirectionViewModel, DirectionDTO>();
-                    
+                cfg.CreateMap<UserProfileDTO, UserProfileViewModel>();
 
                 cfg.CreateMap<vUserProfileDTO, vUserProfileViewModel>();
                 cfg.CreateMap<vUserProfileViewModel, vUserProfileDTO>();

@@ -12,7 +12,7 @@ namespace HIMS.Server.Models.Directions
         public string Name { get; set; }
         public string Description { get; set; }
 
-        public virtual IEnumerable<vUserProfileViewModel> UserProfiles { get; set; }
+        public virtual IEnumerable<UserProfileViewModel> UserProfiles { get; set; }
 
     }
 }

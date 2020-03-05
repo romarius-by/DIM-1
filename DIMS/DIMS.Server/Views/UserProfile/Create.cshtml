@@ -56,7 +56,7 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.UserProfileViewModel.DirectionId, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
-                        @Html.DropDownListFor(model => model.UserProfileViewModel.DirectionId, new SelectList(Model.DirectionViewModels))
+                        @Html.DropDownListFor(model => model.UserProfileViewModel.DirectionId, new SelectList(Model.DirectionViewModels, "DirectionId", "Name"))
                         @Html.ValidationMessageFor(model => model.UserProfileViewModel.DirectionId, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -70,21 +70,21 @@
                     </div>
                 </div>
 
-                @* Score *@
+                @* Score N *@
                 <div class="form-group">
                     @Html.LabelFor(model => model.UserProfileViewModel.UniversityAverageScore, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
-                        @Html.EditorFor(model => model.UserProfileViewModel.UniversityAverageScore, new { htmlAttributes = new { @class = "form-control", type="number" } })
+                        @Html.EditorFor(model => model.UserProfileViewModel.UniversityAverageScore, new { htmlAttributes = new { @class = "form-control", type="number", required="required" } })
                         @Html.ValidationMessageFor(model => model.UserProfileViewModel.UniversityAverageScore, "", new { @class = "text-danger" })
                     </div>
                 </div>
 
-                @* MathScore *@
+                @* MathScore N *@
                 <div class="form-group">
-                    @Html.LabelFor(model => model.UserProfileViewModel.Education, htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.LabelFor(model => model.UserProfileViewModel.MathScore, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
-                        @Html.EditorFor(model => model.UserProfileViewModel.Education, new { htmlAttributes = new { @class = "form-control", type="number" } })
-                        @Html.ValidationMessageFor(model => model.UserProfileViewModel.Education, "", new { @class = "text-danger" })
+                        @Html.EditorFor(model => model.UserProfileViewModel.MathScore, new { htmlAttributes = new { @class = "form-control", type="number", required="required" } })
+                        @Html.ValidationMessageFor(model => model.UserProfileViewModel.MathScore, "", new { @class = "text-danger" })
                     </div>
                 </div>
 
@@ -92,7 +92,7 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.UserProfileViewModel.BirthDate, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
-                        @Html.TextBoxFor(model => model.UserProfileViewModel.BirthDate, new { htmlAttributes = new { @class = "form-control", type = "date", required = "required" } })
+                        @Html.EditorFor(model => model.UserProfileViewModel.BirthDate, new { htmlAttributes = new { @class = "form-control", type = "date", required = "required" } })
                         @Html.ValidationMessageFor(model => model.UserProfileViewModel.BirthDate, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -107,11 +107,11 @@
                     </div>
                 </div>
 
-                @* Skype *@
+                @* Skype N *@
                 <div class="form-group">
                     @Html.LabelFor(model => model.UserProfileViewModel.Skype, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
-                        @Html.EditorFor(model => model.UserProfileViewModel.Skype, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.EditorFor(model => model.UserProfileViewModel.Skype, new { htmlAttributes = new { @class = "form-control", required="required" } })
                         @Html.ValidationMessageFor(model => model.UserProfileViewModel.Skype, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -129,7 +129,7 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.UserProfileViewModel.Sex, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
-                        @Html.DropDownListFor(model => model.UserProfileViewModel.Sex, new SelectList("M", "F"), "Choose...")
+                        @Html.DropDownListFor(model => model.UserProfileViewModel.Sex, new SelectList(new[] { "M", "F" }))
                         @Html.ValidationMessageFor(model => model.UserProfileViewModel.Sex, "", new { @class = "text-danger" })
                     </div>
                 </div>

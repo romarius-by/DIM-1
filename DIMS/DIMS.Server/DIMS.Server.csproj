@@ -176,6 +176,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\SampleController.cs" />
+    <Compile Include="Controllers\Tasks\TasksController.cs" />
     <Compile Include="Controllers\Users\UserProfileController.cs" />
     <Compile Include="Controllers\Users\UserProgressController.cs" />
     <Compile Include="Global.asax.cs">
@@ -186,6 +187,8 @@
     <Compile Include="Models\RegisterViewModel.cs" />
     <Compile Include="Models\SamplesListViewModel.cs" />
     <Compile Include="Models\SampleViewModel.cs" />
+    <Compile Include="Models\Tasks\TasksListViewModel.cs" />
+    <Compile Include="Models\Tasks\vTaskViewModel.cs" />
     <Compile Include="Models\Users\UserProfilePageViewModel.cs" />
     <Compile Include="Models\Users\UserProfilesListViewModel.cs" />
     <Compile Include="Models\Users\UserProfileViewModel.cs" />

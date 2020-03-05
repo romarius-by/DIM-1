@@ -8,7 +8,7 @@
 
 
 <p>
-    @Html.ActionLink("Register", "Create", null, new { @class = "btn btn-success create-user" })
+    @Html.ActionLink("Register", "Create", new { userProfileViewModel = Model.UserProfileViewModel, id = 1 }, new { @class = "btn btn-success create-user" })
 </p>
 
 <table class="table table-striped">

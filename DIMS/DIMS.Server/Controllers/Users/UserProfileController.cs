@@ -91,6 +91,22 @@ namespace HIMS.Server.Controllers
             return PartialView(UserProfilesPageViewModel);
         }
 
+        public ActionResult Details(int? id)
+        {
+            if (!id.HasValue)
+                return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
+
+            var vuserProfileDto = _vUserProfileService.GetVUserProfile(id.Value);
+
+            if (vuserProfileDto == null)
+                return HttpNotFound();
+
+            var vuserProfile = Mapper.Map<vUserProfileDTO, vUserProfileViewModel>(vuserProfileDto);
+
+            return PartialView(vuserProfile);
+        }
+
+
         public ActionResult DeleteById(int? id)
         {
             if (!id.HasValue)

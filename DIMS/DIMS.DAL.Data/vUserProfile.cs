@@ -28,6 +28,6 @@ namespace HIMS.EF.DAL.Data
         public string Address { get; set; }
         public string MobilePhone { get; set; }
         public string Skype { get; set; }
-        public DateTime StartDate { get; set; }
+        public DateTime? StartDate { get; set; }
     }
 }

@@ -37,16 +37,19 @@
             {
         <tr>
             <td>
-                <b>@Html.DisplayFor(modelItem => item.UserId)</b>
+                @Html.DisplayFor(modelItem => item.UserId)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.FullName)
+                @Html.ActionLink(item.FullName, "Details", new { id = item.UserId}, new { @class = "details-user" })
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Direction)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.StartDate)
+                @{
+                    var startDate = item.StartDate.Value.ToShortDateString();
+                }
+                @Html.DisplayFor(modelItem => startDate)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Age)
@@ -97,6 +100,18 @@
     </div>
 </div>
 
+<div class="modal fade" id="details-user-modal">
+    <div class="modal-dialog" id="details-user-dialogContent">
+        @using (Html.BeginForm())
+        {
+
+            <div class="form-actions no-color">
+                @Html.ActionLink("Back to List", "Index")
+            </div>
+        }
+    </div>
+</div>
+
     @section scripts
 {
         <script type="text/javascript">
@@ -121,6 +136,18 @@
                     $.get(this.href, function (data) {
                         $('#create-user-dialogContent').html(data);
                         $('#create-user-modal').modal('show');
+                    });
+                });
+            });
+
+            $(function () {
+                 $.ajaxSetup({ cache: false });
+                $(".details-user").click(function (e) {
+
+                    e.preventDefault();
+                    $.get(this.href, function (data) {
+                        $('#details-user-dialogContent').html(data);
+                        $('#details-user-modal').modal('show');
                     });
                 });
             });

@@ -26,7 +26,7 @@ namespace HIMS.BL.Services
             Database.Dispose();
         }
 
-        public vUserProfileDTO GetVUserProfile(int? id)
+        public vUserProfileDTO GetItem(int? id)
         {
             if (!id.HasValue)
                 throw new ValidationException("The view user profile id value is not set", String.Empty);
@@ -52,7 +52,7 @@ namespace HIMS.BL.Services
             return Mapper.Map<vUserProfile, vUserProfileDTO>(vUserProfile);
         }
 
-        public IEnumerable<vUserProfileDTO> GetVUserProfiles()
+        public IEnumerable<vUserProfileDTO> GetItems()
         {
             return Mapper.Map<List<vUserProfile>, ICollection<vUserProfileDTO>>(
                 Database.vUserProfiles.GetAll().ToList());

@@ -7,15 +7,8 @@ using System.Threading.Tasks;
 
 namespace HIMS.BL.Interfaces
 {
-    public interface ITaskService
+    public interface ITaskService : IService<TaskDTO>
     {
-        void SaveTask(TaskDTO task);
-        TaskDTO GetTask(int? id);
-        void UpdateTask(TaskDTO taskDTO);
-        void DeleteTask(int? id);
-
-        IEnumerable<TaskDTO> GetTasks();
         IEnumerable<UserTaskDTO> GetUserTasks(int? id);
-        void Dispose();
     }
 }

@@ -7,18 +7,11 @@ using System.Threading.Tasks;
 
 namespace HIMS.BL.Interfaces
 {
-    public interface IUserTaskService
+    public interface IUserTaskService : IService<UserTaskDTO>
     {
-        void SaveUserTask(UserTaskDTO userTaskDTO);
-        UserTaskDTO GetUserTask(int? id);
-        void UpdateUserTask(UserTaskDTO userTaskDTO);
-        void DeleteUserTask(int? id);
-
-        IEnumerable<UserTaskDTO> GetUserTask();
         TaskDTO GetTask(int? id);
         TaskStateDTO GetTaskState(int? id);
         IEnumerable<TaskTrackDTO> GetTaskTracks(int? id);
         UserProfileDTO GetUserProfile(int? id);
-        void Dispose();
     }
 }

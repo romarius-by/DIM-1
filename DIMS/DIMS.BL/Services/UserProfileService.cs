@@ -30,7 +30,7 @@ namespace HIMS.BL.Services
         }
 
 
-        public void DeleteUserProfileById(int? id)
+        public void DeleteItem(int? id)
         {
             if (!id.HasValue)
                 throw new ValidationException("The User Profile's id value is not set", String.Empty);
@@ -52,7 +52,7 @@ namespace HIMS.BL.Services
             DimsDatabase.Dispose();
         }
 
-        public UserProfileDTO GetUserProfileById(int? id)
+        public UserProfileDTO GetItem(int? id)
         {
             if (!id.HasValue)
                 throw new ValidationException("The User Profile's id value is not set", String.Empty);
@@ -65,12 +65,12 @@ namespace HIMS.BL.Services
             return Mapper.Map<UserProfile, UserProfileDTO>(userProfile);
         }
 
-        public IEnumerable<UserProfileDTO> GetUserProfiles()
+        public IEnumerable<UserProfileDTO> GetItems()
         {
             return Mapper.Map<IEnumerable<UserProfile>, List<UserProfileDTO>>(DimsDatabase.UserProfiles.GetAll());
         }
 
-        public void SaveUserProfile(UserProfileDTO userProfile)
+        public void SaveItem(UserProfileDTO userProfile)
         {
 
             // Validation (must be improve)
@@ -107,7 +107,7 @@ namespace HIMS.BL.Services
             DimsDatabase.Save();
         }
 
-        public void UpdateUserProfile(UserProfileDTO userProfile)
+        public void UpdateItem(UserProfileDTO userProfile)
         {
             // Validation (must be improve)
             if (userProfile.Name.Length > 25)

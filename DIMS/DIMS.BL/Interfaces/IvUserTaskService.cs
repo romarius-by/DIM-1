@@ -7,11 +7,8 @@ using System.Threading.Tasks;
 
 namespace HIMS.BL.Interfaces
 {
-    public interface IvUserTaskService
+    public interface IvUserTaskService : IvService<vUserTaskDTO>
     {
-        vUserTaskDTO GetUserTask(int? id);
-        IEnumerable<vUserTaskDTO> GetVUserTasks();
 
-        void Dispose();
     }
 }

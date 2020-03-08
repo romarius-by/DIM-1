@@ -7,12 +7,9 @@ using System.Threading.Tasks;
 
 namespace HIMS.BL.Interfaces
 {
-    public interface IvUserProfileService
+    public interface IvUserProfileService : IvService<vUserProfileDTO>
     {
-        vUserProfileDTO GetVUserProfile(int? id);
         vUserProfileDTO GetVUserProfileByEmail(string email);
-        IEnumerable<vUserProfileDTO> GetVUserProfiles();
-
-        void Dispose();
+       
     }
 }

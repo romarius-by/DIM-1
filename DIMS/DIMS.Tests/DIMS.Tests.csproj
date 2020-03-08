@@ -120,11 +120,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DAL.BL\Services\StubUserProfileService.cs" />
-    <Compile Include="DAL.Data\Repositories\StubSampleRepository.cs" />
-    <Compile Include="DAL.Data\Repositories\StubUserProfileRepository.cs" />
-    <Compile Include="DAL.Data\TestSampleRepository.cs" />
-    <Compile Include="DAL.Data\TestUserRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -7,14 +7,8 @@ using System.Threading.Tasks;
 
 namespace HIMS.BL.Interfaces
 {
-    public interface IDirectionService
+    public interface IDirectionService : IService<DirectionDTO>
     {
-        void SaveDirection(DirectionDTO direction);
-        DirectionDTO GetDirection(int? id);
-        void UpdateDireciton(DirectionDTO direction);
-        void DeleteDirection(int? id);
-
-        IEnumerable<DirectionDTO> GetDirections();
-        void Dispose();
+       
     }
 }

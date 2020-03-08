@@ -24,13 +24,11 @@ namespace HIMS.Server.Controllers.Users
         public ActionResult Index(int? id)
         {
 
-            var UserProgresses = new vUserProgressesListViewModel
-            {
-                vUserProgresses = Mapper.Map<IEnumerable<vUserProgressDTO>, List<vUserProgressViewModel>>(
-                    _userProgressService.GetVUserProgressesByUserId(id.Value)),
-                vUserProfile = Mapper.Map<vUserProfileDTO, vUserProfileViewModel>(
-                    _userProfileService.GetVUserProfile(id.Value))
-        };
+            var UserProgresses = new vUserProgressesListViewModel(
+                Mapper.Map<vUserProfileDTO, vUserProfileViewModel>(
+                    _userProfileService.GetItem(id.Value)),
+                Mapper.Map<IEnumerable<vUserProgressDTO>, IEnumerable<vUserProgressViewModel>>(
+                    _userProgressService.GetVUserProgressesByUserId(id.Value)));
 
             return View(UserProgresses);       
         }

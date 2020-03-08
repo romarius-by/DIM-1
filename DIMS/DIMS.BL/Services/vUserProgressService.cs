@@ -26,13 +26,13 @@ namespace HIMS.BL.Services
             Database.Dispose();
         }
 
-        public IEnumerable<vUserProgressDTO> GetVUserProgresses()
+        public IEnumerable<vUserProgressDTO> GetItems()
         {
             return Mapper.Map<List<vUserProgress>, ICollection<vUserProgressDTO>>(
                 Database.vUserProgresses.GetAll().ToList());
         }
 
-        public vUserProgressDTO GetVUserProgress(int? id)
+        public vUserProgressDTO GetItem(int? id)
         {
             if (!id.HasValue)
                 throw new ValidationException("The view user progress id value is not set", String.Empty);

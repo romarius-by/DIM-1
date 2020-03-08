@@ -26,7 +26,7 @@ namespace HIMS.BL.Services
             Database.Dispose();
         }
 
-        public vUserTaskDTO GetUserTask(int? id)
+        public vUserTaskDTO GetItem(int? id)
         {
             if (!id.HasValue)
                 throw new ValidationException("The view user task id value is not set", String.Empty);
@@ -39,7 +39,7 @@ namespace HIMS.BL.Services
             return Mapper.Map<vUserTask, vUserTaskDTO>(_vUserTask);
         }
 
-        public IEnumerable<vUserTaskDTO> GetVUserTasks()
+        public IEnumerable<vUserTaskDTO> GetItems()
         {
             return Mapper.Map<List<vUserTask>, ICollection<vUserTaskDTO>>(
                 Database.vUserTasks.GetAll().ToList());

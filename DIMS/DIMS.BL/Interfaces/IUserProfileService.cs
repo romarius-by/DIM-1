@@ -7,15 +7,8 @@ using System.Threading.Tasks;
 
 namespace HIMS.BL.Interfaces
 {
-    public interface IUserProfileService
+    public interface IUserProfileService : IService<UserProfileDTO>
     {
-        void SaveUserProfile(UserProfileDTO userProfile);
-        UserProfileDTO GetUserProfileById(int? id);
-        void UpdateUserProfile(UserProfileDTO userProfile);
-        void DeleteUserProfileById(int? id);
         void DeleteUserProfileByEmail(string email);
-
-        IEnumerable<UserProfileDTO> GetUserProfiles();
-        void Dispose();
     }
 }

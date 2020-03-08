@@ -45,8 +45,8 @@ namespace HIMS.Server.Controllers
 
         public ActionResult Index()
         {
-            IEnumerable<UserProfileDTO> userProfileDTOs = _userProfileService.GetUserProfiles();
-            IEnumerable<vUserProfileDTO> vUserProfileDTOs = _vUserProfileService.GetVUserProfiles();
+            IEnumerable<UserProfileDTO> userProfileDTOs = _userProfileService.GetItems();
+            IEnumerable<vUserProfileDTO> vUserProfileDTOs = _vUserProfileService.GetItems();
             var userProfiles = new UserProfilesListViewModel
             {
                 UserProfiles = Mapper.Map<IEnumerable<UserProfileDTO>, List<UserProfileViewModel>>(userProfileDTOs)
@@ -57,7 +57,7 @@ namespace HIMS.Server.Controllers
                 vUserProfiles = Mapper.Map<IEnumerable<vUserProfileDTO>, List<vUserProfileViewModel>>(vUserProfileDTOs)
             };
 
-            var directions = _directionService.GetDirections();
+            var directions = _directionService.GetItems();
 
             UserProfilesPageViewModel.UserProfilesListViewModel = new UserProfilesListViewModel
             { UserProfiles = Mapper.Map<IEnumerable<UserProfileDTO>, List<UserProfileViewModel>>(userProfileDTOs) };
@@ -72,7 +72,7 @@ namespace HIMS.Server.Controllers
         public ActionResult Create(UserProfileViewModel userProfileViewModel)
         {
             UserProfilesPageViewModel.DirectionViewModels = Mapper.Map<IEnumerable<DirectionDTO>, List<DirectionViewModel>>
-                (_directionService.GetDirections());
+                (_directionService.GetItems());
             return PartialView(UserProfilesPageViewModel);
         }
 
@@ -86,7 +86,7 @@ namespace HIMS.Server.Controllers
                 if (ModelState.IsValid)
                 {
                     var userProfileDTO = Mapper.Map<UserProfileViewModel, UserProfileDTO>(userProfileViewModel);
-                    _userProfileService.SaveUserProfile(userProfileDTO);
+                    _userProfileService.SaveItem(userProfileDTO);
 
                     UserProfilesPageViewModel.UserProfileViewModel = userProfileViewModel;
                     return RedirectToAction("Index");
@@ -108,7 +108,7 @@ namespace HIMS.Server.Controllers
             if (!id.HasValue)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
-            var userProfileDto = _userProfileService.GetUserProfileById(id.Value);
+            var userProfileDto = _userProfileService.GetItem(id.Value);
 
             if (userProfileDto == null)
                 return HttpNotFound();
@@ -118,7 +118,7 @@ namespace HIMS.Server.Controllers
              //   Mapper.Map<UserProfileDTO, UserProfileViewModel>(userProfileDto);
             UserProfilesPageViewModel.DirectionViewModels =
                 Mapper.Map<IEnumerable<DirectionDTO>, List<DirectionViewModel>>
-                (_directionService.GetDirections());
+                (_directionService.GetItems());
             
             return View(UserProfilesPageViewModel);
         }
@@ -131,7 +131,7 @@ namespace HIMS.Server.Controllers
             if (!id.HasValue)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
-            var userProfileDto = _userProfileService.GetUserProfileById(id.Value);
+            var userProfileDto = _userProfileService.GetItem(id.Value);
 
             if (TryUpdateModel(userProfileDto, "",
                 new string[] {
@@ -152,7 +152,7 @@ namespace HIMS.Server.Controllers
             {
                 try
                 {
-                    _userProfileService.UpdateUserProfile(userProfileDto);
+                    _userProfileService.UpdateItem(userProfileDto);
                     return RedirectToAction("Index");
                 }
                 catch (RetryLimitExceededException)
@@ -171,7 +171,7 @@ namespace HIMS.Server.Controllers
             if (!id.HasValue)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
-            var vuserProfileDto = _vUserProfileService.GetVUserProfile(id.Value);
+            var vuserProfileDto = _vUserProfileService.GetItem(id.Value);
 
             if (vuserProfileDto == null)
                 return HttpNotFound();
@@ -188,7 +188,7 @@ namespace HIMS.Server.Controllers
 
             UserProfilesPageViewModel.vUserProgressesListViewModel = new vUserProgressesListViewModel(
                 Mapper.Map<vUserProfileDTO, vUserProfileViewModel>(
-                    _vUserProfileService.GetVUserProfile(id.Value)),
+                    _vUserProfileService.GetItem(id.Value)),
                 Mapper.Map<IEnumerable<vUserProgressDTO>, IEnumerable<vUserProgressViewModel>>(
                 _vUserProgressService.GetVUserProgressesByUserId(id.Value))
                 );
@@ -203,7 +203,7 @@ namespace HIMS.Server.Controllers
                 return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
 
 
-            var vuserProfileDto = _vUserProfileService.GetVUserProfile(id.Value);
+            var vuserProfileDto = _vUserProfileService.GetItem(id.Value);
 
             if (vuserProfileDto == null)
                 return HttpNotFound();
@@ -220,7 +220,7 @@ namespace HIMS.Server.Controllers
         {
             try
             {
-                _userProfileService.DeleteUserProfileById(id);
+                _userProfileService.DeleteItem(id);
             }
             catch (RetryLimitExceededException)
             {

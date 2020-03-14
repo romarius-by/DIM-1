@@ -23,7 +23,7 @@ namespace HIMS.BL.DTO
         public virtual TaskDTO Task { get; set; }
         public virtual TaskStateDTO TaskState { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TaskTrackDTO> TaskTracks { get; set; }
+        public virtual IEnumerable<TaskTrackDTO> TaskTracks { get; set; }
         public virtual UserProfileDTO UserProfile { get; set; }
     }
 }

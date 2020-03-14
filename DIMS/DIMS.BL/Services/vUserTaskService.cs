@@ -3,6 +3,7 @@ using HIMS.BL.DTO;
 using HIMS.BL.Infrastructure;
 using HIMS.BL.Interfaces;
 using HIMS.EF.DAL.Data;
+using HIMS.EF.DAL.Data.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,15 +16,26 @@ namespace HIMS.BL.Services
     {
 
         private IUnitOfWork Database;
+        private vUserTaskRepository vUserTaskRepository;
 
-        public vUserTaskService(IUnitOfWork uow)
+        public vUserTaskService(IUnitOfWork uow, vUserTaskRepository repository)
         {
             Database = uow;
+            vUserTaskRepository = repository;
         }
 
         public void Dispose()
         {
             Database.Dispose();
+        }
+
+        public IEnumerable<vUserTaskDTO> GetByUserId(int? id)
+        {
+            if (!id.HasValue)
+                throw new ValidationException("The view user task id value is not set", String.Empty);
+
+            return Mapper.Map<IEnumerable<vUserTask>, IEnumerable<vUserTaskDTO>>(
+                vUserTaskRepository.GetByUserId(id.Value));
         }
 
         public vUserTaskDTO GetItem(int? id)

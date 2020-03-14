@@ -12,6 +12,7 @@ namespace HIMS.BL.Interfaces
         TaskDTO GetTask(int? id);
         TaskStateDTO GetTaskState(int? id);
         IEnumerable<TaskTrackDTO> GetTaskTracks(int? id);
+        IEnumerable<UserTaskDTO> GetByUserId(int? id);
         UserProfileDTO GetUserProfile(int? id);
     }
 }

@@ -55,12 +55,13 @@
                 @Html.DisplayFor(modelItem => item.Age)
             </td>
             <td>
-                <div>
+                <div class="btn-group-vertical">
                     @Html.ActionLink("Progress", "Progress", new { id = item.UserId }, new { @class = "btn btn-default progress-user" })
-                    @Html.ActionLink("Tasks", "Tasks", new { id = item.UserId }, new { @class = "btn btn-default tasks-user" })
+                    @Html.ActionLink("Edit", "Edit", new { id = item.UserId, userProfileViewModel = Model.UserProfileViewModel }, new { @class = "btn btn-success edit-user" })
                 </div>
-                <div>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.UserId, userProfileViewModel = Model.UserProfileViewModel }, new { @class = "btn btn-default edit-user" })
+
+                <div class="btn-group-vertical">
+                    @Html.ActionLink("Tasks", "Tasks", new { id = item.UserId }, new { @class = "btn btn-default tasks-user" })
                     @Html.ActionLink("Delete", "DeleteByEmail", new { email = item.Email, id = 0 }, new { @class = "btn btn-danger delete-user" })
                 </div>
 

@@ -9,6 +9,6 @@ namespace HIMS.BL.Interfaces
 {
     public interface IvUserTaskService : IvService<vUserTaskDTO>
     {
-
+        IEnumerable<vUserTaskDTO> GetByUserId(int? id);
     }
 }

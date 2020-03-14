@@ -32,7 +32,7 @@ namespace HIMS.BL.DTO
         public virtual DirectionDTO Direction { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UserTaskDTO> UserTasks { get; set; }
+        public virtual IEnumerable<UserTaskDTO> UserTasks { get; set; }
 
     }
 }

@@ -21,12 +21,15 @@ namespace HIMS.BL.Services
         private UserService UserService { get; }
         private UserProfileRepository Repository { get; }
 
-        public UserProfileService(IUnitOfWork unitOfWork, IProcedureManager pm, UserProfileRepository userProfileRepository, UserService userService)
+        private UserTaskService UserTasks { get; }
+
+        public UserProfileService(IUnitOfWork unitOfWork, IProcedureManager pm, UserProfileRepository userProfileRepository, UserService userService, UserTaskService userTaskService)
         {
             DimsDatabase = unitOfWork;
             Pm = pm;
             Repository = userProfileRepository;
             UserService = userService;
+            UserTasks = userTaskService;
         }
 
 
@@ -44,7 +47,7 @@ namespace HIMS.BL.Services
                 throw new ValidationException("The User Profile's email is not set", String.Empty);
             
             Repository.DeleteByEmail(email);
-            UserService.DeleteUserByEmail(email);
+            var operationDetails = UserService.DeleteUserByEmail(email).Result;
         }
 
         public void Dispose()
@@ -121,10 +124,14 @@ namespace HIMS.BL.Services
                     , nameof(userProfile.Address));
 
             var _userProfile = DimsDatabase.UserProfiles.Get(userProfile.UserId);
+
+            var userTasks = UserTasks.GetByUserId(userProfile.UserId);
             
             if (_userProfile != null)
             {
-                Mapper.Map(userProfile, _userProfile);
+                Mapper.Map<UserProfileDTO, UserProfile>(userProfile, _userProfile);
+                _userProfile.UserTasks = Mapper.Map<IEnumerable<UserTaskDTO>, ICollection<UserTask>>(userTasks);
+
                 DimsDatabase.Save();
             }
 

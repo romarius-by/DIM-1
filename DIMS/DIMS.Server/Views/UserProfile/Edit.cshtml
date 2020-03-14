@@ -3,7 +3,7 @@
 <div class="modal-content">
 
     <div class="modal-header">
-        <h2>Edit @ViewBag.User.Name @ViewBag.User.LastName's profile</h2>
+        <h2>Edit @Model.UserProfileViewModel.Name @Model.UserProfileViewModel.LastName's profile</h2>
     </div>
 
     <div class="modal-body">
@@ -72,7 +72,7 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.UserProfileViewModel.UniversityAverageScore, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.UserProfileViewModel.UniversityAverageScore, new { htmlAttributes = new { @class = "form-control", type = "number" } })
+                    @Html.EditorFor(model => model.UserProfileViewModel.UniversityAverageScore, new { htmlAttributes = new { @class = "form-control", type = "number", min="0", max="10" } })
                     @Html.ValidationMessageFor(model => model.UserProfileViewModel.UniversityAverageScore, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -81,7 +81,7 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.UserProfileViewModel.MathScore, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.UserProfileViewModel.MathScore, new { htmlAttributes = new { @class = "form-control", type = "number" } })
+                    @Html.EditorFor(model => model.UserProfileViewModel.MathScore, new { htmlAttributes = new { @class = "form-control", type = "number", min="0", max="10" } })
                     @Html.ValidationMessageFor(model => model.UserProfileViewModel.MathScore, "", new { @class = "text-danger" })
                 </div>
             </div>

@@ -113,53 +113,38 @@ namespace HIMS.Server.Controllers
             if (userProfileDto == null)
                 return HttpNotFound();
 
-            ViewBag.User = (UserProfileViewModel)Mapper.Map<UserProfileDTO, UserProfileViewModel>(userProfileDto);
-           // UserProfilesPageViewModel.UserProfileViewModel =
-             //   Mapper.Map<UserProfileDTO, UserProfileViewModel>(userProfileDto);
+            UserProfilesPageViewModel.UserProfileViewModel =
+               Mapper.Map<UserProfileDTO, UserProfileViewModel>(userProfileDto);
             UserProfilesPageViewModel.DirectionViewModels =
                 Mapper.Map<IEnumerable<DirectionDTO>, List<DirectionViewModel>>
                 (_directionService.GetItems());
             
-            return View(UserProfilesPageViewModel);
+            return PartialView(UserProfilesPageViewModel);
         }
 
 
         [HttpPost, ActionName("Edit")]
         [ValidateAntiForgeryToken]
-        public ActionResult EditProfile(int? id)
+        public ActionResult EditProfile(UserProfileViewModel userProfileViewModel, int? id)
         {
-            if (!id.HasValue)
+            if (userProfileViewModel == null || !id.HasValue)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
             var userProfileDto = _userProfileService.GetItem(id.Value);
 
-            if (TryUpdateModel(userProfileDto, "",
-                new string[] {
-                      nameof(userProfileDto.Name),
-                      nameof(userProfileDto.LastName),
-                      nameof(userProfileDto.Email),
-                      nameof(userProfileDto.Address),
-                      nameof(userProfileDto.DirectionId),
-                      nameof(userProfileDto.BirthDate),
-                      nameof(userProfileDto.Education),
-                      nameof(userProfileDto.MathScore),
-                      nameof(userProfileDto.UniversityAverageScore),
-                      nameof(userProfileDto.MobilePhone),
-                      nameof(userProfileDto.Sex),
-                      nameof(userProfileDto.Skype),
-                      nameof(userProfileDto.StartDate)
-                }))
+            try
             {
-                try
-                {
-                    _userProfileService.UpdateItem(userProfileDto);
-                    return RedirectToAction("Index");
-                }
-                catch (RetryLimitExceededException)
-                {
-                    ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists, see your system administrator.");
-                }
+                Mapper.Map(userProfileViewModel, userProfileDto);
+                userProfileDto.UserId = id.Value;
+                _userProfileService.UpdateItem(userProfileDto);
+                return RedirectToAction("Index");
+            }                
+
+            catch (RetryLimitExceededException)
+            {
+                ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists, see your system administrator.");
             }
+            
 
             UserProfilesPageViewModel.UserProfileViewModel = Mapper.Map<UserProfileDTO, UserProfileViewModel>(userProfileDto);
 

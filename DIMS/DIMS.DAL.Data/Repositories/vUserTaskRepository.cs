@@ -27,6 +27,11 @@ namespace HIMS.EF.DAL.Data.Repositories
             return _dIMSDBContext.vUserTasks.Find(id);
         }
 
+        public IEnumerable<vUserTask> GetByUserId(int id)
+        {
+            return _dIMSDBContext.vUserTasks.Where(t => t.UserId == id).ToList();
+        }
+
         public IEnumerable<vUserTask> GetAll()
         {
             return _dIMSDBContext.vUserTasks;

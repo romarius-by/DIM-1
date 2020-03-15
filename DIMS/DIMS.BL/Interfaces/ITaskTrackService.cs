@@ -7,15 +7,8 @@ using System.Threading.Tasks;
 
 namespace HIMS.BL.Interfaces
 {
-    public interface ITaskTrackService
+    public interface ITaskTrackService : IService<TaskTrackDTO>
     {
-        TaskTrackDTO GetTaskTrack(int? id);
-        void SaveTaskTrack(TaskTrackDTO taskTrackDTO);
-        void UpdateTaskTrack(TaskTrackDTO taskTrackDTO);
-        void DeleteTaskTrack(int? id);
-
-        UserTaskDTO GetUserTask(int? id);
-        ICollection<TaskTrackDTO> GetTaskTracks();
-        void Dispose();
+        UserTaskDTO GetUserTask(int? id);    
     }
 }

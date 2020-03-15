@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HIMS.EF.DAL.Data.Repositories
 {
-    class UserTaskRepository : IRepository<UserTask>
+    public class UserTaskRepository : IRepository<UserTask>
     {
         private readonly DIMSDBContext _dIMSDBContext;
 
@@ -39,6 +39,11 @@ namespace HIMS.EF.DAL.Data.Repositories
         {
             return _dIMSDBContext.UserTasks.Find(id);
         }
+
+        public IEnumerable<UserTask> GetByUserId(int id)
+        {
+            return _dIMSDBContext.UserTasks.Where(t => t.UserId == id).ToList();
+        } 
 
         public IEnumerable<UserTask> GetAll()
         {

@@ -18,17 +18,22 @@ namespace HIMS.BL.Services
 
         private IUnitOfWork DimsDatabase { get; }
         private IProcedureManager Pm { get; }
-        private UserService _userService { get; }
-        private UserProfileRepository _repository { get; }
+        private UserService UserService { get; }
+        private UserProfileRepository Repository { get; }
 
-        public UserProfileService(IUnitOfWork unitOfWork, IProcedureManager pm)
+        private UserTaskService UserTasks { get; }
+
+        public UserProfileService(IUnitOfWork unitOfWork, IProcedureManager pm, UserProfileRepository userProfileRepository, UserService userService, UserTaskService userTaskService)
         {
             DimsDatabase = unitOfWork;
             Pm = pm;
+            Repository = userProfileRepository;
+            UserService = userService;
+            UserTasks = userTaskService;
         }
 
 
-        public void DeleteUserProfileById(int? id)
+        public void DeleteItem(int? id)
         {
             if (!id.HasValue)
                 throw new ValidationException("The User Profile's id value is not set", String.Empty);
@@ -41,8 +46,8 @@ namespace HIMS.BL.Services
             if (email == null)
                 throw new ValidationException("The User Profile's email is not set", String.Empty);
             
-            _repository.DeleteByEmail(email);
-            _userService.DeleteUserByEmail(email);
+            Repository.DeleteByEmail(email);
+            var operationDetails = UserService.DeleteUserByEmail(email).Result;
         }
 
         public void Dispose()
@@ -50,7 +55,7 @@ namespace HIMS.BL.Services
             DimsDatabase.Dispose();
         }
 
-        public UserProfileDTO GetUserProfileById(int? id)
+        public UserProfileDTO GetItem(int? id)
         {
             if (!id.HasValue)
                 throw new ValidationException("The User Profile's id value is not set", String.Empty);
@@ -63,12 +68,12 @@ namespace HIMS.BL.Services
             return Mapper.Map<UserProfile, UserProfileDTO>(userProfile);
         }
 
-        public IEnumerable<UserProfileDTO> GetUserProfiles()
+        public IEnumerable<UserProfileDTO> GetItems()
         {
             return Mapper.Map<IEnumerable<UserProfile>, List<UserProfileDTO>>(DimsDatabase.UserProfiles.GetAll());
         }
 
-        public void SaveUserProfile(UserProfileDTO userProfile)
+        public void SaveItem(UserProfileDTO userProfile)
         {
 
             // Validation (must be improve)
@@ -78,7 +83,7 @@ namespace HIMS.BL.Services
             if (userProfile.LastName.Length > 25)
                 throw new ValidationException($"The length of {nameof(userProfile.LastName)} must be less than 25"
                     , nameof(userProfile.LastName));
-            if (userProfile.Address.Length > 255)
+            if (userProfile.Address != null && userProfile.Address.Length > 255)
                 throw new ValidationException($"The length of {nameof(userProfile.Address)} must be less than 25"
                     , nameof(userProfile.Address));
 
@@ -87,6 +92,7 @@ namespace HIMS.BL.Services
                 Name = userProfile.Name,
                 Email = userProfile.Email,
                 LastName = userProfile.LastName,
+                DirectionId = userProfile.DirectionId,
                 Sex = userProfile.Sex,
                 Education = userProfile.Education,
                 BirthDate = userProfile.BirthDate,
@@ -104,7 +110,7 @@ namespace HIMS.BL.Services
             DimsDatabase.Save();
         }
 
-        public void UpdateUserProfile(UserProfileDTO userProfile)
+        public void UpdateItem(UserProfileDTO userProfile)
         {
             // Validation (must be improve)
             if (userProfile.Name.Length > 25)
@@ -118,10 +124,14 @@ namespace HIMS.BL.Services
                     , nameof(userProfile.Address));
 
             var _userProfile = DimsDatabase.UserProfiles.Get(userProfile.UserId);
+
+            var userTasks = UserTasks.GetByUserId(userProfile.UserId);
             
             if (_userProfile != null)
             {
-                Mapper.Map(userProfile, _userProfile);
+                Mapper.Map<UserProfileDTO, UserProfile>(userProfile, _userProfile);
+                _userProfile.UserTasks = Mapper.Map<IEnumerable<UserTaskDTO>, ICollection<UserTask>>(userTasks);
+
                 DimsDatabase.Save();
             }
 

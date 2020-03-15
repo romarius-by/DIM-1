@@ -3,6 +3,7 @@ using HIMS.BL.DTO;
 using HIMS.BL.Infrastructure;
 using HIMS.BL.Interfaces;
 using HIMS.EF.DAL.Data;
+using HIMS.EF.DAL.Data.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,13 +15,15 @@ namespace HIMS.BL.Services
     public class UserTaskService : IUserTaskService
     {
         private IUnitOfWork Database;
+        private UserTaskRepository UserTaskRepository;
 
-        public UserTaskService(IUnitOfWork uow)
+        public UserTaskService(IUnitOfWork uow, UserTaskRepository repository)
         {
             Database = uow;
+            UserTaskRepository = repository;
         }
 
-        public void DeleteUserTask(int? id)
+        public void DeleteItem(int? id)
         {
             if (!id.HasValue)
                 throw new ValidationException("The user task id value is not set", String.Empty);
@@ -52,7 +55,7 @@ namespace HIMS.BL.Services
                 Database.UserTasks.Get(id.Value).TaskState);
         }
 
-        public ICollection<TaskTrackDTO> GetTaskTracks(int? id)
+        public IEnumerable<TaskTrackDTO> GetTaskTracks(int? id)
         {
             if (!id.HasValue)
                 throw new ValidationException("The user task id value is not set", String.Empty);
@@ -70,7 +73,7 @@ namespace HIMS.BL.Services
                 Database.UserTasks.Get(id.Value).UserProfile);
         }
 
-        public UserTaskDTO GetUserTask(int? id)
+        public UserTaskDTO GetItem(int? id)
         {
             if (!id.HasValue)
                 throw new ValidationException("The user task id value is not set", String.Empty);
@@ -83,13 +86,13 @@ namespace HIMS.BL.Services
             return Mapper.Map<UserTask, UserTaskDTO>(userTask);
         }
 
-        public ICollection<UserTaskDTO> GetUserTask()
+        public IEnumerable<UserTaskDTO> GetItems()
         {
             return Mapper.Map<List<UserTask>, ICollection<UserTaskDTO>>(
                 Database.UserTasks.GetAll().ToList());
         }
 
-        public void SaveUserTask(UserTaskDTO userTaskDTO)
+        public void SaveItem(UserTaskDTO userTaskDTO)
         {
             var userTask = new UserTask
             {
@@ -99,14 +102,14 @@ namespace HIMS.BL.Services
                 TaskState = Mapper.Map<TaskStateDTO, TaskState>(userTaskDTO.TaskState),
                 UserId = userTaskDTO.UserId,
                 UserProfile = Mapper.Map<UserProfileDTO, UserProfile>(userTaskDTO.UserProfile),
-                TaskTracks = Mapper.Map<ICollection<TaskTrackDTO>, List<TaskTrack>>(userTaskDTO.TaskTracks)
+                TaskTracks = Mapper.Map<IEnumerable<TaskTrackDTO>, List<TaskTrack>>(userTaskDTO.TaskTracks)
             };
 
             Database.UserTasks.Create(userTask);
             Database.Save();
         }
 
-        public void UpdateUserTask(UserTaskDTO userTaskDTO)
+        public void UpdateItem(UserTaskDTO userTaskDTO)
         {
             var userTask = Database.UserTasks.Get(userTaskDTO.UserTaskId);
 
@@ -116,5 +119,16 @@ namespace HIMS.BL.Services
                 Database.Save();
             }
         }
+
+        public IEnumerable<UserTaskDTO> GetByUserId(int? id)
+        {
+            if (!id.HasValue)
+                throw new ValidationException("The user profile id value is not set", String.Empty);
+
+            return Mapper.Map<IEnumerable<UserTask>, IEnumerable<UserTaskDTO>>(
+                UserTaskRepository.GetByUserId(id.Value));
+        }
+
+        
     }
 }

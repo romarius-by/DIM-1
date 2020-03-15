@@ -26,20 +26,33 @@ namespace HIMS.BL.Services
             Database.Dispose();
         }
 
-        public vUserProfileDTO GetVUserProfile(int? id)
+        public vUserProfileDTO GetItem(int? id)
         {
             if (!id.HasValue)
                 throw new ValidationException("The view user profile id value is not set", String.Empty);
 
-            var _vUserProfile = Database.vUserProfiles.Get(id.Value);
+            var vUserProfile = Database.vUserProfiles.Get(id.Value);
 
-            if (_vUserProfile == null)
+            if (vUserProfile == null)
                 throw new ValidationException($"The view user profile with id = {id.Value} was not found", String.Empty);
 
-            return Mapper.Map<vUserProfile, vUserProfileDTO>(_vUserProfile);
+            return Mapper.Map<vUserProfile, vUserProfileDTO>(vUserProfile);
         }
 
-        public ICollection<vUserProfileDTO> GetVUserProfiles()
+        public vUserProfileDTO GetVUserProfileByEmail(string email)
+        {
+            if (email == null)
+                throw new ValidationException("The view user profile email is not set", String.Empty);
+
+            var vUserProfile = Database.vUserProfiles.GetByEmail(email);
+
+            if (vUserProfile == null)
+                throw new ValidationException($"The view user profile with email = {email} was not found", String.Empty);
+
+            return Mapper.Map<vUserProfile, vUserProfileDTO>(vUserProfile);
+        }
+
+        public IEnumerable<vUserProfileDTO> GetItems()
         {
             return Mapper.Map<List<vUserProfile>, ICollection<vUserProfileDTO>>(
                 Database.vUserProfiles.GetAll().ToList());

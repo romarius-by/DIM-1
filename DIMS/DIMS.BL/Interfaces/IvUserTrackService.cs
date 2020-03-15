@@ -7,11 +7,8 @@ using System.Threading.Tasks;
 
 namespace HIMS.BL.Interfaces
 {
-    public interface IvUserTrackService
+    public interface IvUserTrackService : IvService<vUserTrackDTO>
     {
-        vUserTrackDTO GetVUserTrack(int? id);
-        ICollection<vUserTrackDTO> GetVUserTracks();
 
-        void Dispose();
     }
 }

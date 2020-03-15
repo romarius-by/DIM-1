@@ -80,18 +80,25 @@ namespace HIMS.BL.Services
             Database.Dispose();
         }
 
-        public async void DeleteUserByEmail(string email)
+        public async Task<OperationDetails> DeleteUserByEmail(string email)
         {
-            var user = await Database.UserSecurityManager.FindByEmailAsync(email);
+            ApplicationUser user = await Database.UserSecurityManager.FindByEmailAsync(email);
 
-            if (user == null)
+            if (user != null)
             {
-                throw new ValidationException("User with this email not found", String.Empty);
-            }
-            
-            await Database.UserSecurityManager.DeleteAsync(user);
+                var result = Database.UserSecurityManager.Delete(user);
 
-            await Database.SaveAsync();
+                if (result.Errors.Count() > 0)
+                {
+                    return new OperationDetails(false, result.Errors.FirstOrDefault(), "");
+                }
+
+                return new OperationDetails(true, "User deletion by Email was done successfully! Email: ", email);
+            }
+            else
+            {
+                return new OperationDetails(false, "The user with such Email not found! Email: ", email);
+            }
         }
     }
 }

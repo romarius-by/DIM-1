@@ -32,7 +32,7 @@ namespace HIMS.EF.DAL.Data.Repositories
 
         public void DeleteByEmail(string email)
         {
-            var entity = _dimsDbContext.UserProfiles.Find(email);
+            var entity = _dimsDbContext.UserProfiles.Where(x => x.Email == email).FirstOrDefault();
 
             if (entity != null)
             {
@@ -48,6 +48,11 @@ namespace HIMS.EF.DAL.Data.Repositories
         public UserProfile Get(int id)
         {
             return _dimsDbContext.UserProfiles.Find(id);
+        }
+
+        public UserProfile GetByEmail(string email)
+        {
+            return _dimsDbContext.UserProfiles.Find(email);
         }
 
         public IEnumerable<UserProfile> GetAll()

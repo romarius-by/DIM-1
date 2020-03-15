@@ -7,11 +7,10 @@ using System.Threading.Tasks;
 
 namespace HIMS.BL.Interfaces
 {
-    public interface IvUserProgressService
+    public interface IvUserProgressService : IvService<vUserProgressDTO>
     {
-        vUserProgressDTO GetVUserProgress(int? id);
-        ICollection<vUserProgressDTO> GetVUserProfiles();
+        vUserProgressDTO GetItem(int? id);
+        IEnumerable<vUserProgressDTO> GetVUserProgressesByUserId(int? id);
 
-        void Dispose();
     }
 }

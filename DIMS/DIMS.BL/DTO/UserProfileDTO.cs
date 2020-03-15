@@ -22,17 +22,17 @@ namespace HIMS.BL.DTO
         public string LastName { get; set; }
         public string Sex { get; set; }
         public string Education { get; set; }
-        public System.DateTime BirthDate { get; set; }
+        public DateTime? BirthDate { get; set; }
         public double? UniversityAverageScore { get; set; }
         public double? MathScore { get; set; }
         public string Address { get; set; }
         public string MobilePhone { get; set; }
         public string Skype { get; set; }
-        public System.DateTime StartDate { get; set; }
+        public DateTime? StartDate { get; set; }
         public virtual DirectionDTO Direction { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UserTaskDTO> UserTasks { get; set; }
+        public virtual IEnumerable<UserTaskDTO> UserTasks { get; set; }
 
     }
 }

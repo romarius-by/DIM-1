@@ -79,6 +79,7 @@
     <Compile Include="Infrastructure\ValidationException.cs" />
     <Compile Include="Interfaces\IDirectionService.cs" />
     <Compile Include="Interfaces\ISampleService.cs" />
+    <Compile Include="Interfaces\IService.cs" />
     <Compile Include="Interfaces\ITaskService.cs" />
     <Compile Include="Interfaces\ITaskStateService.cs" />
     <Compile Include="Interfaces\ITaskTrackService.cs" />
@@ -87,6 +88,7 @@
     <Compile Include="DTO\SampleDTO.cs" />
     <Compile Include="DTO\UserDTO.cs" />
     <Compile Include="Interfaces\IUserTaskService.cs" />
+    <Compile Include="Interfaces\IvService.cs" />
     <Compile Include="Interfaces\IvTaskService.cs" />
     <Compile Include="Interfaces\IvUserProfileService.cs" />
     <Compile Include="Interfaces\IvUserProgressService.cs" />

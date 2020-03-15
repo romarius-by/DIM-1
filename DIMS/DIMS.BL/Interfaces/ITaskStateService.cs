@@ -7,14 +7,8 @@ using System.Threading.Tasks;
 
 namespace HIMS.BL.Interfaces
 {
-    public interface ITaskStateService
+    public interface ITaskStateService : IService<TaskStateDTO>
     {
-        void SaveTaskState(TaskStateDTO taskStateDTO);
-        TaskStateDTO GetTaskState(int? id);
-        void UpdateTaskState(TaskStateDTO taskStateDTO);
-        void DeleteTaskState(int? id);
-
-        ICollection<UserTaskDTO> GetUserTasks(int? id);
-        void Dispose();
+        IEnumerable<UserTaskDTO> GetUserTasks(int? id);
     }
 }

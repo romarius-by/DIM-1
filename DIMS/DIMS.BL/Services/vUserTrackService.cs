@@ -26,7 +26,7 @@ namespace HIMS.BL.Services
             Database.Dispose();
         }
 
-        public vUserTrackDTO GetVUserTrack(int? id)
+        public vUserTrackDTO GetItem(int? id)
         {
             if (!id.HasValue)
                 throw new ValidationException("The view user track id value is not set", String.Empty);
@@ -39,7 +39,7 @@ namespace HIMS.BL.Services
             return Mapper.Map<vUserTrack, vUserTrackDTO>(_vUserTrack);
         }
 
-        public ICollection<vUserTrackDTO> GetVUserTracks()
+        public IEnumerable<vUserTrackDTO> GetItems()
         {
             return Mapper.Map<List<vUserTrack>, ICollection<vUserTrackDTO>>(
                 Database.vUserTracks.GetAll().ToList());

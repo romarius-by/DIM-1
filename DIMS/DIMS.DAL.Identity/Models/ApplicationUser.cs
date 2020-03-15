@@ -9,8 +9,5 @@ namespace HIMS.EF.DAL.Identity.Models
 {
     public class ApplicationUser : IdentityUser
     {
-        public int Id { get; set; }
-        public string Email { get; set; }
-        
     }
 }

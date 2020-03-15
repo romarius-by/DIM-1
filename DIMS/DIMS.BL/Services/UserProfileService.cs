@@ -46,8 +46,14 @@ namespace HIMS.BL.Services
             if (email == null)
                 throw new ValidationException("The User Profile's email is not set", String.Empty);
             
-            Repository.DeleteByEmail(email);
             var operationDetails = UserService.DeleteUserByEmail(email).Result;
+
+            if (operationDetails.Succedeed)
+            {
+                Repository.DeleteByEmail(email);
+            }
+            else
+                throw new ValidationException(operationDetails.Message, operationDetails.Property);
         }
 
         public void Dispose()
@@ -101,9 +107,7 @@ namespace HIMS.BL.Services
                 Address = userProfile.Address,
                 MobilePhone = userProfile.MobilePhone,
                 Skype = userProfile.Skype,
-                StartDate = userProfile.StartDate,
-                Direction = Mapper.Map<DirectionDTO, Direction>(userProfile.Direction),
-                UserTasks = Mapper.Map<List<UserTaskDTO>, ICollection<UserTask>>(userProfile.UserTasks.ToList())
+                StartDate = userProfile.StartDate
             };
 
             DimsDatabase.UserProfiles.Create(_userProfile);

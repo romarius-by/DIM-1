@@ -231,11 +231,11 @@ namespace HIMS.Server.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteByEmail(string email, int id)
+        public async Task<ActionResult> DeleteByEmail(string email, int id)
         {
             try
             {
-                _userProfileService.DeleteUserProfileByEmail(email);
+                var operationDetails = await _userProfileService.DeleteUserProfileByEmail(email);
             }
             catch (RetryLimitExceededException)
             {

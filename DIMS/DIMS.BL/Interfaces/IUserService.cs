@@ -15,6 +15,7 @@ namespace HIMS.BL.Interfaces
         Task<ClaimsIdentity> Authenticate(UserDTO userDto);
         Task SetInitialData(UserDTO adminDto, List<string> roles);
         Task<OperationDetails> DeleteUserByEmail(string email);
+        /*OperationDetails DeleteUserByEmail(string email);*/
 
     }
 }

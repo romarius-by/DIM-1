@@ -41,16 +41,17 @@ namespace HIMS.BL.Services
             DimsDatabase.Save();
         }
 
-        public void DeleteUserProfileByEmail(string email)
+        public async Task<OperationDetails> DeleteUserProfileByEmail(string email)
         {
             if (email == null)
                 throw new ValidationException("The User Profile's email is not set", String.Empty);
-            
-            var operationDetails = UserService.DeleteUserByEmail(email).Result;
 
-            if (operationDetails.Succedeed)
+            OperationDetails operationDetails = await UserService.DeleteUserByEmail(email);
+
+            if (operationDetails.Succedeed || operationDetails.Message == "The user with such Email not found! Email: ")
             {
                 Repository.DeleteByEmail(email);
+                return operationDetails;
             }
             else
                 throw new ValidationException(operationDetails.Message, operationDetails.Property);

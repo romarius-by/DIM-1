@@ -37,6 +37,7 @@ namespace HIMS.EF.DAL.Data.Repositories
             if (entity != null)
             {
                 _dimsDbContext.UserProfiles.Remove(entity);
+                _dimsDbContext.SaveChanges();
             }
         }
 

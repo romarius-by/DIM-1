@@ -41,33 +41,6 @@ namespace HIMS.Server.Controllers
 
         public ActionResult Index()
         {
-            /*IEnumerable<UserProfileDTO> userProfileDTOs = _userProfileService.GetItems();
-            IEnumerable<vUserProfileDTO> vUserProfileDTOs = _vUserProfileService.GetItems();
-            var userProfiles = new UserProfilesListViewModel
-            {
-                UserProfiles = Mapper.Map<IEnumerable<UserProfileDTO>, List<UserProfileViewModel>>(userProfileDTOs)
-            };
-
-            var vuserProfiles = new vUserProfilesListViewModel
-            {
-                vUserProfiles = Mapper.Map<IEnumerable<vUserProfileDTO>, List<vUserProfileViewModel>>(vUserProfileDTOs)
-            };
-
-            var directions = _directionService.GetItems();
-
-            UserProfilesPageViewModel.UserProfilesListViewModel = new UserProfilesListViewModel
-            { 
-                UserProfiles = Mapper.Map<IEnumerable<UserProfileDTO>, List<UserProfileViewModel>>(userProfileDTOs) 
-            };
-            
-            UserProfilesPageViewModel.vUserProfilesListViewModel = new vUserProfilesListViewModel 
-            { 
-                vUserProfiles = Mapper.Map<IEnumerable<vUserProfileDTO>, List<vUserProfileViewModel>>(vUserProfileDTOs) 
-            };
-
-            UserProfilesPageViewModel.DirectionViewModels = Mapper.Map<IEnumerable<DirectionDTO>, List<DirectionViewModel>>(directions);
-*/
-
             var userProfileDtos = _vUserProfileService.GetItems();
 
             var userProfileListViewModel = Mapper.Map<IEnumerable<vUserProfileDTO>, IEnumerable<vUserProfileViewModel>>(userProfileDtos);

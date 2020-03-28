@@ -245,6 +245,10 @@
       <Project>{CAC997AA-EBE6-4E9F-B4FD-C3CBBD6DA146}</Project>
       <Name>DIMS.DAL.Data</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Email\Email.csproj">
+      <Project>{D7BCA7EA-5647-4B7F-9575-38181DBA2207}</Project>
+      <Name>Email</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

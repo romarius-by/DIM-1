@@ -100,5 +100,24 @@ namespace HIMS.BL.Services
                 return new OperationDetails(false, "The user with such Email not found! Email: ", email);
             }
         }
+
+        public async Task<string> GenerateToken(UserDTO userDTO)
+        {
+            var user = await FindByEmail(userDTO.Email);
+
+            var token = await database.UserSecurityManager.GenerateEmailConfirmationTokenAsync(user.Id).ConfigureAwait(false);
+
+            return token;
+        }
+
+        public async Task<ApplicationUser> FindByEmail(string email) =>
+            await database.UserSecurityManager.FindByEmailAsync(email).ConfigureAwait(false);
+
+        public async Task<ApplicationUser> FindById(string id) =>
+            await database.UserSecurityManager.FindByIdAsync(id).ConfigureAwait(false);
+
+        public async Task<ApplicationUser> FindByName(string id) =>
+            await database.UserSecurityManager.FindByNameAsync(id).ConfigureAwait(false);
+
     }
 }

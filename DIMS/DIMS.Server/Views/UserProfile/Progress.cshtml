@@ -1,4 +1,4 @@
-﻿@model HIMS.Server.Models.Users.UserProfilePageViewModel
+﻿@model HIMS.Server.Models.Users.vUserProgressesListViewModel
 
 @{
     ViewBag.Title = "User Progress Page";
@@ -7,7 +7,7 @@
     <div class="modal-content">
         <div class="modal-header">
             <h2>
-                @Html.DisplayFor(model => model.vUserProgressesListViewModel.vUserProfile.FullName)'s progress:
+                @Html.DisplayFor(model => model.vUserProfile.FullName)'s progress:
             </h2>
         </div>
 
@@ -30,7 +30,7 @@
                         </th>
 
 
-                        @foreach (var item in Model.vUserProgressesListViewModel.vUserProgresses)
+                        @foreach (var item in Model.vUserProgresses)
                         {
                         <tr>
                             <td>

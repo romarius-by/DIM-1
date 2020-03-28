@@ -14,16 +14,16 @@ namespace HIMS.BL.Services
     public class vTaskService : IvTaskService
     {
 
-        private IUnitOfWork Database;
+        private IUnitOfWork database;
 
         public vTaskService(IUnitOfWork uow)
         {
-            Database = uow;
+            database = uow;
         }
 
         public void Dispose()
         {
-            Database.Dispose();
+            database.Dispose();
         }
 
         public vTaskDTO GetItem(int? id)
@@ -31,7 +31,7 @@ namespace HIMS.BL.Services
             if (!id.HasValue)
                 throw new ValidationException("The vTask id value is not set", String.Empty);
 
-            var _vTask = Database.vTasks.Get(id.Value);
+            var _vTask = database.vTasks.Get(id.Value);
 
             if (_vTask == null)
                 throw new ValidationException($"The vTask with id = {id.Value} was not found", String.Empty);
@@ -42,7 +42,7 @@ namespace HIMS.BL.Services
         public IEnumerable<vTaskDTO> GetItems()
         {
             return Mapper.Map<List<vTask>, ICollection<vTaskDTO>>(
-                Database.vTasks.GetAll().ToList());
+                database.vTasks.GetAll().ToList());
         }
     }
 }

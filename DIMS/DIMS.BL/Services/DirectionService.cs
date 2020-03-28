@@ -14,11 +14,11 @@ namespace HIMS.BL.Services
     public class DirectionService : IDirectionService
     {
 
-        private IUnitOfWork DimsDatabase { get; }
+        private IUnitOfWork dimsDatabase { get; }
         
         public DirectionService(IUnitOfWork unitOfWork)
         {
-            DimsDatabase = unitOfWork;
+            dimsDatabase = unitOfWork;
         }
 
         public void DeleteItem(int? id)
@@ -26,13 +26,13 @@ namespace HIMS.BL.Services
             if (!id.HasValue)
                 throw new ValidationException("The Direction's id value is not set", String.Empty);
 
-            DimsDatabase.Directions.Delete(id.Value);
-            DimsDatabase.Save();
+            dimsDatabase.Directions.Delete(id.Value);
+            dimsDatabase.Save();
         }
 
         public void Dispose()
         {
-            DimsDatabase.Dispose();
+            dimsDatabase.Dispose();
         }
 
         public DirectionDTO GetItem(int? id)
@@ -40,7 +40,7 @@ namespace HIMS.BL.Services
             if (!id.HasValue)
                 throw new ValidationException("The Direction's id value is not set", String.Empty);
 
-            var direction = DimsDatabase.Directions.Get(id.Value);
+            var direction = dimsDatabase.Directions.Get(id.Value);
 
             if (direction == null)
                 throw new ValidationException($"The Direction with id = ${id.Value} was not found", String.Empty);
@@ -50,7 +50,7 @@ namespace HIMS.BL.Services
 
         public IEnumerable<DirectionDTO> GetItems()
         {
-            return Mapper.Map<IEnumerable<Direction>, List<DirectionDTO>>(DimsDatabase.Directions.GetAll());
+            return Mapper.Map<IEnumerable<Direction>, List<DirectionDTO>>(dimsDatabase.Directions.GetAll());
         }
 
         public void SaveItem(DirectionDTO direction)
@@ -62,21 +62,21 @@ namespace HIMS.BL.Services
                 UserProfiles = Mapper.Map<List<UserProfileDTO>, ICollection <UserProfile>>(direction.UserProfiles.ToList())
             };
 
-            DimsDatabase.Directions.Create(_direction);
+            dimsDatabase.Directions.Create(_direction);
 
-            DimsDatabase.Save();
+            dimsDatabase.Save();
 
         }
 
         public void UpdateItem(DirectionDTO direction)
         {
-            var _direction = DimsDatabase.Directions.Get(direction.DirectionId);
+            var _direction = dimsDatabase.Directions.Get(direction.DirectionId);
 
             if (_direction != null)
             {
                 Mapper.Map(direction, _direction);
 
-                DimsDatabase.Save();
+                dimsDatabase.Save();
             }
 
 

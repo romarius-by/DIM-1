@@ -14,11 +14,11 @@ namespace HIMS.BL.Services
     public class TaskService : ITaskService
     {
 
-        private IUnitOfWork Database { get; }
+        private IUnitOfWork database { get; }
 
         public TaskService (IUnitOfWork uow)
         {
-            Database = uow;
+            database = uow;
         }
 
 
@@ -27,14 +27,14 @@ namespace HIMS.BL.Services
             if (!id.HasValue)
                 throw new ValidationException("The Task id value is not set", String.Empty);
 
-            Database.Directions.Delete(id.Value);
+            database.Directions.Delete(id.Value);
 
-            Database.Save();
+            database.Save();
         }
 
         public void Dispose()
         {
-            Database.Dispose();
+            database.Dispose();
         }
 
         public TaskDTO GetItem(int? id)
@@ -42,7 +42,7 @@ namespace HIMS.BL.Services
             if (!id.HasValue)
                 throw new ValidationException("The Task id value is not set", String.Empty);
 
-            var task = Database.Tasks.Get(id.Value);
+            var task = database.Tasks.Get(id.Value);
 
             if (task == null)
                 throw new ValidationException($"The task with id = {id.Value} was not found", String.Empty);
@@ -52,7 +52,7 @@ namespace HIMS.BL.Services
 
         public IEnumerable<TaskDTO> GetItems()
         {
-            return Mapper.Map<IEnumerable<EF.DAL.Data.Task>, ICollection<TaskDTO>>(Database.Tasks.GetAll());
+            return Mapper.Map<IEnumerable<EF.DAL.Data.Task>, ICollection<TaskDTO>>(database.Tasks.GetAll());
 
         }
 
@@ -61,7 +61,7 @@ namespace HIMS.BL.Services
             if (!id.HasValue)
                 throw new ValidationException("The task id value is not set", String.Empty);
 
-            return Mapper.Map<IEnumerable<UserTask>, ICollection<UserTaskDTO>>(Database.Tasks.
+            return Mapper.Map<IEnumerable<UserTask>, ICollection<UserTaskDTO>>(database.Tasks.
                 Get(id.Value).UserTasks);
         }
 
@@ -76,20 +76,20 @@ namespace HIMS.BL.Services
                 UserTasks = Mapper.Map<List<UserTaskDTO>, ICollection<UserTask>>(task.UserTasks.ToList())
             };
 
-            Database.Tasks.Create(_task);
-            Database.Save();
+            database.Tasks.Create(_task);
+            database.Save();
             
         }
 
         public void UpdateItem(TaskDTO taskDTO)
         {
-            var task = Database.Tasks.Get(taskDTO.TaskId);
+            var task = database.Tasks.Get(taskDTO.TaskId);
 
             if (task != null)
             {
                 Mapper.Map(taskDTO, task);
 
-                Database.Save();
+                database.Save();
 
             }
         }

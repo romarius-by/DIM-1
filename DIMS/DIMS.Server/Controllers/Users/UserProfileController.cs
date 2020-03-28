@@ -23,7 +23,10 @@ namespace HIMS.Server.Controllers
         private readonly IvUserProgressService _vUserProgressService;
 
         private UserProfilePageViewModel UserProfilesPageViewModel;
-        public UserProfileController(IUserProfileService userProfileService, IvUserProfileService vuserProfileService, IDirectionService directionService, IvUserProgressService vUserProgressService)
+        public UserProfileController(IUserProfileService userProfileService, 
+            IvUserProfileService vuserProfileService, 
+            IDirectionService directionService, 
+            IvUserProgressService vUserProgressService)
         {
             _userProfileService = userProfileService;
             _vUserProfileService = vuserProfileService;
@@ -31,21 +34,14 @@ namespace HIMS.Server.Controllers
             _vUserProgressService = vUserProgressService;
 
             UserProfilesPageViewModel = new UserProfilePageViewModel();
-           /* UserProfilesPageViewModel = new UserProfilePageViewModel
-            {
-                UserProfileViewModel = new UserProfileViewModel(),
-                UserProfilesListViewModel = new UserProfilesListViewModel(),
-                vUserProfilesListViewModel = new vUserProfilesListViewModel(),
-                vUserProfileViewModel = new vUserProfileViewModel(),
-                vUserProgressesListViewModel = new vUserProgressesListViewModel()
-            };*/
+           
         }
 
 
 
         public ActionResult Index()
         {
-            IEnumerable<UserProfileDTO> userProfileDTOs = _userProfileService.GetItems();
+            /*IEnumerable<UserProfileDTO> userProfileDTOs = _userProfileService.GetItems();
             IEnumerable<vUserProfileDTO> vUserProfileDTOs = _vUserProfileService.GetItems();
             var userProfiles = new UserProfilesListViewModel
             {
@@ -60,25 +56,34 @@ namespace HIMS.Server.Controllers
             var directions = _directionService.GetItems();
 
             UserProfilesPageViewModel.UserProfilesListViewModel = new UserProfilesListViewModel
-            { UserProfiles = Mapper.Map<IEnumerable<UserProfileDTO>, List<UserProfileViewModel>>(userProfileDTOs) };
+            { 
+                UserProfiles = Mapper.Map<IEnumerable<UserProfileDTO>, List<UserProfileViewModel>>(userProfileDTOs) 
+            };
+            
             UserProfilesPageViewModel.vUserProfilesListViewModel = new vUserProfilesListViewModel 
-            { vUserProfiles = Mapper.Map<IEnumerable<vUserProfileDTO>, List<vUserProfileViewModel>>(vUserProfileDTOs) };
+            { 
+                vUserProfiles = Mapper.Map<IEnumerable<vUserProfileDTO>, List<vUserProfileViewModel>>(vUserProfileDTOs) 
+            };
+
             UserProfilesPageViewModel.DirectionViewModels = Mapper.Map<IEnumerable<DirectionDTO>, List<DirectionViewModel>>(directions);
+*/
 
+            var userProfileDtos = _vUserProfileService.GetItems();
 
-            return View(UserProfilesPageViewModel);
+            var userProfileListViewModel = Mapper.Map<IEnumerable<vUserProfileDTO>, IEnumerable<vUserProfileViewModel>>(userProfileDtos);
+
+            return View(userProfileListViewModel);
         }
 
-        public ActionResult Create(UserProfileViewModel userProfileViewModel)
+        public ActionResult Create()
         {
-            UserProfilesPageViewModel.DirectionViewModels = Mapper.Map<IEnumerable<DirectionDTO>, List<DirectionViewModel>>
-                (_directionService.GetItems());
-            return PartialView(UserProfilesPageViewModel);
+            ViewBag.DirectionId = GetDirections();
+            return PartialView();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Name, LastName, Email, MobilePhone, DirectionId, Education, UniversityAverageScore, MathScore, BirthDate, Address, Skype, StartDate, Sex")]UserProfileViewModel userProfileViewModel, int id)
+        public ActionResult Create([Bind(Include = "Name, LastName, Email, MobilePhone, DirectionId, Education, UniversityAverageScore, MathScore, BirthDate, Address, Skype, StartDate, Sex")]UserProfileViewModel userProfileViewModel)
         {
             try
             {
@@ -113,13 +118,11 @@ namespace HIMS.Server.Controllers
             if (userProfileDto == null)
                 return HttpNotFound();
 
-            UserProfilesPageViewModel.UserProfileViewModel =
+            var UserProfileViewModel =
                Mapper.Map<UserProfileDTO, UserProfileViewModel>(userProfileDto);
-            UserProfilesPageViewModel.DirectionViewModels =
-                Mapper.Map<IEnumerable<DirectionDTO>, List<DirectionViewModel>>
-                (_directionService.GetItems());
+            ViewBag.DirectionId = GetDirections();
             
-            return PartialView(UserProfilesPageViewModel);
+            return PartialView(UserProfileViewModel);
         }
 
 
@@ -146,9 +149,9 @@ namespace HIMS.Server.Controllers
             }
             
 
-            UserProfilesPageViewModel.UserProfileViewModel = Mapper.Map<UserProfileDTO, UserProfileViewModel>(userProfileDto);
+            var UserProfileViewModel = Mapper.Map<UserProfileDTO, UserProfileViewModel>(userProfileDto);
 
-            return PartialView(UserProfilesPageViewModel);
+            return PartialView(UserProfileViewModel);
         }
 
         public ActionResult Details(int? id)
@@ -171,14 +174,16 @@ namespace HIMS.Server.Controllers
             if (!id.HasValue)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
-            UserProfilesPageViewModel.vUserProgressesListViewModel = new vUserProgressesListViewModel(
-                Mapper.Map<vUserProfileDTO, vUserProfileViewModel>(
-                    _vUserProfileService.GetItem(id.Value)),
-                Mapper.Map<IEnumerable<vUserProgressDTO>, IEnumerable<vUserProgressViewModel>>(
-                _vUserProgressService.GetVUserProgressesByUserId(id.Value))
+            var userProgressDto = _vUserProgressService.GetVUserProgressesByUserId(id.Value);
+
+            var user = _vUserProfileService.GetItem(id.Value);
+
+            var vUserProgressesListViewModel = new vUserProgressesListViewModel(
+                Mapper.Map<vUserProfileDTO, vUserProfileViewModel>(user),
+                Mapper.Map<IEnumerable<vUserProgressDTO>, IEnumerable<vUserProgressViewModel>>(userProgressDto)
                 );
 
-            return PartialView(UserProfilesPageViewModel);
+            return PartialView(vUserProgressesListViewModel);
         }
 
 
@@ -220,6 +225,7 @@ namespace HIMS.Server.Controllers
             if (email == null)
                 return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
 
+            var userProfile = _vUserProfileService.GetVUserProfileByEmail(email);
 
             var vuserProfileDto = Mapper.Map<vUserProfileDTO, vUserProfileViewModel>(_vUserProfileService.GetVUserProfileByEmail(email));
 
@@ -244,5 +250,20 @@ namespace HIMS.Server.Controllers
 
             return RedirectToAction("Index");
         }
+
+        private List<SelectListItem> GetDirections()
+        {
+            var directions = Mapper.Map<IEnumerable<DirectionDTO>, List<DirectionViewModel>>(_directionService.GetItems());
+            List<SelectListItem> selectItems = new List<SelectListItem>();
+
+            foreach (var item in directions)
+            {
+                selectItems.Add(new SelectListItem { Text = item.Name, Value = item.DirectionId.ToString() });
+            }
+
+            return selectItems;
+        }
+
     }
+
 }

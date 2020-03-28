@@ -14,16 +14,16 @@ namespace HIMS.BL.Services
     public class vUserProfileService : IvUserProfileService
     {
 
-        private IUnitOfWork Database;
+        private IUnitOfWork database;
 
         public vUserProfileService(IUnitOfWork uow)
         {
-            Database = uow;
+            database = uow;
         }
 
         public void Dispose()
         {
-            Database.Dispose();
+            database.Dispose();
         }
 
         public vUserProfileDTO GetItem(int? id)
@@ -31,7 +31,7 @@ namespace HIMS.BL.Services
             if (!id.HasValue)
                 throw new ValidationException("The view user profile id value is not set", String.Empty);
 
-            var vUserProfile = Database.vUserProfiles.Get(id.Value);
+            var vUserProfile = database.vUserProfiles.Get(id.Value);
 
             if (vUserProfile == null)
                 throw new ValidationException($"The view user profile with id = {id.Value} was not found", String.Empty);
@@ -44,7 +44,7 @@ namespace HIMS.BL.Services
             if (email == null)
                 throw new ValidationException("The view user profile email is not set", String.Empty);
 
-            var vUserProfile = Database.vUserProfiles.GetByEmail(email);
+            var vUserProfile = database.vUserProfiles.GetByEmail(email);
 
             if (vUserProfile == null)
                 throw new ValidationException($"The view user profile with email = {email} was not found", String.Empty);
@@ -55,7 +55,13 @@ namespace HIMS.BL.Services
         public IEnumerable<vUserProfileDTO> GetItems()
         {
             return Mapper.Map<List<vUserProfile>, ICollection<vUserProfileDTO>>(
-                Database.vUserProfiles.GetAll().ToList());
+                database.vUserProfiles.GetAll().ToList());
         }
+
+        /*public async Task<OperationDetails> GetVUserProfileByEmailAsync(string email)
+        {
+            var vUserProfile = database.vUserProfiles.GetByEmail(email);
+            return Mapper.Map<vUserProfile, vUserProfileDTO>(vUserProfile);
+        }*/
     }
 }

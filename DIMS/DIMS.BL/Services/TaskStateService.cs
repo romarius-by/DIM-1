@@ -13,11 +13,11 @@ namespace HIMS.BL.Services
 {
     public class TaskStateService : ITaskStateService
     {
-        private IUnitOfWork Database { get; }
+        private IUnitOfWork database { get; }
 
         public TaskStateService (IUnitOfWork uow)
         {
-            Database = uow;
+            database = uow;
         }
 
         public void DeleteItem(int? id)
@@ -25,9 +25,9 @@ namespace HIMS.BL.Services
             if (!id.HasValue)
                 throw new ValidationException("The task state id value is not set", String.Empty);
 
-            Database.TaskStates.Delete(id.Value);
+            database.TaskStates.Delete(id.Value);
 
-            Database.Save();
+            database.Save();
             
         }
 
@@ -36,7 +36,7 @@ namespace HIMS.BL.Services
             if (!id.HasValue)
                 throw new ValidationException("The task state id value is not set", String.Empty);
 
-            var task = Database.TaskStates.Get(id.Value);
+            var task = database.TaskStates.Get(id.Value);
 
             if (task == null)
                 throw new ValidationException($"The task state with id = {id.Value} was not found", String.Empty);
@@ -51,7 +51,7 @@ namespace HIMS.BL.Services
                 throw new ValidationException("The task state id value is not set", String.Empty);
 
             return Mapper.Map<List<UserTask>, ICollection<UserTaskDTO>>(
-                Database.TaskStates.Get(id.Value).UserTasks.ToList());
+                database.TaskStates.Get(id.Value).UserTasks.ToList());
 
         }
 
@@ -63,31 +63,31 @@ namespace HIMS.BL.Services
                 UserTasks = Mapper.Map<List<UserTask>>(taskStateDTO.UserTasks)
             };
 
-            Database.TaskStates.Create(taskState);
-            Database.Save();
+            database.TaskStates.Create(taskState);
+            database.Save();
         }
 
         public void UpdateItem(TaskStateDTO taskStateDTO)
         {
-            var taskState = Database.TaskStates.Get(taskStateDTO.StateId);
+            var taskState = database.TaskStates.Get(taskStateDTO.StateId);
 
             if (taskState != null)
             {
                 Mapper.Map(taskStateDTO, taskState);
 
-                Database.Save();
+                database.Save();
             }
         }
 
         public void Dispose()
         {
-            Database.Dispose();
+            database.Dispose();
         }
 
         public IEnumerable<TaskStateDTO> GetItems()
         {
             return Mapper.Map<IEnumerable<TaskState>, IEnumerable<TaskStateDTO>>(
-                Database.TaskStates.GetAll());
+                database.TaskStates.GetAll());
         }
     }
 }

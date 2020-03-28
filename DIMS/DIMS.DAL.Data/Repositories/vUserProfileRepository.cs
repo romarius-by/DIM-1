@@ -29,7 +29,7 @@ namespace HIMS.EF.DAL.Data.Repositories
 
         public vUserProfile GetByEmail(string email)
         {
-            return _dIMSDBContext.vUserProfiles.Where(x => x.Email == email).FirstOrDefault();
+            return _dIMSDBContext.vUserProfiles.Where(userProfile => userProfile.Email == email).FirstOrDefault();
         }
 
         public IEnumerable<vUserProfile> GetAll()

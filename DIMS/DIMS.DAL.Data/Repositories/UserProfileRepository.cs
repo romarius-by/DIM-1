@@ -32,7 +32,7 @@ namespace HIMS.EF.DAL.Data.Repositories
 
         public void DeleteByEmail(string email)
         {
-            var entity = _dimsDbContext.UserProfiles.Where(x => x.Email == email).FirstOrDefault();
+            var entity = _dimsDbContext.UserProfiles.Where(userProfile => userProfile.Email == email).FirstOrDefault();
 
             if (entity != null)
             {

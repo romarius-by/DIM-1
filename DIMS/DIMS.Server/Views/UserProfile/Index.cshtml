@@ -1,4 +1,4 @@
-﻿@model HIMS.Server.Models.Users.UserProfilePageViewModel
+﻿@model IEnumerable<HIMS.Server.Models.Users.vUserProfileViewModel>
 
 @{
     ViewBag.Title = "User Profile Page";
@@ -8,7 +8,7 @@
 
 
 <p>
-    @Html.ActionLink("Register", "Create", new { userProfileViewModel = Model.UserProfileViewModel, id = 1 }, new { @class = "btn btn-success create-user" })
+    @Html.ActionLink("Register", "Create", null, new { @class = "btn btn-success create-user" })
 </p>
 
 <table class="table table-striped">
@@ -33,7 +33,7 @@
             <th></th>
 
 
-            @foreach(var item in Model.vUserProfilesListViewModel.vUserProfiles)
+            @foreach(var item in Model)
             {
         <tr>
             <td>
@@ -57,7 +57,7 @@
             <td>
                 <div class="btn-group-vertical">
                     @Html.ActionLink("Progress", "Progress", new { id = item.UserId }, new { @class = "btn btn-default progress-user" })
-                    @Html.ActionLink("Edit", "Edit", new { id = item.UserId, userProfileViewModel = Model.UserProfileViewModel }, new { @class = "btn btn-success edit-user" })
+                    @Html.ActionLink("Edit", "Edit", new { id = item.UserId }, new { @class = "btn btn-success edit-user" })
                 </div>
 
                 <div class="btn-group-vertical">

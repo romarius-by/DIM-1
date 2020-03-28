@@ -14,16 +14,16 @@ namespace HIMS.BL.Services
     public class vUserTrackService : IvUserTrackService
     {
 
-        private IUnitOfWork Database;
+        private IUnitOfWork database;
 
         public vUserTrackService(IUnitOfWork uow)
         {
-            Database = uow; 
+            database = uow; 
         }
 
         public void Dispose()
         {
-            Database.Dispose();
+            database.Dispose();
         }
 
         public vUserTrackDTO GetItem(int? id)
@@ -31,7 +31,7 @@ namespace HIMS.BL.Services
             if (!id.HasValue)
                 throw new ValidationException("The view user track id value is not set", String.Empty);
 
-            var _vUserTrack = Database.vUserTracks.Get(id.Value);
+            var _vUserTrack = database.vUserTracks.Get(id.Value);
 
             if (_vUserTrack == null)
                 throw new ValidationException($"The view user track with id = {id.Value} was not found", String.Empty);
@@ -42,7 +42,7 @@ namespace HIMS.BL.Services
         public IEnumerable<vUserTrackDTO> GetItems()
         {
             return Mapper.Map<List<vUserTrack>, ICollection<vUserTrackDTO>>(
-                Database.vUserTracks.GetAll().ToList());
+                database.vUserTracks.GetAll().ToList());
         }
     }
 }

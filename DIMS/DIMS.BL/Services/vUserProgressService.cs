@@ -51,7 +51,14 @@ namespace HIMS.BL.Services
             if (!id.HasValue)
                 throw new ValidationException("The view user progress id value is not set", String.Empty);
 
-            return Mapper.Map<IEnumerable<vUserProgress>, List<vUserProgressDTO>>(database.vUserProgresses.Find(m => m.UserId == id.Value));
+            var userProgress = database.vUserProgresses.Find(m => m.UserId == id.Value);
+
+            if (userProgress == null)
+            {
+                throw new ValidationException($"The user with id = {id.Value} was not found", String.Empty);
+            }
+
+            return Mapper.Map<IEnumerable<vUserProgress>, List<vUserProgressDTO>>(userProgress);
         }
     }
 }

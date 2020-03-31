@@ -11,6 +11,6 @@ namespace HIMS.BL.Interfaces
     public interface IUserProfileService : IService<UserProfileDTO>
     {
         /*void DeleteUserProfileByEmail(string email);*/
-        Task<OperationDetails> DeleteUserProfileByEmail(string email);
+        Task<OperationDetails> DeleteUserProfileByEmailAsync(string email);
     }
 }

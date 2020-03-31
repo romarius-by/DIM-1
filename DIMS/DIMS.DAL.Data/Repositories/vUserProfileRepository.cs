@@ -32,6 +32,11 @@ namespace HIMS.EF.DAL.Data.Repositories
             return _dIMSDBContext.vUserProfiles.Where(userProfile => userProfile.Email == email).FirstOrDefault();
         }
 
+        public Task<vUserProfile> GetByEmailAsync (string email)
+        {
+            throw new NotImplementedException();
+        }
+
         public IEnumerable<vUserProfile> GetAll()
         {
             return _dIMSDBContext.vUserProfiles;

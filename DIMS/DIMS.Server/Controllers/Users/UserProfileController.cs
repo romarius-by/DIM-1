@@ -200,10 +200,10 @@ namespace HIMS.Server.Controllers
 
             var userProfile = _vUserProfileService.GetVUserProfileByEmail(email);
 
-            var vuserProfileDto = Mapper.Map<vUserProfileDTO, vUserProfileViewModel>(_vUserProfileService.GetVUserProfileByEmail(email));
-
-            if (vuserProfileDto == null)
+            if (userProfile == null)
                 return HttpNotFound();
+
+            var vuserProfileDto = Mapper.Map<vUserProfileDTO, vUserProfileViewModel>(userProfile);
 
             return PartialView(vuserProfileDto);
         }
@@ -214,7 +214,7 @@ namespace HIMS.Server.Controllers
         {
             try
             {
-                var operationDetails = await _userProfileService.DeleteUserProfileByEmail(email);
+                var operationDetails = await _userProfileService.DeleteUserProfileByEmailAsync(email);
             }
             catch (RetryLimitExceededException)
             {

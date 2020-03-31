@@ -41,7 +41,7 @@ namespace HIMS.BL.Services
             dimsDatabase.Save();
         }
 
-        public async Task<OperationDetails> DeleteUserProfileByEmail(string email)
+        public async Task<OperationDetails> DeleteUserProfileByEmailAsync(string email)
         {
             if (email == null)
                 throw new ValidationException("The User Profile's email is not set", String.Empty);

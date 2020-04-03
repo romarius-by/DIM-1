@@ -8,6 +8,6 @@ namespace HIMS.EF.DAL.Data.Interfaces
 {
     public interface IvUserProfileRepository : IViewRepository<vUserProfile>
     {
-        vUserProfile GetByEmail(string email);
+        Task<vUserProfile> GetByEmailAsync(string email);
     }
 }

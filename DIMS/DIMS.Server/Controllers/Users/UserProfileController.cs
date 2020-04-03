@@ -15,6 +15,8 @@ using System.Web.Mvc;
 
 namespace HIMS.Server.Controllers
 {
+    [Authorize]
+    [RoutePrefix("users")]
     public class UserProfileController : Controller
     {
         private readonly IUserProfileService _userProfileService;
@@ -38,7 +40,8 @@ namespace HIMS.Server.Controllers
         }
 
 
-
+        [HttpGet]
+        [Route("profiles")]
         public ActionResult Index()
         {
             var userProfileDtos = _vUserProfileService.GetItems();
@@ -48,6 +51,8 @@ namespace HIMS.Server.Controllers
             return View(userProfileListViewModel);
         }
 
+        [HttpGet]
+        [Route("create")]
         public ActionResult Create()
         {
             ViewBag.DirectionId = GetDirections();
@@ -55,6 +60,7 @@ namespace HIMS.Server.Controllers
         }
 
         [HttpPost]
+        [Route("create")]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Name, LastName, Email, MobilePhone, DirectionId, Education, UniversityAverageScore, MathScore, BirthDate, Address, Skype, StartDate, Sex")]UserProfileViewModel userProfileViewModel)
         {
@@ -81,6 +87,8 @@ namespace HIMS.Server.Controllers
             return View(UserProfilesPageViewModel);
         }
 
+        [HttpGet]
+        [Route("edit/{id?}")]
         public ActionResult Edit(UserProfileViewModel userProfileViewModel, int? id)
         {
             if (!id.HasValue)
@@ -100,6 +108,7 @@ namespace HIMS.Server.Controllers
 
 
         [HttpPost, ActionName("Edit")]
+        [Route("edit/{id?}")]
         [ValidateAntiForgeryToken]
         public ActionResult EditProfile(UserProfileViewModel userProfileViewModel, int? id)
         {
@@ -127,6 +136,8 @@ namespace HIMS.Server.Controllers
             return PartialView(UserProfileViewModel);
         }
 
+        [HttpGet]
+        [Route("profile/{id?}")]
         public ActionResult Details(int? id)
         {
             if (!id.HasValue)
@@ -142,6 +153,8 @@ namespace HIMS.Server.Controllers
             return PartialView(vuserProfile);
         }
 
+        [HttpGet]
+        [Route("profile/progress/{id?}")]
         public ActionResult Progress(int? id)
         {
             if (!id.HasValue)
@@ -193,12 +206,14 @@ namespace HIMS.Server.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult DeleteByEmail(string email)
+        [HttpGet]
+        [Route("delete/{email?}")]
+        public async Task<ActionResult> DeleteByEmail(string email)
         {
             if (email == null)
                 return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
 
-            var userProfile = _vUserProfileService.GetVUserProfileByEmail(email);
+            var userProfile = await _vUserProfileService.GetVUserProfileByEmailAsync(email);
 
             if (userProfile == null)
                 return HttpNotFound();
@@ -208,7 +223,8 @@ namespace HIMS.Server.Controllers
             return PartialView(vuserProfileDto);
         }
 
-        [HttpPost]
+        [HttpDelete]
+        [Route("delete/{email?}")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteByEmail(string email, int id)
         {
@@ -224,6 +240,7 @@ namespace HIMS.Server.Controllers
             return RedirectToAction("Index");
         }
 
+        [NonAction]
         private List<SelectListItem> GetDirections()
         {
             var directions = Mapper.Map<IEnumerable<DirectionDTO>, List<DirectionViewModel>>(_directionService.GetItems());

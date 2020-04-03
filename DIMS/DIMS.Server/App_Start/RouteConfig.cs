@@ -14,16 +14,19 @@ namespace HIMS.Server
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
+                name: "UserProfile",
+                url: "users/{action}/",
+                defaults: new { controller = "UserProfile", action = "Index", id = UrlParameter.Optional }
+                );
+
+            routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
 
-            routes.MapRoute(
-                name: "UserProfile",
-                url: "{controller}/{action}/{id}",
-                defaults: new { controller = "UserProfile", action = "Index", id = UrlParameter.Optional }
-                );
+
+
         }
     }
 }

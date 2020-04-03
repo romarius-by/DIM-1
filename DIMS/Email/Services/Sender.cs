@@ -28,7 +28,7 @@ namespace HIMS.Email.Services
         }
         public async Task MessageToUserAsync(UserDTO user, string subject, string html)
         {
-            var to = new EmailAddress(user.Email, $"{user.Name}");
+            var to = new EmailAddress("vladislav.rossohin@gmail.com", $"{user.Name}");
 
             var htmlContent = "<div>" + html + _layoutHtml + "</div>";
 

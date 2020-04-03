@@ -39,12 +39,12 @@ namespace HIMS.BL.Services
             return Mapper.Map<vUserProfile, vUserProfileDTO>(vUserProfile);
         }
 
-        public vUserProfileDTO GetVUserProfileByEmail(string email)
+        public async Task<vUserProfileDTO> GetVUserProfileByEmailAsync(string email)
         {
             if (email == null)
                 throw new ValidationException("The view user profile email is not set", String.Empty);
 
-            var vUserProfile = database.vUserProfiles.GetByEmail(email);
+            var vUserProfile = await database.vUserProfiles.GetByEmailAsync(email);
 
             if (vUserProfile == null)
                 throw new ValidationException($"The view user profile with email = {email} was not found", String.Empty);
@@ -58,10 +58,5 @@ namespace HIMS.BL.Services
                 database.vUserProfiles.GetAll().ToList());
         }
 
-        /*public async Task<OperationDetails> GetVUserProfileByEmailAsync(string email)
-        {
-            var vUserProfile = database.vUserProfiles.GetByEmail(email);
-            return Mapper.Map<vUserProfile, vUserProfileDTO>(vUserProfile);
-        }*/
     }
 }

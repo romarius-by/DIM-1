@@ -27,16 +27,16 @@ namespace HIMS.EF.DAL.Data.Repositories
             return _dIMSDBContext.vUserProfiles.Find(id);
         }
 
-        public vUserProfile GetByEmail(string email)
+        public async Task<vUserProfile> GetByEmailAsync(string email)
         {
-            return _dIMSDBContext.vUserProfiles.Where(userProfile => userProfile.Email == email).FirstOrDefault();
+
+            return await System.Threading.Tasks.Task.Run(() => 
+            {
+                return _dIMSDBContext.vUserProfiles.Where(user => user.Email == email).FirstOrDefault();
+            });
         }
 
-        public Task<vUserProfile> GetByEmailAsync (string email)
-        {
-            throw new NotImplementedException();
-        }
-
+        
         public IEnumerable<vUserProfile> GetAll()
         {
             return _dIMSDBContext.vUserProfiles;

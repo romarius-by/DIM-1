@@ -20,9 +20,10 @@ namespace HIMS.Server.Controllers
         private readonly ISender _sender;
 
 
-        public AccountController(IUserService userService)
+        public AccountController(IUserService userService, ISender sender)
         {
             _userService = userService;
+            _sender = sender;
         }
 
         private IAuthenticationManager AuthenticationManager => HttpContext.GetOwinContext().Authentication;
@@ -71,7 +72,7 @@ namespace HIMS.Server.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "admin")]
+        //[Authorize(Roles = "admin")]
         public async Task<ActionResult> Register(RegisterViewModel viewModel)
         {
             //await SetInitialDataAsync().ConfigureAwait(false);
@@ -109,7 +110,7 @@ namespace HIMS.Server.Controllers
             var callbackUrl = Url.Action(
                             "ConfirmEmail",
                             "Account",
-                            new { Username = user.Email, Token = token },
+                            new { Username = "vladislav.rossohin@gmail.com", Token = token },
                             protocol: Request.Url.Scheme);
 
             await _sender.MessageToUserAsync(user, "Account confirmation",

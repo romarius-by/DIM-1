@@ -10,8 +10,7 @@ namespace HIMS.BL.Interfaces
 {
     public interface IvUserProfileService : IvService<vUserProfileDTO>
     {
-        vUserProfileDTO GetVUserProfileByEmail(string email);
-        //Task<OperationDetails> GetVUserProfileByEmailAsync(string email);
+        Task<vUserProfileDTO> GetVUserProfileByEmailAsync(string email);
        
     }
 }

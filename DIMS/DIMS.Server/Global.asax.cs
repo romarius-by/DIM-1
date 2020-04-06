@@ -46,7 +46,7 @@ namespace HIMS.Server
 
             var kernel = new StandardKernel(dependencesModule, serviceModule);
 
-            kernel.Bind<DefaultModelValidatorPdinroviders>().ToConstant(new DefaultModelValidatorProviders(GlobalConfiguration.Configuration.Services.GetModelValidatorProviders()));
+            kernel.Bind<DefaultModelValidatorProviders>().ToConstant(new DefaultModelValidatorProviders(GlobalConfiguration.Configuration.Services.GetModelValidatorProviders()));
 
             var ninjectResolver = new utils.NinjectDependencyResolver(kernel);
 

@@ -4,6 +4,7 @@ using HIMS.Server.utils;
 using Ninject;
 using Ninject.Modules;
 using Ninject.Web.Mvc;
+using Ninject.Web.WebApi.Filter;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -44,6 +45,8 @@ namespace HIMS.Server
             NinjectModule serviceModule = new ServicesModule("DIMSDBConnection", "HimsIdentityConnection");
 
             var kernel = new StandardKernel(dependencesModule, serviceModule);
+
+            kernel.Bind<DefaultModelValidatorPdinroviders>().ToConstant(new DefaultModelValidatorProviders(GlobalConfiguration.Configuration.Services.GetModelValidatorProviders()));
 
             var ninjectResolver = new utils.NinjectDependencyResolver(kernel);
 

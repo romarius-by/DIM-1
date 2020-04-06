@@ -57,5 +57,27 @@ namespace HIMS.Server.ControllersApi
 
         }
 
+        [HttpPost]
+        [Route("create")]
+        public IHttpActionResult Create([FromBody]UserProfileViewModel userProfile)
+        {
+            if(ModelState.IsValid)
+            {
+                var userProfileDto = Mapper.Map<UserProfileViewModel, UserProfileDTO>(userProfile);
+                _userProfileService.SaveItem(userProfileDto);
+
+                return ResponseMessage(Request.CreateResponse(HttpStatusCode.OK, "Member has been succesfully created!"));
+            }
+
+            var validationErrors = GetErrors();
+
+            if (validationErrors != null)
+            {
+                return ResponseMessage(Request.CreateResponse(HttpStatusCode.BadRequest, validationErrors));
+            }
+
+            return ResponseMessage(Request.CreateResponse(HttpStatusCode.BadRequest, "Oops, something went wrong! Please try again"));
+        }
+
     }
 }

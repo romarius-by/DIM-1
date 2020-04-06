@@ -89,7 +89,7 @@ namespace HIMS.Server.Controllers
                 OperationDetails operationDetails = await _userService.Create(userDto).ConfigureAwait(false);
                 if (operationDetails.Succedeed)
                 {
-                    await SendEmailConfirmationTokenAsync(userDto);
+                    //await SendEmailConfirmationTokenAsync(userDto);
                     ViewBag.Message =
                         "To complete the registration, check the email and click " +
                         "on the link indicated in the letter. You must be confirmed "

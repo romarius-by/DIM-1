@@ -48,6 +48,8 @@ namespace HIMS.Server
 
             kernel.Bind<DefaultModelValidatorProviders>().ToConstant(new DefaultModelValidatorProviders(GlobalConfiguration.Configuration.Services.GetModelValidatorProviders()));
 
+            kernel.Bind<DefaultFilterProviders>().ToConstant(new DefaultFilterProviders(GlobalConfiguration.Configuration.Services.GetFilterProviders()));
+
             var ninjectResolver = new utils.NinjectDependencyResolver(kernel);
 
             DependencyResolver.SetResolver(ninjectResolver);

@@ -45,7 +45,12 @@ namespace HIMS.Server
 
             var kernel = new StandardKernel(dependencesModule, serviceModule);
 
-            DependencyResolver.SetResolver(new NinjectDependencyResolver(kernel));
+            var ninjectResolver = new utils.NinjectDependencyResolver(kernel);
+
+            DependencyResolver.SetResolver(ninjectResolver);
+
+            GlobalConfiguration.Configuration.DependencyResolver = new utils.NinjectDependencyResolver(kernel);
+
         }
 
         protected void Session_Start(Object sender, EventArgs e)

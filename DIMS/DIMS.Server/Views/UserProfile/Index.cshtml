@@ -145,27 +145,20 @@
         <script type="text/javascript">
 
             $(function () {
+                function openModal(formTag, actionClass) {
                 $.ajaxSetup({ cache: false });
-                $(".delete-user").click(function (e) {
+                $(formTag).click(function (e) {
 
                     e.preventDefault();
                     $.get(this.href, function (data) {
-                        $('#delete-user-dialogContent').html(data);
-                        $('#delete-user-modal').modal('show');
+                        $(`${actionClass}-dialogContent`).html(data);
+                        $(`${actionClass}-modal`).modal('show');
                     });
                 });
-            });
-
-            $(function () {
-                 $.ajaxSetup({ cache: false });
-                $(".create-user").click(function (e) {
-
-                    e.preventDefault();
-                    $.get(this.href, function (data) {
-                        $('#create-user-dialogContent').html(data);
-                        $('#create-user-modal').modal('show');
-                    });
-                });
+                };
+                openModal(".delete-user", "#delete-user");
+                openModal(".create-user", "#create-user");
+                
             });
 
             $(function () {

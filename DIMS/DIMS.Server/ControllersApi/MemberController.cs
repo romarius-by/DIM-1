@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 using System.Web.Http.Cors;
@@ -44,7 +45,7 @@ namespace HIMS.Server.ControllersApi
         {
 
             if (!id.HasValue)
-                return ResponseMessage(Request.CreateErrorResponse(HttpStatusCode.BadRequest, "The id value was not set"));
+                return ResponseMessage(Request.CreateErrorResponse(HttpStatusCode.BadRequest, "The id value was not set!"));
 
             var vUserProfileDto = _vUserProfileService.GetItem(id.Value);
 
@@ -66,7 +67,7 @@ namespace HIMS.Server.ControllersApi
                 var userProfileDto = Mapper.Map<UserProfileViewModel, UserProfileDTO>(userProfile);
                 _userProfileService.SaveItem(userProfileDto);
 
-                return ResponseMessage(Request.CreateResponse(HttpStatusCode.OK, "Member has been succesfully created!"));
+                return ResponseMessage(Request.CreateResponse(HttpStatusCode.OK, $"The member {userProfile.Name} {userProfile.LastName} has been successfully created!"));
             }
 
             var validationErrors = GetErrors();
@@ -77,6 +78,69 @@ namespace HIMS.Server.ControllersApi
             }
 
             return ResponseMessage(Request.CreateResponse(HttpStatusCode.BadRequest, "Oops, something went wrong! Please try again"));
+        }
+
+        [HttpPut]
+        [Route("profile/edit/{id?}")]
+        public IHttpActionResult Edit([FromBody] UserProfileViewModel userProfile, [FromUri] int? id)
+        {
+            if (ModelState.IsValid && id.HasValue)
+            {
+                var userProfileDto = Mapper.Map<UserProfileViewModel, UserProfileDTO>(userProfile);
+
+                userProfileDto.UserId = id.Value;
+
+                _userProfileService.UpdateItem(userProfileDto);
+
+                return ResponseMessage(Request.CreateResponse(HttpStatusCode.OK, $"Member with id = {id.Value} has been successfully updated!"));
+            }
+
+            var validationErrors = GetErrors();
+
+            if (validationErrors != null)
+            {
+                return ResponseMessage(Request.CreateResponse(HttpStatusCode.BadRequest, validationErrors));
+            }
+
+            return ResponseMessage(Request.CreateResponse(HttpStatusCode.BadRequest, "Oops, something went wrong! Please try again"));
+        }
+
+        [HttpDelete]
+        [Route("profile/delete/{id?}")]
+        public IHttpActionResult Delete([FromUri] int? id)
+        {
+            try
+            {
+                if (id != null)
+                {
+                    _userProfileService.DeleteItem(id);
+                }
+            }
+            catch
+            {
+                return ResponseMessage(Request.CreateErrorResponse(HttpStatusCode.BadRequest, $"There's no user with id = {id.Value}"));
+            }
+
+            return ResponseMessage(Request.CreateResponse(HttpStatusCode.OK, "The user has been succesfully deleted!"));
+        }
+
+        [HttpDelete]
+        [Route("profile/deleteByEmail/{email?}")]
+        public async Task<IHttpActionResult> DeleteByEmail([FromUri] string email)
+        {
+            try
+            {
+                if (email != null)
+                {
+                    await _userProfileService.DeleteUserProfileByEmailAsync(email);
+                }
+            }
+            catch
+            {
+                return ResponseMessage(Request.CreateResponse(HttpStatusCode.BadRequest, $"There's no user with email = {email}!"));
+            }
+
+            return ResponseMessage(Request.CreateResponse(HttpStatusCode.OK, "The user has been succesfully deleted!"));
         }
 
     }

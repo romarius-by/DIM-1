@@ -89,7 +89,7 @@ namespace HIMS.Server.Controllers
                 OperationDetails operationDetails = await _userService.Create(userDto).ConfigureAwait(false);
                 if (operationDetails.Succedeed)
                 {
-                    //await SendEmailConfirmationTokenAsync(userDto);
+                    await SendEmailConfirmationTokenAsync(userDto);
                     ViewBag.Message =
                         "To complete the registration, check the email and click " +
                         "on the link indicated in the letter. You must be confirmed "
@@ -110,7 +110,7 @@ namespace HIMS.Server.Controllers
             var callbackUrl = Url.Action(
                             "ConfirmEmail",
                             "Account",
-                            new { Username = "vladislav.rossohin@gmail.com", Token = token },
+                            new { Username = user.Email, Token = token },
                             protocol: Request.Url.Scheme);
 
             await _sender.MessageToUserAsync(user, "Account confirmation",

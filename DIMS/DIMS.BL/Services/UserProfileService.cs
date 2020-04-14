@@ -57,6 +57,16 @@ namespace HIMS.BL.Services
                 throw new ValidationException(operationDetails.Message, operationDetails.Property);
         }
 
+        public async Task<OperationDetails> DeleteItemAsync(int? id)
+        {
+            if (!id.HasValue)
+                throw new ValidationException("The User Profile's id value is not set!", String.Empty);
+
+            var userProfileEmail = dimsDatabase.UserProfiles.Get(id.Value).Email;
+
+            return await DeleteUserProfileByEmailAsync(userProfileEmail);
+        }
+
         public void Dispose()
         {
             dimsDatabase.Dispose();
@@ -141,5 +151,7 @@ namespace HIMS.BL.Services
             }
 
         }
+
+    
     }
 }

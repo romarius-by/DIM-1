@@ -129,6 +129,20 @@ namespace HIMS.BL.Services
                 userTaskRepository.GetByUserId(id.Value));
         }
 
-        
+        public async Task<OperationDetails> DeleteItemAsync(int? id)
+        {
+            if (!id.HasValue)
+                throw new ValidationException("The id value is not set!", String.Empty);
+
+            var res = await database.UserTasks.DeleteAsync(id.Value);
+
+            if (res != null)
+            {
+                return new OperationDetails(true, "User Task has been succesfully deleted! User: ", res.UserProfile.Name + "" + res.UserProfile.LastName);
+            }
+
+            else
+                return new OperationDetails(false, "Something went wrong!", " ");
+        }
     }
 }

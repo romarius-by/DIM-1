@@ -30,6 +30,16 @@ namespace HIMS.EF.DAL.Data.Repositories
             }
         }
 
+        public async Task<TaskState> DeleteAsync(int id)
+        {
+            return await System.Threading.Tasks.Task.Run(() =>
+            {
+                var taskState = _dIMSDBContext.TaskStates.Find(id);
+
+                return _dIMSDBContext.TaskStates.Remove(taskState);
+            });
+        }
+
         public IEnumerable<TaskState> Find(Func<TaskState, bool> predicate)
         {
             return _dIMSDBContext.TaskStates.Where(predicate).ToList();

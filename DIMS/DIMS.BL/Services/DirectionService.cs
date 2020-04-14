@@ -30,6 +30,25 @@ namespace HIMS.BL.Services
             dimsDatabase.Save();
         }
 
+        public async Task<OperationDetails> DeleteItemAsync(int? id)
+        {
+            if (!id.HasValue)
+                throw new ValidationException("The Direction's id value is not set", String.Empty);
+
+            var res = await dimsDatabase.Directions.DeleteAsync(id.Value);
+
+            if (res != null)
+            {
+                return new OperationDetails(true, "The Direction has been successfully deleted! Direction: ", res.Name);
+            }
+
+            else
+            {
+                return new OperationDetails(false, "Something went wrong!", " ");
+            }
+            
+        }
+
         public void Dispose()
         {
             dimsDatabase.Dispose();
@@ -81,5 +100,7 @@ namespace HIMS.BL.Services
 
 
         }
+
+        
     }
 }

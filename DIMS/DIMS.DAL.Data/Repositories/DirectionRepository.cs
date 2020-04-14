@@ -30,6 +30,16 @@ namespace HIMS.EF.DAL.Data.Repositories
             }
         }
 
+        public async Task<Direction> DeleteAsync(int id)
+        {
+            return await System.Threading.Tasks.Task.Run(() =>
+            {
+                var direction = _dIMSDBContext.Directions.Find(id);
+
+                return _dIMSDBContext.Directions.Remove(direction);
+            });
+        }
+
         public IEnumerable<Direction> Find(Func<Direction, bool> predicate)
         {
             return _dIMSDBContext.Directions.Where(predicate).ToList();

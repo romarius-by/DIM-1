@@ -30,6 +30,20 @@ namespace HIMS.BL.Services
             database.Save();
         }
 
+        public async Task<OperationDetails> DeleteItemAsync(int? id)
+        {
+            if (!id.HasValue)
+                throw new ValidationException("The id value is not set!", String.Empty);
+
+            var res = await database.TaskTracks.DeleteAsync(id.Value);
+
+            if (res != null)
+                return new OperationDetails(true, "Task track has been succesfully deleted: ", res.TrackNote);
+
+            else
+                return new OperationDetails(false, "Something went wrong!", " ");
+        }
+
         public void Dispose()
         {
             database.Dispose();

@@ -66,5 +66,13 @@ namespace HIMS.EF.DAL.Data.Repositories
             _dimsDbContext.Entry(userProfile).State = System.Data.Entity.EntityState.Modified;
         }
 
+        public async Task<UserProfile> DeleteAsync(int id)
+        {
+            return await System.Threading.Tasks.Task.Run(() =>
+            {
+                var up = _dimsDbContext.UserProfiles.Find(id);
+                return _dimsDbContext.UserProfiles.Remove(up);
+            });
+        }
     }
 }

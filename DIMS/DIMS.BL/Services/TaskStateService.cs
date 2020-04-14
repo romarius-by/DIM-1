@@ -89,5 +89,19 @@ namespace HIMS.BL.Services
             return Mapper.Map<IEnumerable<TaskState>, IEnumerable<TaskStateDTO>>(
                 database.TaskStates.GetAll());
         }
+
+        public async Task<OperationDetails> DeleteItemAsync(int? id)
+        {
+            if (!id.HasValue)
+                throw new ValidationException("The id value is not set!", String.Empty);
+
+            var res = await database.TaskStates.DeleteAsync(id.Value);
+
+            if (res != null)
+                return new OperationDetails(true, "Task state has been successfully deleted! State: ", res.StateName);
+
+            else
+                return new OperationDetails(false, "Something went wrong!", " ");
+        }
     }
 }

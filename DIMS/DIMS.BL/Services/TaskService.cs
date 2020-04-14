@@ -93,5 +93,23 @@ namespace HIMS.BL.Services
 
             }
         }
+
+        public async Task<OperationDetails> DeleteItemAsync(int? id)
+        {
+            if (!id.HasValue)
+            {
+                throw new ValidationException("The id value is not set!", String.Empty);
+            }
+
+            var res = await database.Tasks.DeleteAsync(id.Value);
+
+            if (res != null)
+            {
+                return new OperationDetails(true, "The Task has been deleted successfully! Task: ", res.Name);
+            }
+
+            else
+                return new OperationDetails(false, "Something went wrong!", " ");
+        }
     }
 }

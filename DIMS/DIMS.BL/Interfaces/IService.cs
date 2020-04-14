@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HIMS.BL.Infrastructure;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,6 +12,8 @@ namespace HIMS.BL.Interfaces
         void SaveItem(T item);
         void UpdateItem(T item);
         void DeleteItem(int? id);
+
+        Task<OperationDetails> DeleteItemAsync(int? id);
 
     }
 }

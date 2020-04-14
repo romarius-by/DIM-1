@@ -54,5 +54,14 @@ namespace HIMS.EF.DAL.Data.Repositories
         {
             _dIMSDBContext.Entry(item).State = System.Data.Entity.EntityState.Modified;
         }
+
+        public async Task<UserTask> DeleteAsync(int id)
+        {
+            return await System.Threading.Tasks.Task.Run(() =>
+            {
+                var ut = _dIMSDBContext.UserTasks.Find(id);
+                return _dIMSDBContext.UserTasks.Remove(ut);
+            });
+        }
     }
 }

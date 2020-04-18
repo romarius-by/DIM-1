@@ -15,6 +15,8 @@ using System.Web.Mvc;
 
 namespace HIMS.Server.Controllers
 {
+    [Authorize]
+    [RoutePrefix("users")]
     public class UserProfileController : Controller
     {
         private readonly IUserProfileService _userProfileService;
@@ -23,7 +25,10 @@ namespace HIMS.Server.Controllers
         private readonly IvUserProgressService _vUserProgressService;
 
         private UserProfilePageViewModel UserProfilesPageViewModel;
-        public UserProfileController(IUserProfileService userProfileService, IvUserProfileService vuserProfileService, IDirectionService directionService, IvUserProgressService vUserProgressService)
+        public UserProfileController(IUserProfileService userProfileService, 
+            IvUserProfileService vuserProfileService, 
+            IDirectionService directionService, 
+            IvUserProgressService vUserProgressService)
         {
             _userProfileService = userProfileService;
             _vUserProfileService = vuserProfileService;
@@ -31,54 +36,33 @@ namespace HIMS.Server.Controllers
             _vUserProgressService = vUserProgressService;
 
             UserProfilesPageViewModel = new UserProfilePageViewModel();
-           /* UserProfilesPageViewModel = new UserProfilePageViewModel
-            {
-                UserProfileViewModel = new UserProfileViewModel(),
-                UserProfilesListViewModel = new UserProfilesListViewModel(),
-                vUserProfilesListViewModel = new vUserProfilesListViewModel(),
-                vUserProfileViewModel = new vUserProfileViewModel(),
-                vUserProgressesListViewModel = new vUserProgressesListViewModel()
-            };*/
+           
         }
 
 
-
+        [HttpGet]
+        [Route("profiles")]
         public ActionResult Index()
         {
-            IEnumerable<UserProfileDTO> userProfileDTOs = _userProfileService.GetItems();
-            IEnumerable<vUserProfileDTO> vUserProfileDTOs = _vUserProfileService.GetItems();
-            var userProfiles = new UserProfilesListViewModel
-            {
-                UserProfiles = Mapper.Map<IEnumerable<UserProfileDTO>, List<UserProfileViewModel>>(userProfileDTOs)
-            };
+            var userProfileDtos = _vUserProfileService.GetItems();
 
-            var vuserProfiles = new vUserProfilesListViewModel
-            {
-                vUserProfiles = Mapper.Map<IEnumerable<vUserProfileDTO>, List<vUserProfileViewModel>>(vUserProfileDTOs)
-            };
+            var userProfileListViewModel = Mapper.Map<IEnumerable<vUserProfileDTO>, IEnumerable<vUserProfileViewModel>>(userProfileDtos);
 
-            var directions = _directionService.GetItems();
-
-            UserProfilesPageViewModel.UserProfilesListViewModel = new UserProfilesListViewModel
-            { UserProfiles = Mapper.Map<IEnumerable<UserProfileDTO>, List<UserProfileViewModel>>(userProfileDTOs) };
-            UserProfilesPageViewModel.vUserProfilesListViewModel = new vUserProfilesListViewModel 
-            { vUserProfiles = Mapper.Map<IEnumerable<vUserProfileDTO>, List<vUserProfileViewModel>>(vUserProfileDTOs) };
-            UserProfilesPageViewModel.DirectionViewModels = Mapper.Map<IEnumerable<DirectionDTO>, List<DirectionViewModel>>(directions);
-
-
-            return View(UserProfilesPageViewModel);
+            return View(userProfileListViewModel);
         }
 
-        public ActionResult Create(UserProfileViewModel userProfileViewModel)
+        [HttpGet]
+        [Route("create")]
+        public ActionResult Create()
         {
-            UserProfilesPageViewModel.DirectionViewModels = Mapper.Map<IEnumerable<DirectionDTO>, List<DirectionViewModel>>
-                (_directionService.GetItems());
-            return PartialView(UserProfilesPageViewModel);
+            ViewBag.DirectionId = GetDirections();
+            return PartialView();
         }
 
         [HttpPost]
+        [Route("create")]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Name, LastName, Email, MobilePhone, DirectionId, Education, UniversityAverageScore, MathScore, BirthDate, Address, Skype, StartDate, Sex")]UserProfileViewModel userProfileViewModel, int id)
+        public ActionResult Create([Bind(Include = "Name, LastName, Email, MobilePhone, DirectionId, Education, UniversityAverageScore, MathScore, BirthDate, Address, Skype, StartDate, Sex")]UserProfileViewModel userProfileViewModel)
         {
             try
             {
@@ -103,6 +87,8 @@ namespace HIMS.Server.Controllers
             return View(UserProfilesPageViewModel);
         }
 
+        [HttpGet]
+        [Route("edit/{id?}")]
         public ActionResult Edit(UserProfileViewModel userProfileViewModel, int? id)
         {
             if (!id.HasValue)
@@ -113,17 +99,16 @@ namespace HIMS.Server.Controllers
             if (userProfileDto == null)
                 return HttpNotFound();
 
-            UserProfilesPageViewModel.UserProfileViewModel =
+            var UserProfileViewModel =
                Mapper.Map<UserProfileDTO, UserProfileViewModel>(userProfileDto);
-            UserProfilesPageViewModel.DirectionViewModels =
-                Mapper.Map<IEnumerable<DirectionDTO>, List<DirectionViewModel>>
-                (_directionService.GetItems());
+            ViewBag.DirectionId = GetDirections();
             
-            return PartialView(UserProfilesPageViewModel);
+            return PartialView(UserProfileViewModel);
         }
 
 
         [HttpPost, ActionName("Edit")]
+        [Route("edit/{id?}")]
         [ValidateAntiForgeryToken]
         public ActionResult EditProfile(UserProfileViewModel userProfileViewModel, int? id)
         {
@@ -146,11 +131,13 @@ namespace HIMS.Server.Controllers
             }
             
 
-            UserProfilesPageViewModel.UserProfileViewModel = Mapper.Map<UserProfileDTO, UserProfileViewModel>(userProfileDto);
+            var UserProfileViewModel = Mapper.Map<UserProfileDTO, UserProfileViewModel>(userProfileDto);
 
-            return PartialView(UserProfilesPageViewModel);
+            return PartialView(UserProfileViewModel);
         }
 
+        [HttpGet]
+        [Route("profile/{id?}")]
         public ActionResult Details(int? id)
         {
             if (!id.HasValue)
@@ -166,19 +153,23 @@ namespace HIMS.Server.Controllers
             return PartialView(vuserProfile);
         }
 
+        [HttpGet]
+        [Route("profile/progress/{id?}")]
         public ActionResult Progress(int? id)
         {
             if (!id.HasValue)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
-            UserProfilesPageViewModel.vUserProgressesListViewModel = new vUserProgressesListViewModel(
-                Mapper.Map<vUserProfileDTO, vUserProfileViewModel>(
-                    _vUserProfileService.GetItem(id.Value)),
-                Mapper.Map<IEnumerable<vUserProgressDTO>, IEnumerable<vUserProgressViewModel>>(
-                _vUserProgressService.GetVUserProgressesByUserId(id.Value))
+            var userProgressDto = _vUserProgressService.GetVUserProgressesByUserId(id.Value);
+
+            var user = _vUserProfileService.GetItem(id.Value);
+
+            var vUserProgressesListViewModel = new vUserProgressesListViewModel(
+                Mapper.Map<vUserProfileDTO, vUserProfileViewModel>(user),
+                Mapper.Map<IEnumerable<vUserProgressDTO>, IEnumerable<vUserProgressViewModel>>(userProgressDto)
                 );
 
-            return PartialView(UserProfilesPageViewModel);
+            return PartialView(vUserProgressesListViewModel);
         }
 
 
@@ -215,27 +206,31 @@ namespace HIMS.Server.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult DeleteByEmail(string email)
+        [HttpGet]
+        [Route("delete/{email?}")]
+        public async Task<ActionResult> DeleteByEmail(string email)
         {
             if (email == null)
                 return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
 
+            var userProfile = await _vUserProfileService.GetVUserProfileByEmailAsync(email);
 
-            var vuserProfileDto = Mapper.Map<vUserProfileDTO, vUserProfileViewModel>(_vUserProfileService.GetVUserProfileByEmail(email));
-
-            if (vuserProfileDto == null)
+            if (userProfile == null)
                 return HttpNotFound();
+
+            var vuserProfileDto = Mapper.Map<vUserProfileDTO, vUserProfileViewModel>(userProfile);
 
             return PartialView(vuserProfileDto);
         }
 
-        [HttpPost]
+        [HttpDelete]
+        [Route("delete/{email?}")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteByEmail(string email, int id)
+        public async Task<ActionResult> DeleteByEmail(string email, int id)
         {
             try
             {
-                _userProfileService.DeleteUserProfileByEmail(email);
+                var operationDetails = await _userProfileService.DeleteUserProfileByEmailAsync(email);
             }
             catch (RetryLimitExceededException)
             {
@@ -244,5 +239,21 @@ namespace HIMS.Server.Controllers
 
             return RedirectToAction("Index");
         }
+
+        [NonAction]
+        private List<SelectListItem> GetDirections()
+        {
+            var directions = Mapper.Map<IEnumerable<DirectionDTO>, List<DirectionViewModel>>(_directionService.GetItems());
+            List<SelectListItem> selectItems = new List<SelectListItem>();
+
+            foreach (var item in directions)
+            {
+                selectItems.Add(new SelectListItem { Text = item.Name, Value = item.DirectionId.ToString() });
+            }
+
+            return selectItems;
+        }
+
     }
+
 }

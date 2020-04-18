@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DIMS.BL", "DIMS.BL\DIMS.BL.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DIMS.Tests", "DIMS.Tests\DIMS.Tests.csproj", "{1C16688F-5025-4EF0-9318-1B5FB3613F2E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Email", "Email\Email.csproj", "{D7BCA7EA-5647-4B7F-9575-38181DBA2207}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{1C16688F-5025-4EF0-9318-1B5FB3613F2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1C16688F-5025-4EF0-9318-1B5FB3613F2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1C16688F-5025-4EF0-9318-1B5FB3613F2E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D7BCA7EA-5647-4B7F-9575-38181DBA2207}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7BCA7EA-5647-4B7F-9575-38181DBA2207}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7BCA7EA-5647-4B7F-9575-38181DBA2207}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7BCA7EA-5647-4B7F-9575-38181DBA2207}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

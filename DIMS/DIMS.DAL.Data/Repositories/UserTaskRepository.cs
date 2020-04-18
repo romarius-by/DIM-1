@@ -42,7 +42,7 @@ namespace HIMS.EF.DAL.Data.Repositories
 
         public IEnumerable<UserTask> GetByUserId(int id)
         {
-            return _dIMSDBContext.UserTasks.Where(t => t.UserId == id).ToList();
+            return _dIMSDBContext.UserTasks.Where(task => task.UserId == id).ToList();
         } 
 
         public IEnumerable<UserTask> GetAll()
@@ -53,6 +53,15 @@ namespace HIMS.EF.DAL.Data.Repositories
         public void Update(UserTask item)
         {
             _dIMSDBContext.Entry(item).State = System.Data.Entity.EntityState.Modified;
+        }
+
+        public async Task<UserTask> DeleteAsync(int id)
+        {
+            return await System.Threading.Tasks.Task.Run(() =>
+            {
+                var ut = _dIMSDBContext.UserTasks.Find(id);
+                return _dIMSDBContext.UserTasks.Remove(ut);
+            });
         }
     }
 }

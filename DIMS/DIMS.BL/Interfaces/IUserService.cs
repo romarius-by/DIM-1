@@ -1,5 +1,6 @@
 ﻿using HIMS.BL.Infrastructure;
 using HIMS.BL.Models;
+using HIMS.EF.DAL.Identity.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,5 +17,10 @@ namespace HIMS.BL.Interfaces
         Task SetInitialData(UserDTO adminDto, List<string> roles);
         Task<OperationDetails> DeleteUserByEmail(string email);
 
+        Task<ApplicationUser> FindByEmail(string email);
+        Task<ApplicationUser> FindByName(string email);
+        Task<ApplicationUser> FindById(string email);
+
+        Task<string> GenerateToken(UserDTO user);
     }
 }

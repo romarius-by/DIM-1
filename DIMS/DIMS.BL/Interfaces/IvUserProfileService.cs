@@ -1,4 +1,5 @@
 ﻿using HIMS.BL.DTO;
+using HIMS.BL.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace HIMS.BL.Interfaces
 {
     public interface IvUserProfileService : IvService<vUserProfileDTO>
     {
-        vUserProfileDTO GetVUserProfileByEmail(string email);
+        Task<vUserProfileDTO> GetVUserProfileByEmailAsync(string email);
        
     }
 }

@@ -14,11 +14,11 @@ namespace HIMS.BL.Services
     public class TaskTrackService : ITaskTrackService
     {
 
-        private IUnitOfWork Database;
+        private IUnitOfWork database;
 
         public TaskTrackService(IUnitOfWork uow)
         {
-            Database = uow;
+            database = uow;
         }
 
         public void DeleteItem(int? id)
@@ -26,13 +26,27 @@ namespace HIMS.BL.Services
             if (!id.HasValue)
                 throw new ValidationException("The task track id value is not set", String.Empty);
 
-            Database.TaskTracks.Delete(id.Value);
-            Database.Save();
+            database.TaskTracks.Delete(id.Value);
+            database.Save();
+        }
+
+        public async Task<OperationDetails> DeleteItemAsync(int? id)
+        {
+            if (!id.HasValue)
+                throw new ValidationException("The id value is not set!", String.Empty);
+
+            var res = await database.TaskTracks.DeleteAsync(id.Value);
+
+            if (res != null)
+                return new OperationDetails(true, "Task track has been succesfully deleted: ", res.TrackNote);
+
+            else
+                return new OperationDetails(false, "Something went wrong!", " ");
         }
 
         public void Dispose()
         {
-            Database.Dispose();
+            database.Dispose();
         }
 
         public TaskTrackDTO GetItem(int? id)
@@ -40,7 +54,7 @@ namespace HIMS.BL.Services
             if (!id.HasValue)
                 throw new ValidationException("The task track id value is not set", String.Empty);
 
-            var task = Database.TaskTracks.Get(id.Value);
+            var task = database.TaskTracks.Get(id.Value);
 
             if (task == null)
                 throw new ValidationException($"The task track with id = {id.Value} was not found", String.Empty);
@@ -51,7 +65,7 @@ namespace HIMS.BL.Services
         public IEnumerable<TaskTrackDTO> GetItems()
         {
             return Mapper.Map<List<TaskTrack>, ICollection<TaskTrackDTO>>(
-                Database.TaskTracks.GetAll().ToList());
+                database.TaskTracks.GetAll().ToList());
         }
 
         public UserTaskDTO GetUserTask(int? id)
@@ -60,7 +74,7 @@ namespace HIMS.BL.Services
                 throw new ValidationException("The task track id value is not set", String.Empty);
 
             return Mapper.Map<UserTask, UserTaskDTO>(
-                Database.TaskTracks.Get(id.Value).UserTask);
+                database.TaskTracks.Get(id.Value).UserTask);
         }
 
         public void SaveItem(TaskTrackDTO taskTrackDTO)
@@ -73,18 +87,18 @@ namespace HIMS.BL.Services
                 UserTaskId = taskTrackDTO.UserTaskId
             };
 
-            Database.TaskTracks.Create(taskTrack);
-            Database.Save();
+            database.TaskTracks.Create(taskTrack);
+            database.Save();
         }
 
         public void UpdateItem(TaskTrackDTO taskTrackDTO)
         {
-            var taskTrack = Database.TaskTracks.Get(taskTrackDTO.TaskTrackId);
+            var taskTrack = database.TaskTracks.Get(taskTrackDTO.TaskTrackId);
 
             if (taskTrack != null)
             {
                 Mapper.Map(taskTrackDTO, taskTrack);
-                Database.Save();
+                database.Save();
             }
         }
     }

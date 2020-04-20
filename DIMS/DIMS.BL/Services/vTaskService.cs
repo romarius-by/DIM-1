@@ -26,7 +26,7 @@ namespace HIMS.BL.Services
             database.Dispose();
         }
 
-        public vTaskDTO GetItem(int? id)
+        public vTaskDTO GetById(int? id)
         {
             if (!id.HasValue)
                 throw new ValidationException("The vTask id value is not set", String.Empty);
@@ -39,7 +39,7 @@ namespace HIMS.BL.Services
             return Mapper.Map<vTask, vTaskDTO>(_vTask);
         }
 
-        public IEnumerable<vTaskDTO> GetItems()
+        public IEnumerable<vTaskDTO> GetAll()
         {
             return Mapper.Map<List<vTask>, ICollection<vTaskDTO>>(
                 database.vTasks.GetAll().ToList());

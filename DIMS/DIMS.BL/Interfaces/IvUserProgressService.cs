@@ -9,8 +9,7 @@ namespace HIMS.BL.Interfaces
 {
     public interface IvUserProgressService : IvService<vUserProgressDTO>
     {
-        vUserProgressDTO GetItem(int? id);
-        IEnumerable<vUserProgressDTO> GetVUserProgressesByUserId(int? id);
+        IEnumerable<vUserProgressDTO> GetByUserId(int? id);
 
     }
 }

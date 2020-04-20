@@ -20,7 +20,7 @@ namespace HIMS.BL.Services
             database = uow;
         }
 
-        public void DeleteItem(int? id)
+        public void DeleteById(int? id)
         {
             if (!id.HasValue)
                 throw new ValidationException("The task state id value is not set", String.Empty);
@@ -31,7 +31,7 @@ namespace HIMS.BL.Services
             
         }
 
-        public TaskStateDTO GetItem(int? id)
+        public TaskStateDTO GetById(int? id)
         {
             if (!id.HasValue)
                 throw new ValidationException("The task state id value is not set", String.Empty);
@@ -55,7 +55,7 @@ namespace HIMS.BL.Services
 
         }
 
-        public void SaveItem(TaskStateDTO taskStateDTO)
+        public void Save(TaskStateDTO taskStateDTO)
         {
             var taskState = new TaskState
             {
@@ -67,7 +67,7 @@ namespace HIMS.BL.Services
             database.Save();
         }
 
-        public void UpdateItem(TaskStateDTO taskStateDTO)
+        public void Update(TaskStateDTO taskStateDTO)
         {
             var taskState = database.TaskStates.Get(taskStateDTO.StateId);
 
@@ -84,13 +84,13 @@ namespace HIMS.BL.Services
             database.Dispose();
         }
 
-        public IEnumerable<TaskStateDTO> GetItems()
+        public IEnumerable<TaskStateDTO> GetAll()
         {
             return Mapper.Map<IEnumerable<TaskState>, IEnumerable<TaskStateDTO>>(
                 database.TaskStates.GetAll());
         }
 
-        public async Task<OperationDetails> DeleteItemAsync(int? id)
+        public async Task<OperationDetails> DeleteByIdAsync(int? id)
         {
             if (!id.HasValue)
                 throw new ValidationException("The id value is not set!", String.Empty);

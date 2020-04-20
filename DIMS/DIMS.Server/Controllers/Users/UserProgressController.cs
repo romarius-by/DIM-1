@@ -26,9 +26,9 @@ namespace HIMS.Server.Controllers.Users
 
             var UserProgresses = new vUserProgressesListViewModel(
                 Mapper.Map<vUserProfileDTO, vUserProfileViewModel>(
-                    _userProfileService.GetItem(id.Value)),
+                    _userProfileService.GetById(id.Value)),
                 Mapper.Map<IEnumerable<vUserProgressDTO>, IEnumerable<vUserProgressViewModel>>(
-                    _userProgressService.GetVUserProgressesByUserId(id.Value)));
+                    _userProgressService.GetByUserId(id.Value)));
 
             return View(UserProgresses);       
         }

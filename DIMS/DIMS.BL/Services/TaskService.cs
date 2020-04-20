@@ -22,7 +22,7 @@ namespace HIMS.BL.Services
         }
 
 
-        public void DeleteItem(int? id)
+        public void DeleteById(int? id)
         {
             if (!id.HasValue)
                 throw new ValidationException("The Task id value is not set", String.Empty);
@@ -37,7 +37,7 @@ namespace HIMS.BL.Services
             database.Dispose();
         }
 
-        public TaskDTO GetItem(int? id)
+        public TaskDTO GetById(int? id)
         {
             if (!id.HasValue)
                 throw new ValidationException("The Task id value is not set", String.Empty);
@@ -50,7 +50,7 @@ namespace HIMS.BL.Services
             return Mapper.Map<EF.DAL.Data.Task, TaskDTO>(task);
         }
 
-        public IEnumerable<TaskDTO> GetItems()
+        public IEnumerable<TaskDTO> GetAll()
         {
             return Mapper.Map<IEnumerable<EF.DAL.Data.Task>, ICollection<TaskDTO>>(database.Tasks.GetAll());
 
@@ -65,7 +65,7 @@ namespace HIMS.BL.Services
                 Get(id.Value).UserTasks);
         }
 
-        public void SaveItem(TaskDTO task)
+        public void Save(TaskDTO task)
         {
             var _task = new EF.DAL.Data.Task
             {
@@ -81,7 +81,7 @@ namespace HIMS.BL.Services
             
         }
 
-        public void UpdateItem(TaskDTO taskDTO)
+        public void Update(TaskDTO taskDTO)
         {
             var task = database.Tasks.Get(taskDTO.TaskId);
 
@@ -94,7 +94,7 @@ namespace HIMS.BL.Services
             }
         }
 
-        public async Task<OperationDetails> DeleteItemAsync(int? id)
+        public async Task<OperationDetails> DeleteByIdAsync(int? id)
         {
             if (!id.HasValue)
             {

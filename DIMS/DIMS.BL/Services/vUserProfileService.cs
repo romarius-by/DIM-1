@@ -26,7 +26,7 @@ namespace HIMS.BL.Services
             database.Dispose();
         }
 
-        public vUserProfileDTO GetItem(int? id)
+        public vUserProfileDTO GetById(int? id)
         {
             if (!id.HasValue)
                 throw new ValidationException("The view user profile id value is not set", String.Empty);
@@ -39,7 +39,7 @@ namespace HIMS.BL.Services
             return Mapper.Map<vUserProfile, vUserProfileDTO>(vUserProfile);
         }
 
-        public async Task<vUserProfileDTO> GetVUserProfileByEmailAsync(string email)
+        public async Task<vUserProfileDTO> GetByEmailAsync(string email)
         {
             if (email == null)
                 throw new ValidationException("The view user profile email is not set", String.Empty);
@@ -52,7 +52,7 @@ namespace HIMS.BL.Services
             return Mapper.Map<vUserProfile, vUserProfileDTO>(vUserProfile);
         }
 
-        public IEnumerable<vUserProfileDTO> GetItems()
+        public IEnumerable<vUserProfileDTO> GetAll()
         {
             return Mapper.Map<List<vUserProfile>, ICollection<vUserProfileDTO>>(
                 database.vUserProfiles.GetAll().ToList());

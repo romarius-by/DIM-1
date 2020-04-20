@@ -33,7 +33,7 @@ namespace HIMS.BL.Services
         }
 
 
-        public void DeleteItem(int? id)
+        public void DeleteById(int? id)
         {
             if (!id.HasValue)
                 throw new ValidationException("The User Profile's id value is not set", String.Empty);
@@ -41,12 +41,12 @@ namespace HIMS.BL.Services
             dimsDatabase.Save();
         }
 
-        public async Task<OperationDetails> DeleteUserProfileByEmailAsync(string email)
+        public async Task<OperationDetails> DeleteByEmailAsync(string email)
         {
             if (email == null)
                 throw new ValidationException("The User Profile's email is not set", String.Empty);
 
-            OperationDetails operationDetails = await userService.DeleteUserByEmail(email);
+            OperationDetails operationDetails = await userService.DeleteByEmail(email);
 
             if (operationDetails.Succedeed || operationDetails.Message == "The user with such Email not found! Email: ")
             {
@@ -57,14 +57,14 @@ namespace HIMS.BL.Services
                 throw new ValidationException(operationDetails.Message, operationDetails.Property);
         }
 
-        public async Task<OperationDetails> DeleteItemAsync(int? id)
+        public async Task<OperationDetails> DeleteByIdAsync(int? id)
         {
             if (!id.HasValue)
                 throw new ValidationException("The User Profile's id value is not set!", String.Empty);
 
             var userProfileEmail = dimsDatabase.UserProfiles.Get(id.Value).Email;
 
-            return await DeleteUserProfileByEmailAsync(userProfileEmail);
+            return await DeleteByEmailAsync(userProfileEmail);
         }
 
         public void Dispose()
@@ -72,7 +72,7 @@ namespace HIMS.BL.Services
             dimsDatabase.Dispose();
         }
 
-        public UserProfileDTO GetItem(int? id)
+        public UserProfileDTO GetById(int? id)
         {
             if (!id.HasValue)
                 throw new ValidationException("The User Profile's id value is not set", String.Empty);
@@ -85,12 +85,12 @@ namespace HIMS.BL.Services
             return Mapper.Map<UserProfile, UserProfileDTO>(userProfile);
         }
 
-        public IEnumerable<UserProfileDTO> GetItems()
+        public IEnumerable<UserProfileDTO> GetAll()
         {
             return Mapper.Map<IEnumerable<UserProfile>, List<UserProfileDTO>>(dimsDatabase.UserProfiles.GetAll());
         }
 
-        public void SaveItem(UserProfileDTO userProfile)
+        public void Save(UserProfileDTO userProfile)
         {
 
             // Validation (must be improve)
@@ -125,7 +125,7 @@ namespace HIMS.BL.Services
             dimsDatabase.Save();
         }
 
-        public void UpdateItem(UserProfileDTO userProfile)
+        public void Update(UserProfileDTO userProfile)
         {
             // Validation (must be improve)
             if (userProfile.Name.Length > 25)

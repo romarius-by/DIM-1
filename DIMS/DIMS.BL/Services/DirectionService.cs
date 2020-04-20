@@ -21,7 +21,7 @@ namespace HIMS.BL.Services
             dimsDatabase = unitOfWork;
         }
 
-        public void DeleteItem(int? id)
+        public void DeleteById(int? id)
         {
             if (!id.HasValue)
                 throw new ValidationException("The Direction's id value is not set", String.Empty);
@@ -30,7 +30,7 @@ namespace HIMS.BL.Services
             dimsDatabase.Save();
         }
 
-        public async Task<OperationDetails> DeleteItemAsync(int? id)
+        public async Task<OperationDetails> DeleteByIdAsync(int? id)
         {
             if (!id.HasValue)
                 throw new ValidationException("The Direction's id value is not set", String.Empty);
@@ -54,7 +54,7 @@ namespace HIMS.BL.Services
             dimsDatabase.Dispose();
         }
 
-        public DirectionDTO GetItem(int? id)
+        public DirectionDTO GetById(int? id)
         {
             if (!id.HasValue)
                 throw new ValidationException("The Direction's id value is not set", String.Empty);
@@ -67,12 +67,12 @@ namespace HIMS.BL.Services
             return Mapper.Map<Direction, DirectionDTO>(direction);
         }
 
-        public IEnumerable<DirectionDTO> GetItems()
+        public IEnumerable<DirectionDTO> GetAll()
         {
             return Mapper.Map<IEnumerable<Direction>, List<DirectionDTO>>(dimsDatabase.Directions.GetAll());
         }
 
-        public void SaveItem(DirectionDTO direction)
+        public void Save(DirectionDTO direction)
         {
             var _direction = new Direction
             {
@@ -87,7 +87,7 @@ namespace HIMS.BL.Services
 
         }
 
-        public void UpdateItem(DirectionDTO direction)
+        public void Update(DirectionDTO direction)
         {
             var _direction = dimsDatabase.Directions.Get(direction.DirectionId);
 

@@ -8,8 +8,8 @@ namespace HIMS.BL.Interfaces
 {
     public interface IvService<T>
     {
-        T GetItem(int? id);
-        IEnumerable<T> GetItems();
+        T GetById(int? id);
+        IEnumerable<T> GetAll();
         
         void Dispose();
     }

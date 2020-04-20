@@ -80,7 +80,7 @@ namespace HIMS.BL.Services
             database.Dispose();
         }
 
-        public async Task<OperationDetails> DeleteUserByEmail(string email)
+        public async Task<OperationDetails> DeleteByEmail(string email)
         {
             ApplicationUser user = await database.UserSecurityManager.FindByEmailAsync(email);
 

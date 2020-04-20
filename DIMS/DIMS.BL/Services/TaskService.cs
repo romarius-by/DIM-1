@@ -101,11 +101,11 @@ namespace HIMS.BL.Services
                 throw new ValidationException("The id value is not set!", String.Empty);
             }
 
-            var res = await database.Tasks.DeleteByIdAsync(id.Value);
+            var task = await database.Tasks.DeleteByIdAsync(id.Value);
 
-            if (res != null)
+            if (task != null)
             {
-                return new OperationDetails(true, "The Task has been deleted successfully! Task: ", res.Name);
+                return new OperationDetails(true, "The Task has been deleted successfully! Task: ", task.Name);
             }
 
             else

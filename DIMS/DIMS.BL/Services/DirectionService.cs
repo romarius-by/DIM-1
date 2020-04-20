@@ -35,11 +35,11 @@ namespace HIMS.BL.Services
             if (!id.HasValue)
                 throw new ValidationException("The Direction's id value is not set", String.Empty);
 
-            var res = await dimsDatabase.Directions.DeleteByIdAsync(id.Value);
+            var direction = await dimsDatabase.Directions.DeleteByIdAsync(id.Value);
 
-            if (res != null)
+            if (direction != null)
             {
-                return new OperationDetails(true, "The Direction has been successfully deleted! Direction: ", res.Name);
+                return new OperationDetails(true, "The Direction has been successfully deleted! Direction: ", direction.Name);
             }
 
             else

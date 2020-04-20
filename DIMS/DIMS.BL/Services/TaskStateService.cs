@@ -95,10 +95,10 @@ namespace HIMS.BL.Services
             if (!id.HasValue)
                 throw new ValidationException("The id value is not set!", String.Empty);
 
-            var res = await database.TaskStates.DeleteByIdAsync(id.Value);
+            var taskState = await database.TaskStates.DeleteByIdAsync(id.Value);
 
-            if (res != null)
-                return new OperationDetails(true, "Task state has been successfully deleted! State: ", res.StateName);
+            if (taskState != null)
+                return new OperationDetails(true, "Task state has been successfully deleted! State: ", taskState.StateName);
 
             else
                 return new OperationDetails(false, "Something went wrong!", " ");

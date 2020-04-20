@@ -14,11 +14,11 @@ namespace HIMS.BL.Services
     public class DirectionService : IDirectionService
     {
 
-        private IUnitOfWork dimsDatabase { get; }
+        private IUnitOfWork Database { get; }
         
         public DirectionService(IUnitOfWork unitOfWork)
         {
-            dimsDatabase = unitOfWork;
+            Database = unitOfWork;
         }
 
         public void DeleteById(int? id)
@@ -26,8 +26,8 @@ namespace HIMS.BL.Services
             if (!id.HasValue)
                 throw new ValidationException("The Direction's id value is not set", String.Empty);
 
-            dimsDatabase.Directions.DeleteById(id.Value);
-            dimsDatabase.Save();
+            Database.Directions.DeleteById(id.Value);
+            Database.Save();
         }
 
         public async Task<OperationDetails> DeleteByIdAsync(int? id)
@@ -35,7 +35,7 @@ namespace HIMS.BL.Services
             if (!id.HasValue)
                 throw new ValidationException("The Direction's id value is not set", String.Empty);
 
-            var direction = await dimsDatabase.Directions.DeleteByIdAsync(id.Value);
+            var direction = await Database.Directions.DeleteByIdAsync(id.Value);
 
             if (direction != null)
             {
@@ -51,7 +51,7 @@ namespace HIMS.BL.Services
 
         public void Dispose()
         {
-            dimsDatabase.Dispose();
+            Database.Dispose();
         }
 
         public DirectionDTO GetById(int? id)
@@ -59,7 +59,7 @@ namespace HIMS.BL.Services
             if (!id.HasValue)
                 throw new ValidationException("The Direction's id value is not set", String.Empty);
 
-            var direction = dimsDatabase.Directions.GetById(id.Value);
+            var direction = Database.Directions.GetById(id.Value);
 
             if (direction == null)
                 throw new ValidationException($"The Direction with id = ${id.Value} was not found", String.Empty);
@@ -69,7 +69,7 @@ namespace HIMS.BL.Services
 
         public IEnumerable<DirectionDTO> GetAll()
         {
-            return Mapper.Map<IEnumerable<Direction>, List<DirectionDTO>>(dimsDatabase.Directions.GetAll());
+            return Mapper.Map<IEnumerable<Direction>, List<DirectionDTO>>(Database.Directions.GetAll());
         }
 
         public void Save(DirectionDTO direction)
@@ -81,21 +81,21 @@ namespace HIMS.BL.Services
                 UserProfiles = Mapper.Map<List<UserProfileDTO>, ICollection <UserProfile>>(direction.UserProfiles.ToList())
             };
 
-            dimsDatabase.Directions.Create(_direction);
+            Database.Directions.Create(_direction);
 
-            dimsDatabase.Save();
+            Database.Save();
 
         }
 
         public void Update(DirectionDTO direction)
         {
-            var _direction = dimsDatabase.Directions.GetById(direction.DirectionId);
+            var _direction = Database.Directions.GetById(direction.DirectionId);
 
             if (_direction != null)
             {
                 Mapper.Map(direction, _direction);
 
-                dimsDatabase.Save();
+                Database.Save();
             }
 
 

@@ -14,16 +14,16 @@ namespace HIMS.BL.Services
     public class vUserProfileService : IvUserProfileService
     {
 
-        private IUnitOfWork database;
+        private IUnitOfWork Database;
 
         public vUserProfileService(IUnitOfWork uow)
         {
-            database = uow;
+            Database = uow;
         }
 
         public void Dispose()
         {
-            database.Dispose();
+            Database.Dispose();
         }
 
         public vUserProfileDTO GetById(int? id)
@@ -31,7 +31,7 @@ namespace HIMS.BL.Services
             if (!id.HasValue)
                 throw new ValidationException("The view user profile id value is not set", String.Empty);
 
-            var vUserProfile = database.vUserProfiles.GetById(id.Value);
+            var vUserProfile = Database.vUserProfiles.GetById(id.Value);
 
             if (vUserProfile == null)
                 throw new ValidationException($"The view user profile with id = {id.Value} was not found", String.Empty);
@@ -44,7 +44,7 @@ namespace HIMS.BL.Services
             if (email == null)
                 throw new ValidationException("The view user profile email is not set", String.Empty);
 
-            var vUserProfile = await database.vUserProfiles.GetByEmailAsync(email);
+            var vUserProfile = await Database.vUserProfiles.GetByEmailAsync(email);
 
             if (vUserProfile == null)
                 throw new ValidationException($"The view user profile with email = {email} was not found", String.Empty);
@@ -55,7 +55,7 @@ namespace HIMS.BL.Services
         public IEnumerable<vUserProfileDTO> GetAll()
         {
             return Mapper.Map<List<vUserProfile>, ICollection<vUserProfileDTO>>(
-                database.vUserProfiles.GetAll().ToList());
+                Database.vUserProfiles.GetAll().ToList());
         }
 
     }

@@ -20,7 +20,7 @@ namespace HIMS.EF.DAL.Data.Repositories
             _dIMSDBContext.TaskTracks.Add(item);
         }
 
-        public void Delete(int id)
+        public void DeleteById(int id)
         {
             TaskTrack taskTrack = _dIMSDBContext.TaskTracks.Find(id);
 
@@ -30,7 +30,7 @@ namespace HIMS.EF.DAL.Data.Repositories
             }
         }
 
-        public async Task<TaskTrack> DeleteAsync(int id)
+        public async Task<TaskTrack> DeleteByIdAsync(int id)
         {
             return await System.Threading.Tasks.Task.Run(() =>
             {
@@ -44,7 +44,7 @@ namespace HIMS.EF.DAL.Data.Repositories
             return _dIMSDBContext.TaskTracks.Where(predicate).ToList();
         }
 
-        public TaskTrack Get(int id)
+        public TaskTrack GetById(int id)
         {
             return _dIMSDBContext.TaskTracks.Find(id);
         }

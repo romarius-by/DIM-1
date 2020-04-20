@@ -27,7 +27,7 @@ namespace HIMS.BL.Services
             if (!id.HasValue)
                 throw new ValidationException("The Task id value is not set", String.Empty);
 
-            database.Directions.Delete(id.Value);
+            database.Directions.DeleteById(id.Value);
 
             database.Save();
         }
@@ -42,7 +42,7 @@ namespace HIMS.BL.Services
             if (!id.HasValue)
                 throw new ValidationException("The Task id value is not set", String.Empty);
 
-            var task = database.Tasks.Get(id.Value);
+            var task = database.Tasks.GetById(id.Value);
 
             if (task == null)
                 throw new ValidationException($"The task with id = {id.Value} was not found", String.Empty);
@@ -62,7 +62,7 @@ namespace HIMS.BL.Services
                 throw new ValidationException("The task id value is not set", String.Empty);
 
             return Mapper.Map<IEnumerable<UserTask>, ICollection<UserTaskDTO>>(database.Tasks.
-                Get(id.Value).UserTasks);
+                GetById(id.Value).UserTasks);
         }
 
         public void Save(TaskDTO task)
@@ -83,7 +83,7 @@ namespace HIMS.BL.Services
 
         public void Update(TaskDTO taskDTO)
         {
-            var task = database.Tasks.Get(taskDTO.TaskId);
+            var task = database.Tasks.GetById(taskDTO.TaskId);
 
             if (task != null)
             {
@@ -101,7 +101,7 @@ namespace HIMS.BL.Services
                 throw new ValidationException("The id value is not set!", String.Empty);
             }
 
-            var res = await database.Tasks.DeleteAsync(id.Value);
+            var res = await database.Tasks.DeleteByIdAsync(id.Value);
 
             if (res != null)
             {

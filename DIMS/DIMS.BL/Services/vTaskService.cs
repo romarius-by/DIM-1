@@ -31,7 +31,7 @@ namespace HIMS.BL.Services
             if (!id.HasValue)
                 throw new ValidationException("The vTask id value is not set", String.Empty);
 
-            var _vTask = database.vTasks.Get(id.Value);
+            var _vTask = database.vTasks.GetById(id.Value);
 
             if (_vTask == null)
                 throw new ValidationException($"The vTask with id = {id.Value} was not found", String.Empty);

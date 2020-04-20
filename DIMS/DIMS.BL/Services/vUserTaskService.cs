@@ -43,7 +43,7 @@ namespace HIMS.BL.Services
             if (!id.HasValue)
                 throw new ValidationException("The view user task id value is not set", String.Empty);
 
-            var _vUserTask = database.vUserTasks.Get(id.Value);
+            var _vUserTask = database.vUserTasks.GetById(id.Value);
 
             if (_vUserTask == null)
                 throw new ValidationException($"The view user task with id = {id.Value} was not found", String.Empty);

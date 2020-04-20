@@ -25,7 +25,7 @@ namespace HIMS.BL.Services
             if (!id.HasValue)
                 throw new ValidationException("The task state id value is not set", String.Empty);
 
-            database.TaskStates.Delete(id.Value);
+            database.TaskStates.DeleteById(id.Value);
 
             database.Save();
             
@@ -36,7 +36,7 @@ namespace HIMS.BL.Services
             if (!id.HasValue)
                 throw new ValidationException("The task state id value is not set", String.Empty);
 
-            var task = database.TaskStates.Get(id.Value);
+            var task = database.TaskStates.GetById(id.Value);
 
             if (task == null)
                 throw new ValidationException($"The task state with id = {id.Value} was not found", String.Empty);
@@ -51,7 +51,7 @@ namespace HIMS.BL.Services
                 throw new ValidationException("The task state id value is not set", String.Empty);
 
             return Mapper.Map<List<UserTask>, ICollection<UserTaskDTO>>(
-                database.TaskStates.Get(id.Value).UserTasks.ToList());
+                database.TaskStates.GetById(id.Value).UserTasks.ToList());
 
         }
 
@@ -69,7 +69,7 @@ namespace HIMS.BL.Services
 
         public void Update(TaskStateDTO taskStateDTO)
         {
-            var taskState = database.TaskStates.Get(taskStateDTO.StateId);
+            var taskState = database.TaskStates.GetById(taskStateDTO.StateId);
 
             if (taskState != null)
             {
@@ -95,7 +95,7 @@ namespace HIMS.BL.Services
             if (!id.HasValue)
                 throw new ValidationException("The id value is not set!", String.Empty);
 
-            var res = await database.TaskStates.DeleteAsync(id.Value);
+            var res = await database.TaskStates.DeleteByIdAsync(id.Value);
 
             if (res != null)
                 return new OperationDetails(true, "Task state has been successfully deleted! State: ", res.StateName);

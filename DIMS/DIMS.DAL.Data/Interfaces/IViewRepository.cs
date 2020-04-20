@@ -8,7 +8,7 @@ namespace HIMS.EF.DAL.Data.Interfaces
 {
     public interface IViewRepository<T>
     {
-        T Get(int id);
+        T GetById(int id);
         
 
         IEnumerable<T> GetAll();

@@ -26,7 +26,7 @@ namespace HIMS.BL.Services
             if (!id.HasValue)
                 throw new ValidationException("The Direction's id value is not set", String.Empty);
 
-            dimsDatabase.Directions.Delete(id.Value);
+            dimsDatabase.Directions.DeleteById(id.Value);
             dimsDatabase.Save();
         }
 
@@ -35,7 +35,7 @@ namespace HIMS.BL.Services
             if (!id.HasValue)
                 throw new ValidationException("The Direction's id value is not set", String.Empty);
 
-            var res = await dimsDatabase.Directions.DeleteAsync(id.Value);
+            var res = await dimsDatabase.Directions.DeleteByIdAsync(id.Value);
 
             if (res != null)
             {
@@ -59,7 +59,7 @@ namespace HIMS.BL.Services
             if (!id.HasValue)
                 throw new ValidationException("The Direction's id value is not set", String.Empty);
 
-            var direction = dimsDatabase.Directions.Get(id.Value);
+            var direction = dimsDatabase.Directions.GetById(id.Value);
 
             if (direction == null)
                 throw new ValidationException($"The Direction with id = ${id.Value} was not found", String.Empty);
@@ -89,7 +89,7 @@ namespace HIMS.BL.Services
 
         public void Update(DirectionDTO direction)
         {
-            var _direction = dimsDatabase.Directions.Get(direction.DirectionId);
+            var _direction = dimsDatabase.Directions.GetById(direction.DirectionId);
 
             if (_direction != null)
             {

@@ -31,7 +31,7 @@ namespace HIMS.BL.Services
             if (!id.HasValue)
                 throw new ValidationException("The view user track id value is not set", String.Empty);
 
-            var _vUserTrack = database.vUserTracks.Get(id.Value);
+            var _vUserTrack = database.vUserTracks.GetById(id.Value);
 
             if (_vUserTrack == null)
                 throw new ValidationException($"The view user track with id = {id.Value} was not found", String.Empty);

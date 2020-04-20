@@ -37,7 +37,7 @@ namespace HIMS.BL.Services
         {
             if (!id.HasValue)
                 throw new ValidationException("The User Profile's id value is not set", String.Empty);
-            dimsDatabase.UserProfiles.Delete(id.Value);
+            dimsDatabase.UserProfiles.DeleteById(id.Value);
             dimsDatabase.Save();
         }
 
@@ -62,7 +62,7 @@ namespace HIMS.BL.Services
             if (!id.HasValue)
                 throw new ValidationException("The User Profile's id value is not set!", String.Empty);
 
-            var userProfileEmail = dimsDatabase.UserProfiles.Get(id.Value).Email;
+            var userProfileEmail = dimsDatabase.UserProfiles.GetById(id.Value).Email;
 
             return await DeleteByEmailAsync(userProfileEmail);
         }
@@ -77,7 +77,7 @@ namespace HIMS.BL.Services
             if (!id.HasValue)
                 throw new ValidationException("The User Profile's id value is not set", String.Empty);
 
-            var userProfile = dimsDatabase.UserProfiles.Get(id.Value);
+            var userProfile = dimsDatabase.UserProfiles.GetById(id.Value);
 
             if (userProfile == null)
                 throw new ValidationException($"The User Profile with id = {id.Value} was not found", String.Empty);
@@ -138,7 +138,7 @@ namespace HIMS.BL.Services
                 throw new ValidationException($"The length of {nameof(userProfile.Address)} must be less than 25"
                     , nameof(userProfile.Address));
 
-            var _userProfile = dimsDatabase.UserProfiles.Get(userProfile.UserId);
+            var _userProfile = dimsDatabase.UserProfiles.GetById(userProfile.UserId);
 
             var userTasks = this.userTasks.GetByUserId(userProfile.UserId);
             

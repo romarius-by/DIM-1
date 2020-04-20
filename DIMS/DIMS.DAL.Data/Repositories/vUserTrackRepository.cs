@@ -22,7 +22,7 @@ namespace HIMS.EF.DAL.Data.Repositories
             return _dIMSDBContext.vUserTracks.Where(predicate).ToList();
         }
 
-        public vUserTrack Get(int id)
+        public vUserTrack GetById(int id)
         {
             return _dIMSDBContext.vUserTracks.Find(id);
         }

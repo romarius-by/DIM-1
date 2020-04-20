@@ -37,7 +37,7 @@ namespace HIMS.BL.Services
             if (!id.HasValue)
                 throw new ValidationException("The view user progress id value is not set", String.Empty);
 
-            var _vUserProgress = database.vUserProgresses.Get(id.Value);
+            var _vUserProgress = database.vUserProgresses.GetById(id.Value);
 
             if (_vUserProgress == null)
                 throw new ValidationException($"The view user progress with id = {id.Value} was not found", String.Empty);

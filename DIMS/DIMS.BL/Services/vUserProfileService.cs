@@ -31,7 +31,7 @@ namespace HIMS.BL.Services
             if (!id.HasValue)
                 throw new ValidationException("The view user profile id value is not set", String.Empty);
 
-            var vUserProfile = database.vUserProfiles.Get(id.Value);
+            var vUserProfile = database.vUserProfiles.GetById(id.Value);
 
             if (vUserProfile == null)
                 throw new ValidationException($"The view user profile with id = {id.Value} was not found", String.Empty);

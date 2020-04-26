@@ -30,7 +30,7 @@ namespace HIMS.BL.Services
             Database.Save();
         }
 
-        public async Task<OperationDetails> DeleteByIdAsync(int? id)
+        public async Task<bool> DeleteByIdAsync(int? id)
         {
             if (!id.HasValue)
                 throw new ValidationException("The id value is not set!", String.Empty);
@@ -38,10 +38,10 @@ namespace HIMS.BL.Services
             var taskTrack = await Database.TaskTracks.DeleteByIdAsync(id.Value);
 
             if (taskTrack != null)
-                return new OperationDetails(true, "Task track has been succesfully deleted: ", taskTrack.TrackNote);
+                return true;
 
             else
-                return new OperationDetails(false, "Something went wrong!", " ");
+                return false;
         }
 
         public void Dispose()

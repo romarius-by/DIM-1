@@ -10,6 +10,6 @@ namespace HIMS.BL.Interfaces
 {
     public interface IUserProfileService : IService<UserProfileDTO>
     {
-        Task<OperationDetails> DeleteByEmailAsync(string email);
+        Task<bool> DeleteByEmailAsync(string email);
     }
 }

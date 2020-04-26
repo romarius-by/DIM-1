@@ -41,7 +41,7 @@ namespace HIMS.BL.Services
             Database.Save();
         }
 
-        public async Task<OperationDetails> DeleteByEmailAsync(string email)
+        public async Task<bool> DeleteByEmailAsync(string email)
         {
             if (email == null)
                 throw new ValidationException("The User Profile's email is not set", String.Empty);
@@ -51,13 +51,15 @@ namespace HIMS.BL.Services
             if (operationDetails.Succedeed || operationDetails.Message == "The user with such Email not found! Email: ")
             {
                 Repository.DeleteByEmail(email);
-                return operationDetails;
+                return true;
             }
             else
                 throw new ValidationException(operationDetails.Message, operationDetails.Property);
+
+            return false;
         }
 
-        public async Task<OperationDetails> DeleteByIdAsync(int? id)
+        public async Task<bool> DeleteByIdAsync(int? id)
         {
             if (!id.HasValue)
                 throw new ValidationException("The User Profile's id value is not set!", String.Empty);

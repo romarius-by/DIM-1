@@ -17,12 +17,10 @@ namespace HIMS.BL.Services
     {
         private IUnitOfWork Database { get; }
 
-        private IAuthService<UserDTO> AuthService{ get; }
 
-        public UserService(IUnitOfWork uow, IAuthService<UserDTO> authService)
+        public UserService(IUnitOfWork uow)
         {
             Database = uow;
-            AuthService = authService;
         }
 
         public async Task<OperationDetails> Create(UserDTO userDto)

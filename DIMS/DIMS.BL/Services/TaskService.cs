@@ -97,7 +97,7 @@ namespace HIMS.BL.Services
             }
         }
 
-        public async Task<OperationDetails> DeleteByIdAsync(int? id)
+        public async Task<bool> DeleteByIdAsync(int? id)
         {
             if (!id.HasValue)
             {
@@ -108,11 +108,11 @@ namespace HIMS.BL.Services
 
             if (task != null)
             {
-                return new OperationDetails(true, "The Task has been deleted successfully! Task: ", task.Name);
+                return true;
             }
 
             else
-                return new OperationDetails(false, "Something went wrong!", " ");
+                return false;
         }
     }
 }

@@ -13,7 +13,7 @@ namespace HIMS.BL.Interfaces
         void Update(T item);
         void DeleteById(int? id);
 
-        Task<OperationDetails> DeleteByIdAsync(int? id);
+        Task<bool> DeleteByIdAsync(int? id);
 
     }
 }

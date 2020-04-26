@@ -216,7 +216,9 @@ namespace HIMS.Server.Controllers
             var userProfile = await _vUserProfileService.GetByEmailAsync(email);
 
             if (userProfile == null)
+            {
                 return HttpNotFound();
+            } 
 
             var vuserProfileDto = Mapper.Map<vUserProfileDTO, vUserProfileViewModel>(userProfile);
 
@@ -244,14 +246,14 @@ namespace HIMS.Server.Controllers
         private List<SelectListItem> GetDirections()
         {
             var directions = Mapper.Map<IEnumerable<DirectionDTO>, List<DirectionViewModel>>(_directionService.GetAll());
-            List<SelectListItem> selectItems = new List<SelectListItem>();
+            List<SelectListItem> selectedItems = new List<SelectListItem>();
 
-            foreach (var item in directions)
+            foreach (var direction in directions)
             {
-                selectItems.Add(new SelectListItem { Text = item.Name, Value = item.DirectionId.ToString() });
+                selectedItems.Add(new SelectListItem { Text = direction.Name, Value = direction.DirectionId.ToString() });
             }
 
-            return selectItems;
+            return selectedItems;
         }
 
     }

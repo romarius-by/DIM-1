@@ -21,6 +21,5 @@ namespace HIMS.BL.Interfaces
         Task<ApplicationUser> FindByName(string email);
         Task<ApplicationUser> FindById(string email);
 
-        Task<string> GenerateToken(UserDTO user);
     }
 }

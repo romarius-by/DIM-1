@@ -1,5 +1,6 @@
 ﻿using Email.Interfaces;
 using HIMS.BL.Interfaces;
+using HIMS.BL.Models;
 using HIMS.BL.Services;
 using HIMS.Email.Services;
 using Ninject.Modules;
@@ -30,6 +31,7 @@ namespace HIMS.Server.utils
             Bind<IvUserProgressService>().To<vUserProgressService>();
             Bind<IvUserTaskService>().To<vUserTaskService>();
             Bind<IvUserTrackService>().To<vUserTrackService>();
+            Bind<IAuthService<UserDTO>>().To<UserAuthService>();
 
             Bind<ISender>().To<Sender>()
                 .InSingletonScope()

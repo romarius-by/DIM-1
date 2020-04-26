@@ -17,9 +17,12 @@ namespace HIMS.BL.Services
     {
         private IUnitOfWork Database { get; }
 
-        public UserService(IUnitOfWork uow)
+        private IAuthService<UserDTO> AuthService{ get; }
+
+        public UserService(IUnitOfWork uow, IAuthService<UserDTO> authService)
         {
             Database = uow;
+            AuthService = authService;
         }
 
         public async Task<OperationDetails> Create(UserDTO userDto)
@@ -101,14 +104,6 @@ namespace HIMS.BL.Services
             }
         }
 
-        public async Task<string> GenerateToken(UserDTO userDTO)
-        {
-            var user = await FindByEmail(userDTO.Email);
-
-            var token = await Database.UserSecurityManager.GenerateEmailConfirmationTokenAsync(user.Id).ConfigureAwait(false);
-
-            return token;
-        }
 
         public async Task<ApplicationUser> FindByEmail(string email) =>
             await Database.UserSecurityManager.FindByEmailAsync(email).ConfigureAwait(false);

@@ -17,12 +17,15 @@ namespace HIMS.Server.Controllers
     public class AccountController : Controller
     {
         private readonly IUserService _userService;
+        private readonly IAuthService<UserDTO> _authService;
+
         private readonly ISender _sender;
 
 
-        public AccountController(IUserService userService, ISender sender)
+        public AccountController(IUserService userService, IAuthService<UserDTO> authService, ISender sender)
         {
             _userService = userService;
+            _authService = authService;
             _sender = sender;
         }
 
@@ -105,7 +108,7 @@ namespace HIMS.Server.Controllers
 
         private async Task<string> SendEmailConfirmationTokenAsync(UserDTO user)
         {
-            var token = await _userService.GenerateToken(user).ConfigureAwait(false);
+            var token = await _authService.GenerateTokenAsync(user).ConfigureAwait(false);
 
             var callbackUrl = Url.Action(
                             "ConfirmEmail",

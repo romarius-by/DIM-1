@@ -105,13 +105,13 @@ namespace HIMS.BL.Services
         }
 
 
-        public async Task<ApplicationUser> FindByEmail(string email) =>
+        public async Task<ApplicationUser> FindByEmailAsync(string email) =>
             await Database.UserSecurityManager.FindByEmailAsync(email).ConfigureAwait(false);
 
-        public async Task<ApplicationUser> FindById(string id) =>
+        public async Task<ApplicationUser> FindByIdAsync(string id) =>
             await Database.UserSecurityManager.FindByIdAsync(id).ConfigureAwait(false);
 
-        public async Task<ApplicationUser> FindByName(string id) =>
+        public async Task<ApplicationUser> FindByNameAsync(string id) =>
             await Database.UserSecurityManager.FindByNameAsync(id).ConfigureAwait(false);
 
     }

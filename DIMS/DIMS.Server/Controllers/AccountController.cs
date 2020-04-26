@@ -19,14 +19,14 @@ namespace HIMS.Server.Controllers
         private readonly IUserService _userService;
         private readonly IAuthService<UserDTO> _authService;
 
-        private readonly ISender _sender;
+        private readonly ISender _senderService;
 
 
         public AccountController(IUserService userService, IAuthService<UserDTO> authService, ISender sender)
         {
             _userService = userService;
             _authService = authService;
-            _sender = sender;
+            _senderService = sender;
         }
 
         private IAuthenticationManager AuthenticationManager => HttpContext.GetOwinContext().Authentication;
@@ -116,7 +116,7 @@ namespace HIMS.Server.Controllers
                             new { Username = user.Email, Token = token },
                             protocol: Request.Url.Scheme);
 
-            await _sender.MessageToUserAsync(user, "Account confirmation",
+            await _senderService.MessageToUserAsync(user, "Account confirmation",
                     $"<span>Please, confirm your account by following this </span>" +
                     $"<a href='{callbackUrl}'>link</a>");
 

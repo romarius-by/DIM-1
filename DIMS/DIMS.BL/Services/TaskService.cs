@@ -11,6 +11,9 @@ using System.Threading.Tasks;
 
 namespace HIMS.BL.Services
 {
+
+    using DimsTask = global::HIMS.EF.DAL.Data.Task;
+
     public class TaskService : ITaskService
     {
 
@@ -47,12 +50,12 @@ namespace HIMS.BL.Services
             if (task == null)
                 throw new ValidationException($"The task with id = {id.Value} was not found", String.Empty);
 
-            return Mapper.Map<EF.DAL.Data.Task, TaskDTO>(task);
+            return Mapper.Map<DimsTask, TaskDTO>(task);
         }
 
         public IEnumerable<TaskDTO> GetAll()
         {
-            return Mapper.Map<IEnumerable<EF.DAL.Data.Task>, ICollection<TaskDTO>>(Database.Tasks.GetAll());
+            return Mapper.Map<IEnumerable<DimsTask>, ICollection<TaskDTO>>(Database.Tasks.GetAll());
 
         }
 
@@ -67,7 +70,7 @@ namespace HIMS.BL.Services
 
         public void Save(TaskDTO task)
         {
-            var _task = new EF.DAL.Data.Task
+            var _task = new DimsTask
             {
                 Name = task.Name,
                 Description = task.Description,

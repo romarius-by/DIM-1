@@ -12,6 +12,9 @@ using System.Threading.Tasks;
 
 namespace HIMS.BL.Services
 {
+
+    using DimsTask = global::HIMS.EF.DAL.Data.Task;
+
     public class UserTaskService : IUserTaskService
     {
         private IUnitOfWork Database;
@@ -42,7 +45,7 @@ namespace HIMS.BL.Services
             if (!id.HasValue)
                 throw new ValidationException("The user task id value is not set", String.Empty);
 
-            return Mapper.Map<EF.DAL.Data.Task, TaskDTO>(
+            return Mapper.Map<DimsTask, TaskDTO>(
                 Database.UserTasks.GetById(id.Value).Task);
         }
 
@@ -96,7 +99,7 @@ namespace HIMS.BL.Services
         {
             var userTask = new UserTask
             {
-                Task = Mapper.Map<TaskDTO, EF.DAL.Data.Task>(userTaskDTO.Task),
+                Task = Mapper.Map<TaskDTO, DimsTask>(userTaskDTO.Task),
                 TaskId = userTaskDTO.TaskId,
                 StateId = userTaskDTO.StateId,
                 TaskState = Mapper.Map<TaskStateDTO, TaskState>(userTaskDTO.TaskState),

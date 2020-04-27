@@ -22,7 +22,7 @@ namespace HIMS.EF.DAL.Data.Repositories
             return _dIMSDBContext.vUserProfiles.Where(predicate).ToList();
         }
 
-        public vUserProfile Get(int id)
+        public vUserProfile GetById(int id)
         {
             return _dIMSDBContext.vUserProfiles.Find(id);
         }
@@ -32,7 +32,7 @@ namespace HIMS.EF.DAL.Data.Repositories
 
             return await System.Threading.Tasks.Task.Run(() => 
             {
-                return _dIMSDBContext.vUserProfiles.Where(user => user.Email == email).FirstOrDefault();
+                return _dIMSDBContext.vUserProfiles.Where(userProfile => userProfile.Email == email).FirstOrDefault();
             });
         }
 

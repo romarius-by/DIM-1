@@ -21,7 +21,7 @@ namespace HIMS.EF.DAL.Data.Repositories
             return _dIMSDBContext.vTasks.Where(predicate).ToList();
         }
 
-        public vTask Get(int id)
+        public vTask GetById(int id)
         {
             return _dIMSDBContext.vTasks.Find(id);
         }

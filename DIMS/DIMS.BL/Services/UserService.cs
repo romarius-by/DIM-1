@@ -15,28 +15,29 @@ namespace HIMS.BL.Services
 {
     public class UserService : IUserService
     {
-        private IUnitOfWork database { get; }
+        private IUnitOfWork Database { get; }
+
 
         public UserService(IUnitOfWork uow)
         {
-            database = uow;
+            Database = uow;
         }
 
         public async Task<OperationDetails> Create(UserDTO userDto)
         {
-            ApplicationUser user = await database.UserSecurityManager.FindByEmailAsync(userDto.Email).ConfigureAwait(false);
+            ApplicationUser user = await Database.UserSecurityManager.FindByEmailAsync(userDto.Email).ConfigureAwait(false);
             if (user == null)
             {
                 user = new ApplicationUser { Email = userDto.Email, UserName = userDto.Email };
-                var result = await database.UserSecurityManager.CreateAsync(user, userDto.Password).ConfigureAwait(false);
+                var result = await Database.UserSecurityManager.CreateAsync(user, userDto.Password).ConfigureAwait(false);
 
                 if (result.Errors.Any())
                     return new OperationDetails(false, result.Errors.FirstOrDefault(), "");
 
                 // add a role
-                await database.UserSecurityManager.AddToRoleAsync(user.Id.ToString(), userDto.Role).ConfigureAwait(false);
+                await Database.UserSecurityManager.AddToRoleAsync(user.Id.ToString(), userDto.Role).ConfigureAwait(false);
 
-                await database.SaveAsync().ConfigureAwait(false);
+                await Database.SaveAsync().ConfigureAwait(false);
                 return new OperationDetails(true, "The registration was done successfully!", "");
             }
             else
@@ -49,11 +50,11 @@ namespace HIMS.BL.Services
         {
             ClaimsIdentity claim = null;
             // finding the user
-            ApplicationUser user = await database.UserSecurityManager.FindAsync(userDto.Email, userDto.Password).ConfigureAwait(false);
+            ApplicationUser user = await Database.UserSecurityManager.FindAsync(userDto.Email, userDto.Password).ConfigureAwait(false);
             // authorize and return the ClaimsIdentity object
             if (user != null)
             {
-                claim = await database.UserSecurityManager.CreateIdentityAsync(user,
+                claim = await Database.UserSecurityManager.CreateIdentityAsync(user,
                                            DefaultAuthenticationTypes.ApplicationCookie).ConfigureAwait(false);
             }
 
@@ -65,11 +66,11 @@ namespace HIMS.BL.Services
         {
             foreach (string roleName in roles)
             {
-                var role = await database.ApplicationRoleManager.FindByNameAsync(roleName).ConfigureAwait(false);
+                var role = await Database.ApplicationRoleManager.FindByNameAsync(roleName).ConfigureAwait(false);
                 if (role == null)
                 {
                     role = new ApplicationRole { Name = roleName };
-                    await database.ApplicationRoleManager.CreateAsync(role);
+                    await Database.ApplicationRoleManager.CreateAsync(role);
                 }
             }
             await Create(adminDto).ConfigureAwait(false);
@@ -77,16 +78,16 @@ namespace HIMS.BL.Services
 
         public void Dispose()
         {
-            database.Dispose();
+            Database.Dispose();
         }
 
-        public async Task<OperationDetails> DeleteUserByEmail(string email)
+        public async Task<OperationDetails> DeleteByEmail(string email)
         {
-            ApplicationUser user = await database.UserSecurityManager.FindByEmailAsync(email);
+            ApplicationUser user = await Database.UserSecurityManager.FindByEmailAsync(email);
 
             if (user != null)
             {
-                var result = database.UserSecurityManager.Delete(user);
+                var result = Database.UserSecurityManager.Delete(user);
 
                 if (result.Errors.Count() > 0)
                 {
@@ -101,23 +102,15 @@ namespace HIMS.BL.Services
             }
         }
 
-        public async Task<string> GenerateToken(UserDTO userDTO)
-        {
-            var user = await FindByEmail(userDTO.Email);
 
-            var token = await database.UserSecurityManager.GenerateEmailConfirmationTokenAsync(user.Id).ConfigureAwait(false);
+        public async Task<ApplicationUser> FindByEmailAsync(string email) =>
+            await Database.UserSecurityManager.FindByEmailAsync(email).ConfigureAwait(false);
 
-            return token;
-        }
+        public async Task<ApplicationUser> FindByIdAsync(string id) =>
+            await Database.UserSecurityManager.FindByIdAsync(id).ConfigureAwait(false);
 
-        public async Task<ApplicationUser> FindByEmail(string email) =>
-            await database.UserSecurityManager.FindByEmailAsync(email).ConfigureAwait(false);
-
-        public async Task<ApplicationUser> FindById(string id) =>
-            await database.UserSecurityManager.FindByIdAsync(id).ConfigureAwait(false);
-
-        public async Task<ApplicationUser> FindByName(string id) =>
-            await database.UserSecurityManager.FindByNameAsync(id).ConfigureAwait(false);
+        public async Task<ApplicationUser> FindByNameAsync(string id) =>
+            await Database.UserSecurityManager.FindByNameAsync(id).ConfigureAwait(false);
 
     }
 }

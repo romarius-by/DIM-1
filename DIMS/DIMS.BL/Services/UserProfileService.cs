@@ -16,68 +16,70 @@ namespace HIMS.BL.Services
     public class UserProfileService : IUserProfileService
     {
 
-        private IUnitOfWork dimsDatabase { get; }
+        private IUnitOfWork Database { get; }
         private IProcedureManager Pm { get; }
-        private UserService userService { get; }
-        private UserProfileRepository repository { get; }
+        private UserService UserService { get; }
+        private UserProfileRepository Repository { get; }
 
-        private UserTaskService userTasks { get; }
+        private UserTaskService UserTasks { get; }
 
         public UserProfileService(IUnitOfWork unitOfWork, IProcedureManager pm, UserProfileRepository userProfileRepository, UserService userService, UserTaskService userTaskService)
         {
-            dimsDatabase = unitOfWork;
+            Database = unitOfWork;
             Pm = pm;
-            repository = userProfileRepository;
-            this.userService = userService;
-            userTasks = userTaskService;
+            Repository = userProfileRepository;
+            this.UserService = userService;
+            UserTasks = userTaskService;
         }
 
 
-        public void DeleteItem(int? id)
+        public void DeleteById(int? id)
         {
             if (!id.HasValue)
                 throw new ValidationException("The User Profile's id value is not set", String.Empty);
-            dimsDatabase.UserProfiles.Delete(id.Value);
-            dimsDatabase.Save();
+            Database.UserProfiles.DeleteById(id.Value);
+            Database.Save();
         }
 
-        public async Task<OperationDetails> DeleteUserProfileByEmailAsync(string email)
+        public async Task<bool> DeleteByEmailAsync(string email)
         {
             if (email == null)
                 throw new ValidationException("The User Profile's email is not set", String.Empty);
 
-            OperationDetails operationDetails = await userService.DeleteUserByEmail(email);
+            OperationDetails operationDetails = await UserService.DeleteByEmail(email);
 
             if (operationDetails.Succedeed || operationDetails.Message == "The user with such Email not found! Email: ")
             {
-                repository.DeleteByEmail(email);
-                return operationDetails;
+                Repository.DeleteByEmail(email);
+                return true;
             }
             else
                 throw new ValidationException(operationDetails.Message, operationDetails.Property);
+
+            return false;
         }
 
-        public async Task<OperationDetails> DeleteItemAsync(int? id)
+        public async Task<bool> DeleteByIdAsync(int? id)
         {
             if (!id.HasValue)
                 throw new ValidationException("The User Profile's id value is not set!", String.Empty);
 
-            var userProfileEmail = dimsDatabase.UserProfiles.Get(id.Value).Email;
+            var userProfileEmail = Database.UserProfiles.GetById(id.Value).Email;
 
-            return await DeleteUserProfileByEmailAsync(userProfileEmail);
+            return await DeleteByEmailAsync(userProfileEmail);
         }
 
         public void Dispose()
         {
-            dimsDatabase.Dispose();
+            Database.Dispose();
         }
 
-        public UserProfileDTO GetItem(int? id)
+        public UserProfileDTO GetById(int? id)
         {
             if (!id.HasValue)
                 throw new ValidationException("The User Profile's id value is not set", String.Empty);
 
-            var userProfile = dimsDatabase.UserProfiles.Get(id.Value);
+            var userProfile = Database.UserProfiles.GetById(id.Value);
 
             if (userProfile == null)
                 throw new ValidationException($"The User Profile with id = {id.Value} was not found", String.Empty);
@@ -85,12 +87,12 @@ namespace HIMS.BL.Services
             return Mapper.Map<UserProfile, UserProfileDTO>(userProfile);
         }
 
-        public IEnumerable<UserProfileDTO> GetItems()
+        public IEnumerable<UserProfileDTO> GetAll()
         {
-            return Mapper.Map<IEnumerable<UserProfile>, List<UserProfileDTO>>(dimsDatabase.UserProfiles.GetAll());
+            return Mapper.Map<IEnumerable<UserProfile>, List<UserProfileDTO>>(Database.UserProfiles.GetAll());
         }
 
-        public void SaveItem(UserProfileDTO userProfile)
+        public void Save(UserProfileDTO userProfile)
         {
 
             // Validation (must be improve)
@@ -121,11 +123,11 @@ namespace HIMS.BL.Services
                 StartDate = userProfile.StartDate
             };
 
-            dimsDatabase.UserProfiles.Create(_userProfile);
-            dimsDatabase.Save();
+            Database.UserProfiles.Create(_userProfile);
+            Database.Save();
         }
 
-        public void UpdateItem(UserProfileDTO userProfile)
+        public void Update(UserProfileDTO userProfile)
         {
             // Validation (must be improve)
             if (userProfile.Name.Length > 25)
@@ -138,16 +140,16 @@ namespace HIMS.BL.Services
                 throw new ValidationException($"The length of {nameof(userProfile.Address)} must be less than 25"
                     , nameof(userProfile.Address));
 
-            var _userProfile = dimsDatabase.UserProfiles.Get(userProfile.UserId);
+            var _userProfile = Database.UserProfiles.GetById(userProfile.UserId);
 
-            var userTasks = this.userTasks.GetByUserId(userProfile.UserId);
+            var userTasks = this.UserTasks.GetByUserId(userProfile.UserId);
             
             if (_userProfile != null)
             {
                 Mapper.Map<UserProfileDTO, UserProfile>(userProfile, _userProfile);
                 _userProfile.UserTasks = Mapper.Map<IEnumerable<UserTaskDTO>, ICollection<UserTask>>(userTasks);
 
-                dimsDatabase.Save();
+                Database.Save();
             }
 
         }

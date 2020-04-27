@@ -11,48 +11,51 @@ using System.Threading.Tasks;
 
 namespace HIMS.BL.Services
 {
+
+    using DimsTask = global::HIMS.EF.DAL.Data.Task;
+
     public class TaskService : ITaskService
     {
 
-        private IUnitOfWork database { get; }
+        private IUnitOfWork Database { get; }
 
         public TaskService (IUnitOfWork uow)
         {
-            database = uow;
+            Database = uow;
         }
 
 
-        public void DeleteItem(int? id)
+        public void DeleteById(int? id)
         {
             if (!id.HasValue)
                 throw new ValidationException("The Task id value is not set", String.Empty);
 
-            database.Directions.Delete(id.Value);
+            Database.Directions.DeleteById(id.Value);
 
-            database.Save();
+            Database.Save();
         }
 
         public void Dispose()
         {
-            database.Dispose();
+            Database.Dispose();
         }
 
-        public TaskDTO GetItem(int? id)
+        public TaskDTO GetById(int? id)
         {
             if (!id.HasValue)
                 throw new ValidationException("The Task id value is not set", String.Empty);
 
-            var task = database.Tasks.Get(id.Value);
+            var task = Database.Tasks.GetById(id.Value);
 
             if (task == null)
                 throw new ValidationException($"The task with id = {id.Value} was not found", String.Empty);
 
-            return Mapper.Map<EF.DAL.Data.Task, TaskDTO>(task);
+            return Mapper.Map<DimsTask, TaskDTO>(task);
         }
 
-        public IEnumerable<TaskDTO> GetItems()
+        public IEnumerable<TaskDTO> GetAll()
         {
-            return Mapper.Map<IEnumerable<EF.DAL.Data.Task>, ICollection<TaskDTO>>(database.Tasks.GetAll());
+            return Mapper.Map<IEnumerable<DimsTask>, ICollection<TaskDTO>>(Database.Tasks.GetAll());
 
         }
 
@@ -61,13 +64,13 @@ namespace HIMS.BL.Services
             if (!id.HasValue)
                 throw new ValidationException("The task id value is not set", String.Empty);
 
-            return Mapper.Map<IEnumerable<UserTask>, ICollection<UserTaskDTO>>(database.Tasks.
-                Get(id.Value).UserTasks);
+            return Mapper.Map<IEnumerable<UserTask>, ICollection<UserTaskDTO>>(Database.Tasks.
+                GetById(id.Value).UserTasks);
         }
 
-        public void SaveItem(TaskDTO task)
+        public void Save(TaskDTO task)
         {
-            var _task = new EF.DAL.Data.Task
+            var _task = new DimsTask
             {
                 Name = task.Name,
                 Description = task.Description,
@@ -76,40 +79,40 @@ namespace HIMS.BL.Services
                 UserTasks = Mapper.Map<List<UserTaskDTO>, ICollection<UserTask>>(task.UserTasks.ToList())
             };
 
-            database.Tasks.Create(_task);
-            database.Save();
+            Database.Tasks.Create(_task);
+            Database.Save();
             
         }
 
-        public void UpdateItem(TaskDTO taskDTO)
+        public void Update(TaskDTO taskDTO)
         {
-            var task = database.Tasks.Get(taskDTO.TaskId);
+            var task = Database.Tasks.GetById(taskDTO.TaskId);
 
             if (task != null)
             {
                 Mapper.Map(taskDTO, task);
 
-                database.Save();
+                Database.Save();
 
             }
         }
 
-        public async Task<OperationDetails> DeleteItemAsync(int? id)
+        public async Task<bool> DeleteByIdAsync(int? id)
         {
             if (!id.HasValue)
             {
                 throw new ValidationException("The id value is not set!", String.Empty);
             }
 
-            var res = await database.Tasks.DeleteAsync(id.Value);
+            var task = await Database.Tasks.DeleteByIdAsync(id.Value);
 
-            if (res != null)
+            if (task != null)
             {
-                return new OperationDetails(true, "The Task has been deleted successfully! Task: ", res.Name);
+                return true;
             }
 
             else
-                return new OperationDetails(false, "Something went wrong!", " ");
+                return false;
         }
     }
 }

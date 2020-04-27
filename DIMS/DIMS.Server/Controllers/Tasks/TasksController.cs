@@ -27,9 +27,9 @@ namespace HIMS.Server.Controllers.Tasks
             var TasksViewModel = new TasksListViewModel
             {
                 Tasks = Mapper.Map<IEnumerable<vTaskDTO>, IEnumerable<vTaskViewModel>>(
-                    _taskService.GetItems()),
+                    _taskService.GetAll()),
                 UserProfiles = Mapper.Map<IEnumerable<vUserProfileDTO>, IEnumerable<vUserProfileViewModel>>(
-                    _userProfileService.GetItems())
+                    _userProfileService.GetAll())
             };
 
             return View(TasksViewModel);

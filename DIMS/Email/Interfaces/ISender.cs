@@ -9,7 +9,7 @@ namespace Email.Interfaces
 {
     public interface ISender
     {
-        Task MessageToUserAsync(UserDTO user, string subject, string html);
+        Task<string> MessageToUserAsync(UserDTO user, string subject, string html);
         Task MessageToUserAsync(IEnumerable<UserDTO> users, string subject, string html);
     }
 }

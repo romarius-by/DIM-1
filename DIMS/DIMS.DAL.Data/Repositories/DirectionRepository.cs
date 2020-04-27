@@ -20,7 +20,7 @@ namespace HIMS.EF.DAL.Data.Repositories
             _dIMSDBContext.Directions.Add(item);
         }
 
-        public void Delete(int id)
+        public void DeleteById(int id)
         {
             var direction = _dIMSDBContext.Directions.Find(id);
 
@@ -30,7 +30,7 @@ namespace HIMS.EF.DAL.Data.Repositories
             }
         }
 
-        public async Task<Direction> DeleteAsync(int id)
+        public async Task<Direction> DeleteByIdAsync(int id)
         {
             return await System.Threading.Tasks.Task.Run(() =>
             {
@@ -45,7 +45,7 @@ namespace HIMS.EF.DAL.Data.Repositories
             return _dIMSDBContext.Directions.Where(predicate).ToList();
         }
 
-        public Direction Get(int id)
+        public Direction GetById(int id)
         {
             return _dIMSDBContext.Directions.Find(id);
         }

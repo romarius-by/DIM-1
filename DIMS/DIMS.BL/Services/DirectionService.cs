@@ -14,52 +14,52 @@ namespace HIMS.BL.Services
     public class DirectionService : IDirectionService
     {
 
-        private IUnitOfWork dimsDatabase { get; }
+        private IUnitOfWork Database { get; }
         
         public DirectionService(IUnitOfWork unitOfWork)
         {
-            dimsDatabase = unitOfWork;
+            Database = unitOfWork;
         }
 
-        public void DeleteItem(int? id)
+        public void DeleteById(int? id)
         {
             if (!id.HasValue)
                 throw new ValidationException("The Direction's id value is not set", String.Empty);
 
-            dimsDatabase.Directions.Delete(id.Value);
-            dimsDatabase.Save();
+            Database.Directions.DeleteById(id.Value);
+            Database.Save();
         }
 
-        public async Task<OperationDetails> DeleteItemAsync(int? id)
+        public async Task<bool> DeleteByIdAsync(int? id)
         {
             if (!id.HasValue)
                 throw new ValidationException("The Direction's id value is not set", String.Empty);
 
-            var res = await dimsDatabase.Directions.DeleteAsync(id.Value);
+            var direction = await Database.Directions.DeleteByIdAsync(id.Value);
 
-            if (res != null)
+            if (direction != null)
             {
-                return new OperationDetails(true, "The Direction has been successfully deleted! Direction: ", res.Name);
+                return true;
             }
 
             else
             {
-                return new OperationDetails(false, "Something went wrong!", " ");
+                return false;
             }
             
         }
 
         public void Dispose()
         {
-            dimsDatabase.Dispose();
+            Database.Dispose();
         }
 
-        public DirectionDTO GetItem(int? id)
+        public DirectionDTO GetById(int? id)
         {
             if (!id.HasValue)
                 throw new ValidationException("The Direction's id value is not set", String.Empty);
 
-            var direction = dimsDatabase.Directions.Get(id.Value);
+            var direction = Database.Directions.GetById(id.Value);
 
             if (direction == null)
                 throw new ValidationException($"The Direction with id = ${id.Value} was not found", String.Empty);
@@ -67,12 +67,12 @@ namespace HIMS.BL.Services
             return Mapper.Map<Direction, DirectionDTO>(direction);
         }
 
-        public IEnumerable<DirectionDTO> GetItems()
+        public IEnumerable<DirectionDTO> GetAll()
         {
-            return Mapper.Map<IEnumerable<Direction>, List<DirectionDTO>>(dimsDatabase.Directions.GetAll());
+            return Mapper.Map<IEnumerable<Direction>, List<DirectionDTO>>(Database.Directions.GetAll());
         }
 
-        public void SaveItem(DirectionDTO direction)
+        public void Save(DirectionDTO direction)
         {
             var _direction = new Direction
             {
@@ -81,21 +81,21 @@ namespace HIMS.BL.Services
                 UserProfiles = Mapper.Map<List<UserProfileDTO>, ICollection <UserProfile>>(direction.UserProfiles.ToList())
             };
 
-            dimsDatabase.Directions.Create(_direction);
+            Database.Directions.Create(_direction);
 
-            dimsDatabase.Save();
+            Database.Save();
 
         }
 
-        public void UpdateItem(DirectionDTO direction)
+        public void Update(DirectionDTO direction)
         {
-            var _direction = dimsDatabase.Directions.Get(direction.DirectionId);
+            var _direction = Database.Directions.GetById(direction.DirectionId);
 
             if (_direction != null)
             {
                 Mapper.Map(direction, _direction);
 
-                dimsDatabase.Save();
+                Database.Save();
             }
 
 

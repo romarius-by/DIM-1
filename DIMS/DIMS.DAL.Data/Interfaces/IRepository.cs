@@ -8,14 +8,14 @@ namespace HIMS.EF.DAL.Data
 {
     public interface IRepository<T>
     {
-        T Get(int id);
+        T GetById(int id);
         void Create(T item);
         void Update(T item);
-        void Delete(int id);
+        void DeleteById(int id);
 
         IEnumerable<T> GetAll();
         IEnumerable<T> Find(Func<T, Boolean> predicate);
 
-        Task<T> DeleteAsync(int id);
+        Task<T> DeleteByIdAsync(int id);
     }
 }

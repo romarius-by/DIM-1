@@ -9,11 +9,11 @@ namespace HIMS.BL.Interfaces
 {
     public interface IService<T> : IvService<T>
     {
-        void SaveItem(T item);
-        void UpdateItem(T item);
-        void DeleteItem(int? id);
+        void Save(T item);
+        void Update(T item);
+        void DeleteById(int? id);
 
-        Task<OperationDetails> DeleteItemAsync(int? id);
+        Task<bool> DeleteByIdAsync(int? id);
 
     }
 }

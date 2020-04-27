@@ -14,30 +14,30 @@ namespace HIMS.BL.Services
     public class vUserProgressService : IvUserProgressService
     {
 
-        private IUnitOfWork database;
+        private IUnitOfWork Database;
 
         public vUserProgressService(IUnitOfWork uow)
         {
-            database = uow;
+            Database = uow;
         }
 
         public void Dispose()
         {
-            database.Dispose();
+            Database.Dispose();
         }
 
-        public IEnumerable<vUserProgressDTO> GetItems()
+        public IEnumerable<vUserProgressDTO> GetAll()
         {
             return Mapper.Map<List<vUserProgress>, ICollection<vUserProgressDTO>>(
-                database.vUserProgresses.GetAll().ToList());
+                Database.vUserProgresses.GetAll().ToList());
         }
 
-        public vUserProgressDTO GetItem(int? id)
+        public vUserProgressDTO GetById(int? id)
         {
             if (!id.HasValue)
                 throw new ValidationException("The view user progress id value is not set", String.Empty);
 
-            var _vUserProgress = database.vUserProgresses.Get(id.Value);
+            var _vUserProgress = Database.vUserProgresses.GetById(id.Value);
 
             if (_vUserProgress == null)
                 throw new ValidationException($"The view user progress with id = {id.Value} was not found", String.Empty);
@@ -46,12 +46,12 @@ namespace HIMS.BL.Services
 
         }
 
-        public IEnumerable<vUserProgressDTO> GetVUserProgressesByUserId(int? id)
+        public IEnumerable<vUserProgressDTO> GetByUserId(int? id)
         {
             if (!id.HasValue)
                 throw new ValidationException("The view user progress id value is not set", String.Empty);
 
-            var userProgress = database.vUserProgresses.Find(m => m.UserId == id.Value);
+            var userProgress = Database.vUserProgresses.Find(m => m.UserId == id.Value);
 
             if (userProgress == null)
             {

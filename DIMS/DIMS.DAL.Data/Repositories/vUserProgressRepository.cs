@@ -22,7 +22,7 @@ namespace HIMS.EF.DAL.Data.Repositories
             return _dIMSDBContext.vUserProgresses.Where(predicate).ToList();
         }
 
-        public vUserProgress Get(int id)
+        public vUserProgress GetById(int id)
         {
             return _dIMSDBContext.vUserProgresses.Find(id);
         }

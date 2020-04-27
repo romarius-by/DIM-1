@@ -6,11 +6,8 @@ using System.Threading.Tasks;
 
 namespace HIMS.BL.Interfaces
 {
-    public interface IvService<T>
+    public interface IAuthService<T>
     {
-        T GetById(int? id);
-        IEnumerable<T> GetAll();
-        
-        void Dispose();
+        Task<string> GenerateTokenAsync(T item);
     }
 }

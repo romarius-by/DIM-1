@@ -13,30 +13,30 @@ namespace HIMS.BL.Services
 {
     public class TaskStateService : ITaskStateService
     {
-        private IUnitOfWork database { get; }
+        private IUnitOfWork Database { get; }
 
         public TaskStateService (IUnitOfWork uow)
         {
-            database = uow;
+            Database = uow;
         }
 
-        public void DeleteItem(int? id)
+        public void DeleteById(int? id)
         {
             if (!id.HasValue)
                 throw new ValidationException("The task state id value is not set", String.Empty);
 
-            database.TaskStates.Delete(id.Value);
+            Database.TaskStates.DeleteById(id.Value);
 
-            database.Save();
+            Database.Save();
             
         }
 
-        public TaskStateDTO GetItem(int? id)
+        public TaskStateDTO GetById(int? id)
         {
             if (!id.HasValue)
                 throw new ValidationException("The task state id value is not set", String.Empty);
 
-            var task = database.TaskStates.Get(id.Value);
+            var task = Database.TaskStates.GetById(id.Value);
 
             if (task == null)
                 throw new ValidationException($"The task state with id = {id.Value} was not found", String.Empty);
@@ -51,11 +51,11 @@ namespace HIMS.BL.Services
                 throw new ValidationException("The task state id value is not set", String.Empty);
 
             return Mapper.Map<List<UserTask>, ICollection<UserTaskDTO>>(
-                database.TaskStates.Get(id.Value).UserTasks.ToList());
+                Database.TaskStates.GetById(id.Value).UserTasks.ToList());
 
         }
 
-        public void SaveItem(TaskStateDTO taskStateDTO)
+        public void Save(TaskStateDTO taskStateDTO)
         {
             var taskState = new TaskState
             {
@@ -63,45 +63,45 @@ namespace HIMS.BL.Services
                 UserTasks = Mapper.Map<List<UserTask>>(taskStateDTO.UserTasks)
             };
 
-            database.TaskStates.Create(taskState);
-            database.Save();
+            Database.TaskStates.Create(taskState);
+            Database.Save();
         }
 
-        public void UpdateItem(TaskStateDTO taskStateDTO)
+        public void Update(TaskStateDTO taskStateDTO)
         {
-            var taskState = database.TaskStates.Get(taskStateDTO.StateId);
+            var taskState = Database.TaskStates.GetById(taskStateDTO.StateId);
 
             if (taskState != null)
             {
                 Mapper.Map(taskStateDTO, taskState);
 
-                database.Save();
+                Database.Save();
             }
         }
 
         public void Dispose()
         {
-            database.Dispose();
+            Database.Dispose();
         }
 
-        public IEnumerable<TaskStateDTO> GetItems()
+        public IEnumerable<TaskStateDTO> GetAll()
         {
             return Mapper.Map<IEnumerable<TaskState>, IEnumerable<TaskStateDTO>>(
-                database.TaskStates.GetAll());
+                Database.TaskStates.GetAll());
         }
 
-        public async Task<OperationDetails> DeleteItemAsync(int? id)
+        public async Task<bool> DeleteByIdAsync(int? id)
         {
             if (!id.HasValue)
                 throw new ValidationException("The id value is not set!", String.Empty);
 
-            var res = await database.TaskStates.DeleteAsync(id.Value);
+            var taskState = await Database.TaskStates.DeleteByIdAsync(id.Value);
 
-            if (res != null)
-                return new OperationDetails(true, "Task state has been successfully deleted! State: ", res.StateName);
+            if (taskState != null)
+                return true;
 
             else
-                return new OperationDetails(false, "Something went wrong!", " ");
+                return false;
         }
     }
 }

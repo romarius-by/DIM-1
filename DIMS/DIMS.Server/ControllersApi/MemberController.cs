@@ -47,7 +47,7 @@ namespace HIMS.Server.ControllersApi
             if (!id.HasValue)
                 return ResponseMessage(Request.CreateErrorResponse(HttpStatusCode.BadRequest, "The id value was not set!"));
 
-            var vUserProfileDto = _vUserProfileService.GetItem(id.Value);
+            var vUserProfileDto = _vUserProfileService.GetById(id.Value);
 
             if (vUserProfileDto == null)
                 return ResponseMessage(Request.CreateResponse(HttpStatusCode.NotFound, $"The user with id = {id.Value} was not found!"));
@@ -65,7 +65,7 @@ namespace HIMS.Server.ControllersApi
             if(ModelState.IsValid)
             {
                 var userProfileDto = Mapper.Map<UserProfileViewModel, UserProfileDTO>(userProfile);
-                _userProfileService.SaveItem(userProfileDto);
+                _userProfileService.Save(userProfileDto);
 
                 return ResponseMessage(Request.CreateResponse(HttpStatusCode.OK, $"The member {userProfile.Name} {userProfile.LastName} has been successfully created!"));
             }
@@ -90,7 +90,7 @@ namespace HIMS.Server.ControllersApi
 
                 userProfileDto.UserId = id.Value;
 
-                _userProfileService.UpdateItem(userProfileDto);
+                _userProfileService.Update(userProfileDto);
 
                 return ResponseMessage(Request.CreateResponse(HttpStatusCode.OK, $"Member with id = {id.Value} has been successfully updated!"));
             }
@@ -113,7 +113,7 @@ namespace HIMS.Server.ControllersApi
             {
                 if (id != null)
                 {
-                    await _userProfileService.DeleteItemAsync(id);
+                    await _userProfileService.DeleteByIdAsync(id);
                 }
             }
             catch
@@ -132,7 +132,7 @@ namespace HIMS.Server.ControllersApi
             {
                 if (email != null)
                 {
-                    await _userProfileService.DeleteUserProfileByEmailAsync(email);
+                    await _userProfileService.DeleteByEmailAsync(email);
                 }
             }
             catch

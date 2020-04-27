@@ -14,24 +14,24 @@ namespace HIMS.BL.Services
     public class vUserProfileService : IvUserProfileService
     {
 
-        private IUnitOfWork database;
+        private IUnitOfWork Database;
 
         public vUserProfileService(IUnitOfWork uow)
         {
-            database = uow;
+            Database = uow;
         }
 
         public void Dispose()
         {
-            database.Dispose();
+            Database.Dispose();
         }
 
-        public vUserProfileDTO GetItem(int? id)
+        public vUserProfileDTO GetById(int? id)
         {
             if (!id.HasValue)
                 throw new ValidationException("The view user profile id value is not set", String.Empty);
 
-            var vUserProfile = database.vUserProfiles.Get(id.Value);
+            var vUserProfile = Database.vUserProfiles.GetById(id.Value);
 
             if (vUserProfile == null)
                 throw new ValidationException($"The view user profile with id = {id.Value} was not found", String.Empty);
@@ -39,12 +39,12 @@ namespace HIMS.BL.Services
             return Mapper.Map<vUserProfile, vUserProfileDTO>(vUserProfile);
         }
 
-        public async Task<vUserProfileDTO> GetVUserProfileByEmailAsync(string email)
+        public async Task<vUserProfileDTO> GetByEmailAsync(string email)
         {
             if (email == null)
                 throw new ValidationException("The view user profile email is not set", String.Empty);
 
-            var vUserProfile = await database.vUserProfiles.GetByEmailAsync(email);
+            var vUserProfile = await Database.vUserProfiles.GetByEmailAsync(email);
 
             if (vUserProfile == null)
                 throw new ValidationException($"The view user profile with email = {email} was not found", String.Empty);
@@ -52,10 +52,10 @@ namespace HIMS.BL.Services
             return Mapper.Map<vUserProfile, vUserProfileDTO>(vUserProfile);
         }
 
-        public IEnumerable<vUserProfileDTO> GetItems()
+        public IEnumerable<vUserProfileDTO> GetAll()
         {
             return Mapper.Map<List<vUserProfile>, ICollection<vUserProfileDTO>>(
-                database.vUserProfiles.GetAll().ToList());
+                Database.vUserProfiles.GetAll().ToList());
         }
 
     }

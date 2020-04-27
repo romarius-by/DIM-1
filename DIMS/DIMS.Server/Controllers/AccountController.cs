@@ -17,13 +17,16 @@ namespace HIMS.Server.Controllers
     public class AccountController : Controller
     {
         private readonly IUserService _userService;
-        private readonly ISender _sender;
+        private readonly IAuthService<UserDTO> _authService;
+
+        private readonly ISender _senderService;
 
 
-        public AccountController(IUserService userService, ISender sender)
+        public AccountController(IUserService userService, IAuthService<UserDTO> authService, ISender sender)
         {
             _userService = userService;
-            _sender = sender;
+            _authService = authService;
+            _senderService = sender;
         }
 
         private IAuthenticationManager AuthenticationManager => HttpContext.GetOwinContext().Authentication;
@@ -72,7 +75,7 @@ namespace HIMS.Server.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        //[Authorize(Roles = "admin")]
+        [Authorize(Roles = "admin")]
         public async Task<ActionResult> Register(RegisterViewModel viewModel)
         {
             //await SetInitialDataAsync().ConfigureAwait(false);
@@ -89,7 +92,7 @@ namespace HIMS.Server.Controllers
                 OperationDetails operationDetails = await _userService.Create(userDto).ConfigureAwait(false);
                 if (operationDetails.Succedeed)
                 {
-                    //await SendEmailConfirmationTokenAsync(userDto);
+                    await SendEmailConfirmationTokenAsync(userDto);
                     ViewBag.Message =
                         "To complete the registration, check the email and click " +
                         "on the link indicated in the letter. You must be confirmed "
@@ -105,15 +108,15 @@ namespace HIMS.Server.Controllers
 
         private async Task<string> SendEmailConfirmationTokenAsync(UserDTO user)
         {
-            var token = await _userService.GenerateToken(user).ConfigureAwait(false);
+            var token = await _authService.GenerateTokenAsync(user).ConfigureAwait(false);
 
             var callbackUrl = Url.Action(
                             "ConfirmEmail",
                             "Account",
-                            new { Username = "vladislav.rossohin@gmail.com", Token = token },
+                            new { Username = user.Email, Token = token },
                             protocol: Request.Url.Scheme);
 
-            await _sender.MessageToUserAsync(user, "Account confirmation",
+            await _senderService.MessageToUserAsync(user, "Account confirmation",
                     $"<span>Please, confirm your account by following this </span>" +
                     $"<a href='{callbackUrl}'>link</a>");
 

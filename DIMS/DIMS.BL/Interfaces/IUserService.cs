@@ -15,12 +15,11 @@ namespace HIMS.BL.Interfaces
         Task<OperationDetails> Create(UserDTO userDto);
         Task<ClaimsIdentity> Authenticate(UserDTO userDto);
         Task SetInitialData(UserDTO adminDto, List<string> roles);
-        Task<OperationDetails> DeleteUserByEmail(string email);
+        Task<OperationDetails> DeleteByEmail(string email);
 
-        Task<ApplicationUser> FindByEmail(string email);
-        Task<ApplicationUser> FindByName(string email);
-        Task<ApplicationUser> FindById(string email);
+        Task<ApplicationUser> FindByEmailAsync(string email);
+        Task<ApplicationUser> FindByNameAsync(string email);
+        Task<ApplicationUser> FindByIdAsync(string email);
 
-        Task<string> GenerateToken(UserDTO user);
     }
 }

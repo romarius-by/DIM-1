@@ -22,9 +22,14 @@ namespace HIMS.EF.DAL.Data.Repositories
             return _dIMSDBContext.vUserTasks.Where(predicate).ToList();
         }
 
-        public vUserTask Get(int id)
+        public vUserTask GetById(int id)
         {
             return _dIMSDBContext.vUserTasks.Find(id);
+        }
+
+        public IEnumerable<vUserTask> GetByUserId(int id)
+        {
+            return _dIMSDBContext.vUserTasks.Where(vUserTask => vUserTask.UserId == id).ToList();
         }
 
         public IEnumerable<vUserTask> GetAll()

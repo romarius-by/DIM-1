@@ -21,7 +21,7 @@ namespace HIMS.EF.DAL.Data.Repositories
             _himsDbContext.Samples.Add(item);
         }
 
-        public void Delete(int id)
+        public void DeleteById(int id)
         {
             var entity = _himsDbContext.Samples.Find(id);
             if (entity != null)
@@ -30,12 +30,22 @@ namespace HIMS.EF.DAL.Data.Repositories
             }
         }
 
+        public async Task<Sample> DeleteByIdAsync(int id)
+        {
+            return await System.Threading.Tasks.Task.Run(() =>
+            {
+                var sample = _himsDbContext.Samples.Find(id);
+
+                return _himsDbContext.Samples.Remove(sample);
+            });
+        }
+
         public IEnumerable<Sample> Find(Func<Sample, bool> predicate)
         {
             return _himsDbContext.Samples.Where(predicate).ToList();
         }
 
-        public Sample Get(int id)
+        public Sample GetById(int id)
         {
             return _himsDbContext.Samples.Find(id);
         }

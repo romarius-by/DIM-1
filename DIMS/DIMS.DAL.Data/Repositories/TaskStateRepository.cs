@@ -20,7 +20,7 @@ namespace HIMS.EF.DAL.Data.Repositories
             _dIMSDBContext.TaskStates.Add(item);
         }
 
-        public void Delete(int id)
+        public void DeleteById(int id)
         {
             TaskState taskState = _dIMSDBContext.TaskStates.Find(id);
 
@@ -30,12 +30,22 @@ namespace HIMS.EF.DAL.Data.Repositories
             }
         }
 
+        public async Task<TaskState> DeleteByIdAsync(int id)
+        {
+            return await System.Threading.Tasks.Task.Run(() =>
+            {
+                var taskState = _dIMSDBContext.TaskStates.Find(id);
+
+                return _dIMSDBContext.TaskStates.Remove(taskState);
+            });
+        }
+
         public IEnumerable<TaskState> Find(Func<TaskState, bool> predicate)
         {
             return _dIMSDBContext.TaskStates.Where(predicate).ToList();
         }
 
-        public TaskState Get(int id)
+        public TaskState GetById(int id)
         {
             return _dIMSDBContext.TaskStates.Find(id);
         }

@@ -20,23 +20,24 @@ namespace HIMS.EF.DAL.Data.Repositories
             _dimsDbContext.UserProfiles.Add(userProfile);
         }
 
-        public void Delete(int id)
+        public void DeleteById(int id)
         {
-            var entity = _dimsDbContext.UserProfiles.Find(id);
+            var profile = _dimsDbContext.UserProfiles.Find(id);
             
-            if (entity != null)
+            if (profile != null)
             {
-                _dimsDbContext.UserProfiles.Remove(entity);
+                _dimsDbContext.UserProfiles.Remove(profile);
             }
         }
 
         public void DeleteByEmail(string email)
         {
-            var entity = _dimsDbContext.UserProfiles.Find(email);
+            var profile = _dimsDbContext.UserProfiles.Where(userProfile => userProfile.Email == email).FirstOrDefault();
 
-            if (entity != null)
+            if (profile != null)
             {
-                _dimsDbContext.UserProfiles.Remove(entity);
+                _dimsDbContext.UserProfiles.Remove(profile);
+                _dimsDbContext.SaveChanges();
             }
         }
 
@@ -45,9 +46,14 @@ namespace HIMS.EF.DAL.Data.Repositories
             return _dimsDbContext.UserProfiles.Where(predicate).ToList();
         }
 
-        public UserProfile Get(int id)
+        public UserProfile GetById(int id)
         {
             return _dimsDbContext.UserProfiles.Find(id);
+        }
+
+        public UserProfile GetByEmail(string email)
+        {
+            return _dimsDbContext.UserProfiles.Find(email);
         }
 
         public IEnumerable<UserProfile> GetAll()
@@ -60,5 +66,13 @@ namespace HIMS.EF.DAL.Data.Repositories
             _dimsDbContext.Entry(userProfile).State = System.Data.Entity.EntityState.Modified;
         }
 
+        public async Task<UserProfile> DeleteByIdAsync(int id)
+        {
+            return await System.Threading.Tasks.Task.Run(() =>
+            {
+                var profile = _dimsDbContext.UserProfiles.Find(id);
+                return _dimsDbContext.UserProfiles.Remove(profile);
+            });
+        }
     }
 }

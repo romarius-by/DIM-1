@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace HIMS.EF.DAL.Data.Repositories
 {
-    public class vUserProfileRepository : IViewRepository<vUserProfile>
+    public class vUserProfileRepository : IvUserProfileRepository, IViewRepository<vUserProfile>
     {
 
         private readonly DIMSDBContext _dIMSDBContext;
@@ -22,11 +22,21 @@ namespace HIMS.EF.DAL.Data.Repositories
             return _dIMSDBContext.vUserProfiles.Where(predicate).ToList();
         }
 
-        public vUserProfile Get(int id)
+        public vUserProfile GetById(int id)
         {
             return _dIMSDBContext.vUserProfiles.Find(id);
         }
 
+        public async Task<vUserProfile> GetByEmailAsync(string email)
+        {
+
+            return await System.Threading.Tasks.Task.Run(() => 
+            {
+                return _dIMSDBContext.vUserProfiles.Where(userProfile => userProfile.Email == email).FirstOrDefault();
+            });
+        }
+
+        
         public IEnumerable<vUserProfile> GetAll()
         {
             return _dIMSDBContext.vUserProfiles;

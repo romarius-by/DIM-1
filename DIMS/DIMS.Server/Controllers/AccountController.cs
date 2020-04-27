@@ -1,4 +1,5 @@
-﻿using HIMS.BL.Infrastructure;
+﻿using Email.Interfaces;
+using HIMS.BL.Infrastructure;
 using HIMS.BL.Interfaces;
 using HIMS.BL.Models;
 using HIMS.Server.Models;
@@ -16,10 +17,16 @@ namespace HIMS.Server.Controllers
     public class AccountController : Controller
     {
         private readonly IUserService _userService;
+        private readonly IAuthService<UserDTO> _authService;
 
-        public AccountController(IUserService userService)
+        private readonly ISender _senderService;
+
+
+        public AccountController(IUserService userService, IAuthService<UserDTO> authService, ISender sender)
         {
             _userService = userService;
+            _authService = authService;
+            _senderService = sender;
         }
 
         private IAuthenticationManager AuthenticationManager => HttpContext.GetOwinContext().Authentication;
@@ -84,11 +91,37 @@ namespace HIMS.Server.Controllers
                 };
                 OperationDetails operationDetails = await _userService.Create(userDto).ConfigureAwait(false);
                 if (operationDetails.Succedeed)
+                {
+                    await SendEmailConfirmationTokenAsync(userDto);
+                    ViewBag.Message =
+                        "To complete the registration, check the email and click " +
+                        "on the link indicated in the letter. You must be confirmed "
+                        + "before you can log in.";
                     return View("SuccessRegister");
+                }
+                    
                 else
                     ModelState.AddModelError(operationDetails.Property, operationDetails.Message);
             }
             return View(viewModel);
+        }
+
+        private async Task<string> SendEmailConfirmationTokenAsync(UserDTO user)
+        {
+            var token = await _authService.GenerateTokenAsync(user).ConfigureAwait(false);
+
+            var callbackUrl = Url.Action(
+                            "ConfirmEmail",
+                            "Account",
+                            new { Username = user.Email, Token = token },
+                            protocol: Request.Url.Scheme);
+
+            await _senderService.MessageToUserAsync(user, "Account confirmation",
+                    $"<span>Please, confirm your account by following this </span>" +
+                    $"<a href='{callbackUrl}'>link</a>");
+
+
+            return callbackUrl;
         }
 
         private async Task SetInitialDataAsync()

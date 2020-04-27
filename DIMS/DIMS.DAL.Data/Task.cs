@@ -25,8 +25,8 @@ namespace HIMS.EF.DAL.Data
         public int TaskId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public System.DateTime StartDate { get; set; }
-        public System.DateTime DeadlineDate { get; set; }
+        public DateTime? StartDate { get; set; }
+        public DateTime? DeadlineDate { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserTask> UserTasks { get; set; }

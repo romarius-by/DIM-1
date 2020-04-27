@@ -10,7 +10,7 @@ namespace HIMS.BL.DTO
     {
         public int TaskTrackId { get; set; }
         public int UserTaskId { get; set; }
-        public System.DateTime TrackDate { get; set; }
+        public DateTime? TrackDate { get; set; }
         public string TrackNote { get; set; }
         public virtual UserTaskDTO UserTask { get; set; }
 

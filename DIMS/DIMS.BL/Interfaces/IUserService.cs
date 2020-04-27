@@ -1,5 +1,6 @@
 ﻿using HIMS.BL.Infrastructure;
 using HIMS.BL.Models;
+using HIMS.EF.DAL.Identity.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,8 +15,11 @@ namespace HIMS.BL.Interfaces
         Task<OperationDetails> Create(UserDTO userDto);
         Task<ClaimsIdentity> Authenticate(UserDTO userDto);
         Task SetInitialData(UserDTO adminDto, List<string> roles);
-        void DeleteUserByEmail(string email);
+        Task<OperationDetails> DeleteByEmail(string email);
 
-        //Task GetUserById(int id);
+        Task<ApplicationUser> FindByEmailAsync(string email);
+        Task<ApplicationUser> FindByNameAsync(string email);
+        Task<ApplicationUser> FindByIdAsync(string email);
+
     }
 }

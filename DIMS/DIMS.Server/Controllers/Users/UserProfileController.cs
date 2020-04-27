@@ -6,6 +6,7 @@ using HIMS.Server.Models.Directions;
 using HIMS.Server.Models.Users;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
@@ -24,7 +25,7 @@ namespace HIMS.Server.Controllers
         private readonly IDirectionService _directionService;
         private readonly IvUserProgressService _vUserProgressService;
 
-        private UserProfilePageViewModel UserProfilesPageViewModel;
+       // private UserProfilePageViewModel UserProfilesPageViewModel;
         public UserProfileController(IUserProfileService userProfileService, 
             IvUserProfileService vuserProfileService, 
             IDirectionService directionService, 
@@ -35,7 +36,7 @@ namespace HIMS.Server.Controllers
             _directionService = directionService;
             _vUserProgressService = vUserProgressService;
 
-            UserProfilesPageViewModel = new UserProfilePageViewModel();
+           // UserProfilesPageViewModel = new UserProfilePageViewModel();
            
         }
 
@@ -66,25 +67,28 @@ namespace HIMS.Server.Controllers
         {
             try
             {
-                var UserProfileDTO = Mapper.Map<UserProfileViewModel, UserProfileDTO>(UserProfilesPageViewModel.UserProfileViewModel);
+                var userProfileDTO = Mapper.Map<UserProfileViewModel, UserProfileDTO>(userProfileViewModel);
                 if (ModelState.IsValid)
                 {
-                    var userProfileDTO = Mapper.Map<UserProfileViewModel, UserProfileDTO>(userProfileViewModel);
                     _userProfileService.Save(userProfileDTO);
 
-                    UserProfilesPageViewModel.UserProfileViewModel = userProfileViewModel;
+                 //   UserProfilesPageViewModel.UserProfileViewModel = userProfileViewModel;
                     return RedirectToAction("Index");
                 }
             }
 
-            
             catch (RetryLimitExceededException)
             {
                 ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists see your system administrator.");
             }
 
+            catch (ValidationException ex)
+            {
+                ModelState.AddModelError(ex.ValidationAttribute.ToString(), ex.Message);
+            }
+            ViewBag.DirectionId = GetDirections();
 
-            return View(UserProfilesPageViewModel);
+            return PartialView(userProfileViewModel);
         }
 
         [HttpGet]

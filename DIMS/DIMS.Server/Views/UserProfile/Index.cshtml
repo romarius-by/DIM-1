@@ -158,45 +158,11 @@
                 };
                 openModal(".delete-user", "#delete-user");
                 openModal(".create-user", "#create-user");
-                
+                openModal(".edit-user", "#edit-user");
+                openModal(".details-user", "#details-user");
+                openModal(".progress-user", "#progress-user");
             });
 
-            $(function () {
-                 $.ajaxSetup({ cache: false });
-                $(".edit-user").click(function (e) {
-
-                    e.preventDefault();
-                    $.get(this.href, function (data) {
-                        $('#edit-user-dialogContent').html(data);
-                        $('#edit-user-modal').modal('show');
-                    });
-                });
-            });
-
-            $(function () {
-                 $.ajaxSetup({ cache: false });
-                $(".details-user").click(function (e) {
-
-                    e.preventDefault();
-                    $.get(this.href, function (data) {
-                        $('#details-user-dialogContent').html(data);
-                        $('#details-user-modal').modal('show');
-                    });
-                });
-            });
-
-             $(function () {
-                 $.ajaxSetup({ cache: false });
-                $(".progress-user").click(function (e) {
-
-                    e.preventDefault();
-                    $.get(this.href, function (data) {
-                        $('#progress-user-dialogContent').html(data);
-                        $('#progress-user-modal').modal('show');
-                    });
-                });
-            });
-
-         
+    
         </script>
 }

@@ -197,6 +197,7 @@
     <Compile Include="ControllersApi\ProfilesController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\Menthor\TasksManageController.cs" />
     <Compile Include="Controllers\SampleController.cs" />
     <Compile Include="Controllers\Tasks\TasksController.cs" />
     <Compile Include="Controllers\Users\UserProfileController.cs" />
@@ -209,7 +210,11 @@
     <Compile Include="Models\RegisterViewModel.cs" />
     <Compile Include="Models\SamplesListViewModel.cs" />
     <Compile Include="Models\SampleViewModel.cs" />
+    <Compile Include="Models\Tasks\TaskManagePageViewModel.cs" />
     <Compile Include="Models\Tasks\TasksListViewModel.cs" />
+    <Compile Include="Models\Tasks\TaskStateViewModel.cs" />
+    <Compile Include="Models\Tasks\TaskViewModel.cs" />
+    <Compile Include="Models\Tasks\UserTaskViewModel.cs" />
     <Compile Include="Models\Tasks\vTaskViewModel.cs" />
     <Compile Include="Models\Users\UserProfilePageViewModel.cs" />
     <Compile Include="Models\Users\UserProfilesListViewModel.cs" />
@@ -250,6 +255,11 @@
     <Content Include="Views\UserProfile\Edit.cshtml" />
     <Content Include="Views\UserProfile\Details.cshtml" />
     <Content Include="Views\UserProfile\Progress.cshtml" />
+    <Content Include="Views\TasksManage\Create.cshtml" />
+    <Content Include="Views\TasksManage\Details.cshtml" />
+    <Content Include="Views\TasksManage\Edit.cshtml" />
+    <Content Include="Views\TasksManage\Index.cshtml" />
+    <Content Include="Views\TasksManage\Delete.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -27,7 +27,7 @@ namespace HIMS.BL.Services
             if (!id.HasValue)
                 throw new ValidationException("The Task id value is not set", String.Empty);
 
-            database.Directions.Delete(id.Value);
+            database.Tasks.Delete(id.Value);
 
             database.Save();
         }
@@ -87,8 +87,11 @@ namespace HIMS.BL.Services
 
             if (task != null)
             {
-                Mapper.Map(taskDTO, task);
-
+                Mapper.Map(taskDTO, task);/*
+                task.Name = taskDTO.Name;
+                task.Description = taskDTO.Description;
+                task.StartDate = taskDTO.StartDate;
+                task.DeadlineDate = taskDTO.DeadlineDate;*/
                 database.Save();
 
             }

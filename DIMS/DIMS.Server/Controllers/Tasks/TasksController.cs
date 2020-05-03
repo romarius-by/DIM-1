@@ -34,7 +34,5 @@ namespace HIMS.Server.Controllers.Tasks
 
             return View(TasksViewModel);
         }
-
-
     }
 }

@@ -27,6 +27,7 @@ namespace HIMS.Server.ControllersApi
         public IHttpActionResult GetProfiles()
         {
             var vUserProfileDtos = _vUserProfileService.GetAll();
+
             var vUserProfiles = Mapper.Map<IEnumerable<vUserProfileDTO>, List<vUserProfileViewModel>>(vUserProfileDtos);
             
             return Json(vUserProfiles);

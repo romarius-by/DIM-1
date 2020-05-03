@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using HIMS.BL.DTO;
 using HIMS.BL.Interfaces;
-using HIMS.BL.Services;
 using HIMS.Server.Models;
 using HIMS.Server.Models.Users;
 using System;
@@ -10,7 +9,6 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Http;
 using System.Web.Http.Cors;
 
@@ -31,7 +29,6 @@ namespace HIMS.Server.ControllersApi
             _directionService = directionService ?? throw new ArgumentNullException(nameof(directionService));
         }
 
-
         private KeyValuePair<string, IEnumerable<string>>[] GetErrors()
         {
             return ModelState
@@ -43,7 +40,6 @@ namespace HIMS.Server.ControllersApi
         [Route("profile/{id?}")]
         public IHttpActionResult GetDetails([FromUri] int? id)
         {
-
             if (!id.HasValue)
                 return ResponseMessage(Request.CreateErrorResponse(HttpStatusCode.BadRequest, "The id value was not set!"));
 
@@ -55,14 +51,13 @@ namespace HIMS.Server.ControllersApi
             var userProfile = Mapper.Map<vUserProfileDTO, vUserProfileViewModel>(vUserProfileDto);
 
             return Json(userProfile);
-
         }
 
         [HttpPost]
         [Route("create")]
         public IHttpActionResult Create([FromBody]UserProfileViewModel userProfile)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 var userProfileDto = Mapper.Map<UserProfileViewModel, UserProfileDTO>(userProfile);
                 _userProfileService.Save(userProfileDto);
@@ -142,6 +137,5 @@ namespace HIMS.Server.ControllersApi
 
             return ResponseMessage(Request.CreateResponse(HttpStatusCode.OK, "The user has been succesfully deleted!"));
         }
-
     }
 }

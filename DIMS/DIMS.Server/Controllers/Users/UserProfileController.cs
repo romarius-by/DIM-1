@@ -4,14 +4,11 @@ using HIMS.BL.Interfaces;
 using HIMS.Server.Models;
 using HIMS.Server.Models.Directions;
 using HIMS.Server.Models.Users;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Data.Entity.Infrastructure;
-using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
 
 namespace HIMS.Server.Controllers
@@ -25,21 +22,16 @@ namespace HIMS.Server.Controllers
         private readonly IDirectionService _directionService;
         private readonly IvUserProgressService _vUserProgressService;
 
-       // private UserProfilePageViewModel UserProfilesPageViewModel;
-        public UserProfileController(IUserProfileService userProfileService, 
-            IvUserProfileService vuserProfileService, 
-            IDirectionService directionService, 
+        public UserProfileController(IUserProfileService userProfileService,
+            IvUserProfileService vuserProfileService,
+            IDirectionService directionService,
             IvUserProgressService vUserProgressService)
         {
             _userProfileService = userProfileService;
             _vUserProfileService = vuserProfileService;
             _directionService = directionService;
             _vUserProgressService = vUserProgressService;
-
-           // UserProfilesPageViewModel = new UserProfilePageViewModel();
-           
         }
-
 
         [HttpGet]
         [Route("profiles")]
@@ -68,24 +60,23 @@ namespace HIMS.Server.Controllers
             try
             {
                 var userProfileDTO = Mapper.Map<UserProfileViewModel, UserProfileDTO>(userProfileViewModel);
+
                 if (ModelState.IsValid)
                 {
                     _userProfileService.Save(userProfileDTO);
 
-                 //   UserProfilesPageViewModel.UserProfileViewModel = userProfileViewModel;
                     return RedirectToAction("Index");
                 }
             }
-
             catch (RetryLimitExceededException)
             {
                 ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists see your system administrator.");
             }
-
             catch (ValidationException ex)
             {
                 ModelState.AddModelError(ex.ValidationAttribute.ToString(), ex.Message);
             }
+
             ViewBag.DirectionId = GetDirections();
 
             return PartialView(userProfileViewModel);
@@ -96,20 +87,23 @@ namespace HIMS.Server.Controllers
         public ActionResult Edit(UserProfileViewModel userProfileViewModel, int? id)
         {
             if (!id.HasValue)
+            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
 
             var userProfileDto = _userProfileService.GetById(id.Value);
 
             if (userProfileDto == null)
+            {
                 return HttpNotFound();
+            }
 
-            var UserProfileViewModel =
-               Mapper.Map<UserProfileDTO, UserProfileViewModel>(userProfileDto);
+            var UserProfileViewModel = Mapper.Map<UserProfileDTO, UserProfileViewModel>(userProfileDto);
+
             ViewBag.DirectionId = GetDirections();
-            
+
             return PartialView(UserProfileViewModel);
         }
-
 
         [HttpPost, ActionName("Edit")]
         [Route("edit/{id?}")]
@@ -117,23 +111,26 @@ namespace HIMS.Server.Controllers
         public ActionResult EditProfile(UserProfileViewModel userProfileViewModel, int? id)
         {
             if (userProfileViewModel == null || !id.HasValue)
+            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
 
             var userProfileDto = _userProfileService.GetById(id.Value);
 
             try
             {
                 Mapper.Map(userProfileViewModel, userProfileDto);
-                userProfileDto.UserId = id.Value;
-                _userProfileService.Update(userProfileDto);
-                return RedirectToAction("Index");
-            }                
 
+                userProfileDto.UserId = id.Value;
+
+                _userProfileService.Update(userProfileDto);
+
+                return RedirectToAction("Index");
+            }
             catch (RetryLimitExceededException)
             {
                 ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists, see your system administrator.");
             }
-            
 
             var UserProfileViewModel = Mapper.Map<UserProfileDTO, UserProfileViewModel>(userProfileDto);
 
@@ -145,12 +142,16 @@ namespace HIMS.Server.Controllers
         public ActionResult Details(int? id)
         {
             if (!id.HasValue)
+            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
 
             var vuserProfileDto = _vUserProfileService.GetById(id.Value);
 
             if (vuserProfileDto == null)
+            {
                 return HttpNotFound();
+            }
 
             var vuserProfile = Mapper.Map<vUserProfileDTO, vUserProfileViewModel>(vuserProfileDto);
 
@@ -162,7 +163,9 @@ namespace HIMS.Server.Controllers
         public ActionResult Progress(int? id)
         {
             if (!id.HasValue)
+            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
 
             var userProgressDto = _vUserProgressService.GetByUserId(id.Value);
 
@@ -176,18 +179,19 @@ namespace HIMS.Server.Controllers
             return PartialView(vUserProgressesListViewModel);
         }
 
-
         public ActionResult DeleteById(int? id)
         {
             if (!id.HasValue)
+            {
                 return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
-
+            }
 
             var vuserProfileDto = _vUserProfileService.GetById(id.Value);
 
             if (vuserProfileDto == null)
+            {
                 return HttpNotFound();
-
+            }
 
             var vuserProfile = Mapper.Map<vUserProfileDTO, vUserProfileViewModel>(vuserProfileDto);
 
@@ -215,14 +219,16 @@ namespace HIMS.Server.Controllers
         public async Task<ActionResult> DeleteByEmail(string email)
         {
             if (email == null)
-                return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
 
             var userProfile = await _vUserProfileService.GetByEmailAsync(email);
 
             if (userProfile == null)
             {
                 return HttpNotFound();
-            } 
+            }
 
             var vuserProfileDto = Mapper.Map<vUserProfileDTO, vUserProfileViewModel>(userProfile);
 
@@ -250,7 +256,8 @@ namespace HIMS.Server.Controllers
         private List<SelectListItem> GetDirections()
         {
             var directions = Mapper.Map<IEnumerable<DirectionDTO>, List<DirectionViewModel>>(_directionService.GetAll());
-            List<SelectListItem> selectedItems = new List<SelectListItem>();
+
+            var selectedItems = new List<SelectListItem>();
 
             foreach (var direction in directions)
             {
@@ -259,7 +266,5 @@ namespace HIMS.Server.Controllers
 
             return selectedItems;
         }
-
     }
-
 }

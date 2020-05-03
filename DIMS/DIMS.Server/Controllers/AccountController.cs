@@ -4,9 +4,7 @@ using HIMS.BL.Interfaces;
 using HIMS.BL.Models;
 using HIMS.Server.Models;
 using Microsoft.Owin.Security;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
@@ -18,9 +16,7 @@ namespace HIMS.Server.Controllers
     {
         private readonly IUserService _userService;
         private readonly IAuthService<UserDTO> _authService;
-
         private readonly ISender _senderService;
-
 
         public AccountController(IUserService userService, IAuthService<UserDTO> authService, ISender sender)
         {
@@ -44,7 +40,9 @@ namespace HIMS.Server.Controllers
             if (ModelState.IsValid)
             {
                 var userDto = new UserDTO { Email = viewModel.Email, Password = viewModel.Password };
+
                 ClaimsIdentity claim = await _userService.Authenticate(userDto).ConfigureAwait(false);
+
                 if (claim == null)
                 {
                     ModelState.AddModelError("", "Invalid login or password.");
@@ -56,15 +54,18 @@ namespace HIMS.Server.Controllers
                     {
                         IsPersistent = true
                     }, claim);
+
                     return RedirectToAction("Index", "Home");
                 }
             }
+
             return View(viewModel);
         }
 
         public ActionResult Logout()
         {
             AuthenticationManager.SignOut();
+
             return RedirectToAction("Index", "Sample");
         }
 
@@ -79,6 +80,7 @@ namespace HIMS.Server.Controllers
         public async Task<ActionResult> Register(RegisterViewModel viewModel)
         {
             //await SetInitialDataAsync().ConfigureAwait(false);
+            
             if (ModelState.IsValid)
             {
                 var userDto = new UserDTO
@@ -89,7 +91,9 @@ namespace HIMS.Server.Controllers
                     Name = viewModel.Name,
                     Role = "user"
                 };
+
                 OperationDetails operationDetails = await _userService.Create(userDto).ConfigureAwait(false);
+
                 if (operationDetails.Succedeed)
                 {
                     await SendEmailConfirmationTokenAsync(userDto);
@@ -99,10 +103,10 @@ namespace HIMS.Server.Controllers
                         + "before you can log in.";
                     return View("SuccessRegister");
                 }
-                    
                 else
                     ModelState.AddModelError(operationDetails.Property, operationDetails.Message);
             }
+
             return View(viewModel);
         }
 
@@ -120,7 +124,6 @@ namespace HIMS.Server.Controllers
                     $"<span>Please, confirm your account by following this </span>" +
                     $"<a href='{callbackUrl}'>link</a>");
 
-
             return callbackUrl;
         }
 
@@ -136,6 +139,5 @@ namespace HIMS.Server.Controllers
                 Role = "admin",
             }, new List<string> { "user", "admin" }).ConfigureAwait(false);
         }
-
     }
 }

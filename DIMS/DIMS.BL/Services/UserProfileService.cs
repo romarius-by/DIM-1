@@ -16,14 +16,16 @@ namespace HIMS.BL.Services
         private UserProfileRepository Repository { get; }
         private UserTaskService UserTasks { get; }
 
-        public UserProfileService(IUnitOfWork unitOfWork, UserProfileRepository userProfileRepository, UserService userService, UserTaskService userTaskService)
+        public UserProfileService(IUnitOfWork unitOfWork, 
+                                  UserProfileRepository userProfileRepository, 
+                                  UserService userService, 
+                                  UserTaskService userTaskService)
         {
             Database = unitOfWork;
             Repository = userProfileRepository;
             UserService = userService;
             UserTasks = userTaskService;
         }
-
 
         public void DeleteById(int? id)
         {
@@ -45,7 +47,7 @@ namespace HIMS.BL.Services
 
             OperationDetails operationDetails = await UserService.DeleteByEmail(email);
 
-            // TODO: create enum for general messages or rewrite this checking 
+            // TODO: create enum for general messages or rewrite this checking
             if (operationDetails.Succedeed || operationDetails.Message == "The user with such Email not found! Email: ")
             {
                 Repository.DeleteByEmail(email);
@@ -90,7 +92,7 @@ namespace HIMS.BL.Services
         public IEnumerable<UserProfileDTO> GetAll()
         {
             var userProfiles = Database.UserProfiles.GetAll();
-
+            
             return Mapper.Map<IEnumerable<UserProfile>, List<UserProfileDTO>>(userProfiles);
         }
 
@@ -102,11 +104,13 @@ namespace HIMS.BL.Services
                 throw new ValidationException($"The length of {nameof(userProfile.Name)} must be less than 25"
                     , nameof(userProfile.Name));
             }
+
             if (userProfile.LastName.Length > 25)
             {
                 throw new ValidationException($"The length of {nameof(userProfile.LastName)} must be less than 25"
                     , nameof(userProfile.LastName));
             }
+
             if (userProfile.Address != null && userProfile.Address.Length > 255)
             {
                 throw new ValidationException($"The length of {nameof(userProfile.Address)} must be less than 25"
@@ -142,11 +146,13 @@ namespace HIMS.BL.Services
                 throw new ValidationException($"The length of {nameof(userProfile.Name)} must be less than 25"
                     , nameof(userProfile.Name));
             }
+
             if (userProfile.LastName.Length > 25)
             {
                 throw new ValidationException($"The length of {nameof(userProfile.LastName)} must be less than 25"
                     , nameof(userProfile.LastName));
             }
+
             if (userProfile.Address.Length > 255)
             {
                 throw new ValidationException($"The length of {nameof(userProfile.Address)} must be less than 25"

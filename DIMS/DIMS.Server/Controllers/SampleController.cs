@@ -3,12 +3,9 @@ using HIMS.BL.Interfaces;
 using HIMS.BL.Models;
 using HIMS.Server.Models;
 using HIMS.Server.utils;
-using System;
 using System.Collections.Generic;
 using System.Data.Entity.Infrastructure;
-using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 
 namespace HIMS.Server.Controllers
@@ -22,7 +19,6 @@ namespace HIMS.Server.Controllers
             _sampleService = sampleService;
         }
 
-        //[Authorize(Roles = "admin")]
         public ActionResult Index()
         {
             IEnumerable<SampleDTO> sampleDtos = _sampleService.GetSamples();
@@ -57,6 +53,7 @@ namespace HIMS.Server.Controllers
             {
                 ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists see your system administrator.");
             }
+
             return View(sample);
         }
 
@@ -75,6 +72,7 @@ namespace HIMS.Server.Controllers
             }
 
             var sample = Mapper.Map<SampleDTO, SampleViewModel>(sampleDto);
+
             return View(sample);
         }
 
@@ -106,6 +104,7 @@ namespace HIMS.Server.Controllers
             }
 
             var sample = Mapper.Map<SampleDTO, SampleViewModel>(sampleDto);
+
             return View(sample);
         }
 
@@ -124,6 +123,7 @@ namespace HIMS.Server.Controllers
             }
 
             var sample = Mapper.Map<SampleDTO, SampleViewModel>(sampleDto);
+
             return View(sample);
         }
 
@@ -150,7 +150,6 @@ namespace HIMS.Server.Controllers
             return View(sample);
         }
 
-        // POST: Student/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id)
@@ -164,6 +163,7 @@ namespace HIMS.Server.Controllers
                 //Log the error (uncomment dex variable name and add a line here to write a log.
                 return RedirectToAction("Delete", new { id, saveChangesError = true });
             }
+
             return RedirectToAction("Index");
         }
     }

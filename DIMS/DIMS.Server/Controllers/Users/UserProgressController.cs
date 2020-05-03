@@ -2,10 +2,7 @@
 using HIMS.BL.DTO;
 using HIMS.BL.Interfaces;
 using HIMS.Server.Models.Users;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace HIMS.Server.Controllers.Users
@@ -23,15 +20,23 @@ namespace HIMS.Server.Controllers.Users
 
         public ActionResult Index(int? id)
         {
+            if (!id.HasValue)
+            {
+                // TODO: create my own badRequest method
+                return HttpNotFound();
+            }
 
-            var UserProgresses = new vUserProgressesListViewModel(
-                Mapper.Map<vUserProfileDTO, vUserProfileViewModel>(
-                    _userProfileService.GetById(id.Value)),
-                Mapper.Map<IEnumerable<vUserProgressDTO>, IEnumerable<vUserProgressViewModel>>(
-                    _userProgressService.GetByUserId(id.Value)));
+            var _userProfile = _userProfileService.GetById(id.Value);
 
-            return View(UserProgresses);       
+            var userProfile = Mapper.Map<vUserProfileDTO, vUserProfileViewModel>(_userProfile);
+
+            var _userProgress = _userProgressService.GetByUserId(id.Value);
+
+            var userProgress = Mapper.Map<IEnumerable<vUserProgressDTO>, IEnumerable<vUserProgressViewModel>>(_userProgress);
+
+            var userProgresses = new vUserProgressesListViewModel(userProfile, userProgress);
+
+            return View(userProgresses);
         }
-
     }
 }

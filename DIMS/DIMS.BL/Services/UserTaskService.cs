@@ -76,7 +76,17 @@ namespace HIMS.BL.Services
                 Database.UserTasks.GetById(id.Value).UserProfile);
         }
 
-        public UserTaskDTO GetById(int? id)
+        public IEnumerable<UserTaskDTO> GetAllUserProfilesByTaskId(int? id)
+        {
+            var users = database.UserTasks.Find(f => f.TaskId == id).ToList();
+            if (users == null)
+            {
+                throw new ValidationException($"The Users with TaskId = {id} was not found");
+            }
+            return Mapper.Map<IEnumerable<UserTask>, List<UserTaskDTO>>(users);
+        }
+
+        public UserTaskDTO GetItem(int? id)
         {
             if (!id.HasValue)
                 throw new ValidationException("The user task id value is not set", String.Empty);
@@ -99,11 +109,11 @@ namespace HIMS.BL.Services
         {
             var userTask = new UserTask
             {
-                Task = Mapper.Map<TaskDTO, DimsTask>(userTaskDTO.Task),
                 TaskId = userTaskDTO.TaskId,
                 StateId = userTaskDTO.StateId,
-                TaskState = Mapper.Map<TaskStateDTO, TaskState>(userTaskDTO.TaskState),
                 UserId = userTaskDTO.UserId,
+                Task = Mapper.Map<TaskDTO, EF.DAL.Data.Task>(userTaskDTO.Task),
+                TaskState = Mapper.Map<TaskStateDTO, TaskState>(userTaskDTO.TaskState),
                 UserProfile = Mapper.Map<UserProfileDTO, UserProfile>(userTaskDTO.UserProfile),
                 TaskTracks = Mapper.Map<IEnumerable<TaskTrackDTO>, List<TaskTrack>>(userTaskDTO.TaskTracks)
             };
@@ -146,6 +156,17 @@ namespace HIMS.BL.Services
 
             else
                 return false;
+        }
+
+        public void DeleteItemByTaskIdAndUserId(int? taskId, int? userId)
+        {
+            if (!taskId.HasValue && !userId.HasValue)
+            {
+                throw new ValidationException("The UserTask's id value is not set");
+            }
+
+            database.UserTasks.Delete(taskId.Value, userId.Value);
+            database.Save();
         }
     }
 }

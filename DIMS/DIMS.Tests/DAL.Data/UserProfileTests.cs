@@ -1,17 +1,14 @@
-﻿using System;
-using HIMS.EF.DAL.Data;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using HIMS.EF.DAL.Data;
 using Moq;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using HIMS.EF.DAL.Data.Repositories;
 using System.Data.EntityClient;
+using NUnit.Framework;
 
 namespace HIMS.Tests.DAL.Data
 {
-    [TestClass]
+    [TestFixture]
     public class UserProfileTests
     {
         private DIMSDBContext context;
@@ -61,14 +58,14 @@ namespace HIMS.Tests.DAL.Data
             return repo;
         }
 
-        [TestInitialize]
+        [SetUp]
         public void Initialize()
         {
             connection = CreateConnection();
             context = CreateContext(connection);
         }
 
-        [TestMethod]
+        [Test]
         public void ShouldCreateUserProfile()
         {
             //Arrange
@@ -98,13 +95,13 @@ namespace HIMS.Tests.DAL.Data
             Assert.IsNotNull(repo.Get(user.UserId));
         }
 
-        [TestMethod]
+        [Test]
         public void ShouldDeleteUserProfileById()
         {
             //Arrange
             int id = 2;
             var repo = SeedUserProfileRepository();
-            var mock = new Mock<IRepository<UserProfile>>();
+            var mock = new Mock<UserProfileRepository>();
 
             //Act
             mock.Setup(u => u.Delete(It.IsAny<int>()));
@@ -114,7 +111,7 @@ namespace HIMS.Tests.DAL.Data
             mock.Verify(u => u.Delete(id), Times.Once);
         }
 
-        [TestMethod]
+        [Test]
         public void ShoulGetUserProfileById()
         {
             //Arrange

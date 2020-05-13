@@ -198,6 +198,8 @@
     <Compile Include="ControllersApi\ProfilesController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\Menthor\TasksManageController.cs" />
+    <Compile Include="Controllers\Menthor\TaskTrackController.cs" />
     <Compile Include="Controllers\SampleController.cs" />
     <Compile Include="Controllers\Tasks\TasksController.cs" />
     <Compile Include="Controllers\Users\UserProfileController.cs" />
@@ -211,6 +213,11 @@
     <Compile Include="Models\SamplesListViewModel.cs" />
     <Compile Include="Models\SampleViewModel.cs" />
     <Compile Include="Models\Tasks\TasksListViewModel.cs" />
+    <Compile Include="Models\Tasks\TaskStateViewModel.cs" />
+    <Compile Include="Models\Tasks\TaskTrackListViewModel.cs" />
+    <Compile Include="Models\Tasks\TaskTrackViewModel.cs" />
+    <Compile Include="Models\Tasks\TaskViewModel.cs" />
+    <Compile Include="Models\Tasks\UserTaskViewModel.cs" />
     <Compile Include="Models\Tasks\vTaskViewModel.cs" />
     <Compile Include="Models\Users\UserProfilePageViewModel.cs" />
     <Compile Include="Models\Users\UserProfilesListViewModel.cs" />
@@ -260,6 +267,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\TaskTrack\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DIMS.BL\DIMS.BL.csproj">

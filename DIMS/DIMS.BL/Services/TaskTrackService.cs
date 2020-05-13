@@ -101,5 +101,21 @@ namespace HIMS.BL.Services
                 Database.Save();
             }
         }
+
+        public IEnumerable<TaskTrackDTO> GetTracksForUser(int? userId)
+        {
+            if (!userId.HasValue)
+            {
+                throw new ValidationException("The Task Track id value is not set", "");
+            }
+            var tracks = database.vUserTracks.Find(item => item.UserId == userId);
+
+            if (tracks == null)
+            {
+                throw new ValidationException($"The Task Track with id = {userId} was not found", "");
+            }
+
+            return Mapper.Map<IEnumerable<vUserTrack>, List<TaskTrackDTO>>(tracks);
+        }
     }
 }

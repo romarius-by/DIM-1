@@ -31,13 +31,11 @@ namespace HIMS.Server.utils
             Bind<IvUserProgressService>().To<vUserProgressService>();
             Bind<IvUserTaskService>().To<vUserTaskService>();
             Bind<IvUserTrackService>().To<vUserTrackService>();
-            Bind<IAuthService<UserDTO>>().To<UserAuthService>();
-            Bind<IvTaskStateService>().To<vTaskStateService>();
 
-        /*Bind<ISender>().To<Sender>()
-            .InSingletonScope()
-        .WithConstructorArgument("apiKey", ConfigurationManager.AppSettings["apiKey"])
-        .WithConstructorArgument("email", ConfigurationManager.AppSettings["email"]);*/
-    }
+            Bind<ISender>().To<Sender>()
+                .InSingletonScope()
+            .WithConstructorArgument("apiKey", ConfigurationManager.AppSettings["apiKey"])
+            .WithConstructorArgument("email", ConfigurationManager.AppSettings["email"]);
+        }
     }
 }

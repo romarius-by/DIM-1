@@ -75,7 +75,7 @@ namespace HIMS.Server.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "admin")]
+        //[Authorize(Roles = "admin")]
         public async Task<ActionResult> Register(RegisterViewModel viewModel)
         {
             //await SetInitialDataAsync().ConfigureAwait(false);
@@ -106,7 +106,7 @@ namespace HIMS.Server.Controllers
             return View(viewModel);
         }
 
-        /*private async Task<string> SendEmailConfirmationTokenAsync(UserDTO user)
+        private async Task<string> SendEmailConfirmationTokenAsync(UserDTO user)
         {
             var token = await _authService.GenerateTokenAsync(user).ConfigureAwait(false);
 
@@ -122,7 +122,7 @@ namespace HIMS.Server.Controllers
 
 
             return callbackUrl;
-        }*/
+        }
 
         private async Task SetInitialDataAsync()
         {

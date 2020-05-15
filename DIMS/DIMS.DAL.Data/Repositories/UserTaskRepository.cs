@@ -48,7 +48,7 @@ namespace HIMS.EF.DAL.Data.Repositories
 
         public UserTask GetById(int id)
         {
-            return _dIMSDBContext.UserTasks.Find(id);
+            return _dIMSDBContext.UserTasks.Include("Task").Include("TaskState").Include("TaskTracks").Include("UserProfile").Where(userTask => userTask.UserTaskId == id).FirstOrDefault();
         }
 
         public IEnumerable<UserTask> GetByUserId(int id)
@@ -58,7 +58,7 @@ namespace HIMS.EF.DAL.Data.Repositories
 
         public IEnumerable<UserTask> GetAll()
         {
-            return _dIMSDBContext.UserTasks;
+            return _dIMSDBContext.UserTasks.Include("Task").Include("TaskState").Include("TaskTracks").Include("UserProfile");
         }
 
         public void Update(UserTask item)

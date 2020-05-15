@@ -165,8 +165,8 @@ namespace HIMS.BL.Services
                 throw new ValidationException("The UserTask's id value is not set");
             }
 
-            database.UserTasks.Delete(taskId.Value, userId.Value);
-            database.Save();
+            Database.UserTasks.Delete(taskId.Value, userId.Value);
+            Database.Save();
         }
     }
 }

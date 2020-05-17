@@ -198,6 +198,7 @@
     <Compile Include="ControllersApi\ProfilesController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\Menthor\AbstractController.cs" />
     <Compile Include="Controllers\Menthor\TasksManageController.cs" />
     <Compile Include="Controllers\Menthor\TaskTrackController.cs" />
     <Compile Include="Controllers\SampleController.cs" />
@@ -212,8 +213,6 @@
     <Compile Include="Models\RegisterViewModel.cs" />
     <Compile Include="Models\SamplesListViewModel.cs" />
     <Compile Include="Models\SampleViewModel.cs" />
-    <Compile Include="Models\Tasks\TasksListViewModel.cs" />
-    <Compile Include="Models\Tasks\TaskStateViewModel.cs" />
     <Compile Include="Models\Tasks\TaskTrackListViewModel.cs" />
     <Compile Include="Models\Tasks\TaskTrackViewModel.cs" />
     <Compile Include="Models\Tasks\TaskManagePageViewModel.cs" />

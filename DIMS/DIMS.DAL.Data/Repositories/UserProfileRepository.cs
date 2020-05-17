@@ -56,11 +56,6 @@ namespace HIMS.EF.DAL.Data.Repositories
             return _dimsDbContext.UserProfiles.Find(email);
         }
 
-        public UserProfile GetByEmail(string email)
-        {
-            return _dimsDbContext.UserProfiles.Find(email);
-        }
-
         public IEnumerable<UserProfile> GetAll()
         {
             return _dimsDbContext.UserProfiles;

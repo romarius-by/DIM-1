@@ -20,12 +20,12 @@ namespace HIMS.BL.Services
             database = uow;
         }
 
-        public TaskStateDTO GetItem(int? id)
+        public TaskStateDTO GetById(int? id)
         {
             if (!id.HasValue)
                 throw new ValidationException("The task state id value is not set", String.Empty);
 
-            var task = database.TaskStates.Get(id.Value);
+            var task = database.TaskStates.GetById(id.Value);
 
             if (task == null)
                 throw new ValidationException($"The task state with id = {id.Value} was not found", String.Empty);
@@ -39,10 +39,11 @@ namespace HIMS.BL.Services
             database.Dispose();
         }
 
-        public IEnumerable<TaskStateDTO> GetItems()
+        public IEnumerable<TaskStateDTO> GetAll()
         {
-            return Mapper.Map<IEnumerable<TaskState>, IEnumerable<TaskStateDTO>>(
-                database.TaskStates.GetAll());
+            var taskStates = database.TaskStates.GetAll();
+
+            return Mapper.Map<IEnumerable<TaskState>, IEnumerable<TaskStateDTO>>(taskStates);
         }
     }
 }

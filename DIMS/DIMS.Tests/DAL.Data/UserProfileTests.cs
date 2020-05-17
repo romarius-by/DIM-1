@@ -1,6 +1,5 @@
 ﻿using System;
 using HIMS.EF.DAL.Data;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,10 +7,11 @@ using System.Text;
 using System.Threading.Tasks;
 using HIMS.EF.DAL.Data.Repositories;
 using System.Data.EntityClient;
+using NUnit.Framework;
 
 namespace HIMS.Tests.DAL.Data
 {
-    [TestClass]
+    [TestFixture]
     public class UserProfileTests
     {
         private DIMSDBContext context;
@@ -38,17 +38,17 @@ namespace HIMS.Tests.DAL.Data
                new List<UserProfile>
                {
                new UserProfile {
-                    UserId = 1, Name = "username", LastName = "userLname", Sex = "male", DirectionId = 2,
+                    UserId = 1, Name = "username1", LastName = "userLname", Sex = "male", DirectionId = 2,
                     Education = "Harvard", Email = "email", UniversityAverageScore = 6.5d, MathScore = 9.0d,
                     MobilePhone = "+375(33)1922", Skype = "skype", StartDate = System.DateTime.Now,
                     BirthDate = System.DateTime.Now, Address = "dom 5" },
                new UserProfile {
-                    UserId = 2, Name = "username", LastName = "userLname", Sex = "male", DirectionId = 2,
+                    UserId = 2, Name = "username2", LastName = "userLname", Sex = "male", DirectionId = 2,
                     Education = "Harvard", Email = "email", UniversityAverageScore = 6.5d, MathScore = 9.0d,
                     MobilePhone = "+375(33)1922", Skype = "skype", StartDate = System.DateTime.Now,
                     BirthDate = System.DateTime.Now, Address = "dom 5" },
                new UserProfile {
-                    UserId = 3, Name = "username", LastName = "userLname", Sex = "male", DirectionId = 2,
+                    UserId = 3, Name = "username3", LastName = "userLname", Sex = "male", DirectionId = 2,
                     Education = "Harvard", Email = "email", UniversityAverageScore = 6.5d, MathScore = 9.0d,
                     MobilePhone = "+375(33)1922", Skype = "skype", StartDate = System.DateTime.Now,
                     BirthDate = System.DateTime.Now, Address = "dom 5" }
@@ -61,14 +61,14 @@ namespace HIMS.Tests.DAL.Data
             return repo;
         }
 
-        [TestInitialize]
+        [SetUp]
         public void Initialize()
         {
             connection = CreateConnection();
             context = CreateContext(connection);
         }
 
-        [TestMethod]
+        [Test]
         public void ShouldCreateUserProfile()
         {
             //Arrange
@@ -95,39 +95,36 @@ namespace HIMS.Tests.DAL.Data
             repo.Create(user);
 
             //Assert
-            Assert.IsNotNull(repo.Get(user.UserId));
+            Assert.IsNotNull(repo.GetById(user.UserId));
+            Assert.AreEqual("skype", user.Skype);
         }
 
-        [TestMethod]
+        [Test]
         public void ShouldDeleteUserProfileById()
         {
             //Arrange
             int id = 2;
             var repo = SeedUserProfileRepository();
-            var mock = new Mock<IRepository<UserProfile>>();
 
             //Act
-            mock.Setup(u => u.Delete(It.IsAny<int>()));
-            repo.Delete(id);
+            repo.DeleteById(id);
 
             //Assert
-            mock.Verify(u => u.Delete(id), Times.Once);
+            Assert.IsNull(repo.GetById(id));
         }
 
-        [TestMethod]
+        [Test]
         public void ShoulGetUserProfileById()
         {
             //Arrange
             int id = 3;
             var repo = SeedUserProfileRepository();
-            var mock = new Mock<IRepository<UserProfile>>();
 
             //Act
-            mock.Setup(u => u.Get(It.IsAny<int>()));
-            repo.Get(id);
+            repo.GetById(id);
 
             //Assert
-            mock.Verify(u => u.Get(id), Times.Once);
+            Assert.AreEqual("username3",repo.GetById(id).Name);
         }
     }
 }

@@ -30,22 +30,22 @@ namespace HIMS.Server.utils
                 cfg.CreateMap<DirectionDTO, DirectionViewModel>();
                 cfg.CreateMap<DirectionViewModel, DirectionDTO>();
                 cfg.CreateMap<UserProfileDTO, UserProfileViewModel>();
+                cfg.CreateMap<UserTaskViewModel, vUserTaskDTO>();
+                cfg.CreateMap<UserTaskDTO, vUserTaskDTO>();
 
                 cfg.CreateMap<vUserProfileDTO, vUserProfileViewModel>();
                 cfg.CreateMap<vUserProfileViewModel, vUserProfileDTO>();
+                cfg.CreateMap<vUserTaskDTO, vUserTask>();
+                cfg.CreateMap<vUserTaskDTO, UserTask>();
+                cfg.CreateMap<vTaskDTO, vTask>();
+                cfg.CreateMap<vTaskDTO, Task>();
 
                 cfg.CreateMap<vUserProgress, vUserProgressDTO>();
                 cfg.CreateMap<vUserProgressDTO, vUserProgress>();
                 cfg.CreateMap<vUserProgressDTO, vUserProgressViewModel>();
                 cfg.CreateMap<TaskDTO, TaskViewModel>();
-                cfg.CreateMap<TaskDTO, Task>()
-                    .ForMember(dest => dest.UserTasks, opr => opr.Ignore());
-
-                cfg.CreateMap<UserTaskDTO, UserTask>()
-                    .ForMember(dest => dest.Task, opr => opr.Ignore())
-                    .ForMember(dest => dest.TaskState, opr => opr.Ignore())
-                    .ForMember(dest => dest.TaskTracks, opr => opr.Ignore())
-                    .ForMember(dest => dest.UserProfile, opr => opr.Ignore());
+                cfg.CreateMap<TaskDTO, Task>();
+                cfg.CreateMap<UserTaskDTO, UserTask>();
 
 
 

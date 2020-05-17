@@ -182,13 +182,9 @@ namespace HIMS.Server.Controllers.Menthor
             return PartialView(taskManagePageViewModel.taskViewModel);
         }
 
-        public ActionResult Delete(int? id)
+        [HttpGet]
+        public ActionResult Delete(int id)
         {
-            if (!id.HasValue)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-
             var taskDto = _taskService.GetById(id);
             var userTaskDtos = _taskService.GetUserTasks(id);
             var userProfileDtos = _vUserProfileService.GetAll();
@@ -212,7 +208,7 @@ namespace HIMS.Server.Controllers.Menthor
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id)
+        public ActionResult Delete(int? id)
         {
             try
             {

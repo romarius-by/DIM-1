@@ -24,7 +24,7 @@ namespace HIMS.EF.DAL.Identity.Repositories
             UserSecurityManager = new ApplicationUserManager(new UserStore<ApplicationUser>(_identityDbContext));
         }
 
-        public async Task SaveAsync()
+        public async System.Threading.Tasks.Task SaveAsync()
         {
             await _identityDbContext.SaveChangesAsync().ConfigureAwait(false);
         }
@@ -52,5 +52,6 @@ namespace HIMS.EF.DAL.Identity.Repositories
                 this.disposed = true;
             }
         }
+
     }
 }

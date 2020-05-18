@@ -4,10 +4,12 @@ using HIMS.Server.utils;
 using Ninject;
 using Ninject.Modules;
 using Ninject.Web.Mvc;
+using Ninject.Web.WebApi.Filter;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
@@ -19,6 +21,9 @@ namespace HIMS.Server
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
+
+            GlobalConfiguration.Configure(WebApiConfig.Register);
+
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
@@ -37,11 +42,20 @@ namespace HIMS.Server
             // dependency injection
             NinjectModule dependencesModule = new DependencesModule();
 
-            NinjectModule serviceModule = new ServicesModule("HIMSDbContext", "HimsIdentityConnection");
+            NinjectModule serviceModule = new ServicesModule("DIMSDBConnection", "HimsIdentityConnection");
 
             var kernel = new StandardKernel(dependencesModule, serviceModule);
 
-            DependencyResolver.SetResolver(new NinjectDependencyResolver(kernel));
+            kernel.Bind<DefaultModelValidatorProviders>().ToConstant(new DefaultModelValidatorProviders(GlobalConfiguration.Configuration.Services.GetModelValidatorProviders()));
+
+            kernel.Bind<DefaultFilterProviders>().ToConstant(new DefaultFilterProviders(GlobalConfiguration.Configuration.Services.GetFilterProviders()));
+
+            var ninjectResolver = new utils.NinjectDependencyResolver(kernel);
+
+            DependencyResolver.SetResolver(ninjectResolver);
+
+            GlobalConfiguration.Configuration.DependencyResolver = new utils.NinjectDependencyResolver(kernel);
+
         }
 
         protected void Session_Start(Object sender, EventArgs e)

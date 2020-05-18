@@ -1,4 +1,4 @@
-﻿INSERT INTO [dbo].[Sample]
+﻿INSERT INTO [dbo].[Samples]
 		([Name], [Description])
 	VALUES
 		('Sample Record #1', 'This is a simple test record for testing purposes.'),

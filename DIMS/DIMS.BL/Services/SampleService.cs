@@ -51,7 +51,7 @@ namespace HIMS.BL.Services
                 throw new ValidationException($"The length of {nameof(sampleDTO.Description)} must be less then 25"
                     , nameof(sampleDTO.Description));
 
-            var sample = Database.Samples.Get(sampleDTO.SampleId);
+            var sample = Database.Samples.GetById(sampleDTO.SampleId);
 
             if (sample != null)
             {
@@ -70,7 +70,7 @@ namespace HIMS.BL.Services
             if (!id.HasValue)
                 throw new ValidationException("The Sample's id value is not set", String.Empty);
 
-            var sample = Database.Samples.Get(id.Value);
+            var sample = Database.Samples.GetById(id.Value);
 
             if (sample == null)
                 throw new ValidationException($"The Sample with id = {id} was not found", String.Empty);
@@ -83,7 +83,7 @@ namespace HIMS.BL.Services
             if (!id.HasValue)
                 throw new ValidationException("The Sample's id value is not set", String.Empty);
 
-            Database.Samples.Delete(id.Value);
+            Database.Samples.DeleteById(id.Value);
             Database.Save();
         }
 

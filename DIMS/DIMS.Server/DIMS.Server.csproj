@@ -79,14 +79,14 @@
     <Reference Include="Microsoft.Owin.Security.OAuth, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Owin.Security.OAuth.3.0.1\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Ninject, Version=3.3.4.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
       <HintPath>..\packages\Ninject.3.3.4\lib\net45\Ninject.dll</HintPath>
     </Reference>
-    <Reference Include="Ninject.Web.Common, Version=3.3.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
-      <HintPath>..\packages\Ninject.Web.Common.3.3.0\lib\net45\Ninject.Web.Common.dll</HintPath>
+    <Reference Include="Ninject.Web.Common, Version=3.3.2.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.Web.Common.3.3.2\lib\net45\Ninject.Web.Common.dll</HintPath>
     </Reference>
     <Reference Include="Ninject.Web.Common.WebHost, Version=3.3.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
       <HintPath>..\packages\Ninject.Web.Common.WebHost.3.3.0\lib\net45\Ninject.Web.Common.WebHost.dll</HintPath>
@@ -94,11 +94,21 @@
     <Reference Include="Ninject.Web.Mvc, Version=3.3.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
       <HintPath>..\packages\Ninject.MVC5.3.3.0\lib\net45\Ninject.Web.Mvc.dll</HintPath>
     </Reference>
+    <Reference Include="Ninject.Web.WebApi, Version=3.3.1.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.Web.WebApi.3.3.1\lib\net45\Ninject.Web.WebApi.dll</HintPath>
+    </Reference>
     <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
     </Reference>
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.7\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
     <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Cors, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Cors.5.2.7\lib\net45\System.Web.Cors.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -109,6 +119,15 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Http, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.7\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.Cors, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Cors.5.2.7\lib\net45\System.Web.Http.Cors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.7\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.Optimization, Version=1.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
     </Reference>
@@ -157,6 +176,7 @@
     <Content Include="Global.asax" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <None Include="Properties\PublishProfiles\DIMSServer - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -173,20 +193,47 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="ControllersApi\MemberController.cs" />
+    <Compile Include="ControllersApi\ProfilesController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\Menthor\AbstractController.cs" />
+    <Compile Include="Controllers\Menthor\TasksManageController.cs" />
+    <Compile Include="Controllers\Menthor\TaskTrackController.cs" />
     <Compile Include="Controllers\SampleController.cs" />
+    <Compile Include="Controllers\Tasks\TasksController.cs" />
+    <Compile Include="Controllers\Users\UserProfileController.cs" />
+    <Compile Include="Controllers\Users\UserProgressController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Directions\DirectionViewModel.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
     <Compile Include="Models\RegisterViewModel.cs" />
     <Compile Include="Models\SamplesListViewModel.cs" />
     <Compile Include="Models\SampleViewModel.cs" />
+    <Compile Include="Models\Tasks\TaskTrackListViewModel.cs" />
+    <Compile Include="Models\Tasks\TaskTrackViewModel.cs" />
+    <Compile Include="Models\Tasks\TaskManagePageViewModel.cs" />
+    <Compile Include="Models\Tasks\TasksListViewModel.cs" />
+    <Compile Include="Models\Tasks\TaskStateViewModel.cs" />
+    <Compile Include="Models\Tasks\TaskViewModel.cs" />
+    <Compile Include="Models\Tasks\UserTaskViewModel.cs" />
+    <Compile Include="Models\Tasks\vTaskViewModel.cs" />
+    <Compile Include="Models\Users\UserProfilePageViewModel.cs" />
+    <Compile Include="Models\Users\UserProfilesListViewModel.cs" />
+    <Compile Include="Models\Users\UserProfileViewModel.cs" />
+    <Compile Include="Models\Users\vUserProfilesListViewModel.cs" />
+    <Compile Include="Models\Users\vUserProfileViewModel.cs" />
+    <Compile Include="Models\Users\vUserProgressesListViewModel.cs" />
+    <Compile Include="Models\Users\vUserProgressViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="utils\AutomapperConfig.cs" />
     <Compile Include="utils\CurrentUser.cs" />
     <Compile Include="utils\DependencesModule.cs" />
+    <Compile Include="utils\NinjectDependencyResolver.cs" />
+    <Compile Include="utils\NinjectDependencyScope.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
@@ -206,6 +253,18 @@
     <Content Include="Views\Sample\Edit.cshtml" />
     <Content Include="Views\Sample\Delete.cshtml" />
     <Content Include="Views\Sample\Details.cshtml" />
+    <Content Include="Views\UserProfile\Index.cshtml" />
+    <Content Include="Views\UserProfile\DeleteById.cshtml" />
+    <Content Include="Views\UserProfile\Create.cshtml" />
+    <Content Include="Views\UserProfile\DeleteByEmail.cshtml" />
+    <Content Include="Views\UserProfile\Edit.cshtml" />
+    <Content Include="Views\UserProfile\Details.cshtml" />
+    <Content Include="Views\UserProfile\Progress.cshtml" />
+    <Content Include="Views\TasksManage\Create.cshtml" />
+    <Content Include="Views\TasksManage\Details.cshtml" />
+    <Content Include="Views\TasksManage\Edit.cshtml" />
+    <Content Include="Views\TasksManage\Index.cshtml" />
+    <Content Include="Views\TasksManage\Delete.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -215,6 +274,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\TaskTrack\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DIMS.BL\DIMS.BL.csproj">
@@ -224,6 +284,10 @@
     <ProjectReference Include="..\DIMS.DAL.Data\DIMS.DAL.Data.csproj">
       <Project>{CAC997AA-EBE6-4E9F-B4FD-C3CBBD6DA146}</Project>
       <Name>DIMS.DAL.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Email\Email.csproj">
+      <Project>{D7BCA7EA-5647-4B7F-9575-38181DBA2207}</Project>
+      <Name>Email</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
@@ -241,7 +305,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>50698</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:50698/</IISUrl>
+          <IISUrl>http://localhost:5555/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

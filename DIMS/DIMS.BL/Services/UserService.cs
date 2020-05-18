@@ -17,6 +17,7 @@ namespace HIMS.BL.Services
     {
         private IUnitOfWork Database { get; }
 
+
         public UserService(IUnitOfWork uow)
         {
             Database = uow;
@@ -34,11 +35,7 @@ namespace HIMS.BL.Services
                     return new OperationDetails(false, result.Errors.FirstOrDefault(), "");
 
                 // add a role
-                await Database.UserSecurityManager.AddToRoleAsync(user.Id, userDto.Role).ConfigureAwait(false);
-
-                // create user profile
-                //ClientProfile clientProfile = new ClientProfile { Id = user.Id, Address = userDto.Address, Name = userDto.Name };
-                //Database.ClientManager.Create(clientProfile);
+                await Database.UserSecurityManager.AddToRoleAsync(user.Id.ToString(), userDto.Role).ConfigureAwait(false);
 
                 await Database.SaveAsync().ConfigureAwait(false);
                 return new OperationDetails(true, "The registration was done successfully!", "");
@@ -83,5 +80,37 @@ namespace HIMS.BL.Services
         {
             Database.Dispose();
         }
+
+        public async Task<OperationDetails> DeleteByEmail(string email)
+        {
+            ApplicationUser user = await Database.UserSecurityManager.FindByEmailAsync(email);
+
+            if (user != null)
+            {
+                var result = Database.UserSecurityManager.Delete(user);
+
+                if (result.Errors.Count() > 0)
+                {
+                    return new OperationDetails(false, result.Errors.FirstOrDefault(), "");
+                }
+
+                return new OperationDetails(true, "User deletion by Email was done successfully! Email: ", email);
+            }
+            else
+            {
+                return new OperationDetails(false, "The user with such Email not found! Email: ", email);
+            }
+        }
+
+
+        public async Task<ApplicationUser> FindByEmailAsync(string email) =>
+            await Database.UserSecurityManager.FindByEmailAsync(email).ConfigureAwait(false);
+
+        public async Task<ApplicationUser> FindByIdAsync(string id) =>
+            await Database.UserSecurityManager.FindByIdAsync(id).ConfigureAwait(false);
+
+        public async Task<ApplicationUser> FindByNameAsync(string id) =>
+            await Database.UserSecurityManager.FindByNameAsync(id).ConfigureAwait(false);
+
     }
 }

@@ -58,7 +58,7 @@
     <Compile Include="Models\ApplicationRole.cs" />
     <Compile Include="Models\ApplicationRoleManager.cs" />
     <Compile Include="Models\ApplicationUser.cs" />
-    <Compile Include="Models\UserSecurityManager.cs" />
+    <Compile Include="Models\ApplicationUserManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\IdentityUnitOfWork.cs" />
   </ItemGroup>

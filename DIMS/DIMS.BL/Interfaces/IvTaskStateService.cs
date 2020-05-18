@@ -7,9 +7,7 @@ using System.Threading.Tasks;
 
 namespace HIMS.BL.Interfaces
 {
-    public interface ITaskTrackService : IService<TaskTrackDTO>
+    public interface IvTaskStateService : IvService<TaskStateDTO>
     {
-        UserTaskDTO GetUserTask(int id);
-        IEnumerable<TaskTrackDTO> GetTracksForUser(int userId);
     }
 }

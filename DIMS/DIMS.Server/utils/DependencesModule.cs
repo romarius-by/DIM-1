@@ -27,11 +27,11 @@ namespace HIMS.Server.utils
             Bind<ITaskTrackService>().To<TaskTrackService>();
 
             Bind<IvTaskService>().To<vTaskService>();
+            Bind<IvTaskStateService>().To<vTaskStateService>();
             Bind<IvUserProfileService>().To<vUserProfileService>();
             Bind<IvUserProgressService>().To<vUserProgressService>();
             Bind<IvUserTaskService>().To<vUserTaskService>();
             Bind<IvUserTrackService>().To<vUserTrackService>();
-            Bind<IAuthService<UserDTO>>().To<UserAuthService>();
 
             Bind<ISender>().To<Sender>()
                 .InSingletonScope()

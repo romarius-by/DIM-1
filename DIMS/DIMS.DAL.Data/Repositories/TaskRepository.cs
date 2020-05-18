@@ -45,7 +45,8 @@ namespace HIMS.EF.DAL.Data.Repositories
 
         public Task GetById(int id)
         {
-            return _dIMSDBContext.Tasks.Find(id);
+            //return _dIMSDBContext.Tasks.Find(id); 
+            return _dIMSDBContext.Tasks.Include("UserTasks").Where(task => task.TaskId == id).FirstOrDefault();
         }
 
         public IEnumerable<Task> GetAll()

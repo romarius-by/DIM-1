@@ -6,4 +6,4 @@
 	t.Name AS TaskName,
 	tr.TrackNote AS TrackNote,
 	tr.TrackDate AS TrackDate
-	FROM [UserProfiles] up JOIN [UserTasks] ut ON up.UserId=ut.UserId JOIN [TaskTracks] tr ON ut.TaskId=tr.UserTaskId JOIN [Tasks] t ON ut.TaskId=t.TaskId
+	FROM [UserProfiles] up JOIN [UserTasks] ut ON up.UserId=ut.UserId JOIN [TaskTracks] tr ON ut.UserTaskId=tr.UserTaskId JOIN [Tasks] t ON ut.TaskId=t.TaskId

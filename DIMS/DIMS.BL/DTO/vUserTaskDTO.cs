@@ -8,7 +8,9 @@ namespace HIMS.BL.DTO
 {
     public class vUserTaskDTO
     {
+        public int UserTaskId { get; set; }
         public int UserId { get; set; }
+        public int StateId { get; set; }
         public int TaskId { get; set; }
         public string TaskName { get; set; }
         public string Description { get; set; }

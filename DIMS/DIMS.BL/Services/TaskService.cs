@@ -30,7 +30,7 @@ namespace HIMS.BL.Services
             if (!id.HasValue)
                 throw new ValidationException("The Task id value is not set", String.Empty);
 
-            Database.Directions.DeleteById(id.Value);
+            Database.Tasks.DeleteById(id.Value);
 
             Database.Save();
         }

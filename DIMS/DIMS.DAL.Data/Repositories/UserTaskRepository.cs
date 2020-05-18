@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HIMS.EF.DAL.Data.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace HIMS.EF.DAL.Data.Repositories
 {
-    public class UserTaskRepository : IRepository<UserTask>
+    public class UserTaskRepository : IUserTaskRepository
     {
         private readonly DIMSDBContext _dIMSDBContext;
 
@@ -30,6 +31,16 @@ namespace HIMS.EF.DAL.Data.Repositories
             }
         }
 
+        public void Delete(int taskId, int userId)
+        {
+            var userTask = _dIMSDBContext.UserTasks.FirstOrDefault(ut => ut.UserId == userId && ut.TaskId == taskId);
+
+            if (userTask != null)
+            {
+                _dIMSDBContext.UserTasks.Remove(userTask);
+            }
+        }
+
         public IEnumerable<UserTask> Find(Func<UserTask, bool> predicate)
         {
             return _dIMSDBContext.UserTasks.Where(predicate).ToList();
@@ -37,7 +48,7 @@ namespace HIMS.EF.DAL.Data.Repositories
 
         public UserTask GetById(int id)
         {
-            return _dIMSDBContext.UserTasks.Find(id);
+            return _dIMSDBContext.UserTasks.Include("Task").Include("TaskState").Include("TaskTracks").Include("UserProfile").Where(userTask => userTask.UserTaskId == id).FirstOrDefault();
         }
 
         public IEnumerable<UserTask> GetByUserId(int id)
@@ -47,7 +58,7 @@ namespace HIMS.EF.DAL.Data.Repositories
 
         public IEnumerable<UserTask> GetAll()
         {
-            return _dIMSDBContext.UserTasks;
+            return _dIMSDBContext.UserTasks.Include("Task").Include("TaskState").Include("TaskTracks").Include("UserProfile");
         }
 
         public void Update(UserTask item)

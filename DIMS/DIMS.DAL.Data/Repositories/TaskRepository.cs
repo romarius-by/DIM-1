@@ -32,7 +32,8 @@ namespace HIMS.EF.DAL.Data.Repositories
 
         public async Task<Task> DeleteByIdAsync(int id)
         {
-            return await System.Threading.Tasks.Task.Run(() => {
+            return await System.Threading.Tasks.Task.Run(() =>
+            {
                 var task = _dIMSDBContext.Tasks.Find(id);
                 return _dIMSDBContext.Tasks.Remove(task);
             });
@@ -45,8 +46,7 @@ namespace HIMS.EF.DAL.Data.Repositories
 
         public Task GetById(int id)
         {
-            //return _dIMSDBContext.Tasks.Find(id); 
-            return _dIMSDBContext.Tasks.Include("UserTasks").Where(task => task.TaskId == id).FirstOrDefault();
+            return _dIMSDBContext.Tasks.Find(id);
         }
 
         public IEnumerable<Task> GetAll()

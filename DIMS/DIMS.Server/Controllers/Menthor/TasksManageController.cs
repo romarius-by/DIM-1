@@ -37,13 +37,10 @@ namespace HIMS.Server.Controllers.Menthor
         {
             var userProfileDtos = _vUserProfileService.GetAll();
             var userProfileListViewModel = Mapper.Map<IEnumerable<vUserProfileDTO>, IEnumerable<vUserProfileViewModel>>(userProfileDtos);
-            var taskStateDtos = _vTaskStateService.GetAll();
-            var taskStateListViewModel = Mapper.Map<IEnumerable<TaskStateDTO>, IEnumerable<TaskStateViewModel>>(taskStateDtos);
 
             TaskManagePageViewModel taskManagePageViewModel = new TaskManagePageViewModel
             {
-                userProfileListViewModel = userProfileListViewModel,
-                taskStateListViewModel = taskStateListViewModel
+                userProfileListViewModel = userProfileListViewModel
             };
 
             return View(taskManagePageViewModel);
@@ -62,7 +59,7 @@ namespace HIMS.Server.Controllers.Menthor
                     var userProfileListViewModel = Mapper.Map<IEnumerable<vUserProfileDTO>, IEnumerable<vUserProfileViewModel>>(userProfileDtos);
 
                     IEnumerable<string> selectedUsers = Request.Form.GetValues("SelectedUserProfiles");
-                    int selectedState = Convert.ToInt32(Request.Form.Get("SelectedState"));
+                    int activeState = 1;
 
                     if (selectedUsers != null)
                         foreach (var userId in selectedUsers)
@@ -70,7 +67,7 @@ namespace HIMS.Server.Controllers.Menthor
                             var userTaskDto = Mapper.Map<UserTaskViewModel, UserTaskDTO>(userTaskViewModel);
 
                             userTaskDto.UserId = Convert.ToInt32(userId);
-                            userTaskDto.StateId = selectedState;
+                            userTaskDto.StateId = activeState;
                             userTaskDto.TaskId = taskDto.TaskId;
 
                             taskDto.UserTasks.Add(userTaskDto);
@@ -93,7 +90,6 @@ namespace HIMS.Server.Controllers.Menthor
 
             var taskDto = _taskService.GetById(id);
             var userProfileDtos = _vUserProfileService.GetAll();
-            var taskStateDtos = _vTaskStateService.GetAll();
 
             if (taskDto == null)
             {
@@ -103,8 +99,7 @@ namespace HIMS.Server.Controllers.Menthor
             TaskManagePageViewModel taskManagePageViewModel = new TaskManagePageViewModel
             {
                 userProfileListViewModel = Mapper.Map<IEnumerable<vUserProfileDTO>, IEnumerable<vUserProfileViewModel>>(userProfileDtos),
-                taskViewModel = Mapper.Map<TaskDTO, TaskViewModel>(taskDto),
-                taskStateListViewModel = Mapper.Map<IEnumerable<TaskStateDTO>, IEnumerable<TaskStateViewModel>>(taskStateDtos)
+                taskViewModel = Mapper.Map<TaskDTO, TaskViewModel>(taskDto)
             };
 
             return View(taskManagePageViewModel);
@@ -115,14 +110,13 @@ namespace HIMS.Server.Controllers.Menthor
         public ActionResult Edit(TaskManagePageViewModel taskManagePageViewModel, int id)
         {
             var taskDto = Mapper.Map<TaskViewModel, vTaskDTO>(taskManagePageViewModel.taskViewModel);
-
             taskDto.TaskId = id;
 
             var newUsers = new List<string>();
             var oldUsers = GetUsersForTask(id);
 
             IEnumerable<string> selectedUsers = Request.Form.GetValues("SelectedUsers");
-            int selectedState = Convert.ToInt32(Request.Form.Get("SelectedState"));
+            int activeState = 1;
 
             if (selectedUsers != null)
             {
@@ -146,7 +140,7 @@ namespace HIMS.Server.Controllers.Menthor
                         {
                             UserId = Convert.ToInt32(item),
                             TaskId = taskDto.TaskId,
-                            StateId = selectedState
+                            StateId = activeState
                         };
 
                         var userTaskDto = Mapper.Map<UserTaskViewModel, vUserTaskDTO>(userTask);
@@ -156,18 +150,6 @@ namespace HIMS.Server.Controllers.Menthor
                     foreach (var userId in UsersForDeleteTask)
                     {
                         _userTaskService.DeleteItemByTaskIdAndUserId(taskDto.TaskId, Convert.ToInt32(userId));
-                    }
-
-                    var userTaskDtos = _userTaskService.GetAllUserProfilesByTaskId(taskDto.TaskId);
-                    var vUserTaskDtos = Mapper.Map<IEnumerable<UserTaskDTO>, IEnumerable<vUserTaskDTO>>(userTaskDtos);
-
-                    foreach (var userTaskDto in vUserTaskDtos)
-                    {
-                        if (userTaskDto.StateId != selectedState)
-                        {
-                            userTaskDto.StateId = selectedState;
-                            _vUserTaskService.Update(userTaskDto);
-                        }
                     }
 
                     return RedirectToAction("Index");
@@ -232,7 +214,7 @@ namespace HIMS.Server.Controllers.Menthor
 
             var taskDto = _taskService.GetById(id.Value);
             var userProfileDtos = _vUserProfileService.GetAll();
-            var userTaskDtos = _userTaskService.GetAllUserProfilesByTaskId(id.Value);
+            var userTaskDtos = _userTaskService.GetAllUserTasksByTaskId(id.Value);
 
             if (taskDto == null)
             {

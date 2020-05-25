@@ -1,21 +1,20 @@
 ﻿using AutoMapper;
-using HIMS.BL.DTO;
-using HIMS.BL.Infrastructure;
-using HIMS.BL.Interfaces;
-using HIMS.EF.DAL.Data;
+using DIMS.BL.DTO;
+using DIMS.BL.Infrastructure;
+using DIMS.BL.Interfaces;
+using DIMS.EF.DAL.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace HIMS.BL.Services
+namespace DIMS.BL.Services
 {
     public class DirectionService : IDirectionService
     {
 
         private IUnitOfWork Database { get; }
-        
+
         public DirectionService(IUnitOfWork unitOfWork)
         {
             Database = unitOfWork;
@@ -24,7 +23,9 @@ namespace HIMS.BL.Services
         public void DeleteById(int? id)
         {
             if (!id.HasValue)
+            {
                 throw new ValidationException("The Direction's id value is not set", String.Empty);
+            }
 
             Database.Directions.DeleteById(id.Value);
             Database.Save();
@@ -33,7 +34,9 @@ namespace HIMS.BL.Services
         public async Task<bool> DeleteByIdAsync(int? id)
         {
             if (!id.HasValue)
+            {
                 throw new ValidationException("The Direction's id value is not set", String.Empty);
+            }
 
             var direction = await Database.Directions.DeleteByIdAsync(id.Value);
 
@@ -46,7 +49,6 @@ namespace HIMS.BL.Services
             {
                 return false;
             }
-            
         }
 
         public void Dispose()
@@ -57,12 +59,16 @@ namespace HIMS.BL.Services
         public DirectionDTO GetById(int? id)
         {
             if (!id.HasValue)
+            {
                 throw new ValidationException("The Direction's id value is not set", String.Empty);
+            }
 
             var direction = Database.Directions.GetById(id.Value);
 
             if (direction == null)
+            {
                 throw new ValidationException($"The Direction with id = ${id.Value} was not found", String.Empty);
+            }
 
             return Mapper.Map<Direction, DirectionDTO>(direction);
         }
@@ -78,13 +84,12 @@ namespace HIMS.BL.Services
             {
                 Name = direction.Name,
                 Description = direction.Description,
-                UserProfiles = Mapper.Map<List<UserProfileDTO>, ICollection <UserProfile>>(direction.UserProfiles.ToList())
+                UserProfiles = Mapper.Map<List<UserProfileDTO>, ICollection<UserProfile>>(direction.UserProfiles.ToList())
             };
 
             Database.Directions.Create(_direction);
 
             Database.Save();
-
         }
 
         public void Update(DirectionDTO direction)
@@ -97,10 +102,6 @@ namespace HIMS.BL.Services
 
                 Database.Save();
             }
-
-
         }
-
-        
     }
 }

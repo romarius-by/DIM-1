@@ -1,17 +1,15 @@
-﻿using HIMS.BL.Infrastructure;
-using HIMS.BL.Interfaces;
-using HIMS.BL.Models;
-using HIMS.EF.DAL.Identity.Interfaces;
-using HIMS.EF.DAL.Identity.Models;
+﻿using DIMS.BL.Infrastructure;
+using DIMS.BL.Interfaces;
+using DIMS.BL.Models;
+using DIMS.EF.DAL.Identity.Interfaces;
+using DIMS.EF.DAL.Identity.Models;
 using Microsoft.AspNet.Identity;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace HIMS.BL.Services
+namespace DIMS.BL.Services
 {
     public class UserService : IUserService
     {
@@ -33,7 +31,9 @@ namespace HIMS.BL.Services
                 var result = await Database.UserSecurityManager.CreateAsync(user, userDto.Password).ConfigureAwait(false);
 
                 if (result.Errors.Any())
+                {
                     return new OperationDetails(false, result.Errors.FirstOrDefault(), "");
+                }
 
                 await Database.UserSecurityManager.AddToRoleAsync(user.Id.ToString(), userDto.Role).ConfigureAwait(false);
 
@@ -99,14 +99,20 @@ namespace HIMS.BL.Services
             }
         }
 
-        public async Task<ApplicationUser> FindByEmailAsync(string email) =>
-            await Database.UserSecurityManager.FindByEmailAsync(email).ConfigureAwait(false);
+        public async Task<ApplicationUser> FindByEmailAsync(string email)
+        {
+            return await Database.UserSecurityManager.FindByEmailAsync(email).ConfigureAwait(false);
+        }
 
-        public async Task<ApplicationUser> FindByIdAsync(string id) =>
-            await Database.UserSecurityManager.FindByIdAsync(id).ConfigureAwait(false);
+        public async Task<ApplicationUser> FindByIdAsync(string id)
+        {
+            return await Database.UserSecurityManager.FindByIdAsync(id).ConfigureAwait(false);
+        }
 
-        public async Task<ApplicationUser> FindByNameAsync(string id) =>
-            await Database.UserSecurityManager.FindByNameAsync(id).ConfigureAwait(false);
+        public async Task<ApplicationUser> FindByNameAsync(string id)
+        {
+            return await Database.UserSecurityManager.FindByNameAsync(id).ConfigureAwait(false);
+        }
 
         public void Dispose()
         {

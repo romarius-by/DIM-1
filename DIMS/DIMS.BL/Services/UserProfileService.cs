@@ -1,13 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using AutoMapper;
+using DIMS.BL.DTO;
+using DIMS.BL.Infrastructure;
+using DIMS.BL.Interfaces;
+using DIMS.EF.DAL.Data;
+using DIMS.EF.DAL.Data.Repositories;
+using System.Collections.Generic;
 using System.Threading.Tasks;
-using AutoMapper;
-using HIMS.BL.DTO;
-using HIMS.BL.Infrastructure;
-using HIMS.BL.Interfaces;
-using HIMS.EF.DAL.Data;
-using HIMS.EF.DAL.Data.Repositories;
 
-namespace HIMS.BL.Services
+namespace DIMS.BL.Services
 {
     public class UserProfileService : IUserProfileService
     {
@@ -16,9 +16,9 @@ namespace HIMS.BL.Services
         private UserProfileRepository Repository { get; }
         private UserTaskService UserTasks { get; }
 
-        public UserProfileService(IUnitOfWork unitOfWork, 
-                                  UserProfileRepository userProfileRepository, 
-                                  UserService userService, 
+        public UserProfileService(IUnitOfWork unitOfWork,
+                                  UserProfileRepository userProfileRepository,
+                                  UserService userService,
                                   UserTaskService userTaskService)
         {
             Database = unitOfWork;
@@ -33,7 +33,7 @@ namespace HIMS.BL.Services
             {
                 throw new ValidationException("The User Profile's id value is not set", string.Empty);
             }
-            
+
             Database.UserProfiles.DeleteById(id.Value);
             Database.Save();
         }
@@ -51,9 +51,9 @@ namespace HIMS.BL.Services
             if (operationDetails.Succedeed || operationDetails.Message == "The user with such Email not found! Email: ")
             {
                 Repository.DeleteByEmail(email);
-                
+
                 return true;
-            } 
+            }
             else
             {
                 throw new ValidationException(operationDetails.Message, operationDetails.Property);
@@ -92,7 +92,7 @@ namespace HIMS.BL.Services
         public IEnumerable<UserProfileDTO> GetAll()
         {
             var userProfiles = Database.UserProfiles.GetAll();
-            
+
             return Mapper.Map<IEnumerable<UserProfile>, List<UserProfileDTO>>(userProfiles);
         }
 
@@ -162,7 +162,7 @@ namespace HIMS.BL.Services
             var _userProfile = Database.UserProfiles.GetById(userProfile.UserId);
 
             var userTasks = UserTasks.GetByUserId(userProfile.UserId);
-            
+
             if (_userProfile != null)
             {
                 Mapper.Map<UserProfileDTO, UserProfile>(userProfile, _userProfile);

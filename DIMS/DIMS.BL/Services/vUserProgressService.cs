@@ -1,20 +1,17 @@
 ﻿using AutoMapper;
-using HIMS.BL.DTO;
-using HIMS.BL.Infrastructure;
-using HIMS.BL.Interfaces;
-using HIMS.EF.DAL.Data;
+using DIMS.BL.DTO;
+using DIMS.BL.Infrastructure;
+using DIMS.BL.Interfaces;
+using DIMS.EF.DAL.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace HIMS.BL.Services
+namespace DIMS.BL.Services
 {
     public class vUserProgressService : IvUserProgressService
     {
-
-        private IUnitOfWork Database;
+        private readonly IUnitOfWork Database;
 
         public vUserProgressService(IUnitOfWork uow)
         {
@@ -35,12 +32,16 @@ namespace HIMS.BL.Services
         public vUserProgressDTO GetById(int? id)
         {
             if (!id.HasValue)
+            {
                 throw new ValidationException("The view user progress id value is not set", String.Empty);
+            }
 
             var _vUserProgress = Database.vUserProgresses.GetById(id.Value);
 
             if (_vUserProgress == null)
+            {
                 throw new ValidationException($"The view user progress with id = {id.Value} was not found", String.Empty);
+            }
 
             return Mapper.Map<vUserProgress, vUserProgressDTO>(_vUserProgress);
 
@@ -49,7 +50,9 @@ namespace HIMS.BL.Services
         public IEnumerable<vUserProgressDTO> GetByUserId(int? id)
         {
             if (!id.HasValue)
+            {
                 throw new ValidationException("The view user progress id value is not set", String.Empty);
+            }
 
             var userProgress = Database.vUserProgresses.Find(m => m.UserId == id.Value);
 

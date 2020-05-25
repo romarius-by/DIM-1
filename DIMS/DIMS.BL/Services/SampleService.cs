@@ -1,16 +1,13 @@
 ﻿using AutoMapper;
-using HIMS.BL.Infrastructure;
-using HIMS.BL.Interfaces;
-using HIMS.BL.Models;
-using HIMS.EF.DAL.Data;
-using HIMS.EF.DAL.Data.Interfaces;
+using DIMS.BL.Infrastructure;
+using DIMS.BL.Interfaces;
+using DIMS.BL.Models;
+using DIMS.EF.DAL.Data;
+using DIMS.EF.DAL.Data.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace HIMS.BL.Services
+namespace DIMS.BL.Services
 {
     public class SampleService : ISampleService
     {
@@ -26,11 +23,16 @@ namespace HIMS.BL.Services
         {
             // Validation
             if (sampleTM.Name.Length > 25)
+            {
                 throw new ValidationException($"The length of {nameof(sampleTM.Name)} must be less then 25"
                     , nameof(sampleTM.Name));
+            }
+
             if (sampleTM.Description.Length > 255)
+            {
                 throw new ValidationException($"The length of {nameof(sampleTM.Description)} must be less then 25"
                     , nameof(sampleTM.Description));
+            }
 
             var sample = new Sample
             {
@@ -45,11 +47,16 @@ namespace HIMS.BL.Services
         {
             // Validation
             if (sampleDTO.Name.Length > 25)
+            {
                 throw new ValidationException($"The length of {nameof(sampleDTO.Name)} must be less then 25"
                     , nameof(sampleDTO.Name));
+            }
+
             if (sampleDTO.Description.Length > 255)
+            {
                 throw new ValidationException($"The length of {nameof(sampleDTO.Description)} must be less then 25"
                     , nameof(sampleDTO.Description));
+            }
 
             var sample = Database.Samples.GetById(sampleDTO.SampleId);
 
@@ -68,12 +75,16 @@ namespace HIMS.BL.Services
         public SampleDTO GetSample(int? id)
         {
             if (!id.HasValue)
+            {
                 throw new ValidationException("The Sample's id value is not set", String.Empty);
+            }
 
             var sample = Database.Samples.GetById(id.Value);
 
             if (sample == null)
+            {
                 throw new ValidationException($"The Sample with id = {id} was not found", String.Empty);
+            }
 
             return Mapper.Map<Sample, SampleDTO>(sample);
         }
@@ -81,7 +92,9 @@ namespace HIMS.BL.Services
         public void DeleteSample(int? id)
         {
             if (!id.HasValue)
+            {
                 throw new ValidationException("The Sample's id value is not set", String.Empty);
+            }
 
             Database.Samples.DeleteById(id.Value);
             Database.Save();

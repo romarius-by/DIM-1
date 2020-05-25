@@ -1,24 +1,21 @@
 ﻿using AutoMapper;
-using HIMS.BL.DTO;
-using HIMS.BL.Infrastructure;
-using HIMS.BL.Interfaces;
-using HIMS.EF.DAL.Data;
-using HIMS.EF.DAL.Data.Repositories;
-using System;
+using DIMS.BL.DTO;
+using DIMS.BL.Infrastructure;
+using DIMS.BL.Interfaces;
+using DIMS.EF.DAL.Data;
+using DIMS.EF.DAL.Data.Repositories;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace HIMS.BL.Services
+namespace DIMS.BL.Services
 {
-
-    using DimsTask = global::HIMS.EF.DAL.Data.Task;
+    using EntityTask = EF.DAL.Data.Task;
 
     public class UserTaskService : IUserTaskService
     {
-        private IUnitOfWork Database;
-        private UserTaskRepository Repository;
+        private readonly IUnitOfWork Database;
+        private readonly UserTaskRepository Repository;
 
         public UserTaskService(IUnitOfWork uow, UserTaskRepository repository)
         {
@@ -29,7 +26,9 @@ namespace HIMS.BL.Services
         public void DeleteById(int? id)
         {
             if (!id.HasValue)
-                throw new ValidationException("The user task id value is not set", String.Empty);
+            {
+                throw new ValidationException("The user task id value is not set", string.Empty);
+            }
 
             Database.UserTasks.DeleteById(id.Value);
             Database.Save();
@@ -43,16 +42,19 @@ namespace HIMS.BL.Services
         public TaskDTO GetTask(int? id)
         {
             if (!id.HasValue)
-                throw new ValidationException("The user task id value is not set", String.Empty);
+            {
+                Logger.Logger.Warning("The user task id value is not set");
+            }
 
-            return Mapper.Map<DimsTask, TaskDTO>(
-                Database.UserTasks.GetById(id.Value).Task);
+            return Mapper.Map<EntityTask, TaskDTO>(Database.UserTasks.GetById(id.Value).Task);
         }
 
         public TaskStateDTO GetTaskState(int? id)
         {
             if (!id.HasValue)
-                throw new ValidationException("The user task id value is not set", String.Empty);
+            {
+                throw new ValidationException("The user task id value is not set", string.Empty);
+            }
 
             return Mapper.Map<TaskState, TaskStateDTO>(
                 Database.UserTasks.GetById(id.Value).TaskState);
@@ -61,7 +63,9 @@ namespace HIMS.BL.Services
         public IEnumerable<TaskTrackDTO> GetTaskTracks(int? id)
         {
             if (!id.HasValue)
-                throw new ValidationException("The user task id value is not set", String.Empty);
+            {
+                throw new ValidationException("The user task id value is not set", string.Empty);
+            }
 
             return Mapper.Map<List<TaskTrack>, ICollection<TaskTrackDTO>>(
                 Database.UserTasks.GetById(id.Value).TaskTracks.ToList());
@@ -70,7 +74,9 @@ namespace HIMS.BL.Services
         public UserProfileDTO GetUserProfile(int? id)
         {
             if (!id.HasValue)
-                throw new ValidationException("The user task id value is not set", String.Empty);
+            {
+                throw new ValidationException("The user task id value is not set", string.Empty);
+            }
 
             return Mapper.Map<UserProfile, UserProfileDTO>(
                 Database.UserTasks.GetById(id.Value).UserProfile);
@@ -79,12 +85,16 @@ namespace HIMS.BL.Services
         public UserTaskDTO GetById(int? id)
         {
             if (!id.HasValue)
-                throw new ValidationException("The user task id value is not set", String.Empty);
+            {
+                throw new ValidationException("The user task id value is not set", string.Empty);
+            }
 
             var userTask = Database.UserTasks.GetById(id.Value);
 
             if (userTask == null)
-                throw new ValidationException($"The user task with id = {id.Value} was not found", String.Empty);
+            {
+                throw new ValidationException($"The user task with id = {id.Value} was not found", string.Empty);
+            }
 
             return Mapper.Map<UserTask, UserTaskDTO>(userTask);
         }
@@ -99,7 +109,7 @@ namespace HIMS.BL.Services
         {
             var userTask = new UserTask
             {
-                Task = Mapper.Map<TaskDTO, DimsTask>(userTaskDTO.Task),
+                Task = Mapper.Map<TaskDTO, EntityTask>(userTaskDTO.Task),
                 TaskId = userTaskDTO.TaskId,
                 StateId = userTaskDTO.StateId,
                 TaskState = Mapper.Map<TaskStateDTO, TaskState>(userTaskDTO.TaskState),
@@ -126,7 +136,9 @@ namespace HIMS.BL.Services
         public IEnumerable<UserTaskDTO> GetByUserId(int? id)
         {
             if (!id.HasValue)
-                throw new ValidationException("The user profile id value is not set", String.Empty);
+            {
+                throw new ValidationException("The user profile id value is not set", string.Empty);
+            }
 
             return Mapper.Map<IEnumerable<UserTask>, IEnumerable<UserTaskDTO>>(
                 Repository.GetByUserId(id.Value));
@@ -135,7 +147,9 @@ namespace HIMS.BL.Services
         public async Task<bool> DeleteByIdAsync(int? id)
         {
             if (!id.HasValue)
-                throw new ValidationException("The id value is not set!", String.Empty);
+            {
+                throw new ValidationException("The id value is not set!", string.Empty);
+            }
 
             var userTask = await Database.UserTasks.DeleteByIdAsync(id.Value);
 
@@ -143,9 +157,10 @@ namespace HIMS.BL.Services
             {
                 return true;
             }
-
             else
+            {
                 return false;
+            }
         }
     }
 }

@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace HIMS.EF.DAL.Data
+namespace DIMS.EF.DAL.Data
 {
     public interface IRepository<T>
     {
@@ -14,7 +12,7 @@ namespace HIMS.EF.DAL.Data
         void DeleteById(int id);
 
         IEnumerable<T> GetAll();
-        IEnumerable<T> Find(Func<T, Boolean> predicate);
+        IEnumerable<T> Find(Func<T, bool> predicate);
 
         Task<T> DeleteByIdAsync(int id);
     }

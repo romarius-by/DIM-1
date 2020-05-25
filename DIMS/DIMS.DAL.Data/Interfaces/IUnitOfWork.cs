@@ -1,11 +1,7 @@
-﻿using HIMS.EF.DAL.Data.Interfaces;
+﻿using DIMS.EF.DAL.Data.Interfaces;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace HIMS.EF.DAL.Data
+namespace DIMS.EF.DAL.Data
 {
     public interface IUnitOfWork : IDisposable
     {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HIMS.BL.Models
+namespace DIMS.BL.Models
 {
     public class SampleDTO
     {

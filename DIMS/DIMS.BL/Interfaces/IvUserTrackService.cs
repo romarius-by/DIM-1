@@ -1,11 +1,6 @@
-﻿using HIMS.BL.DTO;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using DIMS.BL.DTO;
 
-namespace HIMS.BL.Interfaces
+namespace DIMS.BL.Interfaces
 {
     public interface IvUserTrackService : IvService<vUserTrackDTO>
     {

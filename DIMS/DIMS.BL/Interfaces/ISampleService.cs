@@ -1,11 +1,7 @@
-﻿using HIMS.BL.Models;
-using System;
+﻿using DIMS.BL.Models;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace HIMS.BL.Interfaces
+namespace DIMS.BL.Interfaces
 {
     public interface ISampleService
     {

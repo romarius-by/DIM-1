@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace HIMS.EF.DAL.Data.Repositories
+namespace DIMS.EF.DAL.Data.Repositories
 {
     public class SampleRepository : IRepository<Sample>
     {

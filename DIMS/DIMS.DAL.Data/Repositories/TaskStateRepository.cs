@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace HIMS.EF.DAL.Data.Repositories
+namespace DIMS.EF.DAL.Data.Repositories
 {
-    class TaskStateRepository : IRepository<TaskState>
+    internal class TaskStateRepository : IRepository<TaskState>
     {
         private readonly DIMSDBContext _dIMSDBContext;
 

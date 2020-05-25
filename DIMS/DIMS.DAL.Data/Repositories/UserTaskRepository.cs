@@ -1,10 +1,12 @@
-﻿using System;
+﻿using DIMS.Common;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace HIMS.EF.DAL.Data.Repositories
+using ThreadTask = System.Threading.Tasks.Task;
+
+namespace DIMS.EF.DAL.Data.Repositories
 {
     public class UserTaskRepository : IRepository<UserTask>
     {
@@ -23,7 +25,7 @@ namespace HIMS.EF.DAL.Data.Repositories
         public void DeleteById(int id)
         {
             UserTask userTask = _dIMSDBContext.UserTasks.Find(id);
-            
+
             if (userTask != null)
             {
                 _dIMSDBContext.UserTasks.Remove(userTask);
@@ -42,8 +44,12 @@ namespace HIMS.EF.DAL.Data.Repositories
 
         public IEnumerable<UserTask> GetByUserId(int id)
         {
-            return _dIMSDBContext.UserTasks.Where(task => task.UserId == id).ToList();
-        } 
+            // 1
+            //return _dIMSDBContext.UserTasks.Where(task => task.UserId == id).ToList();
+
+            // 2
+            return _dIMSDBContext.UserTasks.ToListBy(task => task.UserId == id);
+        }
 
         public IEnumerable<UserTask> GetAll()
         {
@@ -57,7 +63,7 @@ namespace HIMS.EF.DAL.Data.Repositories
 
         public async Task<UserTask> DeleteByIdAsync(int id)
         {
-            return await System.Threading.Tasks.Task.Run(() =>
+            return await ThreadTask.Run(() =>
             {
                 var userTask = _dIMSDBContext.UserTasks.Find(id);
                 return _dIMSDBContext.UserTasks.Remove(userTask);

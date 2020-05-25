@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using HIMS.EF.DAL.Data.Interfaces;
+﻿using DIMS.EF.DAL.Data.Interfaces;
+using System;
 
-namespace HIMS.EF.DAL.Data.Repositories
+namespace DIMS.EF.DAL.Data.Repositories
 {
     public class EFUnitOfWork : IUnitOfWork
     {
@@ -24,17 +20,17 @@ namespace HIMS.EF.DAL.Data.Repositories
         private readonly vUserTrackRepository _vUserTrackRepository;
 
         public IRepository<Sample> Samples => _sampleRepository ?? new SampleRepository(_dimsDbContext);
-       
+
         public IRepository<UserProfile> UserProfiles => _userProfileRepository ?? new UserProfileRepository(_dimsDbContext);
-        
+
         public IRepository<UserTask> UserTasks => _userTaskRepository ?? new UserTaskRepository(_dimsDbContext);
-        
+
         public IRepository<Direction> Directions => _directionRepository ?? new DirectionRepository(_dimsDbContext);
-        
+
         public IRepository<Task> Tasks => _taskRepository ?? new TaskRepository(_dimsDbContext);
-        
+
         public IRepository<TaskState> TaskStates => _taskStateRepository ?? new TaskStateRepository(_dimsDbContext);
-        
+
         public IRepository<TaskTrack> TaskTracks => _taskTrackRepository ?? new TaskTrackRepository(_dimsDbContext);
 
         public IViewRepository<vTask> vTasks => _vTaskRepository ?? new vTaskRepository(_dimsDbContext);
@@ -49,7 +45,7 @@ namespace HIMS.EF.DAL.Data.Repositories
 
         public EFUnitOfWork(string connectionString)
         {
-            this._dimsDbContext = new DIMSDBContext(connectionString);
+            _dimsDbContext = new DIMSDBContext(connectionString);
         }
         public void Save()
         {
@@ -60,7 +56,7 @@ namespace HIMS.EF.DAL.Data.Repositories
 
         public virtual void Dispose(bool disposing)
         {
-            if (!this.disposed)
+            if (!disposed)
             {
                 if (disposing)
                 {
@@ -68,7 +64,7 @@ namespace HIMS.EF.DAL.Data.Repositories
                     _dimsDbContext.Dispose();
                 }
                 //release unmanaged resources
-                this.disposed = true;
+                disposed = true;
             }
         }
 

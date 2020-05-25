@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace HIMS.EF.DAL.Data.Repositories
+namespace DIMS.EF.DAL.Data.Repositories
 {
-    class TaskTrackRepository : IRepository<TaskTrack>
+    internal class TaskTrackRepository : IRepository<TaskTrack>
     {
-        private DIMSDBContext _dIMSDBContext;
+        private readonly DIMSDBContext _dIMSDBContext;
 
         public TaskTrackRepository(DIMSDBContext dIMSDBContext)
         {

@@ -1,15 +1,13 @@
 ﻿using AutoMapper;
-using HIMS.BL.DTO;
-using HIMS.BL.Interfaces;
-using HIMS.Server.Models.Users;
+using DIMS.BL.DTO;
+using DIMS.BL.Interfaces;
+using DIMS.Server.Models.Users;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Http;
 using System.Web.Http.Cors;
 
-namespace HIMS.Server.ControllersApi
+namespace DIMS.Server.ControllersApi
 {
     [EnableCors("*", "*", "*")]
     [RoutePrefix("api")]
@@ -29,7 +27,7 @@ namespace HIMS.Server.ControllersApi
             var vUserProfileDtos = _vUserProfileService.GetAll();
 
             var vUserProfiles = Mapper.Map<IEnumerable<vUserProfileDTO>, List<vUserProfileViewModel>>(vUserProfileDtos);
-            
+
             return Json(vUserProfiles);
         }
 

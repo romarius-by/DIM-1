@@ -1,17 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
-namespace HIMS.Server.Models
+namespace DIMS.Server.Models
 {
     public class UserProfileViewModel
     {
         [HiddenInput]
         public int UserId { get; set; }
-        
+
         [Required]
         [Display(Name = "Direction")]
         public int DirectionId { get; set; }

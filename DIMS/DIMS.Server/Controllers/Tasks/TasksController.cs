@@ -1,15 +1,12 @@
 ﻿using AutoMapper;
-using HIMS.BL.DTO;
-using HIMS.BL.Interfaces;
-using HIMS.Server.Models.Tasks;
-using HIMS.Server.Models.Users;
-using System;
+using DIMS.BL.DTO;
+using DIMS.BL.Interfaces;
+using DIMS.Server.Models.Tasks;
+using DIMS.Server.Models.Users;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
-namespace HIMS.Server.Controllers.Tasks
+namespace DIMS.Server.Controllers.Tasks
 {
     public class TasksController : Controller
     {
@@ -28,6 +25,7 @@ namespace HIMS.Server.Controllers.Tasks
             {
                 Tasks = Mapper.Map<IEnumerable<vTaskDTO>, IEnumerable<vTaskViewModel>>(
                     _taskService.GetAll()),
+
                 UserProfiles = Mapper.Map<IEnumerable<vUserProfileDTO>, IEnumerable<vUserProfileViewModel>>(
                     _userProfileService.GetAll())
             };

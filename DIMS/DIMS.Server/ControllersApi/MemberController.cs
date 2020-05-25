@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using HIMS.BL.DTO;
-using HIMS.BL.Interfaces;
-using HIMS.Server.Models;
-using HIMS.Server.Models.Users;
+using DIMS.BL.DTO;
+using DIMS.BL.Interfaces;
+using DIMS.Server.Models;
+using DIMS.Server.Models.Users;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Cors;
 
-namespace HIMS.Server.ControllersApi
+namespace DIMS.Server.ControllersApi
 {
     [EnableCors("*", "*", "*")]
     [RoutePrefix("api")]
@@ -41,12 +41,16 @@ namespace HIMS.Server.ControllersApi
         public IHttpActionResult GetDetails([FromUri] int? id)
         {
             if (!id.HasValue)
+            {
                 return ResponseMessage(Request.CreateErrorResponse(HttpStatusCode.BadRequest, "The id value was not set!"));
+            }
 
             var vUserProfileDto = _vUserProfileService.GetById(id.Value);
 
             if (vUserProfileDto == null)
+            {
                 return ResponseMessage(Request.CreateResponse(HttpStatusCode.NotFound, $"The user with id = {id.Value} was not found!"));
+            }
 
             var userProfile = Mapper.Map<vUserProfileDTO, vUserProfileViewModel>(vUserProfileDto);
 

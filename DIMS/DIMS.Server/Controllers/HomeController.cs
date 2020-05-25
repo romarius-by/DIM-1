@@ -1,6 +1,6 @@
 ﻿using System.Web.Mvc;
 
-namespace HIMS.Server.Controllers
+namespace DIMS.Server.Controllers
 {
     public class HomeController : Controller
     {

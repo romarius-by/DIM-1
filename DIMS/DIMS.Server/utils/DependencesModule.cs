@@ -1,22 +1,17 @@
-﻿using Email.Interfaces;
-using HIMS.BL.Interfaces;
-using HIMS.BL.Models;
-using HIMS.BL.Services;
-using HIMS.Email.Services;
+﻿using DIMS.BL.Interfaces;
+using DIMS.BL.Models;
+using DIMS.BL.Services;
+using DIMS.Email.Services;
+using Email.Interfaces;
 using Ninject.Modules;
-using System;
-using System.Collections.Generic;
 using System.Configuration;
-using System.Linq;
-using System.Web;
 
-namespace HIMS.Server.utils
+namespace DIMS.Server.utils
 {
     public class DependencesModule : NinjectModule
     {
         public override void Load()
         {
-            
             Bind<ISampleService>().To<SampleService>();
             Bind<IUserService>().To<UserService>();
             Bind<IUserProfileService>().To<UserProfileService>();

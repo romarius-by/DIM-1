@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
-using HIMS.BL.DTO;
-using HIMS.BL.Interfaces;
-using HIMS.Server.Models.Users;
+using DIMS.BL.DTO;
+using DIMS.BL.Interfaces;
+using DIMS.Server.Models.Users;
 using System.Collections.Generic;
 using System.Web.Mvc;
 
-namespace HIMS.Server.Controllers.Users
+namespace DIMS.Server.Controllers.Users
 {
     public class UserProgressController : Controller
     {

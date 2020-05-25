@@ -1,4 +1,4 @@
-﻿using HIMS.BL.Models;
+﻿using DIMS.BL.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

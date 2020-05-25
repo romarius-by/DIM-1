@@ -1,15 +1,10 @@
-﻿using HIMS.Server.Models.Directions;
-using System;
+﻿using DIMS.Server.Models.Directions;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
-namespace HIMS.Server.Models.Users
+namespace DIMS.Server.Models.Users
 {
     public class UserProfilePageViewModel
     {
-        
-
         public UserProfileViewModel UserProfileViewModel { get; set; }
         public UserProfilesListViewModel UserProfilesListViewModel { get; set; }
         public vUserProfileViewModel vUserProfileViewModel { get; set; }

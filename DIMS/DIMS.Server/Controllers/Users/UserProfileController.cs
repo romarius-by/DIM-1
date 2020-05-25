@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
-using HIMS.BL.DTO;
-using HIMS.BL.Interfaces;
-using HIMS.Server.Models;
-using HIMS.Server.Models.Directions;
-using HIMS.Server.Models.Users;
+using DIMS.BL.DTO;
+using DIMS.BL.Interfaces;
+using DIMS.Server.Models;
+using DIMS.Server.Models.Directions;
+using DIMS.Server.Models.Users;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Data.Entity.Infrastructure;
@@ -11,7 +11,7 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 
-namespace HIMS.Server.Controllers
+namespace DIMS.Server.Controllers
 {
     [Authorize]
     [RoutePrefix("users")]

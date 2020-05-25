@@ -1,14 +1,14 @@
 ﻿using AutoMapper;
-using HIMS.BL.Interfaces;
-using HIMS.BL.Models;
-using HIMS.Server.Models;
-using HIMS.Server.utils;
+using DIMS.BL.Interfaces;
+using DIMS.BL.Models;
+using DIMS.Server.Models;
+using DIMS.Server.utils;
 using System.Collections.Generic;
 using System.Data.Entity.Infrastructure;
 using System.Net;
 using System.Web.Mvc;
 
-namespace HIMS.Server.Controllers
+namespace DIMS.Server.Controllers
 {
     public class SampleController : Controller
     {

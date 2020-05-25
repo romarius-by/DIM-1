@@ -1,12 +1,10 @@
-﻿using HIMS.BL.Infrastructure;
-using HIMS.Server.App_Start;
-using HIMS.Server.utils;
+﻿using DIMS.BL.Infrastructure;
+using DIMS.Server.App_Start;
+using DIMS.Server.utils;
 using Ninject;
 using Ninject.Modules;
-using Ninject.Web.Mvc;
 using Ninject.Web.WebApi.Filter;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Http;
@@ -14,9 +12,9 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 
-namespace HIMS.Server
+namespace DIMS.Server
 {
-    public class MvcApplication : System.Web.HttpApplication
+    public class MvcApplication : HttpApplication
     {
         protected void Application_Start()
         {
@@ -28,7 +26,7 @@ namespace HIMS.Server
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            AutomapperConfig.Initialize();
+            // AutomapperConfig.Initialize();
 
             // Remove data annotations validation provider 
             ModelValidatorProviders.Providers.Remove(
@@ -50,15 +48,14 @@ namespace HIMS.Server
 
             kernel.Bind<DefaultFilterProviders>().ToConstant(new DefaultFilterProviders(GlobalConfiguration.Configuration.Services.GetFilterProviders()));
 
-            var ninjectResolver = new utils.NinjectDependencyResolver(kernel);
+            var ninjectResolver = new NinjectDependencyResolver(kernel);
 
             DependencyResolver.SetResolver(ninjectResolver);
 
-            GlobalConfiguration.Configuration.DependencyResolver = new utils.NinjectDependencyResolver(kernel);
-
+            GlobalConfiguration.Configuration.DependencyResolver = new NinjectDependencyResolver(kernel);
         }
 
-        protected void Session_Start(Object sender, EventArgs e)
+        protected void Session_Start(object sender, EventArgs e)
         {
             var userObject = new UserObject
             {

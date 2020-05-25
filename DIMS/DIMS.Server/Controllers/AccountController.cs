@@ -1,8 +1,8 @@
-﻿using Email.Interfaces;
-using HIMS.BL.Infrastructure;
-using HIMS.BL.Interfaces;
-using HIMS.BL.Models;
-using HIMS.Server.Models;
+﻿using DIMS.BL.Infrastructure;
+using DIMS.BL.Interfaces;
+using DIMS.BL.Models;
+using DIMS.Server.Models;
+using Email.Interfaces;
 using Microsoft.Owin.Security;
 using System.Collections.Generic;
 using System.Security.Claims;
@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
-namespace HIMS.Server.Controllers
+namespace DIMS.Server.Controllers
 {
     public class AccountController : Controller
     {
@@ -80,7 +80,7 @@ namespace HIMS.Server.Controllers
         public async Task<ActionResult> Register(RegisterViewModel viewModel)
         {
             //await SetInitialDataAsync().ConfigureAwait(false);
-            
+
             if (ModelState.IsValid)
             {
                 var userDto = new UserDTO
@@ -104,7 +104,9 @@ namespace HIMS.Server.Controllers
                     return View("SuccessRegister");
                 }
                 else
+                {
                     ModelState.AddModelError(operationDetails.Property, operationDetails.Message);
+                }
             }
 
             return View(viewModel);

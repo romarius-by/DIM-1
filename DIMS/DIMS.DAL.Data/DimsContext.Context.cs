@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace HIMS.EF.DAL.Data
+namespace DIMS.EF.DAL.Data
 {
     using System;
     using System.Data.Entity;
@@ -160,8 +160,5 @@ namespace HIMS.EF.DAL.Data
         {
             return Convert.IsDBNull(parameterValue) ? default(T) : (T)parameterValue;
         }
-
-
-
     }
 }

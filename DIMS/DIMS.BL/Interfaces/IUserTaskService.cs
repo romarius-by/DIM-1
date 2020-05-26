@@ -14,7 +14,7 @@ namespace HIMS.BL.Interfaces
         IEnumerable<TaskTrackDTO> GetTaskTracks(int id);
         IEnumerable<UserTaskDTO> GetByUserId(int id);
         UserProfileDTO GetUserProfile(int id);
-        IEnumerable<UserTaskDTO> GetAllUserProfilesByTaskId(int id);
+        IEnumerable<UserTaskDTO> GetAllUserTasksByTaskId(int id);
         void DeleteItemByTaskIdAndUserId(int taskId, int userId);
     }
 }

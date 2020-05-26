@@ -7,77 +7,75 @@
     </div>
 
     <div class="modal-body">
-        <div class="">
-            <dl class="dl-horizontal">
-                <dt>
-                    @Html.DisplayNameFor(model => model.taskViewModel.Name)
-                </dt>
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.taskViewModel.Name)
+            </dt>
 
+            <dd>
+                @Html.DisplayFor(model => model.taskViewModel.Name)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.taskViewModel.Description)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.taskViewModel.Description)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.taskViewModel.StartDate)
+            </dt>
+
+            <dd>
+                @{
+                    var startDate = Model.taskViewModel.StartDate.ToShortDateString();
+                }
+                @Html.DisplayFor(model => startDate)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.taskViewModel.DeadlineDate)
+            </dt>
+
+            <dd>
+                @{
+                    var deadlineDate = Model.taskViewModel.DeadlineDate.ToShortDateString();
+                }
+                @Html.DisplayFor(model => deadlineDate)
+            </dd>
+
+            <dt>
+                For user(s):
+            </dt>
+
+            @foreach (var item in Model.userTaskListViewModel)
+            {
                 <dd>
-                    @Html.DisplayFor(model => model.taskViewModel.Name)
+                    @item.UserProfile.Name @item.UserProfile.LastName
                 </dd>
+            }
 
-                <dt>
-                    @Html.DisplayNameFor(model => model.taskViewModel.Description)
-                </dt>
+            <dt>
+                Task state:
+            </dt>
 
-                <dd>
-                    @Html.DisplayFor(model => model.taskViewModel.Description)
-                </dd>
-
-                <dt>
-                    @Html.DisplayNameFor(model => model.taskViewModel.StartDate)
-                </dt>
-
-                <dd>
-                    @{
-                        var startDate = Model.taskViewModel.StartDate.ToShortDateString();
-                    }
-                    @Html.DisplayFor(model => startDate)
-                </dd>
-
-                <dt>
-                    @Html.DisplayNameFor(model => model.taskViewModel.DeadlineDate)
-                </dt>
-
-                <dd>
-                    @{
-                        var deadlineDate = Model.taskViewModel.DeadlineDate.ToShortDateString();
-                    }
-                    @Html.DisplayFor(model => deadlineDate)
-                </dd>
-
-                <dt>
-                    For user(s):
-                </dt>
-
-                @foreach (var item in Model.userTaskListViewModel)
+            @foreach (var item in Model.userTaskListViewModel)
+            {
+                if (item.TaskState.StateName != ViewBag.State)
                 {
                     <dd>
-                        @item.UserProfile.Name @item.UserProfile.LastName
+                        @item.TaskState.StateName
+
                     </dd>
-                }
-
-                <dt>
-                    Task state:
-                </dt>
-
-                @foreach (var item in Model.userTaskListViewModel)
-                {
-                    if (item.TaskState.StateName != ViewBag.State)
                     {
-                        <dd>
-                            @item.TaskState.StateName
-
-                        </dd>
-                        {
-                            ViewBag.State = item.TaskState.StateName;
-                        }
+                        ViewBag.State = item.TaskState.StateName;
                     }
                 }
+            }
 
-            </dl>
-        </div>
+        </dl>
     </div>
     <div class="modal-footer">
         @using (Html.BeginForm())

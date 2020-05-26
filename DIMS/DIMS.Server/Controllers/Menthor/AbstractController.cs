@@ -35,7 +35,7 @@ namespace HIMS.Server.Controllers.Menthor
 
         public List<string> GetUsersForTask(int id)
         {
-            var userTaskDtos = _userTaskService.GetAllUserProfilesByTaskId(id);
+            var userTaskDtos = _userTaskService.GetAllUserTasksByTaskId(id);
             var userTasks = Mapper.Map<IEnumerable<UserTaskDTO>, List<UserTaskViewModel>>(userTaskDtos);
 
             var usersTaskList = new List<string>();

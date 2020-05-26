@@ -75,7 +75,7 @@ namespace HIMS.Server.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        //[Authorize(Roles = "admin")]
+        [Authorize(Roles = "admin")]
         public async Task<ActionResult> Register(RegisterViewModel viewModel)
         {
             //await SetInitialDataAsync().ConfigureAwait(false);

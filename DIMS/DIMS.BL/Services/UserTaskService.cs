@@ -64,7 +64,7 @@ namespace HIMS.BL.Services
                 Database.UserTasks.GetById(id).UserProfile);
         }
 
-        public IEnumerable<UserTaskDTO> GetAllUserProfilesByTaskId(int id)
+        public IEnumerable<UserTaskDTO> GetAllUserTasksByTaskId(int id)
         {
             var users = Database.UserTasks.Find(user => user.TaskId == id).ToList();
 

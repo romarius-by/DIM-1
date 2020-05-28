@@ -32,6 +32,7 @@ namespace HIMS.Server.utils
             Bind<IvUserProgressService>().To<vUserProgressService>();
             Bind<IvUserTaskService>().To<vUserTaskService>();
             Bind<IvUserTrackService>().To<vUserTrackService>();
+            Bind<IvTaskTrackService>().To<vTaskTrackService>();
 
             Bind<ISender>().To<Sender>()
                 .InSingletonScope()

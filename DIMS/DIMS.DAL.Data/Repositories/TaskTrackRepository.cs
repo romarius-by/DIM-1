@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HIMS.EF.DAL.Data.Repositories
 {
-    class TaskTrackRepository : IRepository<TaskTrack>
+    public class TaskTrackRepository : IRepository<TaskTrack>
     {
         private DIMSDBContext _dIMSDBContext;
 
@@ -57,6 +57,11 @@ namespace HIMS.EF.DAL.Data.Repositories
         public void Update(TaskTrack item)
         {
             _dIMSDBContext.Entry(item).State = System.Data.Entity.EntityState.Modified;
+        }
+
+        public IEnumerable<vUserTrack> GetByUserId(int id)
+        {
+            return _dIMSDBContext.vUserTracks.Where(task => task.UserId == id).ToList();
         }
     }
 }

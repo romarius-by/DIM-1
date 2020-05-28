@@ -32,13 +32,20 @@ namespace HIMS.Server.utils
                 cfg.CreateMap<UserProfileDTO, UserProfileViewModel>();
                 cfg.CreateMap<UserTaskViewModel, vUserTaskDTO>();
                 cfg.CreateMap<UserTaskDTO, vUserTaskDTO>();
+                cfg.CreateMap<TaskTrack, vTaskTrackDTO>();
 
+                cfg.CreateMap<vTaskTrackDTO, TaskTrackViewModel>();
+                cfg.CreateMap<vUserTrackDTO, TaskTrackViewModel>();
+                cfg.CreateMap<TaskTrackViewModel, vTaskTrackDTO>();
                 cfg.CreateMap<vUserProfileDTO, vUserProfileViewModel>();
                 cfg.CreateMap<vUserProfileViewModel, vUserProfileDTO>();
                 cfg.CreateMap<vUserTaskDTO, vUserTask>();
                 cfg.CreateMap<vUserTaskDTO, UserTask>();
                 cfg.CreateMap<vTaskDTO, vTask>();
                 cfg.CreateMap<vTaskDTO, Task>();
+                cfg.CreateMap<vUserTrack, TaskTrackDTO>();
+                cfg.CreateMap<vTaskTrackDTO, TaskTrack>();
+                cfg.CreateMap<vUserTrack, vUserTrackDTO>();
 
                 cfg.CreateMap<vUserProgress, vUserProgressDTO>();
                 cfg.CreateMap<vUserProgressDTO, vUserProgress>();

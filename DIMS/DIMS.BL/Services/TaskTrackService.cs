@@ -3,6 +3,7 @@ using HIMS.BL.DTO;
 using HIMS.BL.Infrastructure;
 using HIMS.BL.Interfaces;
 using HIMS.EF.DAL.Data;
+using HIMS.EF.DAL.Data.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,10 +16,12 @@ namespace HIMS.BL.Services
     {
 
         private IUnitOfWork Database;
+        private TaskTrackRepository Repository;
 
-        public TaskTrackService(IUnitOfWork uow)
+        public TaskTrackService(IUnitOfWork uow, TaskTrackRepository repository)
         {
             Database = uow;
+            Repository = repository;
         }
 
         public void DeleteById(int? id)
@@ -80,7 +83,6 @@ namespace HIMS.BL.Services
             {
                 TrackNote = taskTrackDTO.TrackNote,
                 TrackDate = taskTrackDTO.TrackDate,
-                UserTask = Mapper.Map<UserTaskDTO, UserTask>(taskTrackDTO.UserTask),
                 UserTaskId = taskTrackDTO.UserTaskId
             };
 
@@ -101,14 +103,10 @@ namespace HIMS.BL.Services
 
         public IEnumerable<TaskTrackDTO> GetTracksForUser(int userId)
         {
-            var tracks = Database.vUserTracks.Find(item => item.UserId == userId);
 
-            if (tracks == null)
-            {
-                throw new ValidationException($"The Task Track with id = {userId} was not found", "");
-            }
+            var vUserTracks = Repository.GetByUserId(userId);
 
-            return Mapper.Map<IEnumerable<vUserTrack>, List<TaskTrackDTO>>(tracks);
+            return Mapper.Map<IEnumerable<vUserTrack>, IEnumerable<TaskTrackDTO>>(vUserTracks);
         }
     }
 }

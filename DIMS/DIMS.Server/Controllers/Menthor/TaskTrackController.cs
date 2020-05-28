@@ -11,29 +11,117 @@ using System.Web.Mvc;
 namespace HIMS.Server.Controllers.Menthor
 {
     [Authorize]
-    [RoutePrefix("task")]
     public class TaskTrackController : Controller
     {
         private readonly ITaskTrackService _taskTrackService;
+        private readonly IvTaskTrackService _vTaskTrackService;
+        private readonly IvUserTrackService _vUserTrackService;
 
-        public TaskTrackController(ITaskTrackService taskTrackService)
+        public TaskTrackController(ITaskTrackService taskTrackService, IvTaskTrackService vTaskTrackService, IvUserTrackService vUserTrackService)
         {
             _taskTrackService = taskTrackService;
+            _vTaskTrackService = vTaskTrackService;
+            _vUserTrackService = vUserTrackService;
         }
 
         [HttpGet]
-        [Route("track")]
+        [Route("track/{userId}")]
         public ActionResult Index(int userId)
         {
-            IEnumerable<TaskTrackDTO> taskTrackDTOs = _taskTrackService.GetTracksForUser(userId);
+            var vUserTrackDTOs = _vUserTrackService.GetTracksForUser(userId);
 
-            var taskTrackListViewModel = new TaskTrackListViewModel
+            var taskTrackViewModels = Mapper.Map<IEnumerable<vUserTrackDTO>, IEnumerable<TaskTrackViewModel>>(vUserTrackDTOs);
+
+            return View(taskTrackViewModels);
+        }
+
+        public ActionResult Edit(int id)
+        {
+            var taskTrackDto = _vUserTrackService.GetById(id);
+
+            if (taskTrackDto == null)
             {
-                TaskTrackViewModels = Mapper.Map<IEnumerable<TaskTrackDTO>, IEnumerable<TaskTrackViewModel>>(taskTrackDTOs),
-                UserId = userId
-            };
+                return HttpNotFound();
+            }
 
-            return View(taskTrackListViewModel);
+            var taskTrackViewModel = Mapper.Map<vUserTrackDTO, TaskTrackViewModel>(taskTrackDto);
+
+            return View(taskTrackViewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(TaskTrackViewModel taskTrackViewModel, int id)
+        {
+            var vTaskTrackDto = _vTaskTrackService.GetById(id);
+            vTaskTrackDto.TrackDate = taskTrackViewModel.TrackDate;
+            vTaskTrackDto.TrackNote = taskTrackViewModel.TrackNote;
+
+            if (TryUpdateModel(vTaskTrackDto))
+            {
+                try
+                {
+                    _vTaskTrackService.Update(vTaskTrackDto);
+                    return RedirectToAction("Index");
+                }
+                catch (RetryLimitExceededException)
+                {
+                    //Log the error (uncomment dex variable name and add a line here to write a log.
+                    ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists, see your system administrator.");
+                }
+            }
+
+            return PartialView(taskTrackViewModel);
+        }
+
+        [HttpGet]
+        public ActionResult Details(int id)
+        {
+
+            var vUserTrackDto = _vUserTrackService.GetById(id);
+
+            if (vUserTrackDto == null)
+            {
+                return HttpNotFound();
+            }
+
+            var taskTrackViewModel = Mapper.Map<vUserTrackDTO, TaskTrackViewModel>(vUserTrackDto);
+
+            return View(taskTrackViewModel);
+        }
+
+        [HttpGet]
+        public ActionResult Delete(int id)
+        {
+
+            var vUserTrackDto = _vUserTrackService.GetById(id);
+
+            if (vUserTrackDto == null)
+            {
+                return HttpNotFound();
+            }
+
+            var taskTrackViewModel = Mapper.Map<vUserTrackDTO, TaskTrackViewModel>(vUserTrackDto);
+
+            return View(taskTrackViewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Delete(int? id)
+        {
+            var vUserTrackDto = _vUserTrackService.GetById(id);
+
+            try
+            {
+                _taskTrackService.DeleteById(id);
+            }
+            catch (RetryLimitExceededException)
+            {
+                return RedirectToAction("Delete", new { id, saveChangesError = true });
+            }
+
+            return RedirectToAction("Index", new { userId = vUserTrackDto.UserId });
         }
     }
 }

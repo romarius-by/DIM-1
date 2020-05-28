@@ -75,8 +75,8 @@
           <Property Name="UserId" Type="int" Nullable="false" />
           <Property Name="StateId" Type="int" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'DIMSDB.dbo.vTasks' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <!--Ошибки, обнаруженные при создании:
+предупреждение 6002: В таблице или представлении "DIMSDB.dbo.vTasks" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
         <EntityType Name="vTasks">
           <Key>
             <PropertyRef Name="TaskId" />
@@ -91,8 +91,8 @@ warning 6002: The table/view 'DIMSDB.dbo.vTasks' does not have a primary key def
           <Property Name="StartDate" Type="date" Nullable="false" />
           <Property Name="DeadlineDate" Type="date" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'DIMSDB.dbo.vUserProfiles' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <!--Ошибки, обнаруженные при создании:
+предупреждение 6002: В таблице или представлении "DIMSDB.dbo.vUserProfiles" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
         <EntityType Name="vUserProfiles">
           <Key>
             <PropertyRef Name="UserId" />
@@ -119,8 +119,8 @@ warning 6002: The table/view 'DIMSDB.dbo.vUserProfiles' does not have a primary 
           <Property Name="Skype" Type="varchar" MaxLength="50" />
           <Property Name="StartDate" Type="date" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'DIMSDB.dbo.vUserProgresses' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <!--Ошибки, обнаруженные при создании:
+предупреждение 6002: В таблице или представлении "DIMSDB.dbo.vUserProgresses" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
         <EntityType Name="vUserProgresses">
           <Key>
             <PropertyRef Name="UserId" />
@@ -139,8 +139,8 @@ warning 6002: The table/view 'DIMSDB.dbo.vUserProgresses' does not have a primar
           <Property Name="TrackNote" Type="varchar" MaxLength="128" Nullable="false" />
           <Property Name="TrackDate" Type="date" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'DIMSDB.dbo.vUserTasks' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <!--Ошибки, обнаруженные при создании:
+предупреждение 6002: В таблице или представлении "DIMSDB.dbo.vUserTasks" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
         <EntityType Name="vUserTasks">
           <Key>
             <PropertyRef Name="UserId" />
@@ -159,8 +159,8 @@ warning 6002: The table/view 'DIMSDB.dbo.vUserTasks' does not have a primary key
           <Property Name="DeadlineDate" Type="date" Nullable="false" />
           <Property Name="State" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'DIMSDB.dbo.vUserTracks' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <!--Ошибки, обнаруженные при создании:
+предупреждение 6002: В таблице или представлении "DIMSDB.dbo.vUserTracks" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
         <EntityType Name="vUserTracks">
           <Key>
             <PropertyRef Name="UserId" />
@@ -358,7 +358,6 @@ warning 6002: The table/view 'DIMSDB.dbo.vUserTracks' does not have a primary ke
           <EntitySet Name="vUserProfiles" EntityType="DIMSDBModel.vUserProfile" />
           <EntitySet Name="vUserProgresses" EntityType="DIMSDBModel.vUserProgress" />
           <EntitySet Name="vUserTasks" EntityType="DIMSDBModel.vUserTask" />
-          <EntitySet Name="vUserTracks" EntityType="DIMSDBModel.vUserTrack" />
           <AssociationSet Name="FK_Direction_To_UserProfile" Association="DIMSDBModel.FK_Direction_To_UserProfile">
             <End Role="Direction" EntitySet="Directions" />
             <End Role="UserProfile" EntitySet="UserProfiles" />
@@ -379,6 +378,7 @@ warning 6002: The table/view 'DIMSDB.dbo.vUserTracks' does not have a primary ke
             <End Role="UserProfile" EntitySet="UserProfiles" />
             <End Role="UserTask" EntitySet="UserTasks" />
           </AssociationSet>
+          <EntitySet Name="vUserTracks" EntityType="DIMSDBModel.vUserTrack" />
           </EntityContainer>
         <EntityType Name="Direction">
           <Key>
@@ -536,22 +536,6 @@ warning 6002: The table/view 'DIMSDB.dbo.vUserTracks' does not have a primary ke
           <Property Name="DeadlineDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="State" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
-        <EntityType Name="vUserTrack">
-          <Key>
-            <PropertyRef Name="UserId" />
-            <PropertyRef Name="TaskId" />
-            <PropertyRef Name="TaskTrackId" />
-            <PropertyRef Name="TaskName" />
-            <PropertyRef Name="TrackNote" />
-            <PropertyRef Name="TrackDate" />
-          </Key>
-          <Property Name="UserId" Type="Int32" Nullable="false" />
-          <Property Name="TaskId" Type="Int32" Nullable="false" />
-          <Property Name="TaskTrackId" Type="Int32" Nullable="false" />
-          <Property Name="TaskName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="TrackNote" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="false" />
-          <Property Name="TrackDate" Type="DateTime" Nullable="false" Precision="0" />
-        </EntityType>
         <Association Name="FK_Direction_To_UserProfile">
           <End Type="DIMSDBModel.Direction" Role="Direction" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -622,6 +606,22 @@ warning 6002: The table/view 'DIMSDB.dbo.vUserTracks' does not have a primary ke
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="vUserTrack">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="TaskId" />
+            <PropertyRef Name="TaskTrackId" />
+            <PropertyRef Name="TaskName" />
+            <PropertyRef Name="TrackNote" />
+            <PropertyRef Name="TrackDate" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="TaskId" Type="Int32" Nullable="false" />
+          <Property Name="TaskTrackId" Type="Int32" Nullable="false" />
+          <Property Name="TaskName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TrackNote" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="TrackDate" Type="DateTime" Nullable="false" Precision="0" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->

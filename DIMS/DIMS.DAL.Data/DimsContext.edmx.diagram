@@ -16,12 +16,12 @@
         <EntityTypeShape EntityType="DIMSDBModel.vUserProfile" Width="1.5" PointX="5.75" PointY="8.75" />
         <EntityTypeShape EntityType="DIMSDBModel.vUserProgress" Width="1.5" PointX="7.75" PointY="8.75" />
         <EntityTypeShape EntityType="DIMSDBModel.vUserTask" Width="1.5" PointX="9.75" PointY="0.75" />
-        <EntityTypeShape EntityType="DIMSDBModel.vUserTrack" Width="1.5" PointX="9.75" PointY="4.75" />
         <AssociationConnector Association="DIMSDBModel.FK_Direction_To_UserProfile" />
         <AssociationConnector Association="DIMSDBModel.FK_UserTask_To_Task" />
         <AssociationConnector Association="DIMSDBModel.FK_UserTask_To_TaskState" />
         <AssociationConnector Association="DIMSDBModel.FK_UserTask_To_TaskTrack" />
         <AssociationConnector Association="DIMSDBModel.FK_UserTask_To_UserProfile" />
+        <EntityTypeShape EntityType="DIMSDBModel.vUserTrack" Width="1.5" PointX="10.375" PointY="4.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

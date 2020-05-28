@@ -267,6 +267,10 @@
     <Content Include="Views\TasksManage\Edit.cshtml" />
     <Content Include="Views\TasksManage\Index.cshtml" />
     <Content Include="Views\TasksManage\Delete.cshtml" />
+    <Content Include="Views\TaskTrack\Index.cshtml" />
+    <Content Include="Views\TaskTrack\Edit.cshtml" />
+    <Content Include="Views\TaskTrack\Details.cshtml" />
+    <Content Include="Views\TaskTrack\Delete.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -276,7 +280,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\TaskTrack\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DIMS.BL\DIMS.BL.csproj">
@@ -284,7 +287,7 @@
       <Name>DIMS.BL</Name>
     </ProjectReference>
     <ProjectReference Include="..\DIMS.DAL.Data\DIMS.DAL.Data.csproj">
-      <Project>{CAC997AA-EBE6-4E9F-B4FD-C3CBBD6DA146}</Project>
+      <Project>{cac997aa-ebe6-4e9f-b4fd-c3cbbd6da146}</Project>
       <Name>DIMS.DAL.Data</Name>
     </ProjectReference>
     <ProjectReference Include="..\Email\Email.csproj">

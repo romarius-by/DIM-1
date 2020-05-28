@@ -3,6 +3,7 @@ using HIMS.BL.DTO;
 using HIMS.BL.Infrastructure;
 using HIMS.BL.Interfaces;
 using HIMS.EF.DAL.Data;
+using HIMS.EF.DAL.Data.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,10 +16,12 @@ namespace HIMS.BL.Services
     {
 
         private IUnitOfWork Database;
+        private TaskTrackRepository Repository;
 
-        public vUserTrackService(IUnitOfWork uow)
+        public vUserTrackService(IUnitOfWork uow, TaskTrackRepository repository)
         {
-            Database = uow; 
+            Database = uow;
+            Repository = repository;
         }
 
         public void Dispose()
@@ -41,8 +44,16 @@ namespace HIMS.BL.Services
 
         public IEnumerable<vUserTrackDTO> GetAll()
         {
-            return Mapper.Map<List<vUserTrack>, ICollection<vUserTrackDTO>>(
-                Database.vUserTracks.GetAll().ToList());
+            var vUserTracks = Database.vUserTracks.GetAll().ToList();
+
+            return Mapper.Map<List<vUserTrack>, ICollection<vUserTrackDTO>>(vUserTracks);
+        }
+
+        public IEnumerable<vUserTrackDTO> GetTracksForUser(int userId)
+        {
+            var vUserTracks = Repository.GetByUserId(userId);
+
+            return Mapper.Map<IEnumerable<vUserTrack>, IEnumerable<vUserTrackDTO>>(vUserTracks);
         }
     }
 }

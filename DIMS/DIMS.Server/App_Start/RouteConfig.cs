@@ -26,6 +26,12 @@ namespace HIMS.Server
                 );
 
             routes.MapRoute(
+                name: "TaskTrack",
+                url: "track/{action}/",
+                defaults: new { controller = "TaskTrack", action = "Index", id = 2006 }
+                );
+
+            routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }

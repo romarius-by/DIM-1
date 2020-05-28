@@ -111,7 +111,7 @@
     <Compile Include="DTO\SampleDTO.cs" />
     <Compile Include="DTO\UserDTO.cs" />
     <Compile Include="Interfaces\IUserTaskService.cs" />
-    <Compile Include="Interfaces\IvService.cs" />
+    <Compile Include="Interfaces\IVService.cs" />
     <Compile Include="Interfaces\IvTaskService.cs" />
     <Compile Include="Interfaces\IvUserProfileService.cs" />
     <Compile Include="Interfaces\IvUserProgressService.cs" />

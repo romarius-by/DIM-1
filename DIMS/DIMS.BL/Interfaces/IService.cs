@@ -2,7 +2,7 @@
 
 namespace DIMS.BL.Interfaces
 {
-    public interface IService<T> : IvService<T>
+    public interface IService<T> : IVService<T>
     {
         void Save(T item);
         void Update(T item);

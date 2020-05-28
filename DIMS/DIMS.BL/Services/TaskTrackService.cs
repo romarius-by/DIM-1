@@ -57,18 +57,13 @@ namespace DIMS.BL.Services
             Database.Dispose();
         }
 
-        public TaskTrackDTO GetById(int? id)
+        public TaskTrackDTO GetById(int id)
         {
-            if (!id.HasValue)
-            {
-                throw new ValidationException("The task track id value is not set", string.Empty);
-            }
-
-            var task = Database.TaskTracks.GetById(id.Value);
+            var task = Database.TaskTracks.GetById(id);
 
             if (task == null)
             {
-                throw new ValidationException($"The task track with id = {id.Value} was not found", string.Empty);
+                throw new ValidationException($"The task track with id = {id} was not found", string.Empty);
             }
 
             return _mapper.Map<TaskTrack, TaskTrackDTO>(task);

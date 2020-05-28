@@ -77,18 +77,13 @@ namespace DIMS.BL.Services
             return _mapper.Map<IEnumerable<UserTask>, List<UserTaskDTO>>(users);
         }
 
-        public UserTaskDTO GetById(int? id)
+        public UserTaskDTO GetById(int id)
         {
-            if (!id.HasValue)
-            {
-                throw new ValidationException("The user task id value is not set", string.Empty);
-            }
-
-            var userTask = Database.UserTasks.GetById(id.Value);
+            var userTask = Database.UserTasks.GetById(id);
 
             if (userTask == null)
             {
-                throw new ValidationException($"The user task with id = {id.Value} was not found", string.Empty);
+                throw new ValidationException($"The user task with id = {id} was not found", string.Empty);
             }
 
             return _mapper.Map<UserTask, UserTaskDTO>(userTask);

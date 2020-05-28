@@ -2,9 +2,9 @@
 
 namespace DIMS.BL.Interfaces
 {
-    public interface IvService<T>
+    public interface IVService<T>
     {
-        T GetById(int? id);
+        T GetById(int id);
         IEnumerable<T> GetAll();
 
         void Dispose();

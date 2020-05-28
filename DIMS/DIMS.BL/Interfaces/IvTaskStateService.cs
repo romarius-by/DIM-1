@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DIMS.BL.Interfaces
 {
-    public interface IvTaskStateService : IvService<TaskStateDTO>
+    public interface IvTaskStateService : IVService<TaskStateDTO>
     {
     }
 }

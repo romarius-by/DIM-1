@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using DIMS.BL.DTO;
 using DIMS.BL.Interfaces;
-using DIMS.EF.DAL.Data;
 using DIMS.Server.Models.Tasks;
 using DIMS.Server.Models.Users;
 using System;
@@ -9,16 +8,15 @@ using System.Collections.Generic;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 
 namespace DIMS.Server.Controllers.Menthor
 {
     public class TasksManageController : AbstractController
     {
-        public TasksManageController(ITaskService taskService, IvTaskService vTaskService, IUserTaskService userTaskService, 
-            IvUserProfileService vUserProfileService, IvTaskStateService vTaskStateService, IvUserTaskService vUserTaskService, IMapper mapper) 
-            : base (taskService, vTaskService, userTaskService, vUserProfileService, vTaskStateService, vUserTaskService, mapper)
+        public TasksManageController(ITaskService taskService, IvTaskService vTaskService, IUserTaskService userTaskService,
+            IvUserProfileService vUserProfileService, IvTaskStateService vTaskStateService, IvUserTaskService vUserTaskService, IMapper mapper)
+            : base(taskService, vTaskService, userTaskService, vUserProfileService, vTaskStateService, vUserTaskService, mapper)
         {
         }
 
@@ -62,6 +60,7 @@ namespace DIMS.Server.Controllers.Menthor
                     int activeState = 1;
 
                     if (selectedUsers != null)
+                    {
                         foreach (var userId in selectedUsers)
                         {
                             var userTaskDto = _mapper.Map<UserTaskViewModel, UserTaskDTO>(userTaskViewModel);
@@ -72,6 +71,8 @@ namespace DIMS.Server.Controllers.Menthor
 
                             taskDto.UserTasks.Add(userTaskDto);
                         }
+                    }
+
                     _taskService.Save(taskDto);
                     return RedirectToAction("Index");
                 }
@@ -160,7 +161,7 @@ namespace DIMS.Server.Controllers.Menthor
                     ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists, see your system administrator.");
                 }
             }
-            
+
             return PartialView(taskManagePageViewModel.taskViewModel);
         }
 

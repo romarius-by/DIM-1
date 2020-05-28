@@ -3,7 +3,6 @@ using DIMS.BL.DTO;
 using DIMS.BL.Infrastructure;
 using DIMS.BL.Interfaces;
 using DIMS.EF.DAL.Data;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -26,18 +25,13 @@ namespace DIMS.BL.Services
             Database.Dispose();
         }
 
-        public vTaskDTO GetById(int? id)
+        public vTaskDTO GetById(int id)
         {
-            if (!id.HasValue)
-            {
-                throw new ValidationException("The vTask id value is not set", String.Empty);
-            }
-
-            var _vTask = Database.vTasks.GetById(id.Value);
+            var _vTask = Database.vTasks.GetById(id);
 
             if (_vTask == null)
             {
-                throw new ValidationException($"The vTask with id = {id.Value} was not found", String.Empty);
+                throw new ValidationException($"The vTask with id = {id} was not found", string.Empty);
             }
 
             return _mapper.Map<vTask, vTaskDTO>(_vTask);

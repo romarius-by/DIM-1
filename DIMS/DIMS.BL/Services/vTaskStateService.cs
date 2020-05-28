@@ -5,33 +5,34 @@ using DIMS.BL.Interfaces;
 using DIMS.EF.DAL.Data;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DIMS.BL.Services
 {
     public class vTaskStateService : IvTaskStateService
     {
-        private IUnitOfWork database { get; }
+        private IUnitOfWork Uow { get; }
 
         private readonly IMapper _mapper;
 
-        public vTaskStateService (IUnitOfWork uow, IMapper mapper)
+        public vTaskStateService(IUnitOfWork uow, IMapper mapper)
         {
-            database = uow;
+            Uow = uow;
             _mapper = mapper;
         }
 
         public TaskStateDTO GetById(int? id)
         {
             if (!id.HasValue)
+            {
                 throw new ValidationException("The task state id value is not set", String.Empty);
+            }
 
-            var task = database.TaskStates.GetById(id.Value);
+            var task = Uow.TaskStates.GetById(id.Value);
 
             if (task == null)
+            {
                 throw new ValidationException($"The task state with id = {id.Value} was not found", String.Empty);
+            }
 
             return _mapper.Map<TaskState, TaskStateDTO>(task);
 
@@ -39,12 +40,12 @@ namespace DIMS.BL.Services
 
         public void Dispose()
         {
-            database.Dispose();
+            Uow.Dispose();
         }
 
         public IEnumerable<TaskStateDTO> GetAll()
         {
-            var taskStates = database.TaskStates.GetAll();
+            var taskStates = Uow.TaskStates.GetAll();
 
             return _mapper.Map<IEnumerable<TaskState>, IEnumerable<TaskStateDTO>>(taskStates);
         }

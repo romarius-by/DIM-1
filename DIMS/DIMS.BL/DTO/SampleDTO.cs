@@ -1,5 +1,9 @@
-﻿namespace DIMS.BL.Models
+﻿using AutoMapper;
+using DIMS.EF.DAL.Data;
+
+namespace DIMS.BL.Models
 {
+    [AutoMap(typeof(Sample))]
     public class SampleDTO
     {
         public int SampleId { get; set; }

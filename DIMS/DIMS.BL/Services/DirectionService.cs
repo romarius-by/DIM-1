@@ -12,19 +12,20 @@ namespace DIMS.BL.Services
 {
     public class DirectionService : IDirectionService
     {
-
         private IUnitOfWork Database { get; }
+        private readonly IMapper _mapper;
 
-        public DirectionService(IUnitOfWork unitOfWork)
+        public DirectionService(IUnitOfWork unitOfWork, IMapper mapper)
         {
             Database = unitOfWork;
+            _mapper = mapper;
         }
 
         public void DeleteById(int? id)
         {
             if (!id.HasValue)
             {
-                throw new ValidationException("The Direction's id value is not set", String.Empty);
+                throw new ValidationException("The Direction's id value is not set", string.Empty);
             }
 
             Database.Directions.DeleteById(id.Value);
@@ -35,7 +36,7 @@ namespace DIMS.BL.Services
         {
             if (!id.HasValue)
             {
-                throw new ValidationException("The Direction's id value is not set", String.Empty);
+                throw new ValidationException("The Direction's id value is not set", string.Empty);
             }
 
             var direction = await Database.Directions.DeleteByIdAsync(id.Value);
@@ -60,22 +61,24 @@ namespace DIMS.BL.Services
         {
             if (!id.HasValue)
             {
-                throw new ValidationException("The Direction's id value is not set", String.Empty);
+                throw new ValidationException("The Direction's id value is not set", string.Empty);
             }
 
             var direction = Database.Directions.GetById(id.Value);
 
             if (direction == null)
             {
-                throw new ValidationException($"The Direction with id = ${id.Value} was not found", String.Empty);
+                throw new ValidationException($"The Direction with id = ${id.Value} was not found", string.Empty);
             }
 
-            return Mapper.Map<Direction, DirectionDTO>(direction);
+            return _mapper.Map<Direction, DirectionDTO>(direction);
         }
 
         public IEnumerable<DirectionDTO> GetAll()
         {
-            return Mapper.Map<IEnumerable<Direction>, List<DirectionDTO>>(Database.Directions.GetAll());
+            var directions = Database.Directions.GetAll();
+
+            return _mapper.Map<IEnumerable<Direction>, List<DirectionDTO>>(directions);
         }
 
         public void Save(DirectionDTO direction)
@@ -84,7 +87,7 @@ namespace DIMS.BL.Services
             {
                 Name = direction.Name,
                 Description = direction.Description,
-                UserProfiles = Mapper.Map<List<UserProfileDTO>, ICollection<UserProfile>>(direction.UserProfiles.ToList())
+                UserProfiles = _mapper.Map<List<UserProfileDTO>, ICollection<UserProfile>>(direction.UserProfiles.ToList())
             };
 
             Database.Directions.Create(_direction);
@@ -98,7 +101,7 @@ namespace DIMS.BL.Services
 
             if (_direction != null)
             {
-                Mapper.Map(direction, _direction);
+                _mapper.Map(direction, _direction);
 
                 Database.Save();
             }

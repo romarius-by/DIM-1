@@ -1,5 +1,9 @@
-﻿namespace DIMS.Server.Models
+﻿using AutoMapper;
+using DIMS.BL.Models;
+
+namespace DIMS.Server.Models
 {
+    [AutoMap(typeof(SampleDTO))]
     public class SampleViewModel
     {
         public int SampleId { get; set; }

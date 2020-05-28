@@ -14,10 +14,12 @@ namespace DIMS.Server.ControllersApi
     public class ProfilesController : ApiController
     {
         private readonly IvUserProfileService _vUserProfileService;
+        private readonly IMapper _mapper;
 
-        public ProfilesController(IvUserProfileService vUserProfileService)
+        public ProfilesController(IvUserProfileService vUserProfileService, IMapper mapper)
         {
             _vUserProfileService = vUserProfileService ?? throw new ArgumentNullException(nameof(vUserProfileService));
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -26,7 +28,7 @@ namespace DIMS.Server.ControllersApi
         {
             var vUserProfileDtos = _vUserProfileService.GetAll();
 
-            var vUserProfiles = Mapper.Map<IEnumerable<vUserProfileDTO>, List<vUserProfileViewModel>>(vUserProfileDtos);
+            var vUserProfiles = _mapper.Map<IEnumerable<vUserProfileDTO>, List<vUserProfileViewModel>>(vUserProfileDtos);
 
             return Json(vUserProfiles);
         }

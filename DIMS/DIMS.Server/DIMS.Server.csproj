@@ -48,8 +48,8 @@
     <Reference Include="Antlr3.Runtime, Version=3.4.1.9004, Culture=neutral, PublicKeyToken=eb42632606e9261f, processorArchitecture=MSIL">
       <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
-    <Reference Include="AutoMapper, Version=5.2.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
-      <HintPath>..\packages\AutoMapper.5.2.0\lib\net45\AutoMapper.dll</HintPath>
+    <Reference Include="AutoMapper, Version=9.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.9.0.0\lib\net461\AutoMapper.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
@@ -189,7 +189,7 @@
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Properties\PublishProfiles\DIMSServer - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\DIMSServer2020 - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -219,19 +219,25 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Directions\DirectionViewModel.cs" />
+    <Compile Include="Models\Directions\DirectionViewModelProfile.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
     <Compile Include="Models\RegisterViewModel.cs" />
-    <Compile Include="Models\SamplesListViewModel.cs" />
-    <Compile Include="Models\SampleViewModel.cs" />
+    <Compile Include="Models\Samples\SamplesListViewModel.cs" />
+    <Compile Include="Models\Samples\SampleViewModel.cs" />
+    <Compile Include="Models\Samples\SampleViewModelProfile.cs" />
     <Compile Include="Models\Tasks\TasksListViewModel.cs" />
     <Compile Include="Models\Tasks\vTaskViewModel.cs" />
+    <Compile Include="Models\Tasks\vTaskViewModelProfile.cs" />
     <Compile Include="Models\Users\UserProfilePageViewModel.cs" />
     <Compile Include="Models\Users\UserProfilesListViewModel.cs" />
     <Compile Include="Models\Users\UserProfileViewModel.cs" />
+    <Compile Include="Models\Users\UserProfileViewModelProfile.cs" />
     <Compile Include="Models\Users\vUserProfilesListViewModel.cs" />
     <Compile Include="Models\Users\vUserProfileViewModel.cs" />
+    <Compile Include="Models\Users\VUserProfileViewModelProfile.cs" />
     <Compile Include="Models\Users\vUserProgressesListViewModel.cs" />
     <Compile Include="Models\Users\vUserProgressViewModel.cs" />
+    <Compile Include="Models\Users\VUserProgressViewModelProfile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="utils\AutoMapperModule.cs" />
     <Compile Include="utils\CurrentUser.cs" />
@@ -276,11 +282,11 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DIMS.BL\DIMS.BL.csproj">
-      <Project>{67F222E4-888B-4368-97ED-24096FA14E27}</Project>
+      <Project>{67f222e4-888b-4368-97ed-24096fa14e27}</Project>
       <Name>DIMS.BL</Name>
     </ProjectReference>
     <ProjectReference Include="..\DIMS.DAL.Data\DIMS.DAL.Data.csproj">
-      <Project>{CAC997AA-EBE6-4E9F-B4FD-C3CBBD6DA146}</Project>
+      <Project>{cac997aa-ebe6-4e9f-b4fd-c3cbbd6da146}</Project>
       <Name>DIMS.DAL.Data</Name>
     </ProjectReference>
     <ProjectReference Include="..\Email\Email.csproj">

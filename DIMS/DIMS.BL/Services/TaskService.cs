@@ -18,9 +18,12 @@ namespace DIMS.BL.Services
 
         private IUnitOfWork Database { get; }
 
-        public TaskService(IUnitOfWork uow)
+        private readonly IMapper _mapper;
+
+        public TaskService(IUnitOfWork uow, IMapper mapper)
         {
             Database = uow;
+            _mapper = mapper;
         }
 
 
@@ -28,7 +31,7 @@ namespace DIMS.BL.Services
         {
             if (!id.HasValue)
             {
-                throw new ValidationException("The Task id value is not set", String.Empty);
+                throw new ValidationException("The Task id value is not set", string.Empty);
             }
 
             Database.Directions.DeleteById(id.Value);
@@ -45,22 +48,22 @@ namespace DIMS.BL.Services
         {
             if (!id.HasValue)
             {
-                throw new ValidationException("The Task id value is not set", String.Empty);
+                throw new ValidationException("The Task id value is not set", string.Empty);
             }
 
             var task = Database.Tasks.GetById(id.Value);
 
             if (task == null)
             {
-                throw new ValidationException($"The task with id = {id.Value} was not found", String.Empty);
+                throw new ValidationException($"The task with id = {id.Value} was not found", string.Empty);
             }
 
-            return Mapper.Map<DimsTask, TaskDTO>(task);
+            return _mapper.Map<DimsTask, TaskDTO>(task);
         }
 
         public IEnumerable<TaskDTO> GetAll()
         {
-            return Mapper.Map<IEnumerable<DimsTask>, ICollection<TaskDTO>>(Database.Tasks.GetAll());
+            return _mapper.Map<IEnumerable<DimsTask>, ICollection<TaskDTO>>(Database.Tasks.GetAll());
 
         }
 
@@ -68,10 +71,10 @@ namespace DIMS.BL.Services
         {
             if (!id.HasValue)
             {
-                throw new ValidationException("The task id value is not set", String.Empty);
+                throw new ValidationException("The task id value is not set", string.Empty);
             }
 
-            return Mapper.Map<IEnumerable<UserTask>, ICollection<UserTaskDTO>>(Database.Tasks.
+            return _mapper.Map<IEnumerable<UserTask>, ICollection<UserTaskDTO>>(Database.Tasks.
                 GetById(id.Value).UserTasks);
         }
 
@@ -83,7 +86,7 @@ namespace DIMS.BL.Services
                 Description = task.Description,
                 StartDate = task.StartDate,
                 DeadlineDate = task.DeadlineDate,
-                UserTasks = Mapper.Map<List<UserTaskDTO>, ICollection<UserTask>>(task.UserTasks.ToList())
+                UserTasks = _mapper.Map<List<UserTaskDTO>, ICollection<UserTask>>(task.UserTasks.ToList())
             };
 
             Database.Tasks.Create(_task);
@@ -96,7 +99,7 @@ namespace DIMS.BL.Services
 
             if (task != null)
             {
-                Mapper.Map(taskDTO, task);
+                _mapper.Map(taskDTO, task);
 
                 Database.Save();
             }

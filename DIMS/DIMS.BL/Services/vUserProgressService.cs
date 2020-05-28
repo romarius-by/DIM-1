@@ -13,9 +13,12 @@ namespace DIMS.BL.Services
     {
         private readonly IUnitOfWork Database;
 
-        public vUserProgressService(IUnitOfWork uow)
+        private readonly IMapper _mapper;
+
+        public vUserProgressService(IUnitOfWork uow, IMapper mapper)
         {
             Database = uow;
+            _mapper = mapper;
         }
 
         public void Dispose()
@@ -25,7 +28,7 @@ namespace DIMS.BL.Services
 
         public IEnumerable<vUserProgressDTO> GetAll()
         {
-            return Mapper.Map<List<vUserProgress>, ICollection<vUserProgressDTO>>(
+            return _mapper.Map<List<vUserProgress>, ICollection<vUserProgressDTO>>(
                 Database.vUserProgresses.GetAll().ToList());
         }
 
@@ -43,7 +46,7 @@ namespace DIMS.BL.Services
                 throw new ValidationException($"The view user progress with id = {id.Value} was not found", String.Empty);
             }
 
-            return Mapper.Map<vUserProgress, vUserProgressDTO>(_vUserProgress);
+            return _mapper.Map<vUserProgress, vUserProgressDTO>(_vUserProgress);
 
         }
 
@@ -61,7 +64,7 @@ namespace DIMS.BL.Services
                 throw new ValidationException($"The user with id = {id.Value} was not found", String.Empty);
             }
 
-            return Mapper.Map<IEnumerable<vUserProgress>, List<vUserProgressDTO>>(userProgress);
+            return _mapper.Map<IEnumerable<vUserProgress>, List<vUserProgressDTO>>(userProgress);
         }
     }
 }

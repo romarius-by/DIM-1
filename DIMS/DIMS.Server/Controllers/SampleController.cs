@@ -14,9 +14,13 @@ namespace DIMS.Server.Controllers
     {
         private readonly ISampleService _sampleService;
 
-        public SampleController(ISampleService sampleService)
+        private readonly IMapper _mapper;
+
+        public SampleController(ISampleService sampleService, IMapper mapper)
         {
             _sampleService = sampleService;
+            _mapper = mapper;
+
         }
 
         public ActionResult Index()
@@ -24,7 +28,7 @@ namespace DIMS.Server.Controllers
             IEnumerable<SampleDTO> sampleDtos = _sampleService.GetSamples();
             var samples = new SamplesListViewModel
             {
-                Samples = Mapper.Map<IEnumerable<SampleDTO>, List<SampleViewModel>>(sampleDtos),
+                Samples = _mapper.Map<IEnumerable<SampleDTO>, List<SampleViewModel>>(sampleDtos),
                 SamplesAmount = _sampleService.GetSampleEntriesAmout(CurrentUser.IsAdmin)
             };
 
@@ -44,7 +48,7 @@ namespace DIMS.Server.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var sampleDto = Mapper.Map<SampleViewModel, SampleDTO>(sample);
+                    var sampleDto = _mapper.Map<SampleViewModel, SampleDTO>(sample);
                     _sampleService.SaveSample(sampleDto);
                     return RedirectToAction("Index");
                 }
@@ -71,7 +75,7 @@ namespace DIMS.Server.Controllers
                 return HttpNotFound();
             }
 
-            var sample = Mapper.Map<SampleDTO, SampleViewModel>(sampleDto);
+            var sample = _mapper.Map<SampleDTO, SampleViewModel>(sampleDto);
 
             return View(sample);
         }
@@ -103,7 +107,7 @@ namespace DIMS.Server.Controllers
                 }
             }
 
-            var sample = Mapper.Map<SampleDTO, SampleViewModel>(sampleDto);
+            var sample = _mapper.Map<SampleDTO, SampleViewModel>(sampleDto);
 
             return View(sample);
         }
@@ -122,7 +126,7 @@ namespace DIMS.Server.Controllers
                 return HttpNotFound();
             }
 
-            var sample = Mapper.Map<SampleDTO, SampleViewModel>(sampleDto);
+            var sample = _mapper.Map<SampleDTO, SampleViewModel>(sampleDto);
 
             return View(sample);
         }
@@ -145,7 +149,7 @@ namespace DIMS.Server.Controllers
                 return HttpNotFound();
             }
 
-            var sample = Mapper.Map<SampleDTO, SampleViewModel>(sampleDto);
+            var sample = _mapper.Map<SampleDTO, SampleViewModel>(sampleDto);
 
             return View(sample);
         }

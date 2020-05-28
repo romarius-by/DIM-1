@@ -14,9 +14,12 @@ namespace DIMS.BL.Services
 
         private readonly IUnitOfWork Database;
 
-        public vUserTrackService(IUnitOfWork uow)
+        private readonly IMapper _mapper;
+
+        public vUserTrackService(IUnitOfWork uow, IMapper mapper)
         {
             Database = uow;
+            _mapper = mapper;
         }
 
         public void Dispose()
@@ -38,12 +41,12 @@ namespace DIMS.BL.Services
                 throw new ValidationException($"The view user track with id = {id.Value} was not found", String.Empty);
             }
 
-            return Mapper.Map<vUserTrack, vUserTrackDTO>(_vUserTrack);
+            return _mapper.Map<vUserTrack, vUserTrackDTO>(_vUserTrack);
         }
 
         public IEnumerable<vUserTrackDTO> GetAll()
         {
-            return Mapper.Map<List<vUserTrack>, ICollection<vUserTrackDTO>>(
+            return _mapper.Map<List<vUserTrack>, ICollection<vUserTrackDTO>>(
                 Database.vUserTracks.GetAll().ToList());
         }
     }

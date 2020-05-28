@@ -21,16 +21,19 @@ namespace DIMS.Server.Controllers
         private readonly IvUserProfileService _vUserProfileService;
         private readonly IDirectionService _directionService;
         private readonly IvUserProgressService _vUserProgressService;
+        private readonly IMapper _mapper;
 
         public UserProfileController(IUserProfileService userProfileService,
             IvUserProfileService vuserProfileService,
             IDirectionService directionService,
-            IvUserProgressService vUserProgressService)
+            IvUserProgressService vUserProgressService,
+            IMapper mapper)
         {
             _userProfileService = userProfileService;
             _vUserProfileService = vuserProfileService;
             _directionService = directionService;
             _vUserProgressService = vUserProgressService;
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -39,7 +42,7 @@ namespace DIMS.Server.Controllers
         {
             var userProfileDtos = _vUserProfileService.GetAll();
 
-            var userProfileListViewModel = Mapper.Map<IEnumerable<vUserProfileDTO>, IEnumerable<vUserProfileViewModel>>(userProfileDtos);
+            var userProfileListViewModel = _mapper.Map<IEnumerable<vUserProfileDTO>, IEnumerable<vUserProfileViewModel>>(userProfileDtos);
 
             return View(userProfileListViewModel);
         }
@@ -48,18 +51,21 @@ namespace DIMS.Server.Controllers
         [Route("create")]
         public ActionResult Create()
         {
-            ViewBag.DirectionId = GetDirections();
+            var directions = GetDirections();
+
+            ViewBag.DirectionId = directions;
+
             return PartialView();
         }
 
         [HttpPost]
         [Route("create")]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Name, LastName, Email, MobilePhone, DirectionId, Education, UniversityAverageScore, MathScore, BirthDate, Address, Skype, StartDate, Sex")]UserProfileViewModel userProfileViewModel)
+        public ActionResult Create(UserProfileViewModel userProfileViewModel)
         {
             try
             {
-                var userProfileDTO = Mapper.Map<UserProfileViewModel, UserProfileDTO>(userProfileViewModel);
+                var userProfileDTO = _mapper.Map<UserProfileViewModel, UserProfileDTO>(userProfileViewModel);
 
                 if (ModelState.IsValid)
                 {
@@ -98,7 +104,7 @@ namespace DIMS.Server.Controllers
                 return HttpNotFound();
             }
 
-            var UserProfileViewModel = Mapper.Map<UserProfileDTO, UserProfileViewModel>(userProfileDto);
+            var UserProfileViewModel = _mapper.Map<UserProfileDTO, UserProfileViewModel>(userProfileDto);
 
             ViewBag.DirectionId = GetDirections();
 
@@ -119,7 +125,7 @@ namespace DIMS.Server.Controllers
 
             try
             {
-                Mapper.Map(userProfileViewModel, userProfileDto);
+                _mapper.Map(userProfileViewModel, userProfileDto);
 
                 userProfileDto.UserId = id.Value;
 
@@ -132,7 +138,7 @@ namespace DIMS.Server.Controllers
                 ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists, see your system administrator.");
             }
 
-            var UserProfileViewModel = Mapper.Map<UserProfileDTO, UserProfileViewModel>(userProfileDto);
+            var UserProfileViewModel = _mapper.Map<UserProfileDTO, UserProfileViewModel>(userProfileDto);
 
             return PartialView(UserProfileViewModel);
         }
@@ -153,7 +159,7 @@ namespace DIMS.Server.Controllers
                 return HttpNotFound();
             }
 
-            var vuserProfile = Mapper.Map<vUserProfileDTO, vUserProfileViewModel>(vuserProfileDto);
+            var vuserProfile = _mapper.Map<vUserProfileDTO, vUserProfileViewModel>(vuserProfileDto);
 
             return PartialView(vuserProfile);
         }
@@ -172,8 +178,8 @@ namespace DIMS.Server.Controllers
             var user = _vUserProfileService.GetById(id.Value);
 
             var vUserProgressesListViewModel = new vUserProgressesListViewModel(
-                Mapper.Map<vUserProfileDTO, vUserProfileViewModel>(user),
-                Mapper.Map<IEnumerable<vUserProgressDTO>, IEnumerable<vUserProgressViewModel>>(userProgressDto)
+                _mapper.Map<vUserProfileDTO, vUserProfileViewModel>(user),
+                _mapper.Map<IEnumerable<vUserProgressDTO>, IEnumerable<vUserProgressViewModel>>(userProgressDto)
                 );
 
             return PartialView(vUserProgressesListViewModel);
@@ -193,7 +199,7 @@ namespace DIMS.Server.Controllers
                 return HttpNotFound();
             }
 
-            var vuserProfile = Mapper.Map<vUserProfileDTO, vUserProfileViewModel>(vuserProfileDto);
+            var vuserProfile = _mapper.Map<vUserProfileDTO, vUserProfileViewModel>(vuserProfileDto);
 
             return View(vuserProfile);
         }
@@ -230,7 +236,7 @@ namespace DIMS.Server.Controllers
                 return HttpNotFound();
             }
 
-            var vuserProfileDto = Mapper.Map<vUserProfileDTO, vUserProfileViewModel>(userProfile);
+            var vuserProfileDto = _mapper.Map<vUserProfileDTO, vUserProfileViewModel>(userProfile);
 
             return PartialView(vuserProfileDto);
         }
@@ -253,16 +259,18 @@ namespace DIMS.Server.Controllers
         }
 
         [NonAction]
-        private List<SelectListItem> GetDirections()
+        private SelectList GetDirections()
         {
-            var directions = Mapper.Map<IEnumerable<DirectionDTO>, List<DirectionViewModel>>(_directionService.GetAll());
+            var direstionDtos = _directionService.GetAll();
 
-            var selectedItems = new List<SelectListItem>();
+            var directions = _mapper.Map<IEnumerable<DirectionDTO>, List<DirectionViewModel>>(direstionDtos);
 
-            foreach (var direction in directions)
-            {
-                selectedItems.Add(new SelectListItem { Text = direction.Name, Value = direction.DirectionId.ToString() });
-            }
+            var selectedItems = new SelectList(directions);
+
+            //foreach (var direction in directions)
+            //{
+            //    selectedItems.Add(new SelectListItem { Text = direction.Name, Value = direction.DirectionId.ToString() });
+            //}
 
             return selectedItems;
         }

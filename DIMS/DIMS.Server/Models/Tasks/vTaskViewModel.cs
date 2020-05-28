@@ -1,7 +1,10 @@
-﻿using System;
+﻿using AutoMapper;
+using DIMS.BL.DTO;
+using System;
 
 namespace DIMS.Server.Models.Tasks
 {
+    [AutoMap(typeof(vTaskDTO))]
     public class vTaskViewModel
     {
         public int TaskId { get; set; }

@@ -14,16 +14,19 @@ namespace DIMS.BL.Services
     {
         private IUnitOfWork Database { get; }
 
-        public TaskStateService(IUnitOfWork uow)
+        private readonly IMapper _mapper;
+
+        public TaskStateService(IUnitOfWork uow, IMapper mapper)
         {
             Database = uow;
+            _mapper = mapper;
         }
 
         public void DeleteById(int? id)
         {
             if (!id.HasValue)
             {
-                throw new ValidationException("The task state id value is not set", String.Empty);
+                throw new ValidationException("The task state id value is not set", string.Empty);
             }
 
             Database.TaskStates.DeleteById(id.Value);
@@ -36,17 +39,17 @@ namespace DIMS.BL.Services
         {
             if (!id.HasValue)
             {
-                throw new ValidationException("The task state id value is not set", String.Empty);
+                throw new ValidationException("The task state id value is not set", string.Empty);
             }
 
             var task = Database.TaskStates.GetById(id.Value);
 
             if (task == null)
             {
-                throw new ValidationException($"The task state with id = {id.Value} was not found", String.Empty);
+                throw new ValidationException($"The task state with id = {id.Value} was not found", string.Empty);
             }
 
-            return Mapper.Map<TaskState, TaskStateDTO>(task);
+            return _mapper.Map<TaskState, TaskStateDTO>(task);
 
         }
 
@@ -54,10 +57,10 @@ namespace DIMS.BL.Services
         {
             if (!id.HasValue)
             {
-                throw new ValidationException("The task state id value is not set", String.Empty);
+                throw new ValidationException("The task state id value is not set", string.Empty);
             }
 
-            return Mapper.Map<List<UserTask>, ICollection<UserTaskDTO>>(
+            return _mapper.Map<List<UserTask>, ICollection<UserTaskDTO>>(
                 Database.TaskStates.GetById(id.Value).UserTasks.ToList());
 
         }
@@ -67,7 +70,7 @@ namespace DIMS.BL.Services
             var taskState = new TaskState
             {
                 StateName = taskStateDTO.StateName,
-                UserTasks = Mapper.Map<List<UserTask>>(taskStateDTO.UserTasks)
+                UserTasks = _mapper.Map<List<UserTask>>(taskStateDTO.UserTasks)
             };
 
             Database.TaskStates.Create(taskState);
@@ -80,7 +83,7 @@ namespace DIMS.BL.Services
 
             if (taskState != null)
             {
-                Mapper.Map(taskStateDTO, taskState);
+                _mapper.Map(taskStateDTO, taskState);
 
                 Database.Save();
             }
@@ -93,7 +96,7 @@ namespace DIMS.BL.Services
 
         public IEnumerable<TaskStateDTO> GetAll()
         {
-            return Mapper.Map<IEnumerable<TaskState>, IEnumerable<TaskStateDTO>>(
+            return _mapper.Map<IEnumerable<TaskState>, IEnumerable<TaskStateDTO>>(
                 Database.TaskStates.GetAll());
         }
 
@@ -101,7 +104,7 @@ namespace DIMS.BL.Services
         {
             if (!id.HasValue)
             {
-                throw new ValidationException("The id value is not set!", String.Empty);
+                throw new ValidationException("The id value is not set!", string.Empty);
             }
 
             var taskState = await Database.TaskStates.DeleteByIdAsync(id.Value);

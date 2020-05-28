@@ -30,8 +30,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AutoMapper, Version=5.2.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
-      <HintPath>..\packages\AutoMapper.5.2.0\lib\net45\AutoMapper.dll</HintPath>
+    <Reference Include="AutoMapper, Version=9.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.9.0.0\lib\net461\AutoMapper.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
@@ -72,16 +72,29 @@
   <ItemGroup>
     <Compile Include="BusinessModels\WordsAmount.cs" />
     <Compile Include="DTO\DirectionDTO.cs" />
+    <Compile Include="Infrastructure\Profiles\DirectionDTOProfile.cs" />
+    <Compile Include="Infrastructure\Profiles\SampleDTOProfile.cs" />
     <Compile Include="DTO\TaskDTO.cs" />
+    <Compile Include="Infrastructure\Profiles\TaskDTOProfile.cs" />
     <Compile Include="DTO\TaskStateDTO.cs" />
+    <Compile Include="Infrastructure\Profiles\TaskStateDTOProfile.cs" />
     <Compile Include="DTO\TaskTrackDTO.cs" />
+    <Compile Include="Infrastructure\Profiles\TaskTrackDTOProfile.cs" />
     <Compile Include="DTO\UserProfileDTO.cs" />
+    <Compile Include="Infrastructure\Profiles\UserProfileDTOProfile.cs" />
     <Compile Include="DTO\UserTaskDTO.cs" />
+    <Compile Include="Infrastructure\Profiles\UserTaskDTOProfile.cs" />
     <Compile Include="DTO\vTaskDTO.cs" />
+    <Compile Include="Infrastructure\Profiles\vTaskDTOProfile.cs" />
     <Compile Include="DTO\vUserProfileDTO.cs" />
+    <Compile Include="Infrastructure\Profiles\vUserProfileDTOProfile.cs" />
     <Compile Include="DTO\vUserProgressDTO.cs" />
+    <Compile Include="Infrastructure\Profiles\vUserProgressDTOProfile.cs" />
     <Compile Include="DTO\vUserTaskDTO.cs" />
+    <Compile Include="Infrastructure\Profiles\vUserTaskDTOProfile.cs" />
     <Compile Include="DTO\vUserTrackDTO.cs" />
+    <Compile Include="Infrastructure\Profiles\vUserTrackDTOProfile.cs" />
+    <Compile Include="Infrastructure\AutoMapperModule.cs" />
     <Compile Include="Infrastructure\OperationDetails.cs" />
     <Compile Include="Infrastructure\ServicesModule.cs" />
     <Compile Include="Infrastructure\ValidationException.cs" />

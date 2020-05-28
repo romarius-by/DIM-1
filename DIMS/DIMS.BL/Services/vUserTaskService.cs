@@ -15,11 +15,13 @@ namespace DIMS.BL.Services
 
         private readonly IUnitOfWork Database;
         private readonly vUserTaskRepository Repository;
+        private readonly IMapper _mapper;
 
-        public vUserTaskService(IUnitOfWork uow, vUserTaskRepository repository)
+        public vUserTaskService(IUnitOfWork uow, vUserTaskRepository repository, IMapper mapper)
         {
             Database = uow;
             Repository = repository;
+            _mapper = mapper;
         }
 
         public void Dispose()
@@ -34,7 +36,7 @@ namespace DIMS.BL.Services
                 throw new ValidationException("The view user task id value is not set", String.Empty);
             }
 
-            return Mapper.Map<IEnumerable<vUserTask>, IEnumerable<vUserTaskDTO>>(
+            return _mapper.Map<IEnumerable<vUserTask>, IEnumerable<vUserTaskDTO>>(
                 Repository.GetByUserId(id.Value));
         }
 
@@ -52,12 +54,12 @@ namespace DIMS.BL.Services
                 throw new ValidationException($"The view user task with id = {id.Value} was not found", String.Empty);
             }
 
-            return Mapper.Map<vUserTask, vUserTaskDTO>(_vUserTask);
+            return _mapper.Map<vUserTask, vUserTaskDTO>(_vUserTask);
         }
 
         public IEnumerable<vUserTaskDTO> GetAll()
         {
-            return Mapper.Map<List<vUserTask>, ICollection<vUserTaskDTO>>(
+            return _mapper.Map<List<vUserTask>, ICollection<vUserTaskDTO>>(
                 Database.vUserTasks.GetAll().ToList());
         }
     }

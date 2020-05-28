@@ -1,7 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using AutoMapper;
+using DIMS.EF.DAL.Data;
+using System.Collections.Generic;
 
 namespace DIMS.BL.DTO
 {
+    [AutoMap(typeof(Direction))]
     public class DirectionDTO
     {
         public DirectionDTO()

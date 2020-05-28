@@ -1,9 +1,12 @@
-﻿using System;
+﻿using AutoMapper;
+using DIMS.BL.DTO;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 
 namespace DIMS.Server.Models
 {
+    [AutoMap(typeof(UserProfileDTO))]
     public class UserProfileViewModel
     {
         [HiddenInput]
@@ -40,23 +43,18 @@ namespace DIMS.Server.Models
         [DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? BirthDate { get; set; }
 
-        [Required]
         [Range(0, 10, ErrorMessage = "University Average Score must be in range from 0 to 10")]
         public double? UniversityAverageScore { get; set; }
 
-        [Required]
         [Range(0, 10, ErrorMessage = "Math Score must be in range from 0 to 10")]
         public double? MathScore { get; set; }
 
-        [Required]
         [StringLength(100, ErrorMessage = "The maximum length of Address is 100 characters.")]
         public string Address { get; set; }
 
-        [Required]
         [StringLength(13, ErrorMessage = "The maximum length of Mobile Phone is 13 characters (Format: +375xxxxxxxxx).")]
         public string MobilePhone { get; set; }
 
-        [Required]
         [StringLength(50, ErrorMessage = "The maximum length of Skype is 50 characters.")]
         public string Skype { get; set; }
 

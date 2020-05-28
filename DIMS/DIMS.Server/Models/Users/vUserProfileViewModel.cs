@@ -1,7 +1,10 @@
-﻿using System;
+﻿using AutoMapper;
+using DIMS.BL.DTO;
+using System;
 
 namespace DIMS.Server.Models.Users
 {
+    [AutoMap(typeof(vUserProfileDTO))]
     public class vUserProfileViewModel
     {
         public int UserId { get; set; }

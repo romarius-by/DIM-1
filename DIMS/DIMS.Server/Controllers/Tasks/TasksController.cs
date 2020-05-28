@@ -12,21 +12,22 @@ namespace DIMS.Server.Controllers.Tasks
     {
         private readonly IvTaskService _taskService;
         private readonly IvUserProfileService _userProfileService;
-
-        public TasksController(IvTaskService taskService, IvUserProfileService userProfileService)
+        private readonly IMapper _mapper;
+        public TasksController(IvTaskService taskService, IvUserProfileService userProfileService, IMapper mapper)
         {
             _taskService = taskService;
             _userProfileService = userProfileService;
+            _mapper = mapper;
         }
 
         public ActionResult Index()
         {
             var TasksViewModel = new TasksListViewModel
             {
-                Tasks = Mapper.Map<IEnumerable<vTaskDTO>, IEnumerable<vTaskViewModel>>(
+                Tasks = _mapper.Map<IEnumerable<vTaskDTO>, IEnumerable<vTaskViewModel>>(
                     _taskService.GetAll()),
 
-                UserProfiles = Mapper.Map<IEnumerable<vUserProfileDTO>, IEnumerable<vUserProfileViewModel>>(
+                UserProfiles = _mapper.Map<IEnumerable<vUserProfileDTO>, IEnumerable<vUserProfileViewModel>>(
                     _userProfileService.GetAll())
             };
 

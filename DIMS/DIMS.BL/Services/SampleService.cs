@@ -4,7 +4,6 @@ using DIMS.BL.Interfaces;
 using DIMS.BL.Models;
 using DIMS.EF.DAL.Data;
 using DIMS.EF.DAL.Data.Interfaces;
-using System;
 using System.Collections.Generic;
 
 namespace DIMS.BL.Services
@@ -14,30 +13,33 @@ namespace DIMS.BL.Services
         private IUnitOfWork Database { get; }
         private IProcedureManager Pm { get; }
 
-        public SampleService(IUnitOfWork uow, IProcedureManager pm)
+        private readonly IMapper _mapper;
+
+        public SampleService(IUnitOfWork uow, IProcedureManager pm, IMapper mapper)
         {
             Database = uow;
             Pm = pm;
+            _mapper = mapper;
         }
-        public void SaveSample(SampleDTO sampleTM)
+        public void SaveSample(SampleDTO sampleDto)
         {
             // Validation
-            if (sampleTM.Name.Length > 25)
+            if (sampleDto.Name.Length > 25)
             {
-                throw new ValidationException($"The length of {nameof(sampleTM.Name)} must be less then 25"
-                    , nameof(sampleTM.Name));
+                throw new ValidationException($"The length of {nameof(sampleDto.Name)} must be less then 25"
+                    , nameof(sampleDto.Name));
             }
 
-            if (sampleTM.Description.Length > 255)
+            if (sampleDto.Description.Length > 255)
             {
-                throw new ValidationException($"The length of {nameof(sampleTM.Description)} must be less then 25"
-                    , nameof(sampleTM.Description));
+                throw new ValidationException($"The length of {nameof(sampleDto.Description)} must be less then 25"
+                    , nameof(sampleDto.Description));
             }
 
             var sample = new Sample
             {
-                Name = sampleTM.Name,
-                Description = sampleTM.Description
+                Name = sampleDto.Name,
+                Description = sampleDto.Description
             };
 
             Database.Samples.Create(sample);
@@ -62,38 +64,38 @@ namespace DIMS.BL.Services
 
             if (sample != null)
             {
-                Mapper.Map(sampleDTO, sample);
+                _mapper.Map(sampleDTO, sample);
                 Database.Save();
             }
         }
 
         public IEnumerable<SampleDTO> GetSamples()
         {
-            return Mapper.Map<IEnumerable<Sample>, List<SampleDTO>>(Database.Samples.GetAll());
+            return _mapper.Map<IEnumerable<Sample>, List<SampleDTO>>(Database.Samples.GetAll());
         }
 
         public SampleDTO GetSample(int? id)
         {
             if (!id.HasValue)
             {
-                throw new ValidationException("The Sample's id value is not set", String.Empty);
+                throw new ValidationException("The Sample's id value is not set", string.Empty);
             }
 
             var sample = Database.Samples.GetById(id.Value);
 
             if (sample == null)
             {
-                throw new ValidationException($"The Sample with id = {id} was not found", String.Empty);
+                throw new ValidationException($"The Sample with id = {id} was not found", string.Empty);
             }
 
-            return Mapper.Map<Sample, SampleDTO>(sample);
+            return _mapper.Map<Sample, SampleDTO>(sample);
         }
 
         public void DeleteSample(int? id)
         {
             if (!id.HasValue)
             {
-                throw new ValidationException("The Sample's id value is not set", String.Empty);
+                throw new ValidationException("The Sample's id value is not set", string.Empty);
             }
 
             Database.Samples.DeleteById(id.Value);

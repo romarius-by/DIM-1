@@ -16,11 +16,13 @@ namespace DIMS.BL.Services
     {
         private readonly IUnitOfWork Database;
         private readonly UserTaskRepository Repository;
+        private readonly IMapper _mapper;
 
-        public UserTaskService(IUnitOfWork uow, UserTaskRepository repository)
+        public UserTaskService(IUnitOfWork uow, UserTaskRepository repository, IMapper mapper)
         {
             Database = uow;
             Repository = repository;
+            _mapper = mapper;
         }
 
         public void DeleteById(int? id)
@@ -46,7 +48,7 @@ namespace DIMS.BL.Services
                 Logger.Logger.Warning("The user task id value is not set");
             }
 
-            return Mapper.Map<EntityTask, TaskDTO>(Database.UserTasks.GetById(id.Value).Task);
+            return _mapper.Map<EntityTask, TaskDTO>(Database.UserTasks.GetById(id.Value).Task);
         }
 
         public TaskStateDTO GetTaskState(int? id)
@@ -56,7 +58,7 @@ namespace DIMS.BL.Services
                 throw new ValidationException("The user task id value is not set", string.Empty);
             }
 
-            return Mapper.Map<TaskState, TaskStateDTO>(
+            return _mapper.Map<TaskState, TaskStateDTO>(
                 Database.UserTasks.GetById(id.Value).TaskState);
         }
 
@@ -67,7 +69,7 @@ namespace DIMS.BL.Services
                 throw new ValidationException("The user task id value is not set", string.Empty);
             }
 
-            return Mapper.Map<List<TaskTrack>, ICollection<TaskTrackDTO>>(
+            return _mapper.Map<List<TaskTrack>, ICollection<TaskTrackDTO>>(
                 Database.UserTasks.GetById(id.Value).TaskTracks.ToList());
         }
 
@@ -78,7 +80,7 @@ namespace DIMS.BL.Services
                 throw new ValidationException("The user task id value is not set", string.Empty);
             }
 
-            return Mapper.Map<UserProfile, UserProfileDTO>(
+            return _mapper.Map<UserProfile, UserProfileDTO>(
                 Database.UserTasks.GetById(id.Value).UserProfile);
         }
 
@@ -96,12 +98,12 @@ namespace DIMS.BL.Services
                 throw new ValidationException($"The user task with id = {id.Value} was not found", string.Empty);
             }
 
-            return Mapper.Map<UserTask, UserTaskDTO>(userTask);
+            return _mapper.Map<UserTask, UserTaskDTO>(userTask);
         }
 
         public IEnumerable<UserTaskDTO> GetAll()
         {
-            return Mapper.Map<List<UserTask>, ICollection<UserTaskDTO>>(
+            return _mapper.Map<List<UserTask>, ICollection<UserTaskDTO>>(
                 Database.UserTasks.GetAll().ToList());
         }
 
@@ -109,13 +111,13 @@ namespace DIMS.BL.Services
         {
             var userTask = new UserTask
             {
-                Task = Mapper.Map<TaskDTO, EntityTask>(userTaskDTO.Task),
+                Task = _mapper.Map<TaskDTO, EntityTask>(userTaskDTO.Task),
                 TaskId = userTaskDTO.TaskId,
                 StateId = userTaskDTO.StateId,
-                TaskState = Mapper.Map<TaskStateDTO, TaskState>(userTaskDTO.TaskState),
+                TaskState = _mapper.Map<TaskStateDTO, TaskState>(userTaskDTO.TaskState),
                 UserId = userTaskDTO.UserId,
-                UserProfile = Mapper.Map<UserProfileDTO, UserProfile>(userTaskDTO.UserProfile),
-                TaskTracks = Mapper.Map<IEnumerable<TaskTrackDTO>, List<TaskTrack>>(userTaskDTO.TaskTracks)
+                UserProfile = _mapper.Map<UserProfileDTO, UserProfile>(userTaskDTO.UserProfile),
+                TaskTracks = _mapper.Map<IEnumerable<TaskTrackDTO>, List<TaskTrack>>(userTaskDTO.TaskTracks)
             };
 
             Database.UserTasks.Create(userTask);
@@ -128,7 +130,7 @@ namespace DIMS.BL.Services
 
             if (userTask != null)
             {
-                Mapper.Map(userTaskDTO, userTask);
+                _mapper.Map(userTaskDTO, userTask);
                 Database.Save();
             }
         }
@@ -140,7 +142,7 @@ namespace DIMS.BL.Services
                 throw new ValidationException("The user profile id value is not set", string.Empty);
             }
 
-            return Mapper.Map<IEnumerable<UserTask>, IEnumerable<UserTaskDTO>>(
+            return _mapper.Map<IEnumerable<UserTask>, IEnumerable<UserTaskDTO>>(
                 Repository.GetByUserId(id.Value));
         }
 

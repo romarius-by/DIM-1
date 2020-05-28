@@ -13,10 +13,12 @@ namespace DIMS.BL.Services
     {
 
         private readonly IUnitOfWork Database;
+        private readonly IMapper _mapper;
 
-        public vTaskService(IUnitOfWork uow)
+        public vTaskService(IUnitOfWork uow, IMapper mapper)
         {
             Database = uow;
+            _mapper = mapper;
         }
 
         public void Dispose()
@@ -38,12 +40,12 @@ namespace DIMS.BL.Services
                 throw new ValidationException($"The vTask with id = {id.Value} was not found", String.Empty);
             }
 
-            return Mapper.Map<vTask, vTaskDTO>(_vTask);
+            return _mapper.Map<vTask, vTaskDTO>(_vTask);
         }
 
         public IEnumerable<vTaskDTO> GetAll()
         {
-            return Mapper.Map<List<vTask>, ICollection<vTaskDTO>>(
+            return _mapper.Map<List<vTask>, ICollection<vTaskDTO>>(
                 Database.vTasks.GetAll().ToList());
         }
     }

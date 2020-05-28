@@ -1,7 +1,10 @@
-﻿using System;
+﻿using AutoMapper;
+using DIMS.EF.DAL.Data;
+using System;
 
 namespace DIMS.BL.DTO
 {
+    [AutoMap(typeof(UserProfile))]
     public class UserProfileDTO
     {
         public int UserId { get; set; }

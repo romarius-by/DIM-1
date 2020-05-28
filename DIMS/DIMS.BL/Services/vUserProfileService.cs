@@ -15,9 +15,12 @@ namespace DIMS.BL.Services
 
         private readonly IUnitOfWork Database;
 
-        public vUserProfileService(IUnitOfWork uow)
+        private readonly IMapper _mapper;
+
+        public vUserProfileService(IUnitOfWork uow, IMapper mapper)
         {
             Database = uow;
+            _mapper = mapper;
         }
 
         public void Dispose()
@@ -39,7 +42,7 @@ namespace DIMS.BL.Services
                 throw new ValidationException($"The view user profile with id = {id.Value} was not found", String.Empty);
             }
 
-            return Mapper.Map<vUserProfile, vUserProfileDTO>(vUserProfile);
+            return _mapper.Map<vUserProfile, vUserProfileDTO>(vUserProfile);
         }
 
         public async Task<vUserProfileDTO> GetByEmailAsync(string email)
@@ -56,12 +59,12 @@ namespace DIMS.BL.Services
                 throw new ValidationException($"The view user profile with email = {email} was not found", String.Empty);
             }
 
-            return Mapper.Map<vUserProfile, vUserProfileDTO>(vUserProfile);
+            return _mapper.Map<vUserProfile, vUserProfileDTO>(vUserProfile);
         }
 
         public IEnumerable<vUserProfileDTO> GetAll()
         {
-            return Mapper.Map<List<vUserProfile>, ICollection<vUserProfileDTO>>(
+            return _mapper.Map<List<vUserProfile>, ICollection<vUserProfileDTO>>(
                 Database.vUserProfiles.GetAll().ToList());
         }
     }

@@ -1,8 +1,11 @@
-﻿using System;
+﻿using AutoMapper;
+using DIMS.EF.DAL.Data;
+using System;
 using System.Collections.Generic;
 
 namespace DIMS.BL.DTO
 {
+    [AutoMap(typeof(Task))]
     public class TaskDTO
     {
 

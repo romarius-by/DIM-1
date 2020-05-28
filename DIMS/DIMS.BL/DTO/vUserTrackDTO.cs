@@ -1,4 +1,6 @@
-﻿using System;
+﻿using AutoMapper;
+using DIMS.EF.DAL.Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace DIMS.BL.DTO
 {
+    [AutoMap(typeof(vUserTrack))]
     public class vUserTrackDTO
     {
         public int UserId { get; set; }

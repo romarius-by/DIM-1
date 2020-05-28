@@ -21,12 +21,14 @@ namespace DIMS.Server.ControllersApi
         private readonly IUserProfileService _userProfileService;
         private readonly IvUserProfileService _vUserProfileService;
         private readonly IDirectionService _directionService;
+        private readonly IMapper _mapper;
 
-        public MemberController(IUserProfileService userProfileService, IvUserProfileService vUserProfileService, IDirectionService directionService)
+        public MemberController(IUserProfileService userProfileService, IvUserProfileService vUserProfileService, IDirectionService directionService, IMapper mapper)
         {
             _userProfileService = userProfileService ?? throw new ArgumentNullException(nameof(userProfileService));
             _vUserProfileService = vUserProfileService ?? throw new ArgumentNullException(nameof(vUserProfileService));
             _directionService = directionService ?? throw new ArgumentNullException(nameof(directionService));
+            _mapper = mapper;
         }
 
         private KeyValuePair<string, IEnumerable<string>>[] GetErrors()
@@ -52,7 +54,7 @@ namespace DIMS.Server.ControllersApi
                 return ResponseMessage(Request.CreateResponse(HttpStatusCode.NotFound, $"The user with id = {id.Value} was not found!"));
             }
 
-            var userProfile = Mapper.Map<vUserProfileDTO, vUserProfileViewModel>(vUserProfileDto);
+            var userProfile = _mapper.Map<vUserProfileDTO, vUserProfileViewModel>(vUserProfileDto);
 
             return Json(userProfile);
         }
@@ -63,7 +65,7 @@ namespace DIMS.Server.ControllersApi
         {
             if (ModelState.IsValid)
             {
-                var userProfileDto = Mapper.Map<UserProfileViewModel, UserProfileDTO>(userProfile);
+                var userProfileDto = _mapper.Map<UserProfileViewModel, UserProfileDTO>(userProfile);
                 _userProfileService.Save(userProfileDto);
 
                 return ResponseMessage(Request.CreateResponse(HttpStatusCode.OK, $"The member {userProfile.Name} {userProfile.LastName} has been successfully created!"));
@@ -85,7 +87,7 @@ namespace DIMS.Server.ControllersApi
         {
             if (ModelState.IsValid && id.HasValue)
             {
-                var userProfileDto = Mapper.Map<UserProfileViewModel, UserProfileDTO>(userProfile);
+                var userProfileDto = _mapper.Map<UserProfileViewModel, UserProfileDTO>(userProfile);
 
                 userProfileDto.UserId = id.Value;
 

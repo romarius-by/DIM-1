@@ -16,15 +16,19 @@ namespace DIMS.BL.Services
         private UserProfileRepository Repository { get; }
         private UserTaskService UserTasks { get; }
 
+        private readonly IMapper _mapper;
+
         public UserProfileService(IUnitOfWork unitOfWork,
                                   UserProfileRepository userProfileRepository,
                                   UserService userService,
-                                  UserTaskService userTaskService)
+                                  UserTaskService userTaskService,
+                                  IMapper mapper)
         {
             Database = unitOfWork;
             Repository = userProfileRepository;
             UserService = userService;
             UserTasks = userTaskService;
+            _mapper = mapper;
         }
 
         public void DeleteById(int? id)
@@ -86,14 +90,14 @@ namespace DIMS.BL.Services
                 throw new ValidationException($"The User Profile with id = {id.Value} was not found", string.Empty);
             }
 
-            return Mapper.Map<UserProfile, UserProfileDTO>(userProfile);
+            return _mapper.Map<UserProfile, UserProfileDTO>(userProfile);
         }
 
         public IEnumerable<UserProfileDTO> GetAll()
         {
             var userProfiles = Database.UserProfiles.GetAll();
 
-            return Mapper.Map<IEnumerable<UserProfile>, List<UserProfileDTO>>(userProfiles);
+            return _mapper.Map<IEnumerable<UserProfile>, List<UserProfileDTO>>(userProfiles);
         }
 
         public void Save(UserProfileDTO userProfile)
@@ -165,9 +169,9 @@ namespace DIMS.BL.Services
 
             if (_userProfile != null)
             {
-                Mapper.Map<UserProfileDTO, UserProfile>(userProfile, _userProfile);
+                _mapper.Map(userProfile, _userProfile);
 
-                _userProfile.UserTasks = Mapper.Map<IEnumerable<UserTaskDTO>, ICollection<UserTask>>(userTasks);
+                _userProfile.UserTasks = _mapper.Map<IEnumerable<UserTaskDTO>, ICollection<UserTask>>(userTasks);
 
                 Database.Save();
             }

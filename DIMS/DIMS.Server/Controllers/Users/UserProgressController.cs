@@ -11,11 +11,13 @@ namespace DIMS.Server.Controllers.Users
     {
         private readonly IvUserProgressService _userProgressService;
         private readonly IvUserProfileService _userProfileService;
+        private readonly IMapper _mapper;
 
-        public UserProgressController(IvUserProgressService userProgressService, IvUserProfileService userProfileService)
+        public UserProgressController(IvUserProgressService userProgressService, IvUserProfileService userProfileService, IMapper mapper)
         {
             _userProgressService = userProgressService;
             _userProfileService = userProfileService;
+            _mapper = mapper;
         }
 
         public ActionResult Index(int? id)
@@ -28,11 +30,11 @@ namespace DIMS.Server.Controllers.Users
 
             var _userProfile = _userProfileService.GetById(id.Value);
 
-            var userProfile = Mapper.Map<vUserProfileDTO, vUserProfileViewModel>(_userProfile);
+            var userProfile = _mapper.Map<vUserProfileDTO, vUserProfileViewModel>(_userProfile);
 
             var _userProgress = _userProgressService.GetByUserId(id.Value);
 
-            var userProgress = Mapper.Map<IEnumerable<vUserProgressDTO>, IEnumerable<vUserProgressViewModel>>(_userProgress);
+            var userProgress = _mapper.Map<IEnumerable<vUserProgressDTO>, IEnumerable<vUserProgressViewModel>>(_userProgress);
 
             var userProgresses = new vUserProgressesListViewModel(userProfile, userProgress);
 

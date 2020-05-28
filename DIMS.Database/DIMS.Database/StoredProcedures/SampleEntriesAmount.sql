@@ -6,7 +6,7 @@ AS
 		IF @isAdmin = 1
 			BEGIN
 				SELECT @result = COUNT(SampleId)
-				FROM [Samples]
+				FROM [Sample]
 			END
 		ELSE
 			BEGIN

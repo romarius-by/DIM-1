@@ -1,4 +1,4 @@
-﻿CREATE VIEW [dbo].[vUserProfiles]
+﻿CREATE VIEW [dbo].[vUserProfile]
 		AS SELECT ISNULL(up.UserId, -999) AS UserId, --for Entity Framework primary key
 	          CONCAT(up.Name, ' ', up.LastName) AS FullName,
 			  up.Email,
@@ -12,4 +12,4 @@
 			  up.MobilePhone,
 			  up.Skype,
 			  up.StartDate
-			  FROM [UserProfiles] up JOIN [Directions] d ON up.DirectionId=d.DirectionId
+			  FROM [UserProfile] up JOIN [Direction] d ON up.DirectionId=d.DirectionId

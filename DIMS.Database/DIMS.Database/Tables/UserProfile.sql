@@ -1,4 +1,4 @@
-﻿CREATE TABLE [dbo].[UserProfiles]
+﻿CREATE TABLE [dbo].[UserProfile]
 (
 	[UserId] INT IDENTITY NOT NULL, 
     [DirectionId] INT NOT NULL, 
@@ -16,5 +16,5 @@
     [StartDate] DATE NOT NULL
 
 	CONSTRAINT [PK_UserProfile] PRIMARY KEY ([UserId])
-	CONSTRAINT [FK_Direction_To_UserProfile] FOREIGN KEY ([DirectionId]) REFERENCES [Directions]([DirectionId]) ON DELETE CASCADE ON UPDATE CASCADE, 
+	CONSTRAINT [FK_Direction_To_UserProfile] FOREIGN KEY ([DirectionId]) REFERENCES [Direction]([DirectionId]) ON DELETE CASCADE ON UPDATE CASCADE, 
 )

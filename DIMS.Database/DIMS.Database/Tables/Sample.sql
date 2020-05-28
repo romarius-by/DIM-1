@@ -1,4 +1,4 @@
-﻿CREATE TABLE [dbo].[Samples]
+﻿CREATE TABLE [dbo].[Sample]
 (
 	[SampleId] INT IDENTITY(1,1) NOT NULL,
 	[Name] NVARCHAR(25) NOT NULL,

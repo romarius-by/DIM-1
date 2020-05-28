@@ -1,4 +1,4 @@
-﻿CREATE TABLE [dbo].[Directions]
+﻿CREATE TABLE [dbo].[Direction]
 (
 	[DirectionId] INT IDENTITY NOT NULL, 
 	[Name] NVARCHAR(50) NOT NULL, 

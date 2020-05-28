@@ -22,9 +22,9 @@ namespace DIMS.EF.DAL.Data.Repositories
         public IRepository<Sample> Samples => _sampleRepository ?? new SampleRepository(_dimsDbContext);
 
         public IRepository<UserProfile> UserProfiles => _userProfileRepository ?? new UserProfileRepository(_dimsDbContext);
-
-        public IRepository<UserTask> UserTasks => _userTaskRepository ?? new UserTaskRepository(_dimsDbContext);
-
+        
+        public IUserTaskRepository UserTasks => _userTaskRepository ?? new UserTaskRepository(_dimsDbContext);
+        
         public IRepository<Direction> Directions => _directionRepository ?? new DirectionRepository(_dimsDbContext);
 
         public IRepository<Task> Tasks => _taskRepository ?? new TaskRepository(_dimsDbContext);

@@ -16,6 +16,12 @@ namespace DIMS.Server
                 );
 
             routes.MapRoute(
+                name: "TasksManage",
+                url: "tasks/{action}/",
+                defaults: new { controller = "TasksManage", action = "Index", id = UrlParameter.Optional }
+                );
+
+            routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }

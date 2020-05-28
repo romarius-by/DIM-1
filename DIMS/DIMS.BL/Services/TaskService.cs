@@ -34,7 +34,7 @@ namespace DIMS.BL.Services
                 throw new ValidationException("The Task id value is not set", string.Empty);
             }
 
-            Database.Directions.DeleteById(id.Value);
+            Database.Tasks.DeleteById(id.Value);
 
             Database.Save();
         }

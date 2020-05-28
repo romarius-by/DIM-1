@@ -8,7 +8,7 @@ using ThreadTask = System.Threading.Tasks.Task;
 
 namespace DIMS.EF.DAL.Data.Repositories
 {
-    public class UserTaskRepository : IRepository<UserTask>
+    public class UserTaskRepository : IUserTaskRepository
     {
         private readonly DIMSDBContext _dIMSDBContext;
 
@@ -25,6 +25,16 @@ namespace DIMS.EF.DAL.Data.Repositories
         public void DeleteById(int id)
         {
             UserTask userTask = _dIMSDBContext.UserTasks.Find(id);
+
+            if (userTask != null)
+            {
+                _dIMSDBContext.UserTasks.Remove(userTask);
+            }
+        }
+
+        public void Delete(int taskId, int userId)
+        {
+            var userTask = _dIMSDBContext.UserTasks.FirstOrDefault(ut => ut.UserId == userId && ut.TaskId == taskId);
 
             if (userTask != null)
             {

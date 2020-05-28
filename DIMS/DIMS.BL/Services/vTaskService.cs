@@ -48,5 +48,17 @@ namespace DIMS.BL.Services
             return _mapper.Map<List<vTask>, ICollection<vTaskDTO>>(
                 Database.vTasks.GetAll().ToList());
         }
+
+        public void Update(vTaskDTO vTaskDTO)
+        {
+            var task = Database.Tasks.GetById(vTaskDTO.TaskId);
+
+            if (task != null)
+            {
+                Mapper.Map(vTaskDTO, task);
+
+                Database.Save();
+            }
+        }
     }
 }

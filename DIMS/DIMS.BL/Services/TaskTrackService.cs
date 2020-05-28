@@ -80,15 +80,10 @@ namespace DIMS.BL.Services
                 Database.TaskTracks.GetAll().ToList());
         }
 
-        public UserTaskDTO GetUserTask(int? id)
+        public UserTaskDTO GetUserTask(int id)
         {
-            if (!id.HasValue)
-            {
-                throw new ValidationException("The task track id value is not set", string.Empty);
-            }
-
             return _mapper.Map<UserTask, UserTaskDTO>(
-                Database.TaskTracks.GetById(id.Value).UserTask);
+                Database.TaskTracks.GetById(id).UserTask);
         }
 
         public void Save(TaskTrackDTO taskTrackDTO)
@@ -114,6 +109,18 @@ namespace DIMS.BL.Services
                 _mapper.Map(taskTrackDTO, taskTrack);
                 Database.Save();
             }
+        }
+
+        public IEnumerable<TaskTrackDTO> GetTracksForUser(int userId)
+        {
+            var tracks = Database.vUserTracks.Find(item => item.UserId == userId);
+
+            if (tracks == null)
+            {
+                throw new ValidationException($"The Task Track with id = {userId} was not found", "");
+            }
+
+            return Mapper.Map<IEnumerable<vUserTrack>, List<TaskTrackDTO>>(tracks);
         }
     }
 }

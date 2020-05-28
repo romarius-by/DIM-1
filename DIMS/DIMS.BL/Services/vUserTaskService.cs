@@ -62,5 +62,29 @@ namespace DIMS.BL.Services
             return _mapper.Map<List<vUserTask>, ICollection<vUserTaskDTO>>(
                 Database.vUserTasks.GetAll().ToList());
         }
+
+        public void Save(vUserTaskDTO vUserTaskDTO)
+        {
+            var userTask = new UserTask
+            {
+                TaskId = vUserTaskDTO.TaskId,
+                StateId = vUserTaskDTO.StateId,
+                UserId = vUserTaskDTO.UserId
+            };
+
+            Database.UserTasks.Create(userTask);
+            Database.Save();
+        }
+
+        public void Update(vUserTaskDTO vUserTaskDTO)
+        {
+            var userTask = Database.UserTasks.GetById(vUserTaskDTO.UserTaskId);
+
+            if (userTask != null)
+            {
+                Mapper.Map(vUserTaskDTO, userTask);
+                Database.Save();
+            }
+        }
     }
 }

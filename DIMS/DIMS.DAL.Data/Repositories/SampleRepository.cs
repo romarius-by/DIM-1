@@ -8,24 +8,24 @@ namespace DIMS.EF.DAL.Data.Repositories
 {
     public class SampleRepository : IRepository<Sample>
     {
-        private readonly DIMSDBContext _himsDbContext;
+        private readonly DIMSDBContext _dimsDbContext;
 
-        public SampleRepository(DIMSDBContext himsDbContext)
+        public SampleRepository(DIMSDBContext dimsDbContext)
         {
-            _himsDbContext = himsDbContext;
+            _dimsDbContext = dimsDbContext;
         }
 
         public void Create(Sample item)
         {
-            _himsDbContext.Samples.Add(item);
+            _dimsDbContext.Samples.Add(item);
         }
 
         public void DeleteById(int id)
         {
-            var entity = _himsDbContext.Samples.Find(id);
+            var entity = _dimsDbContext.Samples.Find(id);
             if (entity != null)
             {
-                _himsDbContext.Samples.Remove(entity);
+                _dimsDbContext.Samples.Remove(entity);
             }
         }
 
@@ -33,30 +33,30 @@ namespace DIMS.EF.DAL.Data.Repositories
         {
             return await System.Threading.Tasks.Task.Run(() =>
             {
-                var sample = _himsDbContext.Samples.Find(id);
+                var sample = _dimsDbContext.Samples.Find(id);
 
-                return _himsDbContext.Samples.Remove(sample);
+                return _dimsDbContext.Samples.Remove(sample);
             });
         }
 
         public IEnumerable<Sample> Find(Func<Sample, bool> predicate)
         {
-            return _himsDbContext.Samples.Where(predicate).ToList();
+            return _dimsDbContext.Samples.Where(predicate).ToList();
         }
 
         public Sample GetById(int id)
         {
-            return _himsDbContext.Samples.Find(id);
+            return _dimsDbContext.Samples.Find(id);
         }
 
         public IEnumerable<Sample> GetAll()
         {
-            return _himsDbContext.Samples;
+            return _dimsDbContext.Samples;
         }
 
         public void Update(Sample item)
         {
-            _himsDbContext.Entry(item).State = EntityState.Modified;
+            _dimsDbContext.Entry(item).State = EntityState.Modified;
         }
     }
 }

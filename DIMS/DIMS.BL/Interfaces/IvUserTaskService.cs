@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace DIMS.BL.Interfaces
 {
-    public interface IvUserTaskService : IVService<vUserTaskDTO>
+    public interface IVUserTaskService : IVService<vUserTaskDTO>
     {
         void Save(vUserTaskDTO vUserTaskDTO);
         void Update(vUserTaskDTO vUserTaskDTO);

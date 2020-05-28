@@ -33,15 +33,15 @@ namespace DIMS.EF.DAL.Data.Repositories
 
         public IRepository<TaskTrack> TaskTracks => _taskTrackRepository ?? new TaskTrackRepository(_dimsDbContext);
 
-        public IViewRepository<vTask> vTasks => _vTaskRepository ?? new vTaskRepository(_dimsDbContext);
+        public IViewRepository<VTask> VTasks => _vTaskRepository ?? new vTaskRepository(_dimsDbContext);
 
-        public IViewRepository<vUserProgress> vUserProgresses => _vUserProgressRepository ?? new vUserProgressRepository(_dimsDbContext);
+        public IViewRepository<vUserProgress> VUserProgresses => _vUserProgressRepository ?? new vUserProgressRepository(_dimsDbContext);
 
-        public IViewRepository<vUserTask> vUserTasks => _vUserTaskRepository ?? new vUserTaskRepository(_dimsDbContext);
+        public IViewRepository<vUserTask> VUserTasks => _vUserTaskRepository ?? new vUserTaskRepository(_dimsDbContext);
 
-        public IViewRepository<vUserTrack> vUserTracks => _vUserTrackRepository ?? new vUserTrackRepository(_dimsDbContext);
+        public IViewRepository<vUserTrack> VUserTracks => _vUserTrackRepository ?? new vUserTrackRepository(_dimsDbContext);
 
-        public IvUserProfileRepository vUserProfiles => _vUserProfileRepository ?? new vUserProfileRepository(_dimsDbContext);
+        public IvUserProfileRepository VUserProfiles => _vUserProfileRepository ?? new vUserProfileRepository(_dimsDbContext);
 
         public EFUnitOfWork(string connectionString)
         {

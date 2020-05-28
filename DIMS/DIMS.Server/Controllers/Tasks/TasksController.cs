@@ -10,10 +10,10 @@ namespace DIMS.Server.Controllers.Tasks
 {
     public class TasksController : Controller
     {
-        private readonly IvTaskService _taskService;
-        private readonly IvUserProfileService _userProfileService;
+        private readonly IVTaskService _taskService;
+        private readonly IVUserProfileService _userProfileService;
         private readonly IMapper _mapper;
-        public TasksController(IvTaskService taskService, IvUserProfileService userProfileService, IMapper mapper)
+        public TasksController(IVTaskService taskService, IVUserProfileService userProfileService, IMapper mapper)
         {
             _taskService = taskService;
             _userProfileService = userProfileService;
@@ -24,7 +24,7 @@ namespace DIMS.Server.Controllers.Tasks
         {
             var TasksViewModel = new TasksListViewModel
             {
-                Tasks = _mapper.Map<IEnumerable<vTaskDTO>, IEnumerable<vTaskViewModel>>(
+                Tasks = _mapper.Map<IEnumerable<VTaskDTO>, IEnumerable<vTaskViewModel>>(
                     _taskService.GetAll()),
 
                 UserProfiles = _mapper.Map<IEnumerable<vUserProfileDTO>, IEnumerable<vUserProfileViewModel>>(

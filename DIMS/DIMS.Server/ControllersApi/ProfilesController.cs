@@ -13,10 +13,10 @@ namespace DIMS.Server.ControllersApi
     [RoutePrefix("api")]
     public class ProfilesController : ApiController
     {
-        private readonly IvUserProfileService _vUserProfileService;
+        private readonly IVUserProfileService _vUserProfileService;
         private readonly IMapper _mapper;
 
-        public ProfilesController(IvUserProfileService vUserProfileService, IMapper mapper)
+        public ProfilesController(IVUserProfileService vUserProfileService, IMapper mapper)
         {
             _vUserProfileService = vUserProfileService ?? throw new ArgumentNullException(nameof(vUserProfileService));
             _mapper = mapper;

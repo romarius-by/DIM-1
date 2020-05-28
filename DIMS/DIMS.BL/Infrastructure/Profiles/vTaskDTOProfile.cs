@@ -7,7 +7,7 @@ namespace DIMS.BL.DTO
     {
         public vTaskDTOProfile()
         {
-            CreateMap<vTaskDTO, vTask>();
+            CreateMap<VTaskDTO, VTask>();
         }
     }
 }

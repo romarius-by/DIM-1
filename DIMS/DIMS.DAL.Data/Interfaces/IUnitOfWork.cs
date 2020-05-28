@@ -12,11 +12,11 @@ namespace DIMS.EF.DAL.Data
         IRepository<TaskState> TaskStates { get; }
         IRepository<TaskTrack> TaskTracks { get; }
         IUserTaskRepository UserTasks { get; }
-        IViewRepository<vTask> vTasks { get; }
-        IvUserProfileRepository vUserProfiles { get; }
-        IViewRepository<vUserProgress> vUserProgresses { get; }
-        IViewRepository<vUserTask> vUserTasks { get; }
-        IViewRepository<vUserTrack> vUserTracks { get; }
+        IViewRepository<VTask> VTasks { get; }
+        IvUserProfileRepository VUserProfiles { get; }
+        IViewRepository<vUserProgress> VUserProgresses { get; }
+        IViewRepository<vUserTask> VUserTasks { get; }
+        IViewRepository<vUserTrack> VUserTracks { get; }
         void Save();
     }
 }

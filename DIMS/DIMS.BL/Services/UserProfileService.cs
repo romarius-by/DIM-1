@@ -76,18 +76,13 @@ namespace DIMS.BL.Services
             return await DeleteByEmailAsync(userProfileEmail);
         }
 
-        public UserProfileDTO GetById(int? id)
+        public UserProfileDTO GetById(int id)
         {
-            if (!id.HasValue)
-            {
-                throw new ValidationException("The User Profile's id value is not set", string.Empty);
-            }
-
-            var userProfile = Database.UserProfiles.GetById(id.Value);
+            var userProfile = Database.UserProfiles.GetById(id);
 
             if (userProfile == null)
             {
-                throw new ValidationException($"The User Profile with id = {id.Value} was not found", string.Empty);
+                throw new ValidationException($"The User Profile with id = {id} was not found", string.Empty);
             }
 
             return _mapper.Map<UserProfile, UserProfileDTO>(userProfile);

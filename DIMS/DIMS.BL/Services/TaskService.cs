@@ -44,18 +44,13 @@ namespace DIMS.BL.Services
             Database.Dispose();
         }
 
-        public TaskDTO GetById(int? id)
+        public TaskDTO GetById(int id)
         {
-            if (!id.HasValue)
-            {
-                throw new ValidationException("The Task id value is not set", string.Empty);
-            }
-
-            var task = Database.Tasks.GetById(id.Value);
+            var task = Database.Tasks.GetById(id);
 
             if (task == null)
             {
-                throw new ValidationException($"The task with id = {id.Value} was not found", string.Empty);
+                throw new ValidationException($"The task with id = {id} was not found", string.Empty);
             }
 
             return _mapper.Map<DimsTask, TaskDTO>(task);

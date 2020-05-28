@@ -8,13 +8,13 @@ using System.Linq;
 
 namespace DIMS.BL.Services
 {
-    public class vTaskService : IvTaskService
+    public class VTaskService : IVTaskService
     {
 
         private readonly IUnitOfWork Database;
         private readonly IMapper _mapper;
 
-        public vTaskService(IUnitOfWork uow, IMapper mapper)
+        public VTaskService(IUnitOfWork uow, IMapper mapper)
         {
             Database = uow;
             _mapper = mapper;
@@ -25,25 +25,25 @@ namespace DIMS.BL.Services
             Database.Dispose();
         }
 
-        public vTaskDTO GetById(int id)
+        public VTaskDTO GetById(int id)
         {
-            var _vTask = Database.vTasks.GetById(id);
+            var _vTask = Database.VTasks.GetById(id);
 
             if (_vTask == null)
             {
                 throw new ValidationException($"The vTask with id = {id} was not found", string.Empty);
             }
 
-            return _mapper.Map<vTask, vTaskDTO>(_vTask);
+            return _mapper.Map<VTask, VTaskDTO>(_vTask);
         }
 
-        public IEnumerable<vTaskDTO> GetAll()
+        public IEnumerable<VTaskDTO> GetAll()
         {
-            return _mapper.Map<List<vTask>, ICollection<vTaskDTO>>(
-                Database.vTasks.GetAll().ToList());
+            return _mapper.Map<List<VTask>, ICollection<VTaskDTO>>(
+                Database.VTasks.GetAll().ToList());
         }
 
-        public void Update(vTaskDTO vTaskDTO)
+        public void Update(VTaskDTO vTaskDTO)
         {
             var task = Database.Tasks.GetById(vTaskDTO.TaskId);
 

@@ -10,14 +10,14 @@ namespace DIMS.Server.Controllers.Menthor
     public abstract class AbstractController : Controller
     {
         protected readonly ITaskService _taskService;
-        protected readonly IvTaskService _vTaskService;
+        protected readonly IVTaskService _vTaskService;
         protected readonly IUserTaskService _userTaskService;
-        protected readonly IvUserProfileService _vUserProfileService;
-        protected readonly IvTaskStateService _vTaskStateService;
-        protected readonly IvUserTaskService _vUserTaskService;
+        protected readonly IVUserProfileService _vUserProfileService;
+        protected readonly IVTaskStateService _vTaskStateService;
+        protected readonly IVUserTaskService _vUserTaskService;
         protected readonly IMapper _mapper;
 
-        public AbstractController(ITaskService taskService, IvTaskService vTaskService, IUserTaskService userTaskService, IvUserProfileService vUserProfileService, IvTaskStateService vTaskStateService, IvUserTaskService vUserTaskService, IMapper mapper)
+        public AbstractController(ITaskService taskService, IVTaskService vTaskService, IUserTaskService userTaskService, IVUserProfileService vUserProfileService, IVTaskStateService vTaskStateService, IVUserTaskService vUserTaskService, IMapper mapper)
         {
             _taskService = taskService;
             _vTaskService = vTaskService;

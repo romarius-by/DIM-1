@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace DIMS.EF.DAL.Data.Repositories
 {
-    public class vTaskRepository : IViewRepository<vTask>
+    public class vTaskRepository : IViewRepository<VTask>
     {
         private readonly DIMSDBContext _dIMSDBContext;
 
@@ -14,17 +14,17 @@ namespace DIMS.EF.DAL.Data.Repositories
             _dIMSDBContext = dIMSDBContext;
         }
 
-        public IEnumerable<vTask> Find(Func<vTask, bool> predicate)
+        public IEnumerable<VTask> Find(Func<VTask, bool> predicate)
         {
             return _dIMSDBContext.vTasks.Where(predicate).ToList();
         }
 
-        public vTask GetById(int id)
+        public VTask GetById(int id)
         {
             return _dIMSDBContext.vTasks.Find(id);
         }
 
-        public IEnumerable<vTask> GetAll()
+        public IEnumerable<VTask> GetAll()
         {
             return _dIMSDBContext.vTasks;
         }

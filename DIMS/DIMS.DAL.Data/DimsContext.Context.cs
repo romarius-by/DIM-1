@@ -53,7 +53,7 @@ namespace DIMS.EF.DAL.Data
         public virtual DbSet<TaskTrack> TaskTracks { get; set; }
         public virtual DbSet<UserProfile> UserProfiles { get; set; }
         public virtual DbSet<UserTask> UserTasks { get; set; }
-        public virtual DbSet<vTask> vTasks { get; set; }
+        public virtual DbSet<VTask> vTasks { get; set; }
         public virtual DbSet<vUserProfile> vUserProfiles { get; set; }
         public virtual DbSet<vUserProgress> vUserProgresses { get; set; }
         public virtual DbSet<vUserTask> vUserTasks { get; set; }

@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 
 namespace DIMS.BL.Services
 {
-    public class vUserProfileService : IvUserProfileService
+    public class VUserProfileService : IVUserProfileService
     {
 
         private readonly IUnitOfWork Database;
 
         private readonly IMapper _mapper;
 
-        public vUserProfileService(IUnitOfWork uow, IMapper mapper)
+        public VUserProfileService(IUnitOfWork uow, IMapper mapper)
         {
             Database = uow;
             _mapper = mapper;
@@ -28,18 +28,13 @@ namespace DIMS.BL.Services
             Database.Dispose();
         }
 
-        public vUserProfileDTO GetById(int? id)
+        public vUserProfileDTO GetById(int id)
         {
-            if (!id.HasValue)
-            {
-                throw new ValidationException("The view user profile id value is not set", String.Empty);
-            }
-
-            var vUserProfile = Database.vUserProfiles.GetById(id.Value);
+            var vUserProfile = Database.VUserProfiles.GetById(id);
 
             if (vUserProfile == null)
             {
-                throw new ValidationException($"The view user profile with id = {id.Value} was not found", String.Empty);
+                throw new ValidationException($"The view user profile with id = {id} was not found", String.Empty);
             }
 
             return _mapper.Map<vUserProfile, vUserProfileDTO>(vUserProfile);
@@ -52,7 +47,7 @@ namespace DIMS.BL.Services
                 throw new ValidationException("The view user profile email is not set", String.Empty);
             }
 
-            var vUserProfile = await Database.vUserProfiles.GetByEmailAsync(email);
+            var vUserProfile = await Database.VUserProfiles.GetByEmailAsync(email);
 
             if (vUserProfile == null)
             {
@@ -65,7 +60,7 @@ namespace DIMS.BL.Services
         public IEnumerable<vUserProfileDTO> GetAll()
         {
             return _mapper.Map<List<vUserProfile>, ICollection<vUserProfileDTO>>(
-                Database.vUserProfiles.GetAll().ToList());
+                Database.VUserProfiles.GetAll().ToList());
         }
     }
 }

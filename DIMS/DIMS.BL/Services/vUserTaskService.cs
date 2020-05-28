@@ -4,20 +4,19 @@ using DIMS.BL.Infrastructure;
 using DIMS.BL.Interfaces;
 using DIMS.EF.DAL.Data;
 using DIMS.EF.DAL.Data.Repositories;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace DIMS.BL.Services
 {
-    public class vUserTaskService : IvUserTaskService
+    public class VUserTaskService : IVUserTaskService
     {
 
         private readonly IUnitOfWork Database;
         private readonly vUserTaskRepository Repository;
         private readonly IMapper _mapper;
 
-        public vUserTaskService(IUnitOfWork uow, vUserTaskRepository repository, IMapper mapper)
+        public VUserTaskService(IUnitOfWork uow, vUserTaskRepository repository, IMapper mapper)
         {
             Database = uow;
             Repository = repository;
@@ -38,7 +37,7 @@ namespace DIMS.BL.Services
         public vUserTaskDTO GetById(int id)
         {
 
-            var _vUserTask = Database.vUserTasks.GetById(id);
+            var _vUserTask = Database.VUserTasks.GetById(id);
 
             if (_vUserTask == null)
             {
@@ -50,7 +49,7 @@ namespace DIMS.BL.Services
 
         public IEnumerable<vUserTaskDTO> GetAll()
         {
-            var vUserTasks = Database.vUserTasks.GetAll().ToList();
+            var vUserTasks = Database.VUserTasks.GetAll().ToList();
 
             return _mapper.Map<List<vUserTask>, ICollection<vUserTaskDTO>>(vUserTasks);
         }

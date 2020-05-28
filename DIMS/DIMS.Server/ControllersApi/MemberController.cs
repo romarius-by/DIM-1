@@ -19,11 +19,11 @@ namespace DIMS.Server.ControllersApi
     public class MemberController : ApiController
     {
         private readonly IUserProfileService _userProfileService;
-        private readonly IvUserProfileService _vUserProfileService;
+        private readonly IVUserProfileService _vUserProfileService;
         private readonly IDirectionService _directionService;
         private readonly IMapper _mapper;
 
-        public MemberController(IUserProfileService userProfileService, IvUserProfileService vUserProfileService, IDirectionService directionService, IMapper mapper)
+        public MemberController(IUserProfileService userProfileService, IVUserProfileService vUserProfileService, IDirectionService directionService, IMapper mapper)
         {
             _userProfileService = userProfileService ?? throw new ArgumentNullException(nameof(userProfileService));
             _vUserProfileService = vUserProfileService ?? throw new ArgumentNullException(nameof(vUserProfileService));

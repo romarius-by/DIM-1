@@ -1,15 +1,11 @@
 ﻿using AutoMapper;
 using DIMS.EF.DAL.Data;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DIMS.BL.DTO
 {
-    [AutoMap(typeof(vTask))]
-    public class vTaskDTO
+    [AutoMap(typeof(VTask))]
+    public class VTaskDTO
     {
         public int TaskId { get; set; }
         public string Name { get; set; }

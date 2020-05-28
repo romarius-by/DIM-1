@@ -57,18 +57,13 @@ namespace DIMS.BL.Services
             Database.Dispose();
         }
 
-        public DirectionDTO GetById(int? id)
+        public DirectionDTO GetById(int id)
         {
-            if (!id.HasValue)
-            {
-                throw new ValidationException("The Direction's id value is not set", string.Empty);
-            }
-
-            var direction = Database.Directions.GetById(id.Value);
+            var direction = Database.Directions.GetById(id);
 
             if (direction == null)
             {
-                throw new ValidationException($"The Direction with id = ${id.Value} was not found", string.Empty);
+                throw new ValidationException($"The Direction with id = ${id} was not found", string.Empty);
             }
 
             return _mapper.Map<Direction, DirectionDTO>(direction);

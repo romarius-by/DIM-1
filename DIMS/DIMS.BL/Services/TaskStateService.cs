@@ -35,18 +35,13 @@ namespace DIMS.BL.Services
 
         }
 
-        public TaskStateDTO GetById(int? id)
+        public TaskStateDTO GetById(int id)
         {
-            if (!id.HasValue)
-            {
-                throw new ValidationException("The task state id value is not set", string.Empty);
-            }
-
-            var task = Database.TaskStates.GetById(id.Value);
+            var task = Database.TaskStates.GetById(id);
 
             if (task == null)
             {
-                throw new ValidationException($"The task state with id = {id.Value} was not found", string.Empty);
+                throw new ValidationException($"The task state with id = {id} was not found", string.Empty);
             }
 
             return _mapper.Map<TaskState, TaskStateDTO>(task);

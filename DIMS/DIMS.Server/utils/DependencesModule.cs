@@ -21,12 +21,12 @@ namespace DIMS.Server.utils
             Bind<ITaskStateService>().To<TaskStateService>();
             Bind<ITaskTrackService>().To<TaskTrackService>();
 
-            Bind<IvTaskService>().To<vTaskService>();
-            Bind<IvTaskStateService>().To<vTaskStateService>();
-            Bind<IvUserProfileService>().To<vUserProfileService>();
-            Bind<IvUserProgressService>().To<vUserProgressService>();
-            Bind<IvUserTaskService>().To<vUserTaskService>();
-            Bind<IvUserTrackService>().To<vUserTrackService>();
+            Bind<IVTaskService>().To<VTaskService>();
+            Bind<IVTaskStateService>().To<VTaskStateService>();
+            Bind<IVUserProfileService>().To<VUserProfileService>();
+            Bind<IVUserProgressService>().To<VUserProgressService>();
+            Bind<IVUserTaskService>().To<VUserTaskService>();
+            Bind<IVUserTrackService>().To<VUserTrackService>();
 
             Bind<ISender>().To<Sender>()
                 .InSingletonScope()

@@ -108,7 +108,7 @@ namespace DIMS.BL.Services
 
         public IEnumerable<TaskTrackDTO> GetTracksForUser(int userId)
         {
-            var tracks = Database.vUserTracks.Find(item => item.UserId == userId);
+            var tracks = Database.VUserTracks.Find(item => item.UserId == userId);
 
             if (tracks == null)
             {

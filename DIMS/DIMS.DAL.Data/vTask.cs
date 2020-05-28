@@ -13,7 +13,7 @@ namespace DIMS.EF.DAL.Data
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
-    public partial class vTask
+    public partial class VTask
     {
         [Key]
         public int TaskId { get; set; }

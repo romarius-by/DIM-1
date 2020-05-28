@@ -7,7 +7,7 @@ namespace DIMS.Server.Models.Tasks
     {
         public vTaskViewModelProfile()
         {
-            CreateMap<vTaskViewModel, vTaskDTO>();
+            CreateMap<vTaskViewModel, VTaskDTO>();
         }
     }
 }

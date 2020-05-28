@@ -18,15 +18,15 @@ namespace DIMS.Server.Controllers
     public class UserProfileController : Controller
     {
         private readonly IUserProfileService _userProfileService;
-        private readonly IvUserProfileService _vUserProfileService;
+        private readonly IVUserProfileService _vUserProfileService;
         private readonly IDirectionService _directionService;
-        private readonly IvUserProgressService _vUserProgressService;
+        private readonly IVUserProgressService _vUserProgressService;
         private readonly IMapper _mapper;
 
         public UserProfileController(IUserProfileService userProfileService,
-            IvUserProfileService vuserProfileService,
+            IVUserProfileService vuserProfileService,
             IDirectionService directionService,
-            IvUserProgressService vUserProgressService,
+            IVUserProgressService vUserProgressService,
             IMapper mapper)
         {
             _userProfileService = userProfileService;

@@ -14,8 +14,8 @@ namespace DIMS.Server.Controllers.Menthor
 {
     public class TasksManageController : AbstractController
     {
-        public TasksManageController(ITaskService taskService, IvTaskService vTaskService, IUserTaskService userTaskService,
-            IvUserProfileService vUserProfileService, IvTaskStateService vTaskStateService, IvUserTaskService vUserTaskService, IMapper mapper)
+        public TasksManageController(ITaskService taskService, IVTaskService vTaskService, IUserTaskService userTaskService,
+            IVUserProfileService vUserProfileService, IVTaskStateService vTaskStateService, IVUserTaskService vUserTaskService, IMapper mapper)
             : base(taskService, vTaskService, userTaskService, vUserProfileService, vTaskStateService, vUserTaskService, mapper)
         {
         }
@@ -24,9 +24,9 @@ namespace DIMS.Server.Controllers.Menthor
         [Route("tasks")]
         public ActionResult Index()
         {
-            IEnumerable<vTaskDTO> taskDTOs = _vTaskService.GetAll();
+            IEnumerable<VTaskDTO> taskDTOs = _vTaskService.GetAll();
 
-            var taskListViewModel = _mapper.Map<IEnumerable<vTaskDTO>, IEnumerable<vTaskViewModel>>(taskDTOs);
+            var taskListViewModel = _mapper.Map<IEnumerable<VTaskDTO>, IEnumerable<vTaskViewModel>>(taskDTOs);
 
             return View(taskListViewModel);
         }
@@ -110,7 +110,7 @@ namespace DIMS.Server.Controllers.Menthor
         [ValidateAntiForgeryToken]
         public ActionResult Edit(TaskManagePageViewModel taskManagePageViewModel, int id)
         {
-            var taskDto = _mapper.Map<TaskViewModel, vTaskDTO>(taskManagePageViewModel.taskViewModel);
+            var taskDto = _mapper.Map<TaskViewModel, VTaskDTO>(taskManagePageViewModel.taskViewModel);
             taskDto.TaskId = id;
 
             var newUsers = new List<string>();

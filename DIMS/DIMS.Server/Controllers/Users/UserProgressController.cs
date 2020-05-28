@@ -9,11 +9,11 @@ namespace DIMS.Server.Controllers.Users
 {
     public class UserProgressController : Controller
     {
-        private readonly IvUserProgressService _userProgressService;
-        private readonly IvUserProfileService _userProfileService;
+        private readonly IVUserProgressService _userProgressService;
+        private readonly IVUserProfileService _userProfileService;
         private readonly IMapper _mapper;
 
-        public UserProgressController(IvUserProgressService userProgressService, IvUserProfileService userProfileService, IMapper mapper)
+        public UserProgressController(IVUserProgressService userProgressService, IVUserProfileService userProfileService, IMapper mapper)
         {
             _userProgressService = userProgressService;
             _userProfileService = userProfileService;

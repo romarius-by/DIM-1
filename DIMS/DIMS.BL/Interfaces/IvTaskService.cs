@@ -2,8 +2,8 @@
 
 namespace DIMS.BL.Interfaces
 {
-    public interface IvTaskService : IVService<vTaskDTO>
+    public interface IVTaskService : IVService<VTaskDTO>
     {
-        void Update(vTaskDTO vTaskDTO);
+        void Update(VTaskDTO vTaskDTO);
     }
 }

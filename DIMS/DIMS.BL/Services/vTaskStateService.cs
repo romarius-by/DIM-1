@@ -8,30 +8,25 @@ using System.Collections.Generic;
 
 namespace DIMS.BL.Services
 {
-    public class vTaskStateService : IvTaskStateService
+    public class VTaskStateService : IVTaskStateService
     {
         private IUnitOfWork Uow { get; }
 
         private readonly IMapper _mapper;
 
-        public vTaskStateService(IUnitOfWork uow, IMapper mapper)
+        public VTaskStateService(IUnitOfWork uow, IMapper mapper)
         {
             Uow = uow;
             _mapper = mapper;
         }
 
-        public TaskStateDTO GetById(int? id)
+        public TaskStateDTO GetById(int id)
         {
-            if (!id.HasValue)
-            {
-                throw new ValidationException("The task state id value is not set", String.Empty);
-            }
-
-            var task = Uow.TaskStates.GetById(id.Value);
+            var task = Uow.TaskStates.GetById(id);
 
             if (task == null)
             {
-                throw new ValidationException($"The task state with id = {id.Value} was not found", String.Empty);
+                throw new ValidationException($"The task state with id = {id} was not found", String.Empty);
             }
 
             return _mapper.Map<TaskState, TaskStateDTO>(task);

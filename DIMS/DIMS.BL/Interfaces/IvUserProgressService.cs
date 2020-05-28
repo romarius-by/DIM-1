@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace DIMS.BL.Interfaces
 {
-    public interface IvUserProgressService : IVService<vUserProgressDTO>
+    public interface IVUserProgressService : IVService<vUserProgressDTO>
     {
         IEnumerable<vUserProgressDTO> GetByUserId(int? id);
 

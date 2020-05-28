@@ -4,7 +4,7 @@ using System;
 
 namespace DIMS.Server.Models.Tasks
 {
-    [AutoMap(typeof(vTaskDTO))]
+    [AutoMap(typeof(VTaskDTO))]
     public class vTaskViewModel
     {
         public int TaskId { get; set; }

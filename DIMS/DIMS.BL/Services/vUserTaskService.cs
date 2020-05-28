@@ -82,7 +82,7 @@ namespace DIMS.BL.Services
 
             if (userTask != null)
             {
-                Mapper.Map(vUserTaskDTO, userTask);
+                _mapper.Map(vUserTaskDTO, userTask);
                 Database.Save();
             }
         }

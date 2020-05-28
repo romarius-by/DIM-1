@@ -1,23 +1,26 @@
 ﻿using AutoMapper;
-using HIMS.BL.DTO;
-using HIMS.BL.Infrastructure;
-using HIMS.BL.Interfaces;
-using HIMS.EF.DAL.Data;
+using DIMS.BL.DTO;
+using DIMS.BL.Infrastructure;
+using DIMS.BL.Interfaces;
+using DIMS.EF.DAL.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HIMS.BL.Services
+namespace DIMS.BL.Services
 {
     public class vTaskStateService : IvTaskStateService
     {
         private IUnitOfWork database { get; }
 
-        public vTaskStateService (IUnitOfWork uow)
+        private readonly IMapper _mapper;
+
+        public vTaskStateService (IUnitOfWork uow, IMapper mapper)
         {
             database = uow;
+            _mapper = mapper;
         }
 
         public TaskStateDTO GetById(int? id)
@@ -30,7 +33,7 @@ namespace HIMS.BL.Services
             if (task == null)
                 throw new ValidationException($"The task state with id = {id.Value} was not found", String.Empty);
 
-            return Mapper.Map<TaskState, TaskStateDTO>(task);
+            return _mapper.Map<TaskState, TaskStateDTO>(task);
 
         }
 
@@ -43,7 +46,7 @@ namespace HIMS.BL.Services
         {
             var taskStates = database.TaskStates.GetAll();
 
-            return Mapper.Map<IEnumerable<TaskState>, IEnumerable<TaskStateDTO>>(taskStates);
+            return _mapper.Map<IEnumerable<TaskState>, IEnumerable<TaskStateDTO>>(taskStates);
         }
     }
 }

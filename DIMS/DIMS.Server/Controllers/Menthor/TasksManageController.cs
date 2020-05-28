@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
-using HIMS.BL.DTO;
-using HIMS.BL.Interfaces;
-using HIMS.EF.DAL.Data;
-using HIMS.Server.Models.Tasks;
-using HIMS.Server.Models.Users;
+using DIMS.BL.DTO;
+using DIMS.BL.Interfaces;
+using DIMS.EF.DAL.Data;
+using DIMS.Server.Models.Tasks;
+using DIMS.Server.Models.Users;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.Infrastructure;
@@ -12,13 +12,13 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 
-namespace HIMS.Server.Controllers.Menthor
+namespace DIMS.Server.Controllers.Menthor
 {
     public class TasksManageController : AbstractController
     {
         public TasksManageController(ITaskService taskService, IvTaskService vTaskService, IUserTaskService userTaskService, 
-            IvUserProfileService vUserProfileService, IvTaskStateService vTaskStateService, IvUserTaskService vUserTaskService) 
-            : base (taskService, vTaskService, userTaskService, vUserProfileService, vTaskStateService, vUserTaskService)
+            IvUserProfileService vUserProfileService, IvTaskStateService vTaskStateService, IvUserTaskService vUserTaskService, IMapper mapper) 
+            : base (taskService, vTaskService, userTaskService, vUserProfileService, vTaskStateService, vUserTaskService, mapper)
         {
         }
 
@@ -28,7 +28,7 @@ namespace HIMS.Server.Controllers.Menthor
         {
             IEnumerable<vTaskDTO> taskDTOs = _vTaskService.GetAll();
 
-            var taskListViewModel = Mapper.Map<IEnumerable<vTaskDTO>, IEnumerable<vTaskViewModel>>(taskDTOs);
+            var taskListViewModel = _mapper.Map<IEnumerable<vTaskDTO>, IEnumerable<vTaskViewModel>>(taskDTOs);
 
             return View(taskListViewModel);
         }
@@ -36,7 +36,7 @@ namespace HIMS.Server.Controllers.Menthor
         public ActionResult Create()
         {
             var userProfileDtos = _vUserProfileService.GetAll();
-            var userProfileListViewModel = Mapper.Map<IEnumerable<vUserProfileDTO>, IEnumerable<vUserProfileViewModel>>(userProfileDtos);
+            var userProfileListViewModel = _mapper.Map<IEnumerable<vUserProfileDTO>, IEnumerable<vUserProfileViewModel>>(userProfileDtos);
 
             TaskManagePageViewModel taskManagePageViewModel = new TaskManagePageViewModel
             {
@@ -54,9 +54,9 @@ namespace HIMS.Server.Controllers.Menthor
             {
                 if (ModelState.IsValid)
                 {
-                    var taskDto = Mapper.Map<TaskViewModel, TaskDTO>(taskViewModel);
+                    var taskDto = _mapper.Map<TaskViewModel, TaskDTO>(taskViewModel);
                     var userProfileDtos = _vUserProfileService.GetAll();
-                    var userProfileListViewModel = Mapper.Map<IEnumerable<vUserProfileDTO>, IEnumerable<vUserProfileViewModel>>(userProfileDtos);
+                    var userProfileListViewModel = _mapper.Map<IEnumerable<vUserProfileDTO>, IEnumerable<vUserProfileViewModel>>(userProfileDtos);
 
                     IEnumerable<string> selectedUsers = Request.Form.GetValues("SelectedUserProfiles");
                     int activeState = 1;
@@ -64,7 +64,7 @@ namespace HIMS.Server.Controllers.Menthor
                     if (selectedUsers != null)
                         foreach (var userId in selectedUsers)
                         {
-                            var userTaskDto = Mapper.Map<UserTaskViewModel, UserTaskDTO>(userTaskViewModel);
+                            var userTaskDto = _mapper.Map<UserTaskViewModel, UserTaskDTO>(userTaskViewModel);
 
                             userTaskDto.UserId = Convert.ToInt32(userId);
                             userTaskDto.StateId = activeState;
@@ -98,8 +98,8 @@ namespace HIMS.Server.Controllers.Menthor
 
             TaskManagePageViewModel taskManagePageViewModel = new TaskManagePageViewModel
             {
-                userProfileListViewModel = Mapper.Map<IEnumerable<vUserProfileDTO>, IEnumerable<vUserProfileViewModel>>(userProfileDtos),
-                taskViewModel = Mapper.Map<TaskDTO, TaskViewModel>(taskDto)
+                userProfileListViewModel = _mapper.Map<IEnumerable<vUserProfileDTO>, IEnumerable<vUserProfileViewModel>>(userProfileDtos),
+                taskViewModel = _mapper.Map<TaskDTO, TaskViewModel>(taskDto)
             };
 
             return View(taskManagePageViewModel);
@@ -109,7 +109,7 @@ namespace HIMS.Server.Controllers.Menthor
         [ValidateAntiForgeryToken]
         public ActionResult Edit(TaskManagePageViewModel taskManagePageViewModel, int id)
         {
-            var taskDto = Mapper.Map<TaskViewModel, vTaskDTO>(taskManagePageViewModel.taskViewModel);
+            var taskDto = _mapper.Map<TaskViewModel, vTaskDTO>(taskManagePageViewModel.taskViewModel);
             taskDto.TaskId = id;
 
             var newUsers = new List<string>();
@@ -143,7 +143,7 @@ namespace HIMS.Server.Controllers.Menthor
                             StateId = activeState
                         };
 
-                        var userTaskDto = Mapper.Map<UserTaskViewModel, vUserTaskDTO>(userTask);
+                        var userTaskDto = _mapper.Map<UserTaskViewModel, vUserTaskDTO>(userTask);
                         _vUserTaskService.Save(userTaskDto);
                     }
 
@@ -179,10 +179,10 @@ namespace HIMS.Server.Controllers.Menthor
 
             TaskManagePageViewModel taskManagePageViewModel = new TaskManagePageViewModel
             {
-                userProfileListViewModel = Mapper.Map<IEnumerable<vUserProfileDTO>, IEnumerable<vUserProfileViewModel>>(userProfileDtos),
-                taskViewModel = Mapper.Map<TaskDTO, TaskViewModel>(taskDto),
-                userTaskListViewModel = Mapper.Map<IEnumerable<UserTaskDTO>, IEnumerable<UserTaskViewModel>>(userTaskDtos),
-                taskStateListViewModel = Mapper.Map<IEnumerable<TaskStateDTO>, IEnumerable<TaskStateViewModel>>(taskStateDtos)
+                userProfileListViewModel = _mapper.Map<IEnumerable<vUserProfileDTO>, IEnumerable<vUserProfileViewModel>>(userProfileDtos),
+                taskViewModel = _mapper.Map<TaskDTO, TaskViewModel>(taskDto),
+                userTaskListViewModel = _mapper.Map<IEnumerable<UserTaskDTO>, IEnumerable<UserTaskViewModel>>(userTaskDtos),
+                taskStateListViewModel = _mapper.Map<IEnumerable<TaskStateDTO>, IEnumerable<TaskStateViewModel>>(taskStateDtos)
             };
 
             return View(taskManagePageViewModel);
@@ -223,9 +223,9 @@ namespace HIMS.Server.Controllers.Menthor
 
             TaskManagePageViewModel taskManagePageViewModel = new TaskManagePageViewModel
             {
-                taskViewModel = Mapper.Map<TaskDTO, TaskViewModel>(taskDto),
-                userTaskListViewModel = Mapper.Map<IEnumerable<UserTaskDTO>, IEnumerable<UserTaskViewModel>>(userTaskDtos),
-                userProfileListViewModel = Mapper.Map<IEnumerable<vUserProfileDTO>, IEnumerable<vUserProfileViewModel>>(userProfileDtos)
+                taskViewModel = _mapper.Map<TaskDTO, TaskViewModel>(taskDto),
+                userTaskListViewModel = _mapper.Map<IEnumerable<UserTaskDTO>, IEnumerable<UserTaskViewModel>>(userTaskDtos),
+                userProfileListViewModel = _mapper.Map<IEnumerable<vUserProfileDTO>, IEnumerable<vUserProfileViewModel>>(userProfileDtos)
             };
 
             return PartialView(taskManagePageViewModel);

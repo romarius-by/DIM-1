@@ -55,7 +55,7 @@ namespace DIMS.BL.Services
 
             if (task != null)
             {
-                Mapper.Map(vTaskDTO, task);
+                _mapper.Map(vTaskDTO, task);
 
                 Database.Save();
             }

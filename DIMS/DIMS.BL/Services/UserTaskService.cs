@@ -43,7 +43,7 @@ namespace DIMS.BL.Services
 
         public TaskDTO GetTask(int id)
         {
-            return _mapper.Map<DimsTask, TaskDTO>(
+            return _mapper.Map<EntityTask, TaskDTO>(
                 Database.UserTasks.GetById(id).Task);
         }
 
@@ -150,6 +150,7 @@ namespace DIMS.BL.Services
             else
             {
                 return false;
+            }
         }
 
         public void DeleteItemByTaskIdAndUserId(int taskId, int userId)

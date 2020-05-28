@@ -1,24 +1,26 @@
 ﻿using AutoMapper;
-using HIMS.BL.DTO;
-using HIMS.BL.Interfaces;
-using HIMS.Server.Models.Tasks;
+using DIMS.BL.DTO;
+using DIMS.BL.Interfaces;
+using DIMS.Server.Models.Tasks;
 using System.Collections.Generic;
 using System.Data.Entity.Infrastructure;
 using System.Net;
 using System.Web.Mvc;
 
 
-namespace HIMS.Server.Controllers.Menthor
+namespace DIMS.Server.Controllers.Menthor
 {
     [Authorize]
     [RoutePrefix("task")]
     public class TaskTrackController : Controller
     {
         private readonly ITaskTrackService _taskTrackService;
+        private readonly IMapper _mapper;
 
-        public TaskTrackController(ITaskTrackService taskTrackService)
+        public TaskTrackController(ITaskTrackService taskTrackService, IMapper mapper)
         {
             _taskTrackService = taskTrackService;
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -29,7 +31,7 @@ namespace HIMS.Server.Controllers.Menthor
 
             var taskTrackListViewModel = new TaskTrackListViewModel
             {
-                TaskTrackViewModels = Mapper.Map<IEnumerable<TaskTrackDTO>, IEnumerable<TaskTrackViewModel>>(taskTrackDTOs),
+                TaskTrackViewModels = _mapper.Map<IEnumerable<TaskTrackDTO>, IEnumerable<TaskTrackViewModel>>(taskTrackDTOs),
                 UserId = userId
             };
 

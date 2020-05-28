@@ -79,7 +79,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DIMS.DAL.Data\DIMS.DAL.Data.csproj">
-      <Project>{CAC997AA-EBE6-4E9F-B4FD-C3CBBD6DA146}</Project>
+      <Project>{cac997aa-ebe6-4e9f-b4fd-c3cbbd6da146}</Project>
       <Name>DIMS.DAL.Data</Name>
     </ProjectReference>
   </ItemGroup>

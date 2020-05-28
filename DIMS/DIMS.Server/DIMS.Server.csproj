@@ -230,8 +230,6 @@
     <Compile Include="Models\Samples\SamplesListViewModel.cs" />
     <Compile Include="Models\Samples\SampleViewModel.cs" />
     <Compile Include="Models\Samples\SampleViewModelProfile.cs" />
-    <Compile Include="Models\SamplesListViewModel.cs" />
-    <Compile Include="Models\SampleViewModel.cs" />
     <Compile Include="Models\Tasks\TaskTrackListViewModel.cs" />
     <Compile Include="Models\Tasks\TaskTrackViewModel.cs" />
     <Compile Include="Models\Tasks\TaskManagePageViewModel.cs" />

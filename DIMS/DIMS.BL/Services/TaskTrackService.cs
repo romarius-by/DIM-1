@@ -120,7 +120,7 @@ namespace DIMS.BL.Services
                 throw new ValidationException($"The Task Track with id = {userId} was not found", "");
             }
 
-            return Mapper.Map<IEnumerable<vUserTrack>, List<TaskTrackDTO>>(tracks);
+            return _mapper.Map<IEnumerable<vUserTrack>, List<TaskTrackDTO>>(tracks);
         }
     }
 }

@@ -4,6 +4,7 @@ using RestSharp;
 using RestSharp.Authenticators;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Threading.Tasks;
 
 namespace DIMS.Email.Services
@@ -37,14 +38,16 @@ namespace DIMS.Email.Services
             new HttpBasicAuthenticator("api",
                                        "ac2b658fb0738c0a54cf0de9263db7b2-aa4b0867-a38833e8")
             };
+
             RestRequest request = new RestRequest();
-            request.AddParameter("domain", "sandboxc4df07193b994302b7fc0816a4b6f4a9.mailgun.org", ParameterType.UrlSegment);
+            request.AddParameter("domain", ConfigurationManager.AppSettings["domain"], ParameterType.UrlSegment);
             request.Resource = "{domain}/messages";
             request.AddParameter("from", "Mailgun Sandbox <postmaster@sandboxc4df07193b994302b7fc0816a4b6f4a9.mailgun.org>");
             request.AddParameter("to", $"{user.Email}");
             request.AddParameter("subject", $"Registration in DevIncubator");
             request.AddParameter("text", htmlContent);
             request.Method = Method.POST;
+
             return await Task.Run(() =>
             {
                 return client.Execute(request).ToString();

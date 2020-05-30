@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using DIMS.Server.Filters;
+using System.Web.Mvc;
 
 namespace DIMS.Server.App_Start
 {
@@ -6,7 +7,7 @@ namespace DIMS.Server.App_Start
     {
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
-            filters.Add(new HandleErrorAttribute());
+            filters.Add(new ExceptionLogger());
         }
     }
 }

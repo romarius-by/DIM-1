@@ -3,6 +3,7 @@ using DIMS.BL.DTO;
 using DIMS.BL.Infrastructure;
 using DIMS.BL.Interfaces;
 using DIMS.EF.DAL.Data;
+using DIMS.Logger;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,7 +31,7 @@ namespace DIMS.BL.Services
         {
             if (!id.HasValue)
             {
-                Logger.Logger.Error("Error in Task Service", new ValidationException("The Task id value is not set", string.Empty));
+                CustomLogger.Error("Error in Task Service", new ValidationException("The Task id value is not set", string.Empty));
             }
 
             Database.Tasks.DeleteById(id.Value);
@@ -49,7 +50,7 @@ namespace DIMS.BL.Services
 
             if (task == null)
             {
-                Logger.Logger.Error("Error in Task Service", new ValidationException($"The task with id = {id} was not found", string.Empty));
+                CustomLogger.Error("Error in Task Service", new ValidationException($"The task with id = {id} was not found", string.Empty));
             }
 
             return _mapper.Map<DimsTask, TaskDTO>(task);
@@ -64,7 +65,7 @@ namespace DIMS.BL.Services
         {
             if (!id.HasValue)
             {
-                Logger.Logger.Error("Error in Task Service", new ValidationException("The task id value is not set", string.Empty));
+                CustomLogger.Error("Error in Task Service", new ValidationException("The task id value is not set", string.Empty));
             }
 
             return _mapper.Map<IEnumerable<UserTask>, ICollection<UserTaskDTO>>(Database.Tasks.
@@ -102,7 +103,7 @@ namespace DIMS.BL.Services
         {
             if (!id.HasValue)
             {
-                Logger.Logger.Error("Error in Task Service", new ValidationException("The task id value is not set", string.Empty));
+                CustomLogger.Error("Error in Task Service", new ValidationException("The task id value is not set", string.Empty));
             }
 
             var task = await Database.Tasks.DeleteByIdAsync(id.Value);

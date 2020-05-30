@@ -3,7 +3,7 @@ using System;
 
 namespace DIMS.Logger
 {
-    public static class Logger
+    public static class CustomLogger
     {
         private static readonly NLog.Logger logger = LogManager.GetCurrentClassLogger();
 
@@ -22,7 +22,7 @@ namespace DIMS.Logger
             }
 
             // check with wrapper type typeof(Logger);
-            logger.Log(typeof(Logger), loggerEventEmitter);
+            logger.Log(typeof(CustomLogger), loggerEventEmitter);
         }
 
         public static void Info(string message, params string[] args)

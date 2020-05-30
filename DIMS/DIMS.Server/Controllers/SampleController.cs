@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using DIMS.BL.Interfaces;
 using DIMS.BL.Models;
+using DIMS.Server.Filters;
 using DIMS.Server.Models;
 using DIMS.Server.utils;
 using System.Collections.Generic;
@@ -25,6 +26,10 @@ namespace DIMS.Server.Controllers
 
         public ActionResult Index()
         {
+            var a = 1;
+            var b = 0;
+            var c = a / b;
+
             IEnumerable<SampleDTO> sampleDtos = _sampleService.GetSamples();
             var samples = new SamplesListViewModel
             {

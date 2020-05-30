@@ -1,15 +1,10 @@
-﻿using System;
-using HIMS.EF.DAL.Data;
-using Moq;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using HIMS.EF.DAL.Data.Repositories;
-using System.Data.EntityClient;
+﻿using DIMS.EF.DAL.Data;
+using DIMS.EF.DAL.Data.Repositories;
 using NUnit.Framework;
+using System.Collections.Generic;
+using System.Data.EntityClient;
 
-namespace HIMS.Tests.DAL.Data
+namespace DIMS.Tests.DAL.Data
 {
     [TestFixture]
     public class UserProfileTests
@@ -124,7 +119,7 @@ namespace HIMS.Tests.DAL.Data
             repo.GetById(id);
 
             //Assert
-            Assert.AreEqual("username3",repo.GetById(id).Name);
+            Assert.AreEqual("username3", repo.GetById(id).Name);
         }
     }
 }

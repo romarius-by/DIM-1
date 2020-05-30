@@ -220,6 +220,7 @@
     <Compile Include="Controllers\Tasks\TasksController.cs" />
     <Compile Include="Controllers\Users\UserProfileController.cs" />
     <Compile Include="Controllers\Users\UserProgressController.cs" />
+    <Compile Include="Filters\ExceptionLogger.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -298,6 +299,9 @@
     <Content Include="Views\TasksManage\Edit.cshtml" />
     <Content Include="Views\TasksManage\Index.cshtml" />
     <Content Include="Views\TasksManage\Delete.cshtml" />
+    <Content Include="Views\404.cshtml" />
+    <Content Include="Views\403.cshtml" />
+    <Content Include="Views\500.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

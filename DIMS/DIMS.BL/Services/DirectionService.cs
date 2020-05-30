@@ -3,7 +3,7 @@ using DIMS.BL.DTO;
 using DIMS.BL.Infrastructure;
 using DIMS.BL.Interfaces;
 using DIMS.EF.DAL.Data;
-using System;
+using DIMS.Logger;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -25,7 +25,7 @@ namespace DIMS.BL.Services
         {
             if (!id.HasValue)
             {
-                Logger.Logger.Error("Error in Direction Service", new ValidationException("The Direction's id value is not set"));
+                CustomLogger.Error("Error in Direction Service", new ValidationException("The Direction's id value is not set"));
             }
 
             Database.Directions.DeleteById(id.Value);
@@ -36,7 +36,7 @@ namespace DIMS.BL.Services
         {
             if (!id.HasValue)
             {
-                Logger.Logger.Error("Error in Direction Service", new ValidationException("The Direction's id value is not set", string.Empty));
+                CustomLogger.Error("Error in Direction Service", new ValidationException("The Direction's id value is not set", string.Empty));
             }
 
             var direction = await Database.Directions.DeleteByIdAsync(id.Value);
@@ -63,7 +63,7 @@ namespace DIMS.BL.Services
 
             if (direction == null)
             {
-                Logger.Logger.Error("Error in Direction Service", new ValidationException($"The Direction with id = ${id} was not found", string.Empty));
+                CustomLogger.Error("Error in Direction Service", new ValidationException($"The Direction with id = ${id} was not found", string.Empty));
             }
 
             return _mapper.Map<Direction, DirectionDTO>(direction);

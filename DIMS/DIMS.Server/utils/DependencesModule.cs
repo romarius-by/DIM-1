@@ -4,6 +4,7 @@ using DIMS.BL.Services;
 using DIMS.Email.Services;
 using Email.Interfaces;
 using Ninject.Modules;
+using NLog;
 using System.Configuration;
 
 namespace DIMS.Server.utils

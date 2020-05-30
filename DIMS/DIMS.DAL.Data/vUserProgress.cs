@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace HIMS.EF.DAL.Data
+namespace DIMS.EF.DAL.Data
 {
     using System;
     using System.Collections.Generic;
@@ -22,6 +22,6 @@ namespace HIMS.EF.DAL.Data
         public string UserName { get; set; }
         public string TaskName { get; set; }
         public string TrackNote { get; set; }
-        public DateTime? TrackDate { get; set; }
+        public DateTime TrackDate { get; set; }
     }
 }

@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Http;
+﻿using System.Web.Http;
 
-namespace HIMS.Server.App_Start
+namespace DIMS.Server.App_Start
 {
     public static class WebApiConfig
     {
@@ -18,6 +14,8 @@ namespace HIMS.Server.App_Start
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
                 );
+
+            //config.Filters.Add();
         }
     }
 }

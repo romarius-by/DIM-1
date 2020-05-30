@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace HIMS.EF.DAL.Data
+namespace DIMS.EF.DAL.Data
 {
     using System;
     using System.Collections.Generic;
@@ -20,7 +20,7 @@ namespace HIMS.EF.DAL.Data
         {
             this.TaskTracks = new HashSet<TaskTrack>();
         }
-        
+
         [Key]
         public int UserTaskId { get; set; }
         public int TaskId { get; set; }

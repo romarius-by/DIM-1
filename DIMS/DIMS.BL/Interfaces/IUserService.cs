@@ -1,14 +1,12 @@
-﻿using HIMS.BL.Infrastructure;
-using HIMS.BL.Models;
-using HIMS.EF.DAL.Identity.Models;
+﻿using DIMS.BL.Infrastructure;
+using DIMS.BL.Models;
+using DIMS.EF.DAL.Identity.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace HIMS.BL.Interfaces
+namespace DIMS.BL.Interfaces
 {
     public interface IUserService : IDisposable
     {

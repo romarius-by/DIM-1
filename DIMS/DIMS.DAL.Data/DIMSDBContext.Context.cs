@@ -7,13 +7,12 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace HIMS.EF.DAL.Data
+namespace DIMS.EF.DAL.Data
 {
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     using System.Data.Entity.Core.Objects;
-    using System.Linq;
     using System.Data.Common;
     using System.Data;
     using System.Data.Entity.Core.EntityClient;
@@ -39,13 +38,13 @@ namespace HIMS.EF.DAL.Data
         }
 
 
-        public DIMSDBContext(string connectionString) 
+        public DIMSDBContext(string connectionString)
             : base(connectionString)
         {
 
         }
-    
-       
+
+
         public virtual DbSet<Direction> Directions { get; set; }
         public virtual DbSet<Sample> Samples { get; set; }
         public virtual DbSet<Task> Tasks { get; set; }
@@ -58,13 +57,13 @@ namespace HIMS.EF.DAL.Data
         public virtual DbSet<vUserProgress> vUserProgresses { get; set; }
         public virtual DbSet<vUserTask> vUserTasks { get; set; }
         public virtual DbSet<vUserTrack> vUserTracks { get; set; }
-    
+
         public virtual int SampleEntriesAmount(Nullable<bool> isAdmin, ObjectParameter result)
         {
             var isAdminParameter = isAdmin.HasValue ?
                 new ObjectParameter("isAdmin", isAdmin) :
                 new ObjectParameter("isAdmin", typeof(bool));
-    
+
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SampleEntriesAmount", isAdminParameter, result);
         }
 
@@ -160,8 +159,5 @@ namespace HIMS.EF.DAL.Data
         {
             return Convert.IsDBNull(parameterValue) ? default(T) : (T)parameterValue;
         }
-
-
-
     }
 }

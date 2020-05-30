@@ -1,27 +1,26 @@
 ﻿using AutoMapper;
-using HIMS.BL.DTO;
-using HIMS.BL.Infrastructure;
-using HIMS.BL.Interfaces;
-using HIMS.EF.DAL.Data;
-using HIMS.EF.DAL.Data.Repositories;
-using System;
+using DIMS.BL.DTO;
+using DIMS.BL.Infrastructure;
+using DIMS.BL.Interfaces;
+using DIMS.EF.DAL.Data;
+using DIMS.EF.DAL.Data.Repositories;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace HIMS.BL.Services
+namespace DIMS.BL.Services
 {
-    public class vUserTaskService : IvUserTaskService
+    public class VUserTaskService : IVUserTaskService
     {
 
-        private IUnitOfWork Database;
-        private vUserTaskRepository Repository;
+        private readonly IUnitOfWork Database;
+        private readonly VUserTaskRepository Repository;
+        private readonly IMapper _mapper;
 
-        public vUserTaskService(IUnitOfWork uow, vUserTaskRepository repository)
+        public VUserTaskService(IUnitOfWork uow, VUserTaskRepository repository, IMapper mapper)
         {
             Database = uow;
             Repository = repository;
+            _mapper = mapper;
         }
 
         public void Dispose()
@@ -29,35 +28,33 @@ namespace HIMS.BL.Services
             Database.Dispose();
         }
 
-        public IEnumerable<vUserTaskDTO> GetByUserId(int? id)
+        public IEnumerable<VUserTaskDTO> GetByUserId(int id)
         {
-            if (!id.HasValue)
-                throw new ValidationException("The view user task id value is not set", String.Empty);
-
-            return Mapper.Map<IEnumerable<vUserTask>, IEnumerable<vUserTaskDTO>>(
-                Repository.GetByUserId(id.Value));
+            return _mapper.Map<IEnumerable<vUserTask>, IEnumerable<VUserTaskDTO>>(
+                Repository.GetByUserId(id));
         }
 
-        public vUserTaskDTO GetById(int? id)
+        public VUserTaskDTO GetById(int id)
         {
-            if (!id.HasValue)
-                throw new ValidationException("The view user task id value is not set", String.Empty);
 
-            var _vUserTask = Database.vUserTasks.GetById(id.Value);
+            var _vUserTask = Database.VUserTasks.GetById(id);
 
             if (_vUserTask == null)
-                throw new ValidationException($"The view user task with id = {id.Value} was not found", String.Empty);
+            {
+                throw new ValidationException($"The view user task with id = {id} was not found", string.Empty);
+            }
 
-            return Mapper.Map<vUserTask, vUserTaskDTO>(_vUserTask);
+            return _mapper.Map<vUserTask, VUserTaskDTO>(_vUserTask);
         }
 
-        public IEnumerable<vUserTaskDTO> GetAll()
+        public IEnumerable<VUserTaskDTO> GetAll()
         {
-            return Mapper.Map<List<vUserTask>, ICollection<vUserTaskDTO>>(
-                Database.vUserTasks.GetAll().ToList());
+            var vUserTasks = Database.VUserTasks.GetAll().ToList();
+
+            return _mapper.Map<List<vUserTask>, ICollection<VUserTaskDTO>>(vUserTasks);
         }
 
-        public void Save(vUserTaskDTO vUserTaskDTO)
+        public void Save(VUserTaskDTO vUserTaskDTO)
         {
             var userTask = new UserTask
             {
@@ -70,13 +67,13 @@ namespace HIMS.BL.Services
             Database.Save();
         }
 
-        public void Update(vUserTaskDTO vUserTaskDTO)
+        public void Update(VUserTaskDTO vUserTaskDTO)
         {
             var userTask = Database.UserTasks.GetById(vUserTaskDTO.UserTaskId);
 
             if (userTask != null)
             {
-                Mapper.Map(vUserTaskDTO, userTask);
+                _mapper.Map(vUserTaskDTO, userTask);
                 Database.Save();
             }
         }

@@ -1,30 +1,33 @@
 ﻿using AutoMapper;
-using HIMS.BL.DTO;
-using HIMS.BL.Infrastructure;
-using HIMS.BL.Interfaces;
-using HIMS.EF.DAL.Data;
+using DIMS.BL.DTO;
+using DIMS.BL.Infrastructure;
+using DIMS.BL.Interfaces;
+using DIMS.EF.DAL.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace HIMS.BL.Services
+namespace DIMS.BL.Services
 {
     public class TaskTrackService : ITaskTrackService
     {
 
-        private IUnitOfWork Database;
+        private readonly IUnitOfWork Database;
+        private readonly IMapper _mapper;
 
-        public TaskTrackService(IUnitOfWork uow)
+        public TaskTrackService(IUnitOfWork uow, IMapper mapper)
         {
             Database = uow;
+            _mapper = mapper;
         }
 
         public void DeleteById(int? id)
         {
             if (!id.HasValue)
-                throw new ValidationException("The task track id value is not set", String.Empty);
+            {
+                throw new ValidationException("The task track id value is not set", string.Empty);
+            }
 
             Database.TaskTracks.DeleteById(id.Value);
             Database.Save();
@@ -33,15 +36,20 @@ namespace HIMS.BL.Services
         public async Task<bool> DeleteByIdAsync(int? id)
         {
             if (!id.HasValue)
-                throw new ValidationException("The id value is not set!", String.Empty);
+            {
+                throw new ValidationException("The id value is not set!", string.Empty);
+            }
 
             var taskTrack = await Database.TaskTracks.DeleteByIdAsync(id.Value);
 
             if (taskTrack != null)
+            {
                 return true;
-
+            }
             else
+            {
                 return false;
+            }
         }
 
         public void Dispose()
@@ -49,28 +57,27 @@ namespace HIMS.BL.Services
             Database.Dispose();
         }
 
-        public TaskTrackDTO GetById(int? id)
+        public TaskTrackDTO GetById(int id)
         {
-            if (!id.HasValue)
-                throw new ValidationException("The task track id value is not set", String.Empty);
-
-            var task = Database.TaskTracks.GetById(id.Value);
+            var task = Database.TaskTracks.GetById(id);
 
             if (task == null)
-                throw new ValidationException($"The task track with id = {id.Value} was not found", String.Empty);
+            {
+                throw new ValidationException($"The task track with id = {id} was not found", string.Empty);
+            }
 
-            return Mapper.Map<TaskTrack, TaskTrackDTO>(task);
+            return _mapper.Map<TaskTrack, TaskTrackDTO>(task);
         }
 
         public IEnumerable<TaskTrackDTO> GetAll()
         {
-            return Mapper.Map<List<TaskTrack>, ICollection<TaskTrackDTO>>(
+            return _mapper.Map<List<TaskTrack>, ICollection<TaskTrackDTO>>(
                 Database.TaskTracks.GetAll().ToList());
         }
 
         public UserTaskDTO GetUserTask(int id)
         {
-            return Mapper.Map<UserTask, UserTaskDTO>(
+            return _mapper.Map<UserTask, UserTaskDTO>(
                 Database.TaskTracks.GetById(id).UserTask);
         }
 
@@ -80,7 +87,7 @@ namespace HIMS.BL.Services
             {
                 TrackNote = taskTrackDTO.TrackNote,
                 TrackDate = taskTrackDTO.TrackDate,
-                UserTask = Mapper.Map<UserTaskDTO, UserTask>(taskTrackDTO.UserTask),
+                UserTask = _mapper.Map<UserTaskDTO, UserTask>(taskTrackDTO.UserTask),
                 UserTaskId = taskTrackDTO.UserTaskId
             };
 
@@ -94,21 +101,21 @@ namespace HIMS.BL.Services
 
             if (taskTrack != null)
             {
-                Mapper.Map(taskTrackDTO, taskTrack);
+                _mapper.Map(taskTrackDTO, taskTrack);
                 Database.Save();
             }
         }
 
         public IEnumerable<TaskTrackDTO> GetTracksForUser(int userId)
         {
-            var tracks = Database.vUserTracks.Find(item => item.UserId == userId);
+            var tracks = Database.VUserTracks.Find(item => item.UserId == userId);
 
             if (tracks == null)
             {
                 throw new ValidationException($"The Task Track with id = {userId} was not found", "");
             }
 
-            return Mapper.Map<IEnumerable<vUserTrack>, List<TaskTrackDTO>>(tracks);
+            return _mapper.Map<IEnumerable<vUserTrack>, List<TaskTrackDTO>>(tracks);
         }
     }
 }

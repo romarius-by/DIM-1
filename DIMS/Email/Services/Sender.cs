@@ -1,14 +1,13 @@
-﻿using Email.Interfaces;
-using HIMS.BL.Models;
+﻿using DIMS.BL.Models;
+using Email.Interfaces;
 using RestSharp;
 using RestSharp.Authenticators;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Configuration;
 using System.Threading.Tasks;
 
-namespace HIMS.Email.Services
+namespace DIMS.Email.Services
 {
     public class Sender : ISender
     {
@@ -19,34 +18,40 @@ namespace HIMS.Email.Services
             "</div>";
 
         public async Task<string> MessageToUserAsync(UserDTO user, string subject, string html)
-        {/*
+        {
+            /*
             var to = new EmailAddress(user.Email, $"{user.Name}");
 
             var htmlContent = "<div>" + html + _layoutHtml + "</div>";
 
             var msg = MailHelper.CreateSingleEmail(Email, to, subject, "Confirmation", htmlContent);
 
-            await Client.SendEmailAsync(msg);*/
+            await Client.SendEmailAsync(msg);
+            */
+
             var htmlContent = "<div>" + html + _layoutHtml + "</div>";
 
-            RestClient client = new RestClient();
-            client.BaseUrl = new Uri("https://api.mailgun.net/v3");
-            client.Authenticator =
+            RestClient client = new RestClient
+            {
+                BaseUrl = new Uri("https://api.mailgun.net/v3"),
+                Authenticator =
             new HttpBasicAuthenticator("api",
-                                       "ac2b658fb0738c0a54cf0de9263db7b2-aa4b0867-a38833e8");
+                                       "ac2b658fb0738c0a54cf0de9263db7b2-aa4b0867-a38833e8")
+            };
+
             RestRequest request = new RestRequest();
-            request.AddParameter("domain", "sandboxc4df07193b994302b7fc0816a4b6f4a9.mailgun.org", ParameterType.UrlSegment);
+            request.AddParameter("domain", ConfigurationManager.AppSettings["domain"], ParameterType.UrlSegment);
             request.Resource = "{domain}/messages";
             request.AddParameter("from", "Mailgun Sandbox <postmaster@sandboxc4df07193b994302b7fc0816a4b6f4a9.mailgun.org>");
             request.AddParameter("to", $"{user.Email}");
             request.AddParameter("subject", $"Registration in DevIncubator");
             request.AddParameter("text", htmlContent);
             request.Method = Method.POST;
+
             return await Task.Run(() =>
             {
                 return client.Execute(request).ToString();
             });
-
         }
 
         public async Task MessageToUserAsync(IEnumerable<UserDTO> users, string subject, string html)

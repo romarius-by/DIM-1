@@ -1,14 +1,8 @@
-﻿using HIMS.EF.DAL.Data;
-using HIMS.EF.DAL.Identity.Interfaces;
-using HIMS.EF.DAL.Identity.Models;
+﻿using DIMS.EF.DAL.Identity.Models;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace HIMS.EF.DAL.Identity.Repositories
+namespace DIMS.EF.DAL.Identity.Repositories
 {
     public class IdentityUnitOfWork : Interfaces.IUnitOfWork
     {
@@ -49,9 +43,8 @@ namespace HIMS.EF.DAL.Identity.Repositories
                     UserSecurityManager.Dispose();
                 }
                 //relesae unmanaged resources
-                this.disposed = true;
+                disposed = true;
             }
         }
-
     }
 }

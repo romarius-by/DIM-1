@@ -1,7 +1,8 @@
-﻿@model IEnumerable<HIMS.Server.Models.Tasks.vTaskViewModel>
+﻿@model IEnumerable<DIMS.Server.Models.Tasks.vTaskViewModel>
 
 @{
     ViewBag.Title = "Tasks Manage Page";
+    string[] values = new string[] { "create-task", "edit-task", "delete-task", "details-task" };
 }
 
 <h2>Tasks Manage Grid</h2>
@@ -11,157 +12,81 @@
     @Html.ActionLink("Create Task", "Create", null, new { @class = "btn btn-success create-task" })
 </p>
 
-<table class="table table-striped">
+<table class="table table-bordered">
     <thead class="thead-dark">
         <tr>
-            <th>
+            <th scope="col">
                 Id
             </th>
-            <th>
+            <th scope="col">
                 Name
             </th>
-            <th>
+            <th scope="col">
                 Start
             </th>
-            <th>
+            <th scope="col">
                 Deadline
             </th>
-
-            <th></th>
-
-
-            @foreach(var item in Model)
-            {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.TaskId)
-            </td>
-            <td>
-                @Html.ActionLink(item.Name, "Details", new { id = item.TaskId }, new { @class = "details-task" })
-            </td>
-            <td>
-                @{
-                    var startDate = item.StartDate.ToShortDateString();
-                }
-                @Html.DisplayFor(modelItem => startDate)
-            </td>
-            <td>
-                @{
-                    var deadlineDate = item.DeadlineDate.ToShortDateString();
-                }
-                @Html.DisplayFor(modelItem => deadlineDate)
-            </td>
-            <td>
-                <div class="btn-group-vertical">
-                    @Html.ActionLink("Edit", "Edit", new { id = item.TaskId }, new { @class = "btn btn-success edit-task" })
-                </div>
-                <div class="btn-group-vertical">
-                    @Html.ActionLink("Delete", "Delete", new { id = item.TaskId }, new { @class = "btn btn-danger delete-task" })
-                </div>
-            </td>
+            <th scope="col">
+                Actions
+            </th>
         </tr>
-        }
+    </thead>
 
-
-        </thead>
-    </table>
-
-<div class="modal fade" id="create-task-modal">
-    <div class="modal-dialog" id="create-task-dialogContent">
-        @using (Html.BeginForm())
+    <tbody>
+        @foreach (var item in Model)
         {
-            @Html.AntiForgeryToken()
-
-            <div class="form-actions no-color">
-                <input type="submit" value="Create" class="btn btn-default" />
-                @Html.ActionLink("Back to List", "Index")
-            </div>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TaskId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @{
+                        var startDate = item.StartDate.ToShortDateString();
+                    }
+                    @Html.DisplayFor(modelItem => startDate)
+                </td>
+                <td>
+                    @{
+                        var deadlineDate = item.DeadlineDate.ToShortDateString();
+                    }
+                    @Html.DisplayFor(modelItem => deadlineDate)
+                </td>
+                <td>
+                    <div class="btn-group-vertical">
+                        @Html.ActionLink("Details", "Details", new { id = item.TaskId }, new { @class = "btn btn-info details-task" })
+                    </div>
+                    <div class="btn-group-vertical">
+                        @Html.ActionLink("Edit", "Edit", new { id = item.TaskId }, new { @class = "btn btn-success edit-task" })
+                    </div>
+                    <div class="btn-group-vertical">
+                        @Html.ActionLink("Delete", "Delete", new { id = item.TaskId }, new { @class = "btn btn-danger delete-task" })
+                    </div>
+                </td>
+            </tr>
         }
-    </div>
-</div>
 
-<div class="modal fade" id="edit-task-modal">
-    <div class="modal-dialog" id="edit-task-dialogContent">
-        @using (Html.BeginForm())
-        {
-            @Html.AntiForgeryToken()
 
-            <div class="form-actions no-color">
-                <input type="submit" value="Edit" class="btn btn-default" />
-                @Html.ActionLink("Back to List", "Index")
-            </div>
-        }
-    </div>
-</div>
+    </tbody>
+</table>
 
-<div class="modal fade" id="delete-task-modal">
-    <div class="modal-dialog" id="delete-task-dialogContent">
-        @using (Html.BeginForm())
-        {
-            @Html.AntiForgeryToken()
+@ModalFadeHelper.CreateModal(values)
 
-            <div class="form-actions no-color">
-                <input type="submit" value="Delete" class="btn btn-default" />
-                @Html.ActionLink("Back to List", "Index")
-            </div>
-        }
-    </div>
-</div>
 
-<div class="modal fade" id="details-task-modal">
-    <div class="modal-dialog" id="details-task-dialogContent">
-        @using (Html.BeginForm())
-        {
-            <div class="form-actions no-color">
-                @Html.ActionLink("Back to List", "Index")
-            </div>
-        }
-    </div>
-</div>
+@section scripts
+    {
+    <script src="~/Scripts/helpersRazor.js"></script>
 
-    @section scripts
-{
-        <script type="text/javascript">
+    <script type="text/javascript">
 
-            $(function () {
-                function openModal(formTag, actionClass) {
-                $.ajaxSetup({ cache: false });
-                $(formTag).click(function (e) {
+        openModal(".delete-task", "#delete-task");
+        openModal(".create-task", "#create-task");
+        openModal(".edit-task", "#edit-task");
+        openModal(".details-task", "#details-task");
 
-                    e.preventDefault();
-                    $.get(this.href, function (data) {
-                        $(`${actionClass}-dialogContent`).html(data);
-                        $(`${actionClass}-modal`).modal('show');
-                    });
-                });
-                };
-                openModal(".delete-task", "#delete-task");
-                openModal(".create-task", "#create-task");
-                
-            });
-
-            $(function () {
-                 $.ajaxSetup({ cache: false });
-                $(".edit-task").click(function (e) {
-
-                    e.preventDefault();
-                    $.get(this.href, function (data) {
-                        $('#edit-task-dialogContent').html(data);
-                        $('#edit-task-modal').modal('show');
-                    });
-                });
-            });
-
-            $(function () {
-                 $.ajaxSetup({ cache: false });
-                $(".details-task").click(function (e) {
-
-                    e.preventDefault();
-                    $.get(this.href, function (data) {
-                        $('#details-task-dialogContent').html(data);
-                        $('#details-task-modal').modal('show');
-                    });
-                });
-            });
-        </script>
+    </script>
 }
+

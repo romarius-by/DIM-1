@@ -1,9 +1,8 @@
 ﻿using Ninject;
-using Ninject.Web.WebApi;
 using System.Web.Http.Dependencies;
 using IDependencyResolver = System.Web.Http.Dependencies.IDependencyResolver;
 
-namespace HIMS.Server.utils
+namespace DIMS.Server.utils
 {
     public class NinjectDependencyResolver : NinjectDependencyScope, IDependencyResolver, System.Web.Mvc.IDependencyResolver
     {

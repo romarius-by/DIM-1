@@ -1,10 +1,7 @@
-﻿using HIMS.BL.DTO;
+﻿using DIMS.BL.DTO;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
-namespace HIMS.Server.Models.Tasks
+namespace DIMS.Server.Models.Tasks
 {
     public class TaskTrackViewModel
     {

@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace HIMS.EF.DAL.Data.Repositories
+namespace DIMS.EF.DAL.Data.Repositories
 {
     public class UserProfileRepository : IRepository<UserProfile>
     {
@@ -23,7 +22,7 @@ namespace HIMS.EF.DAL.Data.Repositories
         public void DeleteById(int id)
         {
             var profile = _dimsDbContext.UserProfiles.Find(id);
-            
+
             if (profile != null)
             {
                 _dimsDbContext.UserProfiles.Remove(profile);
@@ -48,7 +47,7 @@ namespace HIMS.EF.DAL.Data.Repositories
 
         public UserProfile GetById(int id)
         {
-            return _dimsDbContext.UserProfiles.Include("UserTasks").Where(userProfile => userProfile.UserId == id).FirstOrDefault();
+            return _dimsDbContext.UserProfiles.Find(id);
         }
 
         public UserProfile GetByEmail(string email)
@@ -61,7 +60,7 @@ namespace HIMS.EF.DAL.Data.Repositories
             return _dimsDbContext.UserProfiles;
         }
 
-        public void Update (UserProfile userProfile)
+        public void Update(UserProfile userProfile)
         {
             _dimsDbContext.Entry(userProfile).State = System.Data.Entity.EntityState.Modified;
         }

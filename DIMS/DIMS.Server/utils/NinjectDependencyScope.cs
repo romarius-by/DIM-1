@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Web.Http.Dependencies;
 
-namespace HIMS.Server.utils
+namespace DIMS.Server.utils
 {
     public class NinjectDependencyScope : IDependencyScope
     {
@@ -19,34 +19,32 @@ namespace HIMS.Server.utils
 
         public void Dispose()
         {
-            var disposable = this.resolver as IDisposable;
-
-            if (disposable != null)
+            if (resolver is IDisposable disposable)
             {
                 disposable.Dispose();
             }
 
-            this.resolver = null;
+            resolver = null;
         }
 
         public object GetService(Type serviceType)
         {
-            if (this.resolver == null)
+            if (resolver == null)
             {
                 throw new ObjectDisposedException("this", "This scope has already been disposed");
             }
 
-            return this.resolver.TryGet(serviceType);
+            return resolver.TryGet(serviceType);
         }
 
         public IEnumerable<object> GetServices(Type serviceType)
         {
-            if (this.resolver == null)
+            if (resolver == null)
             {
                 throw new ObjectDisposedException("this", "This scope has already been disposed");
             }
 
-            return this.resolver.GetAll(serviceType);
+            return resolver.GetAll(serviceType);
         }
     }
 }

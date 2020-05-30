@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using AutoMapper;
+using DIMS.BL.Models;
 
-namespace HIMS.Server.Models
+namespace DIMS.Server.Models
 {
+    [AutoMap(typeof(SampleDTO))]
     public class SampleViewModel
     {
         public int SampleId { get; set; }

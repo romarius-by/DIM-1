@@ -1,18 +1,12 @@
-﻿using HIMS.BL.Interfaces;
-using HIMS.BL.Models;
-using HIMS.EF.DAL.Identity.Interfaces;
-using HIMS.EF.DAL.Identity.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using DIMS.BL.Interfaces;
+using DIMS.BL.Models;
+using DIMS.EF.DAL.Identity.Interfaces;
 using System.Threading.Tasks;
 
-namespace HIMS.BL.Services
+namespace DIMS.BL.Services
 {
     public class UserAuthService : IAuthService<UserDTO>
     {
-
         private IUnitOfWork Database { get; }
 
         public UserAuthService(IUnitOfWork uow)
@@ -28,6 +22,5 @@ namespace HIMS.BL.Services
 
             return token;
         }
-        
     }
 }

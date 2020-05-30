@@ -1,24 +1,24 @@
 ﻿using AutoMapper;
-using HIMS.BL.DTO;
-using HIMS.BL.Infrastructure;
-using HIMS.BL.Interfaces;
-using HIMS.EF.DAL.Data;
+using DIMS.BL.DTO;
+using DIMS.BL.Infrastructure;
+using DIMS.BL.Interfaces;
+using DIMS.EF.DAL.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace HIMS.BL.Services
+namespace DIMS.BL.Services
 {
-    public class vUserProgressService : IvUserProgressService
+    public class VUserProgressService : IVUserProgressService
     {
+        private readonly IUnitOfWork Database;
 
-        private IUnitOfWork Database;
+        private readonly IMapper _mapper;
 
-        public vUserProgressService(IUnitOfWork uow)
+        public VUserProgressService(IUnitOfWork uow, IMapper mapper)
         {
             Database = uow;
+            _mapper = mapper;
         }
 
         public void Dispose()
@@ -26,39 +26,40 @@ namespace HIMS.BL.Services
             Database.Dispose();
         }
 
-        public IEnumerable<vUserProgressDTO> GetAll()
+        public IEnumerable<VUserProgressDTO> GetAll()
         {
-            return Mapper.Map<List<vUserProgress>, ICollection<vUserProgressDTO>>(
-                Database.vUserProgresses.GetAll().ToList());
+            return _mapper.Map<List<vUserProgress>, ICollection<VUserProgressDTO>>(
+                Database.VUserProgresses.GetAll().ToList());
         }
 
-        public vUserProgressDTO GetById(int? id)
+        public VUserProgressDTO GetById(int id)
         {
-            if (!id.HasValue)
-                throw new ValidationException("The view user progress id value is not set", String.Empty);
-
-            var _vUserProgress = Database.vUserProgresses.GetById(id.Value);
+            var _vUserProgress = Database.VUserProgresses.GetById(id);
 
             if (_vUserProgress == null)
-                throw new ValidationException($"The view user progress with id = {id.Value} was not found", String.Empty);
+            {
+                throw new ValidationException($"The view user progress with id = {id} was not found", String.Empty);
+            }
 
-            return Mapper.Map<vUserProgress, vUserProgressDTO>(_vUserProgress);
+            return _mapper.Map<vUserProgress, VUserProgressDTO>(_vUserProgress);
 
         }
 
-        public IEnumerable<vUserProgressDTO> GetByUserId(int? id)
+        public IEnumerable<VUserProgressDTO> GetByUserId(int? id)
         {
             if (!id.HasValue)
+            {
                 throw new ValidationException("The view user progress id value is not set", String.Empty);
+            }
 
-            var userProgress = Database.vUserProgresses.Find(m => m.UserId == id.Value);
+            var userProgress = Database.VUserProgresses.Find(m => m.UserId == id.Value);
 
             if (userProgress == null)
             {
                 throw new ValidationException($"The user with id = {id.Value} was not found", String.Empty);
             }
 
-            return Mapper.Map<IEnumerable<vUserProgress>, List<vUserProgressDTO>>(userProgress);
+            return _mapper.Map<IEnumerable<vUserProgress>, List<VUserProgressDTO>>(userProgress);
         }
     }
 }

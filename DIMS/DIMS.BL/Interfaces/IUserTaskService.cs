@@ -1,11 +1,7 @@
-﻿using HIMS.BL.DTO;
-using System;
+﻿using DIMS.BL.DTO;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace HIMS.BL.Interfaces
+namespace DIMS.BL.Interfaces
 {
     public interface IUserTaskService : IService<UserTaskDTO>
     {
@@ -14,7 +10,7 @@ namespace HIMS.BL.Interfaces
         IEnumerable<TaskTrackDTO> GetTaskTracks(int id);
         IEnumerable<UserTaskDTO> GetByUserId(int id);
         UserProfileDTO GetUserProfile(int id);
-        IEnumerable<UserTaskDTO> GetAllUserProfilesByTaskId(int id);
+        IEnumerable<UserTaskDTO> GetAllUserTasksByTaskId(int id);
         void DeleteItemByTaskIdAndUserId(int taskId, int userId);
     }
 }

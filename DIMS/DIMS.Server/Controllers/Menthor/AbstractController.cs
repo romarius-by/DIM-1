@@ -1,29 +1,23 @@
 ﻿using AutoMapper;
-using HIMS.BL.DTO;
-using HIMS.BL.Interfaces;
-using HIMS.EF.DAL.Data;
-using HIMS.Server.Models.Tasks;
-using HIMS.Server.Models.Users;
-using System;
+using DIMS.BL.DTO;
+using DIMS.BL.Interfaces;
+using DIMS.Server.Models.Tasks;
 using System.Collections.Generic;
-using System.Data.Entity.Infrastructure;
-using System.Linq;
-using System.Net;
-using System.Web;
 using System.Web.Mvc;
 
-namespace HIMS.Server.Controllers.Menthor
+namespace DIMS.Server.Controllers.Menthor
 {
     public abstract class AbstractController : Controller
     {
         protected readonly ITaskService _taskService;
-        protected readonly IvTaskService _vTaskService;
+        protected readonly IVTaskService _vTaskService;
         protected readonly IUserTaskService _userTaskService;
-        protected readonly IvUserProfileService _vUserProfileService;
-        protected readonly IvTaskStateService _vTaskStateService;
-        protected readonly IvUserTaskService _vUserTaskService;
+        protected readonly IVUserProfileService _vUserProfileService;
+        protected readonly IVTaskStateService _vTaskStateService;
+        protected readonly IVUserTaskService _vUserTaskService;
+        protected readonly IMapper _mapper;
 
-        public AbstractController(ITaskService taskService, IvTaskService vTaskService, IUserTaskService userTaskService, IvUserProfileService vUserProfileService, IvTaskStateService vTaskStateService, IvUserTaskService vUserTaskService)
+        public AbstractController(ITaskService taskService, IVTaskService vTaskService, IUserTaskService userTaskService, IVUserProfileService vUserProfileService, IVTaskStateService vTaskStateService, IVUserTaskService vUserTaskService, IMapper mapper)
         {
             _taskService = taskService;
             _vTaskService = vTaskService;
@@ -31,12 +25,13 @@ namespace HIMS.Server.Controllers.Menthor
             _vUserProfileService = vUserProfileService;
             _vTaskStateService = vTaskStateService;
             _vUserTaskService = vUserTaskService;
+            _mapper = mapper;
         }
 
         public List<string> GetUsersForTask(int id)
         {
-            var userTaskDtos = _userTaskService.GetAllUserProfilesByTaskId(id);
-            var userTasks = Mapper.Map<IEnumerable<UserTaskDTO>, List<UserTaskViewModel>>(userTaskDtos);
+            var userTaskDtos = _userTaskService.GetAllUserTasksByTaskId(id);
+            var userTasks = _mapper.Map<IEnumerable<UserTaskDTO>, List<UserTaskViewModel>>(userTaskDtos);
 
             var usersTaskList = new List<string>();
 

@@ -1,11 +1,7 @@
-﻿using HIMS.EF.DAL.Data.Interfaces;
+﻿using DIMS.EF.DAL.Data.Interfaces;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace HIMS.EF.DAL.Data
+namespace DIMS.EF.DAL.Data
 {
     public interface IUnitOfWork : IDisposable
     {
@@ -16,11 +12,11 @@ namespace HIMS.EF.DAL.Data
         IRepository<TaskState> TaskStates { get; }
         IRepository<TaskTrack> TaskTracks { get; }
         IUserTaskRepository UserTasks { get; }
-        IViewRepository<vTask> vTasks { get; }
-        IvUserProfileRepository vUserProfiles { get; }
-        IViewRepository<vUserProgress> vUserProgresses { get; }
-        IViewRepository<vUserTask> vUserTasks { get; }
-        IViewRepository<vUserTrack> vUserTracks { get; }
+        IViewRepository<vTask> VTasks { get; }
+        IvUserProfileRepository VUserProfiles { get; }
+        IViewRepository<vUserProgress> VUserProgresses { get; }
+        IViewRepository<vUserTask> VUserTasks { get; }
+        IViewRepository<vUserTrack> VUserTracks { get; }
         void Save();
     }
 }

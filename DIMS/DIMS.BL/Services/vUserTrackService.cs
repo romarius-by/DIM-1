@@ -1,24 +1,25 @@
 ﻿using AutoMapper;
-using HIMS.BL.DTO;
-using HIMS.BL.Infrastructure;
-using HIMS.BL.Interfaces;
-using HIMS.EF.DAL.Data;
+using DIMS.BL.DTO;
+using DIMS.BL.Infrastructure;
+using DIMS.BL.Interfaces;
+using DIMS.EF.DAL.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace HIMS.BL.Services
+namespace DIMS.BL.Services
 {
-    public class vUserTrackService : IvUserTrackService
+    public class VUserTrackService : IVUserTrackService
     {
 
-        private IUnitOfWork Database;
+        private readonly IUnitOfWork Database;
 
-        public vUserTrackService(IUnitOfWork uow)
+        private readonly IMapper _mapper;
+
+        public VUserTrackService(IUnitOfWork uow, IMapper mapper)
         {
-            Database = uow; 
+            Database = uow;
+            _mapper = mapper;
         }
 
         public void Dispose()
@@ -26,23 +27,22 @@ namespace HIMS.BL.Services
             Database.Dispose();
         }
 
-        public vUserTrackDTO GetById(int? id)
+        public VUserTrackDTO GetById(int id)
         {
-            if (!id.HasValue)
-                throw new ValidationException("The view user track id value is not set", String.Empty);
-
-            var _vUserTrack = Database.vUserTracks.GetById(id.Value);
+            var _vUserTrack = Database.VUserTracks.GetById(id);
 
             if (_vUserTrack == null)
-                throw new ValidationException($"The view user track with id = {id.Value} was not found", String.Empty);
+            {
+                throw new ValidationException($"The view user track with id = {id} was not found", String.Empty);
+            }
 
-            return Mapper.Map<vUserTrack, vUserTrackDTO>(_vUserTrack);
+            return _mapper.Map<vUserTrack, VUserTrackDTO>(_vUserTrack);
         }
 
-        public IEnumerable<vUserTrackDTO> GetAll()
+        public IEnumerable<VUserTrackDTO> GetAll()
         {
-            return Mapper.Map<List<vUserTrack>, ICollection<vUserTrackDTO>>(
-                Database.vUserTracks.GetAll().ToList());
+            return _mapper.Map<List<vUserTrack>, ICollection<VUserTrackDTO>>(
+                Database.VUserTracks.GetAll().ToList());
         }
     }
 }

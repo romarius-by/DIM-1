@@ -1,4 +1,8 @@
-﻿@model HIMS.Server.Models.Tasks.TaskManagePageViewModel
+﻿@model DIMS.Server.Models.Tasks.TaskManagePageViewModel
+
+@{
+    Layout = null;
+}
 
 <div class="modal-content">
 
@@ -47,25 +51,24 @@
                     </div>
                 </div>
 
-                @foreach (var item in Model.userProfileListViewModel)
-                {
-                    <div class="checkbox">
-                        <label>
-                            <input type="checkbox" name="SelectedUserProfiles" value="@item.UserId" />
-                            @item.FullName
-                        </label>
+                <div class="form-group">
+                    @Html.Label("Members", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @foreach (var item in Model.userProfileListViewModel)
+                        {
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" name="SelectedUserProfiles" value="@item.UserId" />
+                                    @item.FullName
+                                </label>
+                            </div>
+
+                        }
                     </div>
-                }
+                </div>
 
-                <select name="SelectedState" class="form-control">
-                    @foreach (var item in Model.taskStateListViewModel)
-                    {
-                        <option value="@item.StateId">@item.StateName</option>
-                    }
-                </select>
-
-                <div class="form-actions form-group col-md-offset-2 col-md-10">
-                    <input type="submit" value="Create" class="btn btn-default" />
+                <div class="form-actions">
+                    <input type="submit" value="Create" class="btn btn-default col-md-offset-10" />
                 </div>
             </div>
         }

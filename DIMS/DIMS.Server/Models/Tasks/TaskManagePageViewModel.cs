@@ -1,10 +1,10 @@
-﻿using HIMS.Server.Models.Users;
+﻿using DIMS.Server.Models.Users;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace HIMS.Server.Models.Tasks
+namespace DIMS.Server.Models.Tasks
 {
     public class TaskManagePageViewModel
     {
@@ -12,6 +12,6 @@ namespace HIMS.Server.Models.Tasks
         public IEnumerable<UserTaskViewModel> userTaskListViewModel { get; set; }
         public TaskStateViewModel taskStateViewModel { get; set; }
         public IEnumerable<TaskStateViewModel> taskStateListViewModel { get; set; }
-        public IEnumerable<vUserProfileViewModel> userProfileListViewModel { get; set; }
+        public IEnumerable<VUserProfileViewModel> userProfileListViewModel { get; set; }
     }
 }

@@ -189,7 +189,7 @@ namespace DIMS.Server.Controllers
         {
             if (!id.HasValue)
             {
-                return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
             var vuserProfileDto = _vUserProfileService.GetById(id.Value);

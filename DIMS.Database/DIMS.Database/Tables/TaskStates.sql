@@ -1,4 +1,4 @@
-﻿CREATE TABLE [dbo].[TaskState]
+﻿CREATE TABLE [dbo].[TaskStates]
 (
 	[StateId] INT NOT NULL, 
     [StateName] VARCHAR(50) NOT NULL 

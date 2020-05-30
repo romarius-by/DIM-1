@@ -64,25 +64,22 @@
     <Folder Include="StoredProcedures" />
   </ItemGroup>
   <ItemGroup>
-    <Build Include="Tables\Samples.sql" />
     <Build Include="StoredProcedures\SampleEntriesAmount.sql" />
     <Build Include="Tables\UserProfiles.sql" />
-    <Build Include="Tables\Directions.sql" />
     <Build Include="Tables\UserTasks.sql" />
     <Build Include="Views\vUserProfiles.sql" />
     <None Include="ResetIdetity.sql" />
-    <None Include="SeedData\UserProfileInitialData.sql" />
-    <None Include="SeedData\DirectionInitialData.sql" />
-    <Build Include="Views\vUserProgresses.sql" />
     <Build Include="Tables\TaskTracks.sql" />
     <Build Include="Tables\Tasks.sql" />
     <Build Include="Views\vTasks.sql" />
     <Build Include="Tables\TaskStates.sql" />
+    <Build Include="Tables\Directions.sql" />
+    <Build Include="Tables\Samples.sql" />
+    <Build Include="Views\vUserProgresses.sql" />
     <Build Include="Views\vUserTasks.sql" />
     <Build Include="Views\vUserTracks.sql" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="SeedData\SampleInitialData.sql" />
     <None Include="SeedData\Script.PostDeployment.sql" />
   </ItemGroup>
   <ItemGroup>

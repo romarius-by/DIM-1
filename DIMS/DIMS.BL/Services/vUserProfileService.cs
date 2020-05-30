@@ -28,7 +28,7 @@ namespace DIMS.BL.Services
             Database.Dispose();
         }
 
-        public vUserProfileDTO GetById(int id)
+        public VUserProfileDTO GetById(int id)
         {
             var vUserProfile = Database.VUserProfiles.GetById(id);
 
@@ -37,10 +37,10 @@ namespace DIMS.BL.Services
                 throw new ValidationException($"The view user profile with id = {id} was not found", String.Empty);
             }
 
-            return _mapper.Map<vUserProfile, vUserProfileDTO>(vUserProfile);
+            return _mapper.Map<vUserProfile, VUserProfileDTO>(vUserProfile);
         }
 
-        public async Task<vUserProfileDTO> GetByEmailAsync(string email)
+        public async Task<VUserProfileDTO> GetByEmailAsync(string email)
         {
             if (email == null)
             {
@@ -54,13 +54,14 @@ namespace DIMS.BL.Services
                 throw new ValidationException($"The view user profile with email = {email} was not found", String.Empty);
             }
 
-            return _mapper.Map<vUserProfile, vUserProfileDTO>(vUserProfile);
+            return _mapper.Map<vUserProfile, VUserProfileDTO>(vUserProfile);
         }
 
-        public IEnumerable<vUserProfileDTO> GetAll()
+        public IEnumerable<VUserProfileDTO> GetAll()
         {
-            return _mapper.Map<List<vUserProfile>, ICollection<vUserProfileDTO>>(
-                Database.VUserProfiles.GetAll().ToList());
+            var userProfiles = Database.VUserProfiles.GetAll().ToList();
+
+            return _mapper.Map<List<vUserProfile>, ICollection<VUserProfileDTO>>(userProfiles);
         }
     }
 }

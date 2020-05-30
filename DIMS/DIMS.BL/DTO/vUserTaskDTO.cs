@@ -5,7 +5,7 @@ using System;
 namespace DIMS.BL.DTO
 {
     [AutoMap(typeof(vUserTask))]
-    public class vUserTaskDTO
+    public class VUserTaskDTO
     {
         public int UserTaskId { get; set; }
         public int UserId { get; set; }

@@ -12,6 +12,6 @@ namespace DIMS.Server.Models.Tasks
         public IEnumerable<UserTaskViewModel> userTaskListViewModel { get; set; }
         public TaskStateViewModel taskStateViewModel { get; set; }
         public IEnumerable<TaskStateViewModel> taskStateListViewModel { get; set; }
-        public IEnumerable<vUserProfileViewModel> userProfileListViewModel { get; set; }
+        public IEnumerable<VUserProfileViewModel> userProfileListViewModel { get; set; }
     }
 }

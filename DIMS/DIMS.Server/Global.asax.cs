@@ -40,11 +40,11 @@ namespace DIMS.Server
             // dependency injection
             var dependencesModule = new DependencesModule();
 
-            var autoMappeModule = new AutoMapperModule();
+            var autoMapperServerModule = new AutoMapperModule();
 
             var serviceModule = new ServicesModule("DIMSDBConnection", "DIMSIdentityConnection");
 
-            var kernel = new StandardKernel(dependencesModule, serviceModule, autoMappeModule);
+            var kernel = new StandardKernel(dependencesModule, serviceModule, autoMapperServerModule);
 
             kernel.Bind<DefaultModelValidatorProviders>().ToConstant(new DefaultModelValidatorProviders(GlobalConfiguration.Configuration.Services.GetModelValidatorProviders()));
 

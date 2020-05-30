@@ -7,7 +7,7 @@ namespace DIMS.Server.Models.Users
     {
         public VUserProfileViewModelProfile()
         {
-            CreateMap<vUserProfileViewModel, vUserProfileDTO>();
+            CreateMap<VUserProfileViewModel, VUserProfileDTO>();
         }
     }
 }

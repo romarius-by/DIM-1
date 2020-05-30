@@ -3,9 +3,9 @@ using System.Threading.Tasks;
 
 namespace DIMS.BL.Interfaces
 {
-    public interface IVUserProfileService : IVService<vUserProfileDTO>
+    public interface IVUserProfileService : IVService<VUserProfileDTO>
     {
-        Task<vUserProfileDTO> GetByEmailAsync(string email);
+        Task<VUserProfileDTO> GetByEmailAsync(string email);
 
     }
 }

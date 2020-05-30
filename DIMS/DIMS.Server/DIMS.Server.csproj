@@ -224,12 +224,12 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Directions\DirectionViewModel.cs" />
-    <Compile Include="Models\Directions\DirectionViewModelProfile.cs" />
+    <Compile Include="Utils\Profiles\DirectionViewModelProfile.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
     <Compile Include="Models\RegisterViewModel.cs" />
     <Compile Include="Models\Samples\SamplesListViewModel.cs" />
     <Compile Include="Models\Samples\SampleViewModel.cs" />
-    <Compile Include="Models\Samples\SampleViewModelProfile.cs" />
+    <Compile Include="Utils\Profiles\SampleViewModelProfile.cs" />
     <Compile Include="Models\Tasks\TaskTrackListViewModel.cs" />
     <Compile Include="Models\Tasks\TaskTrackViewModel.cs" />
     <Compile Include="Models\Tasks\TaskManagePageViewModel.cs" />
@@ -238,23 +238,35 @@
     <Compile Include="Models\Tasks\TaskViewModel.cs" />
     <Compile Include="Models\Tasks\UserTaskViewModel.cs" />
     <Compile Include="Models\Tasks\vTaskViewModel.cs" />
-    <Compile Include="Models\Tasks\vTaskViewModelProfile.cs" />
+    <Compile Include="Utils\Profiles\vTaskViewModelProfile.cs" />
     <Compile Include="Models\Users\UserProfilePageViewModel.cs" />
     <Compile Include="Models\Users\UserProfilesListViewModel.cs" />
     <Compile Include="Models\Users\UserProfileViewModel.cs" />
-    <Compile Include="Models\Users\UserProfileViewModelProfile.cs" />
-    <Compile Include="Models\Users\vUserProfilesListViewModel.cs" />
-    <Compile Include="Models\Users\vUserProfileViewModel.cs" />
-    <Compile Include="Models\Users\VUserProfileViewModelProfile.cs" />
-    <Compile Include="Models\Users\vUserProgressesListViewModel.cs" />
-    <Compile Include="Models\Users\vUserProgressViewModel.cs" />
-    <Compile Include="Models\Users\VUserProgressViewModelProfile.cs" />
+    <Compile Include="Utils\Profiles\UserProfileViewModelProfile.cs" />
+    <Compile Include="Models\Users\VUserProfilesListViewModel.cs" />
+    <Compile Include="Models\Users\VUserProfileViewModel.cs" />
+    <Compile Include="Utils\Profiles\VUserProfileViewModelProfile.cs" />
+    <Compile Include="Models\Users\VUserProgressesListViewModel.cs" />
+    <Compile Include="Models\Users\VUserProgressViewModel.cs" />
+    <Compile Include="Utils\Profiles\VUserProgressViewModelProfile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="utils\AutoMapperModule.cs" />
-    <Compile Include="utils\CurrentUser.cs" />
-    <Compile Include="utils\DependencesModule.cs" />
-    <Compile Include="utils\NinjectDependencyResolver.cs" />
-    <Compile Include="utils\NinjectDependencyScope.cs" />
+    <Compile Include="Utils\AutoMapperModule.cs" />
+    <Compile Include="Utils\CurrentUser.cs" />
+    <Compile Include="Utils\DependencesModule.cs" />
+    <Compile Include="Utils\NinjectDependencyResolver.cs" />
+    <Compile Include="Utils\NinjectDependencyScope.cs" />
+    <Compile Include="Utils\Profiles\DirectionDTOProfile.cs" />
+    <Compile Include="Utils\Profiles\SampleDTOProfile.cs" />
+    <Compile Include="Utils\Profiles\TaskDTOProfile.cs" />
+    <Compile Include="Utils\Profiles\TaskStateDTOProfile.cs" />
+    <Compile Include="Utils\Profiles\TaskTrackDTOProfile.cs" />
+    <Compile Include="Utils\Profiles\UserProfileDTOProfile.cs" />
+    <Compile Include="Utils\Profiles\UserTaskDTOProfile.cs" />
+    <Compile Include="Utils\Profiles\vTaskDTOProfile.cs" />
+    <Compile Include="Utils\Profiles\vUserProfileDTOProfile.cs" />
+    <Compile Include="Utils\Profiles\VUserProgressDTOProfile.cs" />
+    <Compile Include="Utils\Profiles\vUserTaskDTOProfile.cs" />
+    <Compile Include="Utils\Profiles\vUserTrackDTOProfile.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />

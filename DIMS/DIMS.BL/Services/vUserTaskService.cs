@@ -13,10 +13,10 @@ namespace DIMS.BL.Services
     {
 
         private readonly IUnitOfWork Database;
-        private readonly vUserTaskRepository Repository;
+        private readonly VUserTaskRepository Repository;
         private readonly IMapper _mapper;
 
-        public VUserTaskService(IUnitOfWork uow, vUserTaskRepository repository, IMapper mapper)
+        public VUserTaskService(IUnitOfWork uow, VUserTaskRepository repository, IMapper mapper)
         {
             Database = uow;
             Repository = repository;
@@ -28,13 +28,13 @@ namespace DIMS.BL.Services
             Database.Dispose();
         }
 
-        public IEnumerable<vUserTaskDTO> GetByUserId(int id)
+        public IEnumerable<VUserTaskDTO> GetByUserId(int id)
         {
-            return _mapper.Map<IEnumerable<vUserTask>, IEnumerable<vUserTaskDTO>>(
+            return _mapper.Map<IEnumerable<vUserTask>, IEnumerable<VUserTaskDTO>>(
                 Repository.GetByUserId(id));
         }
 
-        public vUserTaskDTO GetById(int id)
+        public VUserTaskDTO GetById(int id)
         {
 
             var _vUserTask = Database.VUserTasks.GetById(id);
@@ -44,17 +44,17 @@ namespace DIMS.BL.Services
                 throw new ValidationException($"The view user task with id = {id} was not found", string.Empty);
             }
 
-            return _mapper.Map<vUserTask, vUserTaskDTO>(_vUserTask);
+            return _mapper.Map<vUserTask, VUserTaskDTO>(_vUserTask);
         }
 
-        public IEnumerable<vUserTaskDTO> GetAll()
+        public IEnumerable<VUserTaskDTO> GetAll()
         {
             var vUserTasks = Database.VUserTasks.GetAll().ToList();
 
-            return _mapper.Map<List<vUserTask>, ICollection<vUserTaskDTO>>(vUserTasks);
+            return _mapper.Map<List<vUserTask>, ICollection<VUserTaskDTO>>(vUserTasks);
         }
 
-        public void Save(vUserTaskDTO vUserTaskDTO)
+        public void Save(VUserTaskDTO vUserTaskDTO)
         {
             var userTask = new UserTask
             {
@@ -67,7 +67,7 @@ namespace DIMS.BL.Services
             Database.Save();
         }
 
-        public void Update(vUserTaskDTO vUserTaskDTO)
+        public void Update(VUserTaskDTO vUserTaskDTO)
         {
             var userTask = Database.UserTasks.GetById(vUserTaskDTO.UserTaskId);
 

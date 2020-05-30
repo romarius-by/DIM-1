@@ -7,7 +7,7 @@ namespace DIMS.Server.Models.Users
     {
         public VUserProgressViewModelProfile()
         {
-            CreateMap<vUserProgressViewModel, vUserProgressDTO>();
+            CreateMap<VUserProgressViewModel, VUserProgressDTO>();
         }
     }
 }

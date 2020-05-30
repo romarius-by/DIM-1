@@ -13,13 +13,13 @@ namespace DIMS.EF.DAL.Data
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
-    public partial class VTask
+    public partial class vTask
     {
         [Key]
         public int TaskId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public DateTime? StartDate { get; set; }
-        public DateTime? DeadlineDate { get; set; }
+        public System.DateTime StartDate { get; set; }
+        public System.DateTime DeadlineDate { get; set; }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using DIMS.BL.Models;
 using DIMS.EF.DAL.Data;
+using System.Collections.Generic;
 
 namespace DIMS.BL.DTO
 {
@@ -9,6 +10,8 @@ namespace DIMS.BL.DTO
         public SampleDTOProfile()
         {
             CreateMap<SampleDTO, Sample>();
+            CreateMap<Sample, SampleDTO>();
+            CreateMap<IEnumerable<Sample>, List<SampleDTO>>();
         }
     }
 }

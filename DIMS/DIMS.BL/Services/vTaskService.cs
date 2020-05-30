@@ -34,12 +34,12 @@ namespace DIMS.BL.Services
                 throw new ValidationException($"The vTask with id = {id} was not found", string.Empty);
             }
 
-            return _mapper.Map<VTask, VTaskDTO>(_vTask);
+            return _mapper.Map<vTask, VTaskDTO>(_vTask);
         }
 
         public IEnumerable<VTaskDTO> GetAll()
         {
-            return _mapper.Map<List<VTask>, ICollection<VTaskDTO>>(
+            return _mapper.Map<List<vTask>, ICollection<VTaskDTO>>(
                 Database.VTasks.GetAll().ToList());
         }
 

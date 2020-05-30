@@ -27,7 +27,7 @@ namespace DIMS.Server.Controllers.Tasks
                 Tasks = _mapper.Map<IEnumerable<VTaskDTO>, IEnumerable<vTaskViewModel>>(
                     _taskService.GetAll()),
 
-                UserProfiles = _mapper.Map<IEnumerable<vUserProfileDTO>, IEnumerable<vUserProfileViewModel>>(
+                UserProfiles = _mapper.Map<IEnumerable<VUserProfileDTO>, IEnumerable<VUserProfileViewModel>>(
                     _userProfileService.GetAll())
             };
 

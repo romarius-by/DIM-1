@@ -4,7 +4,7 @@ using System;
 
 namespace DIMS.BL.DTO
 {
-    [AutoMap(typeof(VTask))]
+    [AutoMap(typeof(vTask))]
     public class VTaskDTO
     {
         public int TaskId { get; set; }

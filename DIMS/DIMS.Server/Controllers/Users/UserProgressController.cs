@@ -30,13 +30,13 @@ namespace DIMS.Server.Controllers.Users
 
             var _userProfile = _userProfileService.GetById(id.Value);
 
-            var userProfile = _mapper.Map<vUserProfileDTO, vUserProfileViewModel>(_userProfile);
+            var userProfile = _mapper.Map<VUserProfileDTO, VUserProfileViewModel>(_userProfile);
 
             var _userProgress = _userProgressService.GetByUserId(id.Value);
 
-            var userProgress = _mapper.Map<IEnumerable<vUserProgressDTO>, IEnumerable<vUserProgressViewModel>>(_userProgress);
+            var userProgress = _mapper.Map<IEnumerable<VUserProgressDTO>, IEnumerable<VUserProgressViewModel>>(_userProgress);
 
-            var userProgresses = new vUserProgressesListViewModel(userProfile, userProgress);
+            var userProgresses = new VUserProgressesListViewModel(userProfile, userProgress);
 
             return View(userProgresses);
         }

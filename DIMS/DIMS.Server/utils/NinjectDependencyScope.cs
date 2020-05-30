@@ -19,9 +19,7 @@ namespace DIMS.Server.utils
 
         public void Dispose()
         {
-            var disposable = resolver as IDisposable;
-
-            if (disposable != null)
+            if (resolver is IDisposable disposable)
             {
                 disposable.Dispose();
             }

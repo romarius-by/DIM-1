@@ -2,8 +2,8 @@
 
 namespace DIMS.Server.Models.Users
 {
-    public class vUserProfilesListViewModel
+    public class VUserProfilesListViewModel
     {
-        public IEnumerable<vUserProfileViewModel> vUserProfiles { get; set; }
+        public IEnumerable<VUserProfileViewModel> VUserProfiles { get; set; }
     }
 }

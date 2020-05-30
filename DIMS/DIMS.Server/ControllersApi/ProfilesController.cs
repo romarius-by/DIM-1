@@ -28,7 +28,7 @@ namespace DIMS.Server.ControllersApi
         {
             var vUserProfileDtos = _vUserProfileService.GetAll();
 
-            var vUserProfiles = _mapper.Map<IEnumerable<vUserProfileDTO>, List<vUserProfileViewModel>>(vUserProfileDtos);
+            var vUserProfiles = _mapper.Map<IEnumerable<VUserProfileDTO>, List<VUserProfileViewModel>>(vUserProfileDtos);
 
             return Json(vUserProfiles);
         }

@@ -4,8 +4,8 @@ using System;
 
 namespace DIMS.Server.Models.Users
 {
-    [AutoMap(typeof(vUserProfileDTO))]
-    public class vUserProfileViewModel
+    [AutoMap(typeof(VUserProfileDTO))]
+    public class VUserProfileViewModel
     {
         public int UserId { get; set; }
         public string FullName { get; set; }

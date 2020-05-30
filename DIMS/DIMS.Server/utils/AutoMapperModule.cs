@@ -29,24 +29,4 @@ namespace DIMS.Server.utils
             return config;
         }
     }
-
-
-    //cfg.CreateMap<Sample, SampleDTO>();
-    //cfg.CreateMap<SampleDTO, Sample>();
-    //cfg.CreateMap<SampleViewModel, SampleDTO>();
-    //cfg.CreateMap<UserProfileViewModel, UserProfileDTO>();
-    //cfg.CreateMap<UserProfile, UserProfileDTO>();
-    //cfg.CreateMap<UserProfileDTO, UserProfile>();
-    //cfg.CreateMap<DirectionDTO, Direction>();
-    //cfg.CreateMap<Direction, DirectionDTO>();
-    //cfg.CreateMap<DirectionDTO, DirectionViewModel>();
-    //cfg.CreateMap<DirectionViewModel, DirectionDTO>();
-    //cfg.CreateMap<UserProfileDTO, UserProfileViewModel>();
-
-    //cfg.CreateMap<vUserProfileDTO, vUserProfileViewModel>();
-    //cfg.CreateMap<vUserProfileViewModel, vUserProfileDTO>();
-
-    //cfg.CreateMap<vUserProgress, vUserProgressDTO>();
-    //cfg.CreateMap<vUserProgressDTO, vUserProgress>();
-    //cfg.CreateMap<vUserProgressDTO, vUserProgressViewModel>();
 }

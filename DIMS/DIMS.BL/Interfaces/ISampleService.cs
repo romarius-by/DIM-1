@@ -6,7 +6,7 @@ namespace DIMS.BL.Interfaces
     public interface ISampleService
     {
         void SaveSample(SampleDTO sampleTM);
-        SampleDTO GetSample(int? id);
+        SampleDTO GetSample(int id);
         void UpdateSample(SampleDTO sampleDTO);
         void DeleteSample(int? id);
 

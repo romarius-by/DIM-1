@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace DIMS.EF.DAL.Data.Repositories
 {
-    public class vUserProfileRepository : IvUserProfileRepository, IViewRepository<vUserProfile>
+    public class VUserProfileRepository : IvUserProfileRepository, IViewRepository<vUserProfile>
     {
 
         private readonly DIMSDBContext _dIMSDBContext;
 
-        public vUserProfileRepository(DIMSDBContext dIMSDBContext)
+        public VUserProfileRepository(DIMSDBContext dIMSDBContext)
         {
             _dIMSDBContext = dIMSDBContext;
         }

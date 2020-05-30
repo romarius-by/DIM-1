@@ -68,7 +68,7 @@ namespace DIMS.Server.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            SampleDTO sampleDto = _sampleService.GetSample(id);
+            SampleDTO sampleDto = _sampleService.GetSample(id.Value);
 
             if (sampleDto == null)
             {
@@ -89,7 +89,7 @@ namespace DIMS.Server.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            var sampleDto = _sampleService.GetSample(id);
+            var sampleDto = _sampleService.GetSample(id.Value);
 
             if (TryUpdateModel(sampleDto, "",
                 new string[] { nameof(sampleDto.Name), nameof(sampleDto.Description) }))
@@ -119,7 +119,7 @@ namespace DIMS.Server.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            SampleDTO sampleDto = _sampleService.GetSample(id);
+            SampleDTO sampleDto = _sampleService.GetSample(id.Value);
 
             if (sampleDto == null)
             {
@@ -142,7 +142,7 @@ namespace DIMS.Server.Controllers
                 ViewBag.ErrorMessage = "Delete failed. Try again, and if the problem persists see your system administrator.";
             }
 
-            SampleDTO sampleDto = _sampleService.GetSample(id);
+            SampleDTO sampleDto = _sampleService.GetSample(id.Value);
 
             if (sampleDto == null)
             {

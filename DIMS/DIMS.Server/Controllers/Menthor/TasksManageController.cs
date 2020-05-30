@@ -34,7 +34,7 @@ namespace DIMS.Server.Controllers.Menthor
         public ActionResult Create()
         {
             var userProfileDtos = _vUserProfileService.GetAll();
-            var userProfileListViewModel = _mapper.Map<IEnumerable<vUserProfileDTO>, IEnumerable<vUserProfileViewModel>>(userProfileDtos);
+            var userProfileListViewModel = _mapper.Map<IEnumerable<VUserProfileDTO>, IEnumerable<VUserProfileViewModel>>(userProfileDtos);
 
             TaskManagePageViewModel taskManagePageViewModel = new TaskManagePageViewModel
             {
@@ -54,7 +54,7 @@ namespace DIMS.Server.Controllers.Menthor
                 {
                     var taskDto = _mapper.Map<TaskViewModel, TaskDTO>(taskViewModel);
                     var userProfileDtos = _vUserProfileService.GetAll();
-                    var userProfileListViewModel = _mapper.Map<IEnumerable<vUserProfileDTO>, IEnumerable<vUserProfileViewModel>>(userProfileDtos);
+                    var userProfileListViewModel = _mapper.Map<IEnumerable<VUserProfileDTO>, IEnumerable<VUserProfileViewModel>>(userProfileDtos);
 
                     IEnumerable<string> selectedUsers = Request.Form.GetValues("SelectedUserProfiles");
                     int activeState = 1;
@@ -99,7 +99,7 @@ namespace DIMS.Server.Controllers.Menthor
 
             TaskManagePageViewModel taskManagePageViewModel = new TaskManagePageViewModel
             {
-                userProfileListViewModel = _mapper.Map<IEnumerable<vUserProfileDTO>, IEnumerable<vUserProfileViewModel>>(userProfileDtos),
+                userProfileListViewModel = _mapper.Map<IEnumerable<VUserProfileDTO>, IEnumerable<VUserProfileViewModel>>(userProfileDtos),
                 taskViewModel = _mapper.Map<TaskDTO, TaskViewModel>(taskDto)
             };
 
@@ -144,7 +144,7 @@ namespace DIMS.Server.Controllers.Menthor
                             StateId = activeState
                         };
 
-                        var userTaskDto = _mapper.Map<UserTaskViewModel, vUserTaskDTO>(userTask);
+                        var userTaskDto = _mapper.Map<UserTaskViewModel, VUserTaskDTO>(userTask);
                         _vUserTaskService.Save(userTaskDto);
                     }
 
@@ -180,7 +180,7 @@ namespace DIMS.Server.Controllers.Menthor
 
             TaskManagePageViewModel taskManagePageViewModel = new TaskManagePageViewModel
             {
-                userProfileListViewModel = _mapper.Map<IEnumerable<vUserProfileDTO>, IEnumerable<vUserProfileViewModel>>(userProfileDtos),
+                userProfileListViewModel = _mapper.Map<IEnumerable<VUserProfileDTO>, IEnumerable<VUserProfileViewModel>>(userProfileDtos),
                 taskViewModel = _mapper.Map<TaskDTO, TaskViewModel>(taskDto),
                 userTaskListViewModel = _mapper.Map<IEnumerable<UserTaskDTO>, IEnumerable<UserTaskViewModel>>(userTaskDtos),
                 taskStateListViewModel = _mapper.Map<IEnumerable<TaskStateDTO>, IEnumerable<TaskStateViewModel>>(taskStateDtos)
@@ -226,7 +226,7 @@ namespace DIMS.Server.Controllers.Menthor
             {
                 taskViewModel = _mapper.Map<TaskDTO, TaskViewModel>(taskDto),
                 userTaskListViewModel = _mapper.Map<IEnumerable<UserTaskDTO>, IEnumerable<UserTaskViewModel>>(userTaskDtos),
-                userProfileListViewModel = _mapper.Map<IEnumerable<vUserProfileDTO>, IEnumerable<vUserProfileViewModel>>(userProfileDtos)
+                userProfileListViewModel = _mapper.Map<IEnumerable<VUserProfileDTO>, IEnumerable<VUserProfileViewModel>>(userProfileDtos)
             };
 
             return PartialView(taskManagePageViewModel);

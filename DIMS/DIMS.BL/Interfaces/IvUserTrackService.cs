@@ -2,7 +2,7 @@
 
 namespace DIMS.BL.Interfaces
 {
-    public interface IVUserTrackService : IVService<vUserTrackDTO>
+    public interface IVUserTrackService : IVService<VUserTrackDTO>
     {
 
     }

@@ -27,7 +27,7 @@ namespace DIMS.BL.Services
             Database.Dispose();
         }
 
-        public vUserTrackDTO GetById(int id)
+        public VUserTrackDTO GetById(int id)
         {
             var _vUserTrack = Database.VUserTracks.GetById(id);
 
@@ -36,12 +36,12 @@ namespace DIMS.BL.Services
                 throw new ValidationException($"The view user track with id = {id} was not found", String.Empty);
             }
 
-            return _mapper.Map<vUserTrack, vUserTrackDTO>(_vUserTrack);
+            return _mapper.Map<vUserTrack, VUserTrackDTO>(_vUserTrack);
         }
 
-        public IEnumerable<vUserTrackDTO> GetAll()
+        public IEnumerable<VUserTrackDTO> GetAll()
         {
-            return _mapper.Map<List<vUserTrack>, ICollection<vUserTrackDTO>>(
+            return _mapper.Map<List<vUserTrack>, ICollection<VUserTrackDTO>>(
                 Database.VUserTracks.GetAll().ToList());
         }
     }

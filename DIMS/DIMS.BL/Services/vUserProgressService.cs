@@ -26,13 +26,13 @@ namespace DIMS.BL.Services
             Database.Dispose();
         }
 
-        public IEnumerable<vUserProgressDTO> GetAll()
+        public IEnumerable<VUserProgressDTO> GetAll()
         {
-            return _mapper.Map<List<vUserProgress>, ICollection<vUserProgressDTO>>(
+            return _mapper.Map<List<vUserProgress>, ICollection<VUserProgressDTO>>(
                 Database.VUserProgresses.GetAll().ToList());
         }
 
-        public vUserProgressDTO GetById(int id)
+        public VUserProgressDTO GetById(int id)
         {
             var _vUserProgress = Database.VUserProgresses.GetById(id);
 
@@ -41,11 +41,11 @@ namespace DIMS.BL.Services
                 throw new ValidationException($"The view user progress with id = {id} was not found", String.Empty);
             }
 
-            return _mapper.Map<vUserProgress, vUserProgressDTO>(_vUserProgress);
+            return _mapper.Map<vUserProgress, VUserProgressDTO>(_vUserProgress);
 
         }
 
-        public IEnumerable<vUserProgressDTO> GetByUserId(int? id)
+        public IEnumerable<VUserProgressDTO> GetByUserId(int? id)
         {
             if (!id.HasValue)
             {
@@ -59,7 +59,7 @@ namespace DIMS.BL.Services
                 throw new ValidationException($"The user with id = {id.Value} was not found", String.Empty);
             }
 
-            return _mapper.Map<IEnumerable<vUserProgress>, List<vUserProgressDTO>>(userProgress);
+            return _mapper.Map<IEnumerable<vUserProgress>, List<VUserProgressDTO>>(userProgress);
         }
     }
 }

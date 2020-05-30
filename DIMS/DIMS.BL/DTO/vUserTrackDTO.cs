@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace DIMS.BL.DTO
 {
     [AutoMap(typeof(vUserTrack))]
-    public class vUserTrackDTO
+    public class VUserTrackDTO
     {
         public int UserId { get; set; }
         public int TaskId { get; set; }

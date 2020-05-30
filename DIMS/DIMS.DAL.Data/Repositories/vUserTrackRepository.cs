@@ -5,12 +5,12 @@ using System.Linq;
 
 namespace DIMS.EF.DAL.Data.Repositories
 {
-    public class vUserTrackRepository : IViewRepository<vUserTrack>
+    public class VUserTrackRepository : IViewRepository<vUserTrack>
     {
 
         private readonly DIMSDBContext _dIMSDBContext;
 
-        public vUserTrackRepository(DIMSDBContext dIMSDBContext)
+        public VUserTrackRepository(DIMSDBContext dIMSDBContext)
         {
             _dIMSDBContext = dIMSDBContext;
         }

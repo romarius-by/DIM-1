@@ -4,8 +4,8 @@ using System;
 
 namespace DIMS.Server.Models.Users
 {
-    [AutoMap(typeof(vUserProgressDTO))]
-    public class vUserProgressViewModel
+    [AutoMap(typeof(VUserProgressDTO))]
+    public class VUserProgressViewModel
     {
         public int UserId { get; set; }
         public int TaskId { get; set; }

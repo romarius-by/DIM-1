@@ -3,10 +3,10 @@ using System.Collections.Generic;
 
 namespace DIMS.BL.Interfaces
 {
-    public interface IVUserTaskService : IVService<vUserTaskDTO>
+    public interface IVUserTaskService : IVService<VUserTaskDTO>
     {
-        void Save(vUserTaskDTO vUserTaskDTO);
-        void Update(vUserTaskDTO vUserTaskDTO);
-        IEnumerable<vUserTaskDTO> GetByUserId(int id);
+        void Save(VUserTaskDTO vUserTaskDTO);
+        void Update(VUserTaskDTO vUserTaskDTO);
+        IEnumerable<VUserTaskDTO> GetByUserId(int id);
     }
 }

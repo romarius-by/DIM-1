@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="DIMSDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="DIMS.DatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Directions">
           <Key>
             <PropertyRef Name="DirectionId" />
@@ -76,7 +76,7 @@
           <Property Name="StateId" Type="int" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'DIMSDB.dbo.vTasks' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'DIMS.Database.dbo.vTasks' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vTasks">
           <Key>
             <PropertyRef Name="TaskId" />
@@ -92,7 +92,7 @@ warning 6002: The table/view 'DIMSDB.dbo.vTasks' does not have a primary key def
           <Property Name="DeadlineDate" Type="date" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'DIMSDB.dbo.vUserProfiles' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'DIMS.Database.dbo.vUserProfiles' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vUserProfiles">
           <Key>
             <PropertyRef Name="UserId" />
@@ -120,7 +120,7 @@ warning 6002: The table/view 'DIMSDB.dbo.vUserProfiles' does not have a primary 
           <Property Name="StartDate" Type="date" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'DIMSDB.dbo.vUserProgresses' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'DIMS.Database.dbo.vUserProgresses' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vUserProgresses">
           <Key>
             <PropertyRef Name="UserId" />
@@ -140,7 +140,7 @@ warning 6002: The table/view 'DIMSDB.dbo.vUserProgresses' does not have a primar
           <Property Name="TrackDate" Type="date" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'DIMSDB.dbo.vUserTasks' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'DIMS.Database.dbo.vUserTasks' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vUserTasks">
           <Key>
             <PropertyRef Name="UserId" />
@@ -160,7 +160,7 @@ warning 6002: The table/view 'DIMSDB.dbo.vUserTasks' does not have a primary key
           <Property Name="State" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'DIMSDB.dbo.vUserTracks' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'DIMS.Database.dbo.vUserTracks' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vUserTracks">
           <Key>
             <PropertyRef Name="UserId" />
@@ -251,7 +251,7 @@ warning 6002: The table/view 'DIMSDB.dbo.vUserTracks' does not have a primary ke
           <Parameter Name="isAdmin" Type="bit" Mode="In" />
           <Parameter Name="result" Type="int" Mode="InOut" />
         </Function>
-        <EntityContainer Name="DIMSDBModelStoreContainer">
+        <EntityContainer Name="DIMSDatabaseModelStoreContainer">
           <EntitySet Name="Directions" EntityType="Self.Directions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Samples" EntityType="Self.Samples" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tasks" EntityType="Self.Tasks" Schema="dbo" store:Type="Tables" />
@@ -338,63 +338,26 @@ warning 6002: The table/view 'DIMSDB.dbo.vUserTracks' does not have a primary ke
             <End Role="UserTasks" EntitySet="UserTasks" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="DIMSDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityContainer Name="DIMSDBEntities" annotation:LazyLoadingEnabled="true">
-          <FunctionImport Name="SampleEntriesAmount">
-            <Parameter Name="isAdmin" Mode="In" Type="Boolean" />
-            <Parameter Name="result" Mode="InOut" Type="Int32" />
-          </FunctionImport>
-          <EntitySet Name="Directions" EntityType="DIMSDBModel.Direction" />
-          <EntitySet Name="Samples" EntityType="DIMSDBModel.Sample" />
-          <EntitySet Name="Tasks" EntityType="DIMSDBModel.Task" />
-          <EntitySet Name="TaskStates" EntityType="DIMSDBModel.TaskState" />
-          <EntitySet Name="TaskTracks" EntityType="DIMSDBModel.TaskTrack" />
-          <EntitySet Name="UserProfiles" EntityType="DIMSDBModel.UserProfile" />
-          <EntitySet Name="UserTasks" EntityType="DIMSDBModel.UserTask" />
-          <EntitySet Name="vTasks" EntityType="DIMSDBModel.vTask" />
-          <EntitySet Name="vUserProfiles" EntityType="DIMSDBModel.vUserProfile" />
-          <EntitySet Name="vUserProgresses" EntityType="DIMSDBModel.vUserProgress" />
-          <EntitySet Name="vUserTasks" EntityType="DIMSDBModel.vUserTask" />
-          <EntitySet Name="vUserTracks" EntityType="DIMSDBModel.vUserTrack" />
-          <AssociationSet Name="FK_Direction_To_UserProfile" Association="DIMSDBModel.FK_Direction_To_UserProfile">
-            <End Role="Direction" EntitySet="Directions" />
-            <End Role="UserProfile" EntitySet="UserProfiles" />
-          </AssociationSet>
-          <AssociationSet Name="FK_UserTask_To_Task" Association="DIMSDBModel.FK_UserTask_To_Task">
-            <End Role="Task" EntitySet="Tasks" />
-            <End Role="UserTask" EntitySet="UserTasks" />
-          </AssociationSet>
-          <AssociationSet Name="FK_UserTask_To_TaskState" Association="DIMSDBModel.FK_UserTask_To_TaskState">
-            <End Role="TaskState" EntitySet="TaskStates" />
-            <End Role="UserTask" EntitySet="UserTasks" />
-          </AssociationSet>
-          <AssociationSet Name="FK_UserTask_To_TaskTrack" Association="DIMSDBModel.FK_UserTask_To_TaskTrack">
-            <End Role="UserTask" EntitySet="UserTasks" />
-            <End Role="TaskTrack" EntitySet="TaskTracks" />
-          </AssociationSet>
-          <AssociationSet Name="FK_UserTask_To_UserProfile" Association="DIMSDBModel.FK_UserTask_To_UserProfile">
-            <End Role="UserProfile" EntitySet="UserProfiles" />
-            <End Role="UserTask" EntitySet="UserTasks" />
-          </AssociationSet>
-          </EntityContainer>
+      <Schema Namespace="DIMS.DatabaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="Direction">
           <Key>
             <PropertyRef Name="DirectionId" />
           </Key>
           <Property Name="DirectionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="UserProfiles" Relationship="DIMSDBModel.FK_Direction_To_UserProfile" FromRole="Direction" ToRole="UserProfile" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="UserProfiles" Relationship="Self.FK_Direction_To_UserProfile" FromRole="Directions" ToRole="UserProfiles" />
         </EntityType>
         <EntityType Name="Sample">
           <Key>
             <PropertyRef Name="SampleId" />
           </Key>
           <Property Name="SampleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Task">
@@ -402,19 +365,19 @@ warning 6002: The table/view 'DIMSDB.dbo.vUserTracks' does not have a primary ke
             <PropertyRef Name="TaskId" />
           </Key>
           <Property Name="TaskId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Description" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="256" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="DeadlineDate" Type="DateTime" Nullable="false" Precision="0" />
-          <NavigationProperty Name="UserTasks" Relationship="DIMSDBModel.FK_UserTask_To_Task" FromRole="Task" ToRole="UserTask" />
+          <NavigationProperty Name="UserTasks" Relationship="Self.FK_UserTask_To_Task" FromRole="Tasks" ToRole="UserTasks" />
         </EntityType>
         <EntityType Name="TaskState">
           <Key>
             <PropertyRef Name="StateId" />
           </Key>
           <Property Name="StateId" Type="Int32" Nullable="false" />
-          <Property Name="StateName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="UserTasks" Relationship="DIMSDBModel.FK_UserTask_To_TaskState" FromRole="TaskState" ToRole="UserTask" />
+          <Property Name="StateName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="UserTasks" Relationship="Self.FK_UserTask_To_TaskState" FromRole="TaskStates" ToRole="UserTasks" />
         </EntityType>
         <EntityType Name="TaskTrack">
           <Key>
@@ -423,8 +386,8 @@ warning 6002: The table/view 'DIMSDB.dbo.vUserTracks' does not have a primary ke
           <Property Name="TaskTrackId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="UserTaskId" Type="Int32" Nullable="false" />
           <Property Name="TrackDate" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="TrackNote" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="UserTask" Relationship="DIMSDBModel.FK_UserTask_To_TaskTrack" FromRole="TaskTrack" ToRole="UserTask" />
+          <Property Name="TrackNote" Type="String" MaxLength="128" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="UserTask" Relationship="Self.FK_UserTask_To_TaskTrack" FromRole="TaskTracks" ToRole="UserTasks" />
         </EntityType>
         <EntityType Name="UserProfile">
           <Key>
@@ -432,20 +395,20 @@ warning 6002: The table/view 'DIMSDB.dbo.vUserTracks' does not have a primary ke
           </Key>
           <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="DirectionId" Type="Int32" Nullable="false" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="true" />
-          <Property Name="Email" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
-          <Property Name="LastName" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="true" />
-          <Property Name="Sex" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="Education" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LastName" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Sex" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Education" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="BirthDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="UniversityAverageScore" Type="Double" />
           <Property Name="MathScore" Type="Double" />
-          <Property Name="Address" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="MobilePhone" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="MobilePhone" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Skype" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="0" />
-          <NavigationProperty Name="Direction" Relationship="DIMSDBModel.FK_Direction_To_UserProfile" FromRole="UserProfile" ToRole="Direction" />
-          <NavigationProperty Name="UserTasks" Relationship="DIMSDBModel.FK_UserTask_To_UserProfile" FromRole="UserProfile" ToRole="UserTask" />
+          <NavigationProperty Name="Direction" Relationship="Self.FK_Direction_To_UserProfile" FromRole="UserProfiles" ToRole="Directions" />
+          <NavigationProperty Name="UserTasks" Relationship="Self.FK_UserTask_To_UserProfile" FromRole="UserProfiles" ToRole="UserTasks" />
         </EntityType>
         <EntityType Name="UserTask">
           <Key>
@@ -455,10 +418,10 @@ warning 6002: The table/view 'DIMSDB.dbo.vUserTracks' does not have a primary ke
           <Property Name="TaskId" Type="Int32" Nullable="false" />
           <Property Name="UserId" Type="Int32" Nullable="false" />
           <Property Name="StateId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Task" Relationship="DIMSDBModel.FK_UserTask_To_Task" FromRole="UserTask" ToRole="Task" />
-          <NavigationProperty Name="TaskState" Relationship="DIMSDBModel.FK_UserTask_To_TaskState" FromRole="UserTask" ToRole="TaskState" />
-          <NavigationProperty Name="TaskTracks" Relationship="DIMSDBModel.FK_UserTask_To_TaskTrack" FromRole="UserTask" ToRole="TaskTrack" />
-          <NavigationProperty Name="UserProfile" Relationship="DIMSDBModel.FK_UserTask_To_UserProfile" FromRole="UserTask" ToRole="UserProfile" />
+          <NavigationProperty Name="Task" Relationship="Self.FK_UserTask_To_Task" FromRole="UserTasks" ToRole="Tasks" />
+          <NavigationProperty Name="TaskState" Relationship="Self.FK_UserTask_To_TaskState" FromRole="UserTasks" ToRole="TaskStates" />
+          <NavigationProperty Name="TaskTracks" Relationship="Self.FK_UserTask_To_TaskTrack" FromRole="UserTasks" ToRole="TaskTracks" />
+          <NavigationProperty Name="UserProfile" Relationship="Self.FK_UserTask_To_UserProfile" FromRole="UserTasks" ToRole="UserProfiles" />
         </EntityType>
         <EntityType Name="vTask">
           <Key>
@@ -469,8 +432,8 @@ warning 6002: The table/view 'DIMSDB.dbo.vUserTracks' does not have a primary ke
             <PropertyRef Name="DeadlineDate" />
           </Key>
           <Property Name="TaskId" Type="Int32" Nullable="false" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Description" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="256" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="DeadlineDate" Type="DateTime" Nullable="false" Precision="0" />
         </EntityType>
@@ -487,16 +450,16 @@ warning 6002: The table/view 'DIMSDB.dbo.vUserTracks' does not have a primary ke
             <PropertyRef Name="StartDate" />
           </Key>
           <Property Name="UserId" Type="Int32" Nullable="false" />
-          <Property Name="FullName" Type="String" Nullable="false" MaxLength="51" FixedLength="false" Unicode="true" />
-          <Property Name="Email" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
-          <Property Name="Direction" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Sex" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="Education" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="FullName" Type="String" MaxLength="51" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Direction" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Sex" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Education" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Age" Type="Int32" />
           <Property Name="UniversityAverageScore" Type="Double" />
           <Property Name="MathScore" Type="Double" />
-          <Property Name="Address" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="MobilePhone" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="MobilePhone" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Skype" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="0" />
         </EntityType>
@@ -513,9 +476,9 @@ warning 6002: The table/view 'DIMSDB.dbo.vUserTracks' does not have a primary ke
           <Property Name="UserId" Type="Int32" Nullable="false" />
           <Property Name="TaskId" Type="Int32" Nullable="false" />
           <Property Name="TaskTrackId" Type="Int32" Nullable="false" />
-          <Property Name="UserName" Type="String" Nullable="false" MaxLength="51" FixedLength="false" Unicode="true" />
-          <Property Name="TaskName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="TrackNote" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="UserName" Type="String" MaxLength="51" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TaskName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TrackNote" Type="String" MaxLength="128" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="TrackDate" Type="DateTime" Nullable="false" Precision="0" />
         </EntityType>
         <EntityType Name="vUserTask">
@@ -530,11 +493,11 @@ warning 6002: The table/view 'DIMSDB.dbo.vUserTracks' does not have a primary ke
           </Key>
           <Property Name="UserId" Type="Int32" Nullable="false" />
           <Property Name="TaskId" Type="Int32" Nullable="false" />
-          <Property Name="TaskName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Description" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="TaskName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="256" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="DeadlineDate" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="State" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="State" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
         </EntityType>
         <EntityType Name="vUserTrack">
           <Key>
@@ -548,233 +511,271 @@ warning 6002: The table/view 'DIMSDB.dbo.vUserTracks' does not have a primary ke
           <Property Name="UserId" Type="Int32" Nullable="false" />
           <Property Name="TaskId" Type="Int32" Nullable="false" />
           <Property Name="TaskTrackId" Type="Int32" Nullable="false" />
-          <Property Name="TaskName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="TrackNote" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="TaskName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TrackNote" Type="String" MaxLength="128" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="TrackDate" Type="DateTime" Nullable="false" Precision="0" />
         </EntityType>
         <Association Name="FK_Direction_To_UserProfile">
-          <End Type="DIMSDBModel.Direction" Role="Direction" Multiplicity="1">
+          <End Role="Directions" Type="Self.Direction" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Type="DIMSDBModel.UserProfile" Role="UserProfile" Multiplicity="*" />
+          <End Role="UserProfiles" Type="Self.UserProfile" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Direction">
+            <Principal Role="Directions">
               <PropertyRef Name="DirectionId" />
             </Principal>
-            <Dependent Role="UserProfile">
+            <Dependent Role="UserProfiles">
               <PropertyRef Name="DirectionId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_UserTask_To_Task">
-          <End Type="DIMSDBModel.Task" Role="Task" Multiplicity="1">
+          <End Role="Tasks" Type="Self.Task" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Type="DIMSDBModel.UserTask" Role="UserTask" Multiplicity="*" />
+          <End Role="UserTasks" Type="Self.UserTask" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Task">
+            <Principal Role="Tasks">
               <PropertyRef Name="TaskId" />
             </Principal>
-            <Dependent Role="UserTask">
+            <Dependent Role="UserTasks">
               <PropertyRef Name="TaskId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_UserTask_To_TaskState">
-          <End Type="DIMSDBModel.TaskState" Role="TaskState" Multiplicity="1">
+          <End Role="TaskStates" Type="Self.TaskState" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Type="DIMSDBModel.UserTask" Role="UserTask" Multiplicity="*" />
+          <End Role="UserTasks" Type="Self.UserTask" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="TaskState">
+            <Principal Role="TaskStates">
               <PropertyRef Name="StateId" />
             </Principal>
-            <Dependent Role="UserTask">
+            <Dependent Role="UserTasks">
               <PropertyRef Name="StateId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_UserTask_To_TaskTrack">
-          <End Type="DIMSDBModel.UserTask" Role="UserTask" Multiplicity="1">
+          <End Role="UserTasks" Type="Self.UserTask" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Type="DIMSDBModel.TaskTrack" Role="TaskTrack" Multiplicity="*" />
+          <End Role="TaskTracks" Type="Self.TaskTrack" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="UserTask">
+            <Principal Role="UserTasks">
               <PropertyRef Name="UserTaskId" />
             </Principal>
-            <Dependent Role="TaskTrack">
+            <Dependent Role="TaskTracks">
               <PropertyRef Name="UserTaskId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_UserTask_To_UserProfile">
-          <End Type="DIMSDBModel.UserProfile" Role="UserProfile" Multiplicity="1">
+          <End Role="UserProfiles" Type="Self.UserProfile" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Type="DIMSDBModel.UserTask" Role="UserTask" Multiplicity="*" />
+          <End Role="UserTasks" Type="Self.UserTask" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="UserProfile">
+            <Principal Role="UserProfiles">
               <PropertyRef Name="UserId" />
             </Principal>
-            <Dependent Role="UserTask">
+            <Dependent Role="UserTasks">
               <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        </Schema>
+        <EntityContainer Name="dimsDBConnection" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Directions" EntityType="Self.Direction" />
+          <EntitySet Name="Samples" EntityType="Self.Sample" />
+          <EntitySet Name="Tasks" EntityType="Self.Task" />
+          <EntitySet Name="TaskStates" EntityType="Self.TaskState" />
+          <EntitySet Name="TaskTracks" EntityType="Self.TaskTrack" />
+          <EntitySet Name="UserProfiles" EntityType="Self.UserProfile" />
+          <EntitySet Name="UserTasks" EntityType="Self.UserTask" />
+          <EntitySet Name="vTasks" EntityType="Self.vTask" />
+          <EntitySet Name="vUserProfiles" EntityType="Self.vUserProfile" />
+          <EntitySet Name="vUserProgresses" EntityType="Self.vUserProgress" />
+          <EntitySet Name="vUserTasks" EntityType="Self.vUserTask" />
+          <EntitySet Name="vUserTracks" EntityType="Self.vUserTrack" />
+          <AssociationSet Name="FK_Direction_To_UserProfile" Association="Self.FK_Direction_To_UserProfile">
+            <End Role="Directions" EntitySet="Directions" />
+            <End Role="UserProfiles" EntitySet="UserProfiles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserTask_To_Task" Association="Self.FK_UserTask_To_Task">
+            <End Role="Tasks" EntitySet="Tasks" />
+            <End Role="UserTasks" EntitySet="UserTasks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserTask_To_TaskState" Association="Self.FK_UserTask_To_TaskState">
+            <End Role="TaskStates" EntitySet="TaskStates" />
+            <End Role="UserTasks" EntitySet="UserTasks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserTask_To_TaskTrack" Association="Self.FK_UserTask_To_TaskTrack">
+            <End Role="UserTasks" EntitySet="UserTasks" />
+            <End Role="TaskTracks" EntitySet="TaskTracks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserTask_To_UserProfile" Association="Self.FK_UserTask_To_UserProfile">
+            <End Role="UserProfiles" EntitySet="UserProfiles" />
+            <End Role="UserTasks" EntitySet="UserTasks" />
+          </AssociationSet>
+          <FunctionImport Name="SampleEntriesAmount">
+            <Parameter Name="isAdmin" Mode="In" Type="Boolean" />
+            <Parameter Name="result" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+        </EntityContainer>
+      </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="DIMSDBModelStoreContainer" CdmEntityContainer="DIMSDBEntities">
-          <FunctionImportMapping FunctionImportName="SampleEntriesAmount" FunctionName="DIMSDBModel.Store.SampleEntriesAmount" />
+        <EntityContainerMapping StorageEntityContainer="DIMSDatabaseModelStoreContainer" CdmEntityContainer="dimsDBConnection">
           <EntitySetMapping Name="Directions">
-            <EntityTypeMapping TypeName="DIMSDBModel.Direction">
+            <EntityTypeMapping TypeName="DIMS.DatabaseModel.Direction">
               <MappingFragment StoreEntitySet="Directions">
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="DirectionId" ColumnName="DirectionId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Samples">
-            <EntityTypeMapping TypeName="DIMSDBModel.Sample">
+            <EntityTypeMapping TypeName="DIMS.DatabaseModel.Sample">
               <MappingFragment StoreEntitySet="Samples">
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="SampleId" ColumnName="SampleId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Tasks">
-            <EntityTypeMapping TypeName="DIMSDBModel.Task">
+            <EntityTypeMapping TypeName="DIMS.DatabaseModel.Task">
               <MappingFragment StoreEntitySet="Tasks">
-                <ScalarProperty Name="DeadlineDate" ColumnName="DeadlineDate" />
-                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="TaskId" ColumnName="TaskId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="DeadlineDate" ColumnName="DeadlineDate" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TaskStates">
-            <EntityTypeMapping TypeName="DIMSDBModel.TaskState">
+            <EntityTypeMapping TypeName="DIMS.DatabaseModel.TaskState">
               <MappingFragment StoreEntitySet="TaskStates">
-                <ScalarProperty Name="StateName" ColumnName="StateName" />
                 <ScalarProperty Name="StateId" ColumnName="StateId" />
+                <ScalarProperty Name="StateName" ColumnName="StateName" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TaskTracks">
-            <EntityTypeMapping TypeName="DIMSDBModel.TaskTrack">
+            <EntityTypeMapping TypeName="DIMS.DatabaseModel.TaskTrack">
               <MappingFragment StoreEntitySet="TaskTracks">
-                <ScalarProperty Name="TrackNote" ColumnName="TrackNote" />
-                <ScalarProperty Name="TrackDate" ColumnName="TrackDate" />
-                <ScalarProperty Name="UserTaskId" ColumnName="UserTaskId" />
                 <ScalarProperty Name="TaskTrackId" ColumnName="TaskTrackId" />
+                <ScalarProperty Name="UserTaskId" ColumnName="UserTaskId" />
+                <ScalarProperty Name="TrackDate" ColumnName="TrackDate" />
+                <ScalarProperty Name="TrackNote" ColumnName="TrackNote" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="UserProfiles">
-            <EntityTypeMapping TypeName="DIMSDBModel.UserProfile">
+            <EntityTypeMapping TypeName="DIMS.DatabaseModel.UserProfile">
               <MappingFragment StoreEntitySet="UserProfiles">
-                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
-                <ScalarProperty Name="Skype" ColumnName="Skype" />
-                <ScalarProperty Name="MobilePhone" ColumnName="MobilePhone" />
-                <ScalarProperty Name="Address" ColumnName="Address" />
-                <ScalarProperty Name="MathScore" ColumnName="MathScore" />
-                <ScalarProperty Name="UniversityAverageScore" ColumnName="UniversityAverageScore" />
-                <ScalarProperty Name="BirthDate" ColumnName="BirthDate" />
-                <ScalarProperty Name="Education" ColumnName="Education" />
-                <ScalarProperty Name="Sex" ColumnName="Sex" />
-                <ScalarProperty Name="LastName" ColumnName="LastName" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="DirectionId" ColumnName="DirectionId" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="DirectionId" ColumnName="DirectionId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Sex" ColumnName="Sex" />
+                <ScalarProperty Name="Education" ColumnName="Education" />
+                <ScalarProperty Name="BirthDate" ColumnName="BirthDate" />
+                <ScalarProperty Name="UniversityAverageScore" ColumnName="UniversityAverageScore" />
+                <ScalarProperty Name="MathScore" ColumnName="MathScore" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="MobilePhone" ColumnName="MobilePhone" />
+                <ScalarProperty Name="Skype" ColumnName="Skype" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="UserTasks">
-            <EntityTypeMapping TypeName="DIMSDBModel.UserTask">
+            <EntityTypeMapping TypeName="DIMS.DatabaseModel.UserTask">
               <MappingFragment StoreEntitySet="UserTasks">
-                <ScalarProperty Name="StateId" ColumnName="StateId" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="TaskId" ColumnName="TaskId" />
                 <ScalarProperty Name="UserTaskId" ColumnName="UserTaskId" />
+                <ScalarProperty Name="TaskId" ColumnName="TaskId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="StateId" ColumnName="StateId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="vTasks">
-            <EntityTypeMapping TypeName="DIMSDBModel.vTask">
+            <EntityTypeMapping TypeName="DIMS.DatabaseModel.vTask">
               <MappingFragment StoreEntitySet="vTasks">
-                <ScalarProperty Name="DeadlineDate" ColumnName="DeadlineDate" />
-                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="TaskId" ColumnName="TaskId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="DeadlineDate" ColumnName="DeadlineDate" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="vUserProfiles">
-            <EntityTypeMapping TypeName="DIMSDBModel.vUserProfile">
+            <EntityTypeMapping TypeName="DIMS.DatabaseModel.vUserProfile">
               <MappingFragment StoreEntitySet="vUserProfiles">
-                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
-                <ScalarProperty Name="Skype" ColumnName="Skype" />
-                <ScalarProperty Name="MobilePhone" ColumnName="MobilePhone" />
-                <ScalarProperty Name="Address" ColumnName="Address" />
-                <ScalarProperty Name="MathScore" ColumnName="MathScore" />
-                <ScalarProperty Name="UniversityAverageScore" ColumnName="UniversityAverageScore" />
-                <ScalarProperty Name="Age" ColumnName="Age" />
-                <ScalarProperty Name="Education" ColumnName="Education" />
-                <ScalarProperty Name="Sex" ColumnName="Sex" />
-                <ScalarProperty Name="Direction" ColumnName="Direction" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="FullName" ColumnName="FullName" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Direction" ColumnName="Direction" />
+                <ScalarProperty Name="Sex" ColumnName="Sex" />
+                <ScalarProperty Name="Education" ColumnName="Education" />
+                <ScalarProperty Name="Age" ColumnName="Age" />
+                <ScalarProperty Name="UniversityAverageScore" ColumnName="UniversityAverageScore" />
+                <ScalarProperty Name="MathScore" ColumnName="MathScore" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="MobilePhone" ColumnName="MobilePhone" />
+                <ScalarProperty Name="Skype" ColumnName="Skype" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="vUserProgresses">
-            <EntityTypeMapping TypeName="DIMSDBModel.vUserProgress">
+            <EntityTypeMapping TypeName="DIMS.DatabaseModel.vUserProgress">
               <MappingFragment StoreEntitySet="vUserProgresses">
-                <ScalarProperty Name="TrackDate" ColumnName="TrackDate" />
-                <ScalarProperty Name="TrackNote" ColumnName="TrackNote" />
-                <ScalarProperty Name="TaskName" ColumnName="TaskName" />
-                <ScalarProperty Name="UserName" ColumnName="UserName" />
-                <ScalarProperty Name="TaskTrackId" ColumnName="TaskTrackId" />
-                <ScalarProperty Name="TaskId" ColumnName="TaskId" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="TaskId" ColumnName="TaskId" />
+                <ScalarProperty Name="TaskTrackId" ColumnName="TaskTrackId" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="TaskName" ColumnName="TaskName" />
+                <ScalarProperty Name="TrackNote" ColumnName="TrackNote" />
+                <ScalarProperty Name="TrackDate" ColumnName="TrackDate" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="vUserTasks">
-            <EntityTypeMapping TypeName="DIMSDBModel.vUserTask">
+            <EntityTypeMapping TypeName="DIMS.DatabaseModel.vUserTask">
               <MappingFragment StoreEntitySet="vUserTasks">
-                <ScalarProperty Name="State" ColumnName="State" />
-                <ScalarProperty Name="DeadlineDate" ColumnName="DeadlineDate" />
-                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="TaskName" ColumnName="TaskName" />
-                <ScalarProperty Name="TaskId" ColumnName="TaskId" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="TaskId" ColumnName="TaskId" />
+                <ScalarProperty Name="TaskName" ColumnName="TaskName" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="DeadlineDate" ColumnName="DeadlineDate" />
+                <ScalarProperty Name="State" ColumnName="State" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="vUserTracks">
-            <EntityTypeMapping TypeName="DIMSDBModel.vUserTrack">
+            <EntityTypeMapping TypeName="DIMS.DatabaseModel.vUserTrack">
               <MappingFragment StoreEntitySet="vUserTracks">
-                <ScalarProperty Name="TrackDate" ColumnName="TrackDate" />
-                <ScalarProperty Name="TrackNote" ColumnName="TrackNote" />
-                <ScalarProperty Name="TaskName" ColumnName="TaskName" />
-                <ScalarProperty Name="TaskTrackId" ColumnName="TaskTrackId" />
-                <ScalarProperty Name="TaskId" ColumnName="TaskId" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="TaskId" ColumnName="TaskId" />
+                <ScalarProperty Name="TaskTrackId" ColumnName="TaskTrackId" />
+                <ScalarProperty Name="TaskName" ColumnName="TaskName" />
+                <ScalarProperty Name="TrackNote" ColumnName="TrackNote" />
+                <ScalarProperty Name="TrackDate" ColumnName="TrackDate" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          </EntityContainerMapping>
+          <FunctionImportMapping FunctionImportName="SampleEntriesAmount" FunctionName="DIMS.DatabaseModel.Store.SampleEntriesAmount" />
+        </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>

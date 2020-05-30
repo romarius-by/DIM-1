@@ -5,7 +5,7 @@ using System;
 namespace DIMS.BL.DTO
 {
     [AutoMap(typeof(vUserProfile))]
-    public class vUserProfileDTO
+    public class VUserProfileDTO
     {
         public int UserId { get; set; }
         public string FullName { get; set; }
@@ -19,7 +19,7 @@ namespace DIMS.BL.DTO
         public string Address { get; set; }
         public string MobilePhone { get; set; }
         public string Skype { get; set; }
-        public DateTime? StartDate { get; set; }
+        public DateTime StartDate { get; set; }
 
     }
 }

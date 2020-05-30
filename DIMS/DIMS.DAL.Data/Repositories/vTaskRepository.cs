@@ -5,26 +5,26 @@ using System.Linq;
 
 namespace DIMS.EF.DAL.Data.Repositories
 {
-    public class vTaskRepository : IViewRepository<VTask>
+    public class VTaskRepository : IViewRepository<vTask>
     {
         private readonly DIMSDBContext _dIMSDBContext;
 
-        public vTaskRepository(DIMSDBContext dIMSDBContext)
+        public VTaskRepository(DIMSDBContext dIMSDBContext)
         {
             _dIMSDBContext = dIMSDBContext;
         }
 
-        public IEnumerable<VTask> Find(Func<VTask, bool> predicate)
+        public IEnumerable<vTask> Find(Func<vTask, bool> predicate)
         {
             return _dIMSDBContext.vTasks.Where(predicate).ToList();
         }
 
-        public VTask GetById(int id)
+        public vTask GetById(int id)
         {
             return _dIMSDBContext.vTasks.Find(id);
         }
 
-        public IEnumerable<VTask> GetAll()
+        public IEnumerable<vTask> GetAll()
         {
             return _dIMSDBContext.vTasks;
         }

@@ -71,17 +71,14 @@ namespace DIMS.BL.Services
 
         public IEnumerable<SampleDTO> GetSamples()
         {
-            return _mapper.Map<IEnumerable<Sample>, List<SampleDTO>>(Database.Samples.GetAll());
+            var samples = Database.Samples.GetAll();
+
+            return _mapper.Map<IEnumerable<Sample>, List<SampleDTO>>(samples);
         }
 
-        public SampleDTO GetSample(int? id)
+        public SampleDTO GetSample(int id)
         {
-            if (!id.HasValue)
-            {
-                throw new ValidationException("The Sample's id value is not set", string.Empty);
-            }
-
-            var sample = Database.Samples.GetById(id.Value);
+            var sample = Database.Samples.GetById(id);
 
             if (sample == null)
             {

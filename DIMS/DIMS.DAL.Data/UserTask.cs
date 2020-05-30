@@ -20,7 +20,7 @@ namespace DIMS.EF.DAL.Data
         {
             this.TaskTracks = new HashSet<TaskTrack>();
         }
-        
+
         [Key]
         public int UserTaskId { get; set; }
         public int TaskId { get; set; }

@@ -8,6 +8,7 @@ namespace DIMS.BL.DTO
         public DirectionDTOProfile()
         {
             CreateMap<DirectionDTO, Direction>();
+            CreateMap<Direction, DirectionDTO>();
         }
     }
 }

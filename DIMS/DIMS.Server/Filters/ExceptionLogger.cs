@@ -7,12 +7,12 @@ namespace DIMS.Server.Filters
     {
         public void OnException(ExceptionContext exceptionContext)
         {
-            if (!exceptionContext.ExceptionHandled)
+            if (exceptionContext.Exception == null)
             {
-                CustomLogger.Error(exceptionContext.Exception.Message, exceptionContext.Exception, exceptionContext.Exception.Message);
-
-                exceptionContext.ExceptionHandled = true;
+                return;
             }
+
+            CustomLogger.Error(exceptionContext.Exception);
         }
     }
 }

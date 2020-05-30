@@ -73,7 +73,7 @@ namespace DIMS.BL.Services
         {
             var samples = Database.Samples.GetAll();
 
-            return _mapper.Map<IEnumerable<Sample>, List<SampleDTO>>(samples);
+           return _mapper.Map<IEnumerable<Sample>, List<SampleDTO>>(samples);
         }
 
         public SampleDTO GetSample(int id)

@@ -15,10 +15,10 @@ namespace DIMS.Logger
             {
                 loggerEventEmitter.Exception = exception;
 
-                //if(exception.InnerException != null)
-                //{
-                //    loggerEventEmitter.Exception = exception.InnerException;
-                //}
+                if (exception.InnerException != null)
+                {
+                    loggerEventEmitter.Exception = exception.InnerException;
+                }
             }
 
             // check with wrapper type typeof(Logger);
@@ -39,6 +39,11 @@ namespace DIMS.Logger
         public static void Error(string message, Exception exception, params string[] args)
         {
             WriteLog(LogLevel.Error, exception, message, args);
+        }
+
+        public static void Error(Exception exception)
+        {
+            WriteLog(LogLevel.Error, null, "Error occured. Error Message='{0}'\r\n StackTrace={1}", exception.Message, exception.StackTrace);
         }
 
         public static void Trace(string message, params string[] args)

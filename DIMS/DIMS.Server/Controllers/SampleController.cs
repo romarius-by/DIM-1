@@ -26,10 +26,6 @@ namespace DIMS.Server.Controllers
 
         public ActionResult Index()
         {
-            var a = 1;
-            var b = 0;
-            var c = a / b;
-
             IEnumerable<SampleDTO> sampleDtos = _sampleService.GetSamples();
             var samples = new SamplesListViewModel
             {

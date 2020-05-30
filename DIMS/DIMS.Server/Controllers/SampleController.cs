@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using DIMS.BL.Interfaces;
 using DIMS.BL.Models;
-using DIMS.Server.Filters;
 using DIMS.Server.Models;
 using DIMS.Server.utils;
 using System.Collections.Generic;

@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
-namespace HIMS.BL.Interfaces
+namespace DIMS.BL.Interfaces
 {
-    public interface IvService<T>
+    public interface IVService<T>
     {
-        T GetById(int? id);
+        T GetById(int id);
         IEnumerable<T> GetAll();
-        
+
         void Dispose();
     }
 }

@@ -1,16 +1,12 @@
-﻿using HIMS.BL.DTO;
-using System;
+﻿using DIMS.BL.DTO;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace HIMS.BL.Interfaces
+namespace DIMS.BL.Interfaces
 {
-    public interface IvUserTaskService : IvService<vUserTaskDTO>
+    public interface IVUserTaskService : IVService<VUserTaskDTO>
     {
-        void Save(vUserTaskDTO vUserTaskDTO);
-        void Update(vUserTaskDTO vUserTaskDTO);
-        IEnumerable<vUserTaskDTO> GetByUserId(int? id);
+        void Save(VUserTaskDTO vUserTaskDTO);
+        void Update(VUserTaskDTO vUserTaskDTO);
+        IEnumerable<VUserTaskDTO> GetByUserId(int id);
     }
 }

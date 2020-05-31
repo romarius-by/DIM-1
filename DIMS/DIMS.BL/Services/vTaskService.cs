@@ -1,24 +1,23 @@
 ﻿using AutoMapper;
-using HIMS.BL.DTO;
-using HIMS.BL.Infrastructure;
-using HIMS.BL.Interfaces;
-using HIMS.EF.DAL.Data;
-using System;
+using DIMS.BL.DTO;
+using DIMS.BL.Infrastructure;
+using DIMS.BL.Interfaces;
+using DIMS.EF.DAL.Data;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace HIMS.BL.Services
+namespace DIMS.BL.Services
 {
-    public class vTaskService : IvTaskService
+    public class VTaskService : IVTaskService
     {
 
-        private IUnitOfWork Database;
+        private readonly IUnitOfWork Database;
+        private readonly IMapper _mapper;
 
-        public vTaskService(IUnitOfWork uow)
+        public VTaskService(IUnitOfWork uow, IMapper mapper)
         {
             Database = uow;
+            _mapper = mapper;
         }
 
         public void Dispose()
@@ -26,32 +25,31 @@ namespace HIMS.BL.Services
             Database.Dispose();
         }
 
-        public vTaskDTO GetById(int? id)
+        public VTaskDTO GetById(int id)
         {
-            if (!id.HasValue)
-                throw new ValidationException("The vTask id value is not set", String.Empty);
-
-            var _vTask = Database.vTasks.GetById(id.Value);
+            var _vTask = Database.VTasks.GetById(id);
 
             if (_vTask == null)
-                throw new ValidationException($"The vTask with id = {id.Value} was not found", String.Empty);
+            {
+                throw new ValidationException($"The vTask with id = {id} was not found", string.Empty);
+            }
 
-            return Mapper.Map<vTask, vTaskDTO>(_vTask);
+            return _mapper.Map<vTask, VTaskDTO>(_vTask);
         }
 
-        public IEnumerable<vTaskDTO> GetAll()
+        public IEnumerable<VTaskDTO> GetAll()
         {
-            return Mapper.Map<List<vTask>, ICollection<vTaskDTO>>(
-                Database.vTasks.GetAll().ToList());
+            return _mapper.Map<List<vTask>, ICollection<VTaskDTO>>(
+                Database.VTasks.GetAll().ToList());
         }
 
-        public void Update(vTaskDTO vTaskDTO)
+        public void Update(VTaskDTO vTaskDTO)
         {
             var task = Database.Tasks.GetById(vTaskDTO.TaskId);
 
             if (task != null)
             {
-                Mapper.Map(vTaskDTO, task);
+                _mapper.Map(vTaskDTO, task);
 
                 Database.Save();
             }

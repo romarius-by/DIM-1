@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using AutoMapper;
+using DIMS.EF.DAL.Data;
+using System;
 
-namespace HIMS.BL.DTO
+namespace DIMS.BL.DTO
 {
-    public class vUserProgressDTO
+    [AutoMap(typeof(vUserProgress))]
+    public class VUserProgressDTO
     {
         public int UserId { get; set; }
         public int TaskId { get; set; }

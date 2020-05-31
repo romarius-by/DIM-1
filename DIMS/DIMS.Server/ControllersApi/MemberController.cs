@@ -1,36 +1,35 @@
 ﻿using AutoMapper;
-using HIMS.BL.DTO;
-using HIMS.BL.Interfaces;
-using HIMS.BL.Services;
-using HIMS.Server.Models;
-using HIMS.Server.Models.Users;
+using DIMS.BL.DTO;
+using DIMS.BL.Interfaces;
+using DIMS.Server.Models;
+using DIMS.Server.Models.Users;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Http;
 using System.Web.Http.Cors;
 
-namespace HIMS.Server.ControllersApi
+namespace DIMS.Server.ControllersApi
 {
     [EnableCors("*", "*", "*")]
     [RoutePrefix("api")]
     public class MemberController : ApiController
     {
         private readonly IUserProfileService _userProfileService;
-        private readonly IvUserProfileService _vUserProfileService;
+        private readonly IVUserProfileService _vUserProfileService;
         private readonly IDirectionService _directionService;
+        private readonly IMapper _mapper;
 
-        public MemberController(IUserProfileService userProfileService, IvUserProfileService vUserProfileService, IDirectionService directionService)
+        public MemberController(IUserProfileService userProfileService, IVUserProfileService vUserProfileService, IDirectionService directionService, IMapper mapper)
         {
             _userProfileService = userProfileService ?? throw new ArgumentNullException(nameof(userProfileService));
             _vUserProfileService = vUserProfileService ?? throw new ArgumentNullException(nameof(vUserProfileService));
             _directionService = directionService ?? throw new ArgumentNullException(nameof(directionService));
+            _mapper = mapper;
         }
-
 
         private KeyValuePair<string, IEnumerable<string>>[] GetErrors()
         {
@@ -43,28 +42,30 @@ namespace HIMS.Server.ControllersApi
         [Route("profile/{id?}")]
         public IHttpActionResult GetDetails([FromUri] int? id)
         {
-
             if (!id.HasValue)
+            {
                 return ResponseMessage(Request.CreateErrorResponse(HttpStatusCode.BadRequest, "The id value was not set!"));
+            }
 
             var vUserProfileDto = _vUserProfileService.GetById(id.Value);
 
             if (vUserProfileDto == null)
+            {
                 return ResponseMessage(Request.CreateResponse(HttpStatusCode.NotFound, $"The user with id = {id.Value} was not found!"));
+            }
 
-            var userProfile = Mapper.Map<vUserProfileDTO, vUserProfileViewModel>(vUserProfileDto);
+            var userProfile = _mapper.Map<VUserProfileDTO, VUserProfileViewModel>(vUserProfileDto);
 
             return Json(userProfile);
-
         }
 
         [HttpPost]
         [Route("create")]
         public IHttpActionResult Create([FromBody]UserProfileViewModel userProfile)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                var userProfileDto = Mapper.Map<UserProfileViewModel, UserProfileDTO>(userProfile);
+                var userProfileDto = _mapper.Map<UserProfileViewModel, UserProfileDTO>(userProfile);
                 _userProfileService.Save(userProfileDto);
 
                 return ResponseMessage(Request.CreateResponse(HttpStatusCode.OK, $"The member {userProfile.Name} {userProfile.LastName} has been successfully created!"));
@@ -86,7 +87,7 @@ namespace HIMS.Server.ControllersApi
         {
             if (ModelState.IsValid && id.HasValue)
             {
-                var userProfileDto = Mapper.Map<UserProfileViewModel, UserProfileDTO>(userProfile);
+                var userProfileDto = _mapper.Map<UserProfileViewModel, UserProfileDTO>(userProfile);
 
                 userProfileDto.UserId = id.Value;
 
@@ -142,6 +143,5 @@ namespace HIMS.Server.ControllersApi
 
             return ResponseMessage(Request.CreateResponse(HttpStatusCode.OK, "The user has been succesfully deleted!"));
         }
-
     }
 }

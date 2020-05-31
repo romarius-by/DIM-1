@@ -7,13 +7,12 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace HIMS.EF.DAL.Data
+namespace DIMS.EF.DAL.Data
 {
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     using System.Data.Entity.Core.Objects;
-    using System.Linq;
     using System.Data.Common;
     using System.Data;
     using System.Data.Entity.Core.EntityClient;
@@ -160,8 +159,5 @@ namespace HIMS.EF.DAL.Data
         {
             return Convert.IsDBNull(parameterValue) ? default(T) : (T)parameterValue;
         }
-
-
-
     }
 }

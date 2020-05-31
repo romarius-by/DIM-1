@@ -1,18 +1,16 @@
-﻿using HIMS.EF.DAL.Data.Interfaces;
+﻿using DIMS.EF.DAL.Data.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace HIMS.EF.DAL.Data.Repositories
+namespace DIMS.EF.DAL.Data.Repositories
 {
-    public class vUserTaskRepository : IViewRepository<vUserTask>
+    public class VUserTaskRepository : IViewRepository<vUserTask>
     {
 
         private readonly DIMSDBContext _dIMSDBContext;
 
-        public vUserTaskRepository(DIMSDBContext dIMSDBContext)
+        public VUserTaskRepository(DIMSDBContext dIMSDBContext)
         {
             _dIMSDBContext = dIMSDBContext;
         }

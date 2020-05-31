@@ -1,12 +1,6 @@
-﻿using HIMS.EF.DAL.Data.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Data.Entity.Core.Objects;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using DIMS.EF.DAL.Data.Interfaces;
 
-namespace HIMS.EF.DAL.Data.Repositories
+namespace DIMS.EF.DAL.Data.Repositories
 {
     public class ProcedureManager : IProcedureManager
     {

@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using AutoMapper;
+using DIMS.BL.DTO;
+using System;
 
-namespace HIMS.Server.Models.Users
+namespace DIMS.Server.Models.Users
 {
-    public class vUserProgressViewModel
+    [AutoMap(typeof(VUserProgressDTO))]
+    public class VUserProgressViewModel
     {
         public int UserId { get; set; }
         public int TaskId { get; set; }

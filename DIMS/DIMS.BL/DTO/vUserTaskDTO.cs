@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using AutoMapper;
+using DIMS.EF.DAL.Data;
+using System;
 
-namespace HIMS.BL.DTO
+namespace DIMS.BL.DTO
 {
-    public class vUserTaskDTO
+    [AutoMap(typeof(vUserTask))]
+    public class VUserTaskDTO
     {
         public int UserTaskId { get; set; }
         public int UserId { get; set; }

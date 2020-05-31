@@ -1,14 +1,12 @@
 ﻿using AutoMapper;
-using HIMS.BL.DTO;
-using HIMS.BL.Interfaces;
-using HIMS.Server.Models.Tasks;
+using DIMS.BL.DTO;
+using DIMS.BL.Interfaces;
+using DIMS.Server.Models.Tasks;
 using System.Collections.Generic;
-using System.Data.Entity.Infrastructure;
-using System.Net;
 using System.Web.Mvc;
 
 
-namespace HIMS.Server.Controllers.Menthor
+namespace DIMS.Server.Controllers.Menthor
 {
     [Authorize]
     public class TaskTrackController : Controller
@@ -16,14 +14,16 @@ namespace HIMS.Server.Controllers.Menthor
         private readonly ITaskTrackService _taskTrackService;
         private readonly IvTaskTrackService _vTaskTrackService;
         private readonly IvUserTrackService _vUserTrackService;
+        private readonly IMapper _mapper;
 
-        public TaskTrackController(ITaskTrackService taskTrackService, IvTaskTrackService vTaskTrackService, IvUserTrackService vUserTrackService)
+        public TaskTrackController(ITaskTrackService taskTrackService, IvTaskTrackService vTaskTrackService, IvUserTrackService vUserTrackService, IMapper mapper)
         {
             _taskTrackService = taskTrackService;
             _vTaskTrackService = vTaskTrackService;
             _vUserTrackService = vUserTrackService;
+            _mapper = mapper;
         }
-
+        
         [HttpGet]
         [Route("track/{userId}")]
         public ActionResult Index(int userId)

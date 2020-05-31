@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
 
-namespace HIMS.Server.Models
+namespace DIMS.Server.Models
 {
     public class UserProfilesListViewModel
     {
-
         public IEnumerable<UserProfileViewModel> UserProfiles { get; set; }
     }
 }

@@ -1,37 +1,44 @@
 ﻿using AutoMapper;
-using HIMS.BL.DTO;
-using HIMS.BL.Interfaces;
-using HIMS.Server.Models.Users;
-using System;
+using DIMS.BL.DTO;
+using DIMS.BL.Interfaces;
+using DIMS.Server.Models.Users;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
-namespace HIMS.Server.Controllers.Users
+namespace DIMS.Server.Controllers.Users
 {
     public class UserProgressController : Controller
     {
-        private readonly IvUserProgressService _userProgressService;
-        private readonly IvUserProfileService _userProfileService;
+        private readonly IVUserProgressService _userProgressService;
+        private readonly IVUserProfileService _userProfileService;
+        private readonly IMapper _mapper;
 
-        public UserProgressController(IvUserProgressService userProgressService, IvUserProfileService userProfileService)
+        public UserProgressController(IVUserProgressService userProgressService, IVUserProfileService userProfileService, IMapper mapper)
         {
             _userProgressService = userProgressService;
             _userProfileService = userProfileService;
+            _mapper = mapper;
         }
 
         public ActionResult Index(int? id)
         {
+            if (!id.HasValue)
+            {
+                // TODO: create my own badRequest method
+                return HttpNotFound();
+            }
 
-            var UserProgresses = new vUserProgressesListViewModel(
-                Mapper.Map<vUserProfileDTO, vUserProfileViewModel>(
-                    _userProfileService.GetById(id.Value)),
-                Mapper.Map<IEnumerable<vUserProgressDTO>, IEnumerable<vUserProgressViewModel>>(
-                    _userProgressService.GetByUserId(id.Value)));
+            var _userProfile = _userProfileService.GetById(id.Value);
 
-            return View(UserProgresses);       
+            var userProfile = _mapper.Map<VUserProfileDTO, VUserProfileViewModel>(_userProfile);
+
+            var _userProgress = _userProgressService.GetByUserId(id.Value);
+
+            var userProgress = _mapper.Map<IEnumerable<VUserProgressDTO>, IEnumerable<VUserProgressViewModel>>(_userProgress);
+
+            var userProgresses = new VUserProgressesListViewModel(userProfile, userProgress);
+
+            return View(userProgresses);
         }
-
     }
 }

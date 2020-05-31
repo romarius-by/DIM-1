@@ -1,30 +1,32 @@
 ﻿using AutoMapper;
-using HIMS.BL.DTO;
-using HIMS.BL.Infrastructure;
-using HIMS.BL.Interfaces;
-using HIMS.EF.DAL.Data;
-using System;
+using DIMS.BL.DTO;
+using DIMS.BL.Infrastructure;
+using DIMS.BL.Interfaces;
+using DIMS.EF.DAL.Data;
+using DIMS.Logger;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace HIMS.BL.Services
+namespace DIMS.BL.Services
 {
     public class DirectionService : IDirectionService
     {
-
         private IUnitOfWork Database { get; }
-        
-        public DirectionService(IUnitOfWork unitOfWork)
+        private readonly IMapper _mapper;
+
+        public DirectionService(IUnitOfWork unitOfWork, IMapper mapper)
         {
             Database = unitOfWork;
+            _mapper = mapper;
         }
 
         public void DeleteById(int? id)
         {
             if (!id.HasValue)
-                throw new ValidationException("The Direction's id value is not set", String.Empty);
+            {
+                CustomLogger.Error("Error in Direction Service", new ValidationException("The Direction's id value is not set"));
+            }
 
             Database.Directions.DeleteById(id.Value);
             Database.Save();
@@ -33,7 +35,9 @@ namespace HIMS.BL.Services
         public async Task<bool> DeleteByIdAsync(int? id)
         {
             if (!id.HasValue)
-                throw new ValidationException("The Direction's id value is not set", String.Empty);
+            {
+                CustomLogger.Error("Error in Direction Service", new ValidationException("The Direction's id value is not set", string.Empty));
+            }
 
             var direction = await Database.Directions.DeleteByIdAsync(id.Value);
 
@@ -46,7 +50,6 @@ namespace HIMS.BL.Services
             {
                 return false;
             }
-            
         }
 
         public void Dispose()
@@ -54,22 +57,23 @@ namespace HIMS.BL.Services
             Database.Dispose();
         }
 
-        public DirectionDTO GetById(int? id)
+        public DirectionDTO GetById(int id)
         {
-            if (!id.HasValue)
-                throw new ValidationException("The Direction's id value is not set", String.Empty);
-
-            var direction = Database.Directions.GetById(id.Value);
+            var direction = Database.Directions.GetById(id);
 
             if (direction == null)
-                throw new ValidationException($"The Direction with id = ${id.Value} was not found", String.Empty);
+            {
+                CustomLogger.Error("Error in Direction Service", new ValidationException($"The Direction with id = ${id} was not found", string.Empty));
+            }
 
-            return Mapper.Map<Direction, DirectionDTO>(direction);
+            return _mapper.Map<Direction, DirectionDTO>(direction);
         }
 
         public IEnumerable<DirectionDTO> GetAll()
         {
-            return Mapper.Map<IEnumerable<Direction>, List<DirectionDTO>>(Database.Directions.GetAll());
+            var directions = Database.Directions.GetAll();
+
+            return _mapper.Map<IEnumerable<Direction>, List<DirectionDTO>>(directions);
         }
 
         public void Save(DirectionDTO direction)
@@ -78,13 +82,12 @@ namespace HIMS.BL.Services
             {
                 Name = direction.Name,
                 Description = direction.Description,
-                UserProfiles = Mapper.Map<List<UserProfileDTO>, ICollection <UserProfile>>(direction.UserProfiles.ToList())
+                UserProfiles = _mapper.Map<List<UserProfileDTO>, ICollection<UserProfile>>(direction.UserProfiles.ToList())
             };
 
             Database.Directions.Create(_direction);
 
             Database.Save();
-
         }
 
         public void Update(DirectionDTO direction)
@@ -93,14 +96,10 @@ namespace HIMS.BL.Services
 
             if (_direction != null)
             {
-                Mapper.Map(direction, _direction);
+                _mapper.Map(direction, _direction);
 
                 Database.Save();
             }
-
-
         }
-
-        
     }
 }

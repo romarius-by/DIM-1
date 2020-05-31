@@ -1,22 +1,18 @@
-﻿using Email.Interfaces;
-using HIMS.BL.Interfaces;
-using HIMS.BL.Models;
-using HIMS.BL.Services;
-using HIMS.Email.Services;
+﻿using DIMS.BL.Interfaces;
+using DIMS.BL.Models;
+using DIMS.BL.Services;
+using DIMS.Email.Services;
+using Email.Interfaces;
 using Ninject.Modules;
-using System;
-using System.Collections.Generic;
+using NLog;
 using System.Configuration;
-using System.Linq;
-using System.Web;
 
-namespace HIMS.Server.utils
+namespace DIMS.Server.utils
 {
     public class DependencesModule : NinjectModule
     {
         public override void Load()
         {
-            
             Bind<ISampleService>().To<SampleService>();
             Bind<IUserService>().To<UserService>();
             Bind<IUserProfileService>().To<UserProfileService>();
@@ -26,13 +22,13 @@ namespace HIMS.Server.utils
             Bind<ITaskStateService>().To<TaskStateService>();
             Bind<ITaskTrackService>().To<TaskTrackService>();
 
-            Bind<IvTaskService>().To<vTaskService>();
-            Bind<IvTaskStateService>().To<vTaskStateService>();
-            Bind<IvUserProfileService>().To<vUserProfileService>();
-            Bind<IvUserProgressService>().To<vUserProgressService>();
-            Bind<IvUserTaskService>().To<vUserTaskService>();
-            Bind<IvUserTrackService>().To<vUserTrackService>();
-            Bind<IvTaskTrackService>().To<vTaskTrackService>();
+            Bind<IVTaskService>().To<VTaskService>();
+            Bind<IVTaskStateService>().To<VTaskStateService>();
+            Bind<IVUserProfileService>().To<VUserProfileService>();
+            Bind<IVUserProgressService>().To<VUserProgressService>();
+            Bind<IVUserTaskService>().To<VUserTaskService>();
+            Bind<IVUserTrackService>().To<VUserTrackService>();
+            Bind<IVTaskTrackService>().To<VTaskTrackService>();
 
             Bind<ISender>().To<Sender>()
                 .InSingletonScope()

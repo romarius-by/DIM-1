@@ -1,18 +1,17 @@
-﻿using HIMS.EF.DAL.Data.Interfaces;
+﻿using DIMS.EF.DAL.Data.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace HIMS.EF.DAL.Data.Repositories
+namespace DIMS.EF.DAL.Data.Repositories
 {
-    public class vUserProfileRepository : IvUserProfileRepository, IViewRepository<vUserProfile>
+    public class VUserProfileRepository : IvUserProfileRepository, IViewRepository<vUserProfile>
     {
 
         private readonly DIMSDBContext _dIMSDBContext;
 
-        public vUserProfileRepository(DIMSDBContext dIMSDBContext)
+        public VUserProfileRepository(DIMSDBContext dIMSDBContext)
         {
             _dIMSDBContext = dIMSDBContext;
         }
@@ -30,13 +29,12 @@ namespace HIMS.EF.DAL.Data.Repositories
         public async Task<vUserProfile> GetByEmailAsync(string email)
         {
 
-            return await System.Threading.Tasks.Task.Run(() => 
+            return await System.Threading.Tasks.Task.Run(() =>
             {
                 return _dIMSDBContext.vUserProfiles.Where(userProfile => userProfile.Email == email).FirstOrDefault();
             });
         }
 
-        
         public IEnumerable<vUserProfile> GetAll()
         {
             return _dIMSDBContext.vUserProfiles;

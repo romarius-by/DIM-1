@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using AutoMapper;
+using DIMS.EF.DAL.Data;
+using System;
 
-namespace HIMS.BL.DTO
+namespace DIMS.BL.DTO
 {
-    public class vUserProfileDTO
+    [AutoMap(typeof(vUserProfile))]
+    public class VUserProfileDTO
     {
         public int UserId { get; set; }
         public string FullName { get; set; }
@@ -14,13 +13,13 @@ namespace HIMS.BL.DTO
         public string Direction { get; set; }
         public string Sex { get; set; }
         public string Education { get; set; }
-        public Nullable<int> Age { get; set; }
-        public Nullable<double> UniversityAverageScore { get; set; }
-        public Nullable<double> MathScore { get; set; }
+        public int? Age { get; set; }
+        public double? UniversityAverageScore { get; set; }
+        public double? MathScore { get; set; }
         public string Address { get; set; }
         public string MobilePhone { get; set; }
         public string Skype { get; set; }
-        public DateTime? StartDate { get; set; }
+        public DateTime StartDate { get; set; }
 
     }
 }

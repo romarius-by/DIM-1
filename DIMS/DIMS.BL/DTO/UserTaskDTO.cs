@@ -1,18 +1,16 @@
-﻿using System;
+﻿using AutoMapper;
+using DIMS.EF.DAL.Data;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace HIMS.BL.DTO
+namespace DIMS.BL.DTO
 {
+    [AutoMap(typeof(UserTask))]
     public class UserTaskDTO
     {
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public UserTaskDTO()
         {
-            this.TaskTracks = new HashSet<TaskTrackDTO>();
+            TaskTracks = new HashSet<TaskTrackDTO>();
         }
 
         public int UserTaskId { get; set; }
@@ -22,7 +20,6 @@ namespace HIMS.BL.DTO
 
         public virtual TaskDTO Task { get; set; }
         public virtual TaskStateDTO TaskState { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual IEnumerable<TaskTrackDTO> TaskTracks { get; set; }
         public virtual UserProfileDTO UserProfile { get; set; }
     }

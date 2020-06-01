@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace HIMS.BL.DTO
+namespace DIMS.BL.DTO
 {
-    public class vTaskTrackDTO
+    public class VTaskTrackDTO
     {
         public int TaskTrackId { get; set; }
         public int UserTaskId { get; set; }

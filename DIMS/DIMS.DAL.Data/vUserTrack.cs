@@ -18,6 +18,7 @@ namespace DIMS.EF.DAL.Data
         public int UserId { get; set; }
         public int TaskId { get; set; }
 
+        [Key]
         public int TaskTrackId { get; set; }
         public string TaskName { get; set; }
         public string TrackNote { get; set; }

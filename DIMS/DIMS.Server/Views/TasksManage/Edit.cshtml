@@ -9,10 +9,10 @@
     <div class="modal-header">
         <h2>Edit</h2>
     </div>
+    @using (Html.BeginForm())
+    {
+        <div class="modal-body">
 
-    <div class="modal-body">
-        @using (Html.BeginForm())
-        {
             @Html.AntiForgeryToken()
 
             <div class="form-horizontal">
@@ -65,19 +65,13 @@
                     </div>
                 </div>
             </div>
-        }
+        </div>
 
-    </div>
-
-    <div class="modal-footer">
-        @using (Html.BeginForm())
-        {
-            @Html.AntiForgeryToken()
+        <div class="modal-footer">
             <div class="form-actions" style="display: flex; justify-content: space-between">
                 <input type="submit" value="Save" class="btn btn-success" />
-                @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-default"})
+                @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-default" })
             </div>
-        }
-    </div>
-
+        </div>
+    }
 </div>

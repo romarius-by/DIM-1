@@ -1,59 +1,58 @@
 ﻿using AutoMapper;
-using HIMS.BL.DTO;
-using HIMS.BL.Infrastructure;
-using HIMS.BL.Interfaces;
-using HIMS.EF.DAL.Data;
+using DIMS.BL.DTO;
+using DIMS.BL.Infrastructure;
+using DIMS.BL.Interfaces;
+using DIMS.EF.DAL.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace HIMS.BL.Services
+namespace DIMS.BL.Services
 {
-    public class vTaskTrackService : IvTaskTrackService
+    public class VTaskTrackService : IVTaskTrackService
     {
 
-        private IUnitOfWork Database;
+        private IUnitOfWork Uow { get; }
 
-        public vTaskTrackService(IUnitOfWork uow)
+        private readonly IMapper _mapper;
+
+        public VTaskTrackService(IUnitOfWork uow, IMapper mapper)
         {
-            Database = uow;
+            Uow = uow;
+            _mapper = mapper;
         }
 
         public void Dispose()
         {
-            Database.Dispose();
+            Uow.Dispose();
         }
 
-        public vTaskTrackDTO GetById(int? id)
+        public VTaskTrackDTO GetById(int id)
         {
-            if (!id.HasValue)
-                throw new ValidationException("The TaskTrack id value is not set", String.Empty);
-
-            var taskTrack = Database.TaskTracks.GetById(id.Value);
+            var taskTrack = Uow.TaskTracks.GetById(id);
 
             if (taskTrack == null)
-                throw new ValidationException($"The TaskTrack with id = {id.Value} was not found", String.Empty);
+                throw new ValidationException($"The TaskTrack with id = {id} was not found", String.Empty);
 
-            return Mapper.Map<TaskTrack, vTaskTrackDTO>(taskTrack);
+            return _mapper.Map<TaskTrack, VTaskTrackDTO>(taskTrack);
         }
 
-        public IEnumerable<vTaskTrackDTO> GetAll()
+        public IEnumerable<VTaskTrackDTO> GetAll()
         {
-            var taskTrackDto = Database.TaskTracks.GetAll().ToList();
-            return Mapper.Map<List<TaskTrack>, ICollection<vTaskTrackDTO>>(taskTrackDto);
+            var taskTrackDto = Uow.TaskTracks.GetAll().ToList();
+
+            return _mapper.Map<List<TaskTrack>, ICollection<VTaskTrackDTO>>(taskTrackDto);
         }
 
-        public void Update(vTaskTrackDTO vTaskTrackDTO)
+        public void Update(VTaskTrackDTO vTaskTrackDTO)
         {
-            var taskTrack = Database.TaskTracks.GetById(vTaskTrackDTO.TaskTrackId);
+            var taskTrack = Uow.TaskTracks.GetById(vTaskTrackDTO.TaskTrackId);
 
             if (taskTrack != null)
             {
-                Mapper.Map(vTaskTrackDTO, taskTrack);
+                _mapper.Map(vTaskTrackDTO, taskTrack);
 
-                Database.Save();
+                Uow.Save();
             }
         }
     }

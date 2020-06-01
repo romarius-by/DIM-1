@@ -240,6 +240,7 @@
     <Compile Include="Models\Tasks\TaskViewModel.cs" />
     <Compile Include="Models\Tasks\UserTaskViewModel.cs" />
     <Compile Include="Models\Tasks\vTaskViewModel.cs" />
+    <Compile Include="Utils\Profiles\VTaskTrackDTOProfile.cs" />
     <Compile Include="Utils\Profiles\vTaskViewModelProfile.cs" />
     <Compile Include="Models\Users\UserProfilePageViewModel.cs" />
     <Compile Include="Models\Users\UserProfilesListViewModel.cs" />
@@ -264,11 +265,11 @@
     <Compile Include="Utils\Profiles\TaskTrackDTOProfile.cs" />
     <Compile Include="Utils\Profiles\UserProfileDTOProfile.cs" />
     <Compile Include="Utils\Profiles\UserTaskDTOProfile.cs" />
-    <Compile Include="Utils\Profiles\vTaskDTOProfile.cs" />
+    <Compile Include="Utils\Profiles\VTaskDTOProfile.cs" />
     <Compile Include="Utils\Profiles\vUserProfileDTOProfile.cs" />
     <Compile Include="Utils\Profiles\VUserProgressDTOProfile.cs" />
-    <Compile Include="Utils\Profiles\vUserTaskDTOProfile.cs" />
-    <Compile Include="Utils\Profiles\vUserTrackDTOProfile.cs" />
+    <Compile Include="Utils\Profiles\VUserTaskDTOProfile.cs" />
+    <Compile Include="Utils\Profiles\VUserTrackDTOProfile.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
@@ -301,9 +302,9 @@
     <Content Include="Views\TasksManage\Index.cshtml" />
     <Content Include="Views\TasksManage\Delete.cshtml" />
     <Content Include="Views\TaskTrack\Index.cshtml" />
-    <Content Include="Views\TaskTrack\Edit.cshtml" />
     <Content Include="Views\TaskTrack\Details.cshtml" />
     <Content Include="Views\TaskTrack\Delete.cshtml" />
+    <Content Include="Views\TaskTrack\Edit.cshtml" />
     <Content Include="Views\Errors\404.cshtml" />
     <Content Include="Views\Errors\403.cshtml" />
     <Content Include="Views\Errors\500.cshtml" />

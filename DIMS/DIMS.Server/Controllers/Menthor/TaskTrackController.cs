@@ -3,6 +3,8 @@ using DIMS.BL.DTO;
 using DIMS.BL.Interfaces;
 using DIMS.Server.Models.Tasks;
 using System.Collections.Generic;
+using System.Data.Entity.Infrastructure;
+using System.Net;
 using System.Web.Mvc;
 
 
@@ -12,11 +14,11 @@ namespace DIMS.Server.Controllers.Menthor
     public class TaskTrackController : Controller
     {
         private readonly ITaskTrackService _taskTrackService;
-        private readonly IvTaskTrackService _vTaskTrackService;
-        private readonly IvUserTrackService _vUserTrackService;
+        private readonly IVTaskTrackService _vTaskTrackService;
+        private readonly IVUserTrackService _vUserTrackService;
         private readonly IMapper _mapper;
 
-        public TaskTrackController(ITaskTrackService taskTrackService, IvTaskTrackService vTaskTrackService, IvUserTrackService vUserTrackService, IMapper mapper)
+        public TaskTrackController(ITaskTrackService taskTrackService, IVTaskTrackService vTaskTrackService, IVUserTrackService vUserTrackService, IMapper mapper)
         {
             _taskTrackService = taskTrackService;
             _vTaskTrackService = vTaskTrackService;
@@ -30,11 +32,12 @@ namespace DIMS.Server.Controllers.Menthor
         {
             var vUserTrackDTOs = _vUserTrackService.GetTracksForUser(userId);
 
-            var taskTrackViewModels = Mapper.Map<IEnumerable<vUserTrackDTO>, IEnumerable<TaskTrackViewModel>>(vUserTrackDTOs);
+            var taskTrackViewModels = _mapper.Map<IEnumerable<VUserTrackDTO>, IEnumerable<TaskTrackViewModel>>(vUserTrackDTOs);
 
             return View(taskTrackViewModels);
         }
 
+        [HttpGet]
         public ActionResult Edit(int id)
         {
             var taskTrackDto = _vUserTrackService.GetById(id);
@@ -44,7 +47,7 @@ namespace DIMS.Server.Controllers.Menthor
                 return HttpNotFound();
             }
 
-            var taskTrackViewModel = Mapper.Map<vUserTrackDTO, TaskTrackViewModel>(taskTrackDto);
+            var taskTrackViewModel = _mapper.Map<VUserTrackDTO, TaskTrackViewModel>(taskTrackDto);
 
             return View(taskTrackViewModel);
         }
@@ -54,6 +57,7 @@ namespace DIMS.Server.Controllers.Menthor
         public ActionResult Edit(TaskTrackViewModel taskTrackViewModel, int id)
         {
             var vTaskTrackDto = _vTaskTrackService.GetById(id);
+            var vUserTrackDto = _vUserTrackService.GetById(id);
             vTaskTrackDto.TrackDate = taskTrackViewModel.TrackDate;
             vTaskTrackDto.TrackNote = taskTrackViewModel.TrackNote;
 
@@ -62,7 +66,7 @@ namespace DIMS.Server.Controllers.Menthor
                 try
                 {
                     _vTaskTrackService.Update(vTaskTrackDto);
-                    return RedirectToAction("Index");
+                    return RedirectToAction("Index", new { userId = vUserTrackDto.UserId });
                 }
                 catch (RetryLimitExceededException)
                 {
@@ -85,7 +89,7 @@ namespace DIMS.Server.Controllers.Menthor
                 return HttpNotFound();
             }
 
-            var taskTrackViewModel = Mapper.Map<vUserTrackDTO, TaskTrackViewModel>(vUserTrackDto);
+            var taskTrackViewModel = _mapper.Map<VUserTrackDTO, TaskTrackViewModel>(vUserTrackDto);
 
             return View(taskTrackViewModel);
         }
@@ -101,7 +105,7 @@ namespace DIMS.Server.Controllers.Menthor
                 return HttpNotFound();
             }
 
-            var taskTrackViewModel = Mapper.Map<vUserTrackDTO, TaskTrackViewModel>(vUserTrackDto);
+            var taskTrackViewModel = _mapper.Map<VUserTrackDTO, TaskTrackViewModel>(vUserTrackDto);
 
             return View(taskTrackViewModel);
         }
@@ -110,7 +114,7 @@ namespace DIMS.Server.Controllers.Menthor
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int? id)
         {
-            var vUserTrackDto = _vUserTrackService.GetById(id);
+            var vUserTrackDto = _vUserTrackService.GetById(id.Value);
 
             try
             {

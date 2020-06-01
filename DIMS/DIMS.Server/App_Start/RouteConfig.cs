@@ -24,7 +24,7 @@ namespace DIMS.Server
             routes.MapRoute(
                 name: "TaskTrack",
                 url: "track/{action}/",
-                defaults: new { controller = "TaskTrack", action = "Index", id = 2006 }
+                defaults: new { controller = "TaskTrack", action = "Index", id = UrlParameter.Optional }
                 );
 
             routes.MapRoute(

@@ -32,6 +32,12 @@ namespace DIMS.Server
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
+
+            routes.MapRoute(
+                name: "Account",
+                url: "{controller}/{action}/",
+                defaults: new { controller = "Account", action = "Login" }
+            );
         }
     }
 }

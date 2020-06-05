@@ -25,7 +25,7 @@ namespace DIMS.Server.Controllers.Menthor
             _vUserTrackService = vUserTrackService;
             _mapper = mapper;
         }
-        
+
         [HttpGet]
         [Route("track/{userId}")]
         public ActionResult Index(int userId)
@@ -61,18 +61,14 @@ namespace DIMS.Server.Controllers.Menthor
             vTaskTrackDto.TrackDate = taskTrackViewModel.TrackDate;
             vTaskTrackDto.TrackNote = taskTrackViewModel.TrackNote;
 
-            if (TryUpdateModel(vTaskTrackDto))
+            try
             {
-                try
-                {
-                    _vTaskTrackService.Update(vTaskTrackDto);
-                    return RedirectToAction("Index", new { userId = vUserTrackDto.UserId });
-                }
-                catch (RetryLimitExceededException)
-                {
-                    //Log the error (uncomment dex variable name and add a line here to write a log.
-                    ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists, see your system administrator.");
-                }
+                _vTaskTrackService.Update(vTaskTrackDto);
+                return RedirectToAction("Index", new { userId = vUserTrackDto.UserId });
+            }
+            catch (RetryLimitExceededException)
+            {
+                ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists, see your system administrator.");
             }
 
             return PartialView(taskTrackViewModel);

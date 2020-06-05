@@ -50,8 +50,6 @@ namespace DIMS.BL.Services
             var tracks = Database.VUserTracks.Find(item => item.UserId == userId);
 
             return _mapper.Map<IEnumerable<vUserTrack>, List<VUserTrackDTO>>(tracks);
-
         }
-
     }
 }

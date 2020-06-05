@@ -57,7 +57,7 @@
             {
                 @Html.AntiForgeryToken()
 
-                <div class="form-actions" style="display: flex; justify-content: space-between">
+                <div class="d-flex justify-content-between">
                     <input type="submit" value="Delete" class="btn btn-danger" />
                     @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-light" })
                 </div>

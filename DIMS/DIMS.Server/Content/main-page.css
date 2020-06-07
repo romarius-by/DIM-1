@@ -44,6 +44,7 @@ body {
     max-width: 330px;
     padding: 15px;
     margin: auto;
+    border-radius: 5px;
 }
 
     .form-signin .checkbox {
@@ -63,13 +64,21 @@ body {
         }
 
     .form-signin input[type="email"] {
-        margin-bottom: -1px;
-        border-bottom-right-radius: 0;
-        border-bottom-left-radius: 0;
+        margin-bottom: 5px;
     }
 
     .form-signin input[type="password"] {
         margin-bottom: 10px;
-        border-top-left-radius: 0;
-        border-top-right-radius: 0;
     }
+
+.form-register {
+    width: 100%;
+    max-width: 330px;
+    padding: 15px;
+    margin: auto;
+    border-radius: 5px;
+}
+
+.form-group{
+    text-align: left;
+}

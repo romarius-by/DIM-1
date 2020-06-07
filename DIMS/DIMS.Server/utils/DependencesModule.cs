@@ -14,6 +14,7 @@ namespace DIMS.Server.utils
         public override void Load()
         {
             Bind<ISampleService>().To<SampleService>();
+            Bind<IAuthService<UserDTO>>().To<UserAuthService>();
             Bind<IUserService>().To<UserService>();
             Bind<IUserProfileService>().To<UserProfileService>();
             Bind<IUserTaskService>().To<UserTaskService>();
@@ -21,6 +22,7 @@ namespace DIMS.Server.utils
             Bind<IDirectionService>().To<DirectionService>();
             Bind<ITaskStateService>().To<TaskStateService>();
             Bind<ITaskTrackService>().To<TaskTrackService>();
+
 
             Bind<IVTaskService>().To<VTaskService>();
             Bind<IVTaskStateService>().To<VTaskStateService>();

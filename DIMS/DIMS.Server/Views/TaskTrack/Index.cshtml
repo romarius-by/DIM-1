@@ -70,11 +70,9 @@
 
     <script type="text/javascript">
 
-        var values = ["edit", "delete", "details"];
-
-        values.forEach((value) => {
-            openModal(`.${value}-task-track`, `#${value}-task-track`)
-        })
+        openModal(`.edit-task-track`, `#edit-task-track`);
+        openModal(`.delete-task-track`, `#delete-task-track`);
+        openModal(`.details-task-track`, `#details-task-track`);
 
     </script>
 }

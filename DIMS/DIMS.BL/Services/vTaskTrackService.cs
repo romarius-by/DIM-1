@@ -3,6 +3,7 @@ using DIMS.BL.DTO;
 using DIMS.BL.Infrastructure;
 using DIMS.BL.Interfaces;
 using DIMS.EF.DAL.Data;
+using DIMS.Logger;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,8 +33,9 @@ namespace DIMS.BL.Services
             var taskTrack = Uow.TaskTracks.GetById(id);
 
             if (taskTrack == null)
-                throw new ValidationException($"The TaskTrack with id = {id} was not found", String.Empty);
-
+            {
+                CustomLogger.Error("Error in VTaskTrack", new ValidationException($"The TaskTrack with id = {id} was not found", String.Empty));
+            }
             return _mapper.Map<TaskTrack, VTaskTrackDTO>(taskTrack);
         }
 

@@ -7,7 +7,7 @@ using System.Web.Mvc;
 
 namespace DIMS.Server.Controllers.Menthor
 {
-    public abstract class AbstractController : Controller
+    public abstract class BaseMVCController : Controller
     {
         protected readonly ITaskService _taskService;
         protected readonly IVTaskService _vTaskService;
@@ -17,9 +17,12 @@ namespace DIMS.Server.Controllers.Menthor
         protected readonly IVUserTaskService _vUserTaskService;
         protected readonly IMapper _mapper;
 
-        public AbstractController(ITaskService taskService, IVTaskService vTaskService, 
-            IUserTaskService userTaskService, IVUserProfileService vUserProfileService, 
-            IVTaskStateService vTaskStateService, IVUserTaskService vUserTaskService, 
+        public BaseMVCController(ITaskService taskService, 
+            IVTaskService vTaskService, 
+            IUserTaskService userTaskService, 
+            IVUserProfileService vUserProfileService, 
+            IVTaskStateService vTaskStateService, 
+            IVUserTaskService vUserTaskService, 
             IMapper mapper)
         {
             _taskService = taskService;

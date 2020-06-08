@@ -318,7 +318,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ErrorsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\Menthor\AbstractController.cs" />
+    <Compile Include="Controllers\Menthor\BaseMVCController.cs" />
     <Compile Include="Controllers\Menthor\TasksManageController.cs" />
     <Compile Include="Controllers\Menthor\TaskTrackController.cs" />
     <Compile Include="Controllers\SampleController.cs" />

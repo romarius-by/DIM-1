@@ -43,7 +43,8 @@
             @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
         </div>
+
+        <input type="submit" value="Register" class="btn btn-lg btn-primary btn-block" />
+        @Html.ActionLink("Go to Login page", "Login", null, new { @class = "btn btn-lg btn-secondary btn-block" })
     </div>
-    <input type="submit" value="Register" class="btn btn-lg btn-primary btn-block" />
-    @Html.ActionLink("Go to Login page", "Login", null, new { @class = "btn btn-lg btn-secondary btn-block" })
 }

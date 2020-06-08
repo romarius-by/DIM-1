@@ -1,6 +1,6 @@
 ﻿using DIMS.EF.DAL.Data.Interfaces;
 
-namespace DIMS.EF.DAL.Data.Repositories
+namespace DIMS.EF.DAL.Data.Services
 {
     public class ProcedureManager : IProcedureManager
     {

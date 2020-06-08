@@ -14,9 +14,11 @@ namespace DIMS.Server.Controllers.Menthor
 {
     public class TasksManageController : AbstractController
     {
-        public TasksManageController(ITaskService taskService, IVTaskService vTaskService, IUserTaskService userTaskService,
-            IVUserProfileService vUserProfileService, IVTaskStateService vTaskStateService, IVUserTaskService vUserTaskService, IMapper mapper)
-            : base(taskService, vTaskService, userTaskService, vUserProfileService, vTaskStateService, vUserTaskService, mapper)
+        public TasksManageController(ITaskService taskService, IVTaskService vTaskService, 
+            IUserTaskService userTaskService, IVUserProfileService vUserProfileService, 
+            IVTaskStateService vTaskStateService, IVUserTaskService vUserTaskService, 
+            IMapper mapper) : base(taskService, vTaskService, userTaskService, 
+                vUserProfileService, vTaskStateService, vUserTaskService, mapper)
         {
         }
 

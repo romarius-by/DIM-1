@@ -18,7 +18,10 @@ namespace DIMS.Server.Controllers.Menthor
         private readonly IVUserTrackService _vUserTrackService;
         private readonly IMapper _mapper;
 
-        public TaskTrackController(ITaskTrackService taskTrackService, IVTaskTrackService vTaskTrackService, IVUserTrackService vUserTrackService, IMapper mapper)
+        public TaskTrackController(ITaskTrackService taskTrackService, 
+            IVTaskTrackService vTaskTrackService, 
+            IVUserTrackService vUserTrackService, 
+            IMapper mapper)
         {
             _taskTrackService = taskTrackService;
             _vTaskTrackService = vTaskTrackService;

@@ -94,7 +94,7 @@ namespace DIMS.Server.Controllers.Menthor
         {
             ViewBag.TaskUsers = GetUsersForTask(id);
 
-            var taskDto = _taskService.GetById(id);
+            var taskDto = _vTaskService.GetById(id);
             var userProfileDtos = _vUserProfileService.GetAll();
 
             if (taskDto == null)
@@ -105,7 +105,7 @@ namespace DIMS.Server.Controllers.Menthor
             TaskManagePageViewModel taskManagePageViewModel = new TaskManagePageViewModel
             {
                 userProfileListViewModel = _mapper.Map<IEnumerable<VUserProfileDTO>, IEnumerable<VUserProfileViewModel>>(userProfileDtos),
-                taskViewModel = _mapper.Map<TaskDTO, TaskViewModel>(taskDto)
+                taskViewModel = _mapper.Map<VTaskDTO, TaskViewModel>(taskDto)
             };
 
             return View(taskManagePageViewModel);

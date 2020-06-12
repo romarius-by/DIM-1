@@ -164,27 +164,6 @@ namespace DIMS.Server.Controllers
             return PartialView(vuserProfile);
         }
 
-        [HttpGet]
-        [Route("profile/progress/{id?}")]
-        public ActionResult Progress(int? id)
-        {
-            if (!id.HasValue)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-
-            var userProgressDto = _vUserProgressService.GetByUserId(id.Value);
-
-            var user = _vUserProfileService.GetById(id.Value);
-
-            var vUserProgressesListViewModel = new VUserProgressesListViewModel(
-                _mapper.Map<VUserProfileDTO, VUserProfileViewModel>(user),
-                _mapper.Map<IEnumerable<VUserProgressDTO>, IEnumerable<VUserProgressViewModel>>(userProgressDto)
-                );
-
-            return PartialView(vUserProgressesListViewModel);
-        }
-
         public ActionResult DeleteById(int? id)
         {
             if (!id.HasValue)

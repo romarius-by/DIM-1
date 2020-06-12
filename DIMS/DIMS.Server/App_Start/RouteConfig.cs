@@ -38,6 +38,12 @@ namespace DIMS.Server
                 url: "{controller}/{action}/",
                 defaults: new { controller = "Account", action = "Login" }
             );
+
+            routes.MapRoute(
+                name: "UserProgress",
+                url: "progress/{action}/{id}",
+                defaults: new { controller = "UserProgress", action = "Index", id = UrlParameter.Optional }
+                );
         }
     }
 }

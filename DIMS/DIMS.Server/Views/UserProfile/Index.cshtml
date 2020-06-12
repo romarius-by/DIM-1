@@ -56,7 +56,7 @@
             </td>
             <td>
                 <div class="btn-group-vertical">
-                    @Html.ActionLink("Progress", "Progress", new { id = item.UserId }, new { @class = "btn btn-light progress-user" })
+                    @Html.ActionLink("Progress", "Index", "UserProgress", new { userId = item.UserId }, new { @class = "btn btn-light progress-user" })
                     @Html.ActionLink("Edit", "Edit", new { id = item.UserId }, new { @class = "btn btn-success edit-user" })
                 </div>
 
@@ -127,18 +127,7 @@
     </div>
 </div>
 
-<div class="modal fade" id="progress-user-modal">
-    <div class="modal-dialog" id="progress-user-dialogContent">
-        @using (Html.BeginForm())
-        {
-            @Html.AntiForgeryToken()
 
-            <div class="form-actions no-color">
-                @Html.ActionLink("Back to List", "Index")
-            </div>
-        }
-    </div>
-</div>
 
     @section scripts
 {
@@ -160,7 +149,6 @@
                 openModal(".create-user", "#create-user");
                 openModal(".edit-user", "#edit-user");
                 openModal(".details-user", "#details-user");
-                openModal(".progress-user", "#progress-user");
             });
 
     

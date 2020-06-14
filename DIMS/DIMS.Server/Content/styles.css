@@ -42,6 +42,6 @@ textarea {
     }
 }
 
-.btn-info{
-    flex: 0 !important;
+.btn-group > .btn, .btn-group-vertical > .btn {
+    flex: 0;
 }

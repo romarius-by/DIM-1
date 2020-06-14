@@ -1,4 +1,5 @@
-﻿@model DIMS.Server.Models.UserProfileViewModel
+﻿@using DIMS.Server.Models.Partials
+@model DIMS.Server.Models.UserProfileViewModel
 
 <div class="modal-content">
 
@@ -122,11 +123,6 @@
             </div>
         </div>
 
-        <div class="modal-footer">
-            <div class="d-flex justify-content-between">
-                <input type="submit" value="Create" class="btn btn-success" />
-                @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-light" })
-            </div>
-        </div>
+        @Html.Partial("~/Views/Partials/ModalButtons.cshtml", new ModalButtonViewModel { Value = "Create", ButtonClass = "success" })
     }
 </div>

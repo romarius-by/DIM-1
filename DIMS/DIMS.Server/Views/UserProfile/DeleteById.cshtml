@@ -1,6 +1,7 @@
-﻿@model DIMS.Server.Models.Users.VUserProfileViewModel
+﻿@using DIMS.Server.Models.Partials
+@model DIMS.Server.Models.Users.VUserProfileViewModel
 @{
-    Layout=null;
+    Layout = null;
 }
 
 <div class="modal-content">
@@ -13,7 +14,6 @@
         <h4>
             @Html.DisplayFor(model => model.FullName)
         </h4>
-        <div>
             <hr />
             <dl class="dl-horizontal">
                 <dt>
@@ -48,18 +48,11 @@
                     @Html.DisplayFor(model => model.Direction)
                 </dd>
             </dl>
-        </div>
-
-        <div class="modal-footer">
-            @using (Html.BeginForm())
-            {
-                @Html.AntiForgeryToken()
-
-                <div class="d-flex justify-content-between">
-                    <input type="submit" value="Delete" class="btn btn-danger" />
-                    @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-light" })
-                </div>
-            }
-        </div>
     </div>
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.Partial("~/Views/Partials/ModalButtons.cshtml", new ModalButtonViewModel { Value = "Delete", ButtonClass = "danger" })
+        }
 </div>

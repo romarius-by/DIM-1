@@ -1,4 +1,5 @@
-﻿@model DIMS.Server.Models.Tasks.TaskManagePageViewModel
+﻿@using DIMS.Server.Models.Partials
+@model DIMS.Server.Models.Tasks.TaskManagePageViewModel
 
 @{
     Layout = null;
@@ -50,16 +51,11 @@
             </dl>
         </div>
 
-        <div class="modal-footer">
-            @using (Html.BeginForm())
-            {
-                @Html.AntiForgeryToken()
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
 
-                <div class="d-flex justify-content-between">
-                    <input type="submit" value="Delete" class="btn btn-danger" />
-                    @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-light" })
-                </div>
-            }
-        </div>
+            @Html.Partial("~/Views/Partials/ModalButtons.cshtml", new ModalButtonViewModel { Value = "Delete", ButtonClass = "danger" })
+        }
     </div>
 </div>

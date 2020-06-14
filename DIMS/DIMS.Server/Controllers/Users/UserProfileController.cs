@@ -164,6 +164,8 @@ namespace DIMS.Server.Controllers
             return PartialView(vuserProfile);
         }
 
+        [HttpGet]
+        [Route("delete/{id?}")]
         public ActionResult DeleteById(int? id)
         {
             if (!id.HasValue)
@@ -184,6 +186,7 @@ namespace DIMS.Server.Controllers
         }
 
         [HttpPost]
+        [Route("delete/{id?}")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteById(int id)
         {
@@ -200,7 +203,6 @@ namespace DIMS.Server.Controllers
         }
 
         [HttpGet]
-        [Route("delete/{email?}")]
         public async Task<ActionResult> DeleteByEmail(string email)
         {
             if (email == null)
@@ -221,7 +223,6 @@ namespace DIMS.Server.Controllers
         }
 
         [HttpDelete]
-        [Route("delete/{email?}")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteByEmail(string email, int id)
         {

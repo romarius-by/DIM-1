@@ -5,9 +5,11 @@ using DIMS.Server.Models.Tasks;
 using DIMS.Server.Models.Users;
 using System.Collections.Generic;
 using System.Web.Mvc;
+using System.Web.Routing;
 
 namespace DIMS.Server.Controllers.Users
 {
+    [RoutePrefix("progress")]
     public class UserProgressController : Controller
     {
         private readonly IVUserProgressService _userProgressService;
@@ -25,14 +27,14 @@ namespace DIMS.Server.Controllers.Users
             _taskService = taskService;
             _mapper = mapper;
         }
-
-        public ActionResult Index(int userId)
+        [Route("user/{id}")]
+        public ActionResult Index(int id)
         {
-            var userProfileDTO = _userProfileService.GetById(userId);
+            var userProfileDTO = _userProfileService.GetById(id);
 
             var userProfileViewModel = _mapper.Map<VUserProfileDTO, VUserProfileViewModel>(userProfileDTO);
 
-            var userProgressDTO = _userProgressService.GetByUserId(userId);
+            var userProgressDTO = _userProgressService.GetByUserId(id);
 
             var userProgressViewModel = _mapper.Map<IEnumerable<VUserProgressDTO>, IEnumerable<VUserProgressViewModel>>(userProgressDTO);
 
@@ -41,9 +43,10 @@ namespace DIMS.Server.Controllers.Users
             return View(userProgresses);
         }
 
-        public ActionResult Details(int trackId)
+        [Route("detail/{id}")]
+        public ActionResult Details(int id)
         {
-            var userProgressDTO = _userProgressService.GetById(trackId);
+            var userProgressDTO = _userProgressService.GetById(id);
 
             var userProgressViewModel = _mapper.Map<VUserProgressDTO, VUserProgressViewModel>(userProgressDTO);
 

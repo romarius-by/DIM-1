@@ -1,4 +1,7 @@
 ﻿@model DIMS.Server.Models.Users.VUserProfileViewModel
+@{
+    Layout=null;
+}
 
 <div class="modal-content">
     <div class="modal-header">
@@ -8,7 +11,7 @@
 
     <div class="modal-body">
         <h4>
-                    @Html.DisplayFor(model => model.FullName)
+            @Html.DisplayFor(model => model.FullName)
         </h4>
         <div>
             <hr />

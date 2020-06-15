@@ -1,5 +1,4 @@
-﻿@using DIMS.Server.Models.Partials
-@model DIMS.Server.Models.Tasks.TaskManagePageViewModel
+﻿@model DIMS.Server.Models.Tasks.TaskManagePageViewModel
 
 @{
     Layout = null;
@@ -70,6 +69,6 @@
                 </div>
             </div>
 
-            @Html.Partial("~/Views/Partials/ModalButtons.cshtml", new ModalButtonViewModel { Value = "Create", ButtonClass = "success" })
+            @Html.Partial("ModalButtons", new ModalButtonViewModel { Value = "Create", ButtonClass = "success" })
         }
     </div>

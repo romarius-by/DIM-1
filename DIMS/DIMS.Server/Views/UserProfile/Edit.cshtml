@@ -1,5 +1,4 @@
-﻿@using DIMS.Server.Models.Partials
-@model DIMS.Server.Models.UserProfileViewModel
+﻿@model DIMS.Server.Models.UserProfileViewModel
 
 <div class="modal-content">
     <div class="modal-header">
@@ -121,6 +120,6 @@
             </div>
         </div>
 
-        @Html.Partial("~/Views/Partials/ModalButtons.cshtml", new ModalButtonViewModel { Value = "Edit", ButtonClass = "success" })
+        @Html.Partial("ModalButtons", new ModalButtonViewModel { Value = "Edit", ButtonClass = "success" })
     }
 </div>

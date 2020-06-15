@@ -427,7 +427,7 @@
     <Content Include="Views\Shared\_LayoutMainPage.cshtml" />
     <Content Include="Views\UserProgress\Index.cshtml" />
     <Content Include="Views\UserProgress\Details.cshtml" />
-    <Content Include="Views\Partials\ModalButtons.cshtml" />
+    <Content Include="Views\Shared\ModalButtons.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

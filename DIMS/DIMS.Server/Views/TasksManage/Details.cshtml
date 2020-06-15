@@ -1,5 +1,4 @@
-﻿@using DIMS.Server.Models.Partials
-@model DIMS.Server.Models.Tasks.TaskManagePageViewModel
+﻿@model DIMS.Server.Models.Tasks.TaskManagePageViewModel
 
 <div class="modal-content">
 
@@ -71,6 +70,6 @@
         </dl>
     </div>
 
-    @Html.Partial("~/Views/Partials/ModalButtons.cshtml", new ModalButtonViewModel { IsItDetails = true })
+    @Html.Partial("ModalButtons", new ModalButtonViewModel { IsItDetails = true })
             
 </div>

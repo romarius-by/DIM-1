@@ -1,5 +1,4 @@
-﻿@using DIMS.Server.Models.Partials
-@model DIMS.Server.Models.Tasks.TaskManagePageViewModel
+﻿@model DIMS.Server.Models.Tasks.TaskManagePageViewModel
 
 @{
     Layout = null;
@@ -55,7 +54,7 @@
         {
             @Html.AntiForgeryToken()
 
-            @Html.Partial("~/Views/Partials/ModalButtons.cshtml", new ModalButtonViewModel { Value = "Delete", ButtonClass = "danger" })
+            @Html.Partial("ModalButtons", new ModalButtonViewModel { Value = "Delete", ButtonClass = "danger" })
         }
     </div>
 </div>

@@ -1,5 +1,4 @@
-﻿@using DIMS.Server.Models.Partials
-@model DIMS.Server.Models.Users.VUserProgressDetailsViewModel
+﻿@model DIMS.Server.Models.Users.VUserProgressDetailsViewModel
 
 @{
     Layout = null;
@@ -72,5 +71,5 @@
         </dl>
     </div>
 
-    @Html.Partial("~/Views/Partials/ModalButtons.cshtml", new ModalButtonViewModel { IsItDetails = true, Id = Model.VUserProgress.UserId })
+    @Html.Partial("ModalButtons", new ModalButtonViewModel { IsItDetails = true, Id = Model.VUserProgress.UserId })
 </div>

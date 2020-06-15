@@ -1,5 +1,4 @@
-﻿@using DIMS.Server.Models.Partials
-@model DIMS.Server.Models.Users.VUserProfileViewModel
+﻿@model DIMS.Server.Models.Users.VUserProfileViewModel
 @{
     Layout = null;
 }
@@ -53,6 +52,6 @@
         @using (Html.BeginForm())
         {
             @Html.AntiForgeryToken()
-            @Html.Partial("~/Views/Partials/ModalButtons.cshtml", new ModalButtonViewModel { Value = "Delete", ButtonClass = "danger" })
+            @Html.Partial("ModalButtons", new ModalButtonViewModel { Value = "Delete", ButtonClass = "danger" })
         }
 </div>

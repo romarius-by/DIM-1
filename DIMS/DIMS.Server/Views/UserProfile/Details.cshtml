@@ -1,5 +1,4 @@
-﻿@using DIMS.Server.Models.Partials
-@model DIMS.Server.Models.Users.VUserProfileViewModel
+﻿@model DIMS.Server.Models.Users.VUserProfileViewModel
 
 <div class="modal-content">
 
@@ -110,9 +109,6 @@
         </dl>
     </div>
 
-    <div class="modal-footer">
-        <div class="d-flex justify-content-end">
-            @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-light" })
-        </div>
-    </div>
+
+    @Html.Partial("ModalButtons", new ModalButtonViewModel { IsItDetails = true })
 </div>

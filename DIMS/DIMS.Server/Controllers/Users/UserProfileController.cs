@@ -165,26 +165,7 @@ namespace DIMS.Server.Controllers
         }
 
         [HttpGet]
-        [Route("profile/progress/{id?}")]
-        public ActionResult Progress(int? id)
-        {
-            if (!id.HasValue)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-
-            var userProgressDto = _vUserProgressService.GetByUserId(id.Value);
-
-            var user = _vUserProfileService.GetById(id.Value);
-
-            var vUserProgressesListViewModel = new VUserProgressesListViewModel(
-                _mapper.Map<VUserProfileDTO, VUserProfileViewModel>(user),
-                _mapper.Map<IEnumerable<VUserProgressDTO>, IEnumerable<VUserProgressViewModel>>(userProgressDto)
-                );
-
-            return PartialView(vUserProgressesListViewModel);
-        }
-
+        [Route("delete/{id?}")]
         public ActionResult DeleteById(int? id)
         {
             if (!id.HasValue)
@@ -205,6 +186,7 @@ namespace DIMS.Server.Controllers
         }
 
         [HttpPost]
+        [Route("delete/{id?}")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteById(int id)
         {
@@ -221,7 +203,6 @@ namespace DIMS.Server.Controllers
         }
 
         [HttpGet]
-        [Route("delete/{email?}")]
         public async Task<ActionResult> DeleteByEmail(string email)
         {
             if (email == null)
@@ -242,7 +223,6 @@ namespace DIMS.Server.Controllers
         }
 
         [HttpDelete]
-        [Route("delete/{email?}")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteByEmail(string email, int id)
         {

@@ -13,6 +13,6 @@ namespace DIMS.Server.Models.Users
         public string UserName { get; set; }
         public string TaskName { get; set; }
         public string TrackNote { get; set; }
-        public DateTime? TrackDate { get; set; }
+        public DateTime TrackDate { get; set; }
     }
 }

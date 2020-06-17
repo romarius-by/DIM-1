@@ -1,0 +1,72 @@
+﻿@model DIMS.Server.Models.Users.VUserProgressesListViewModel
+
+@{
+    ViewBag.Title = "User Progress Page";
+    string[] values = new string[] { "details-progress" };
+}
+
+<h2>@Html.DisplayFor(model => model.VUserProfile.FullName)'s progress:</h2>
+
+<table class="table table-bordered">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">
+                Id
+            </th>
+            <th scope="col">
+                Task
+            </th>
+            <th scope="col">
+                Note
+            </th>
+            <th scope="col">
+                Date
+            </th>
+            <th scope="col">
+                Actions
+            </th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model.VUserProgresses)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TaskId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TaskName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TrackNote)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TrackDate)
+                </td>
+                <td class="d-flex justify-content-around">
+                    <div class="btn-group-vertical">
+                        @Html.ActionLink("Details", "Details", new { id = item.TaskTrackId }, new { @class = "btn btn-info details-progress" })
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div class="d-flex justify-content-end">
+    @Html.ActionLink("Back to User Profiles", "Index", "UserProfile", null, new { @class = "btn btn-light" })
+</div>
+
+@ModalFadeHelper.CreateModal(values)
+
+@section scripts
+    {
+    <script src="~/Scripts/helpersRazor.js"></script>
+
+    <script type="text/javascript">
+
+        openModal(".details-progress", "#details-progress");
+
+    </script>
+}

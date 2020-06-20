@@ -10,6 +10,7 @@ namespace DIMS.BL.DTO
         {
             CreateMap<VUserTaskDTO, vUserTask>().ReverseMap();
             CreateMap<VUserTaskDTO, UserTaskViewModel>().ReverseMap();
+            CreateMap<VUserTaskDTO, VUserTaskViewModel>().ReverseMap();
         }
     }
 }

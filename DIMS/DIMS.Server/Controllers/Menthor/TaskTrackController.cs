@@ -36,9 +36,9 @@ namespace DIMS.Server.Controllers.Menthor
         {
             var vUserTrackDTOs = _vUserTrackService.GetTracksForUser(id);
 
-            var taskTrackViewModels = _mapper.Map<IEnumerable<VUserTrackDTO>, IEnumerable<TaskTrackViewModel>>(vUserTrackDTOs);
+            var VUserTrackViewModels = _mapper.Map<IEnumerable<VUserTrackDTO>, IEnumerable<VUserTrackViewModel>>(vUserTrackDTOs);
 
-            return View(taskTrackViewModels);
+            return View(VUserTrackViewModels);
         }
 
         [HttpGet]
@@ -52,20 +52,20 @@ namespace DIMS.Server.Controllers.Menthor
                 return HttpNotFound();
             }
 
-            var taskTrackViewModel = _mapper.Map<VUserTrackDTO, TaskTrackViewModel>(taskTrackDto);
+            var VUserTrackViewModel = _mapper.Map<VUserTrackDTO, VUserTrackViewModel>(taskTrackDto);
 
-            return View(taskTrackViewModel);
+            return View(VUserTrackViewModel);
         }
 
         [HttpPost]
         [Route("edit/{id}")]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(TaskTrackViewModel taskTrackViewModel, int id)
+        public ActionResult Edit(VUserTrackViewModel VUserTrackViewModel, int id)
         {
             var vTaskTrackDto = _vTaskTrackService.GetById(id);
             var vUserTrackDto = _vUserTrackService.GetById(id);
-            vTaskTrackDto.TrackDate = taskTrackViewModel.TrackDate;
-            vTaskTrackDto.TrackNote = taskTrackViewModel.TrackNote;
+            vTaskTrackDto.TrackDate = VUserTrackViewModel.TrackDate;
+            vTaskTrackDto.TrackNote = VUserTrackViewModel.TrackNote;
 
             try
             {
@@ -77,7 +77,7 @@ namespace DIMS.Server.Controllers.Menthor
                 ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists, see your system administrator.");
             }
 
-            return PartialView(taskTrackViewModel);
+            return PartialView(VUserTrackViewModel);
         }
 
         [HttpGet]
@@ -91,9 +91,9 @@ namespace DIMS.Server.Controllers.Menthor
                 return HttpNotFound();
             }
 
-            var taskTrackViewModel = _mapper.Map<VUserTrackDTO, TaskTrackViewModel>(vUserTrackDto);
+            var VUserTrackViewModel = _mapper.Map<VUserTrackDTO, VUserTrackViewModel>(vUserTrackDto);
 
-            return View(taskTrackViewModel);
+            return View(VUserTrackViewModel);
         }
 
         [HttpGet]
@@ -107,9 +107,9 @@ namespace DIMS.Server.Controllers.Menthor
                 return HttpNotFound();
             }
 
-            var taskTrackViewModel = _mapper.Map<VUserTrackDTO, TaskTrackViewModel>(vUserTrackDto);
+            var VUserTrackViewModel = _mapper.Map<VUserTrackDTO, VUserTrackViewModel>(vUserTrackDto);
 
-            return View(taskTrackViewModel);
+            return View(VUserTrackViewModel);
         }
 
         [HttpPost]

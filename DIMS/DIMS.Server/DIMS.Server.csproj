@@ -325,6 +325,7 @@
     <Compile Include="Controllers\Menthor\TaskTrackController.cs" />
     <Compile Include="Controllers\SampleController.cs" />
     <Compile Include="Controllers\Tasks\TasksController.cs" />
+    <Compile Include="Controllers\Users\UserTaskController.cs" />
     <Compile Include="Controllers\Users\UserProfileController.cs" />
     <Compile Include="Controllers\Users\UserProgressController.cs" />
     <Compile Include="Filters\ExceptionLogger.cs" />
@@ -333,6 +334,8 @@
     </Compile>
     <Compile Include="Models\Directions\DirectionViewModel.cs" />
     <Compile Include="Models\Partials\ModalButtonViewModel.cs" />
+    <Compile Include="Models\Tasks\VUserTaskViewModel.cs" />
+    <Compile Include="Models\Tasks\TaskTrackViewModel.cs" />
     <Compile Include="Models\Users\VUserProgressDetailsViewModel.cs" />
     <Compile Include="Utils\Profiles\DirectionViewModelProfile.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
@@ -341,7 +344,7 @@
     <Compile Include="Models\Samples\SampleViewModel.cs" />
     <Compile Include="Utils\Profiles\SampleViewModelProfile.cs" />
     <Compile Include="Models\Tasks\TaskTrackListViewModel.cs" />
-    <Compile Include="Models\Tasks\TaskTrackViewModel.cs" />
+    <Compile Include="Models\Tasks\VUserTrackViewModel.cs" />
     <Compile Include="Models\Tasks\TaskManagePageViewModel.cs" />
     <Compile Include="Models\Tasks\TasksListViewModel.cs" />
     <Compile Include="Models\Tasks\TaskStateViewModel.cs" />
@@ -428,6 +431,9 @@
     <Content Include="Views\UserProgress\Index.cshtml" />
     <Content Include="Views\UserProgress\Details.cshtml" />
     <Content Include="Views\Shared\ModalButtons.cshtml" />
+    <Content Include="Views\UserTask\Index.cshtml" />
+    <Content Include="Views\UserTask\Create.cshtml" />
+    <Content Include="Views\UserTask\Details.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

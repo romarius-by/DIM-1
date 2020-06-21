@@ -54,7 +54,7 @@ namespace DIMS.Server.Controllers.Users
         [Route("details/{userId}/{taskId}")]
         public ActionResult Details(int userId, int taskId)
         {
-            var vUserTaskDTO = _vUserTaskService.GetByUserId(userId).Where(usertask => usertask.TaskId == taskId).First();
+            var vUserTaskDTO = _vUserTaskService.GetByUserId(userId).Where(usertask => usertask.TaskId == taskId).FirstOrDefault();
 
             if (vUserTaskDTO == null)
             {

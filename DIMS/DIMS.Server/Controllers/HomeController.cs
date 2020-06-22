@@ -7,7 +7,22 @@ namespace DIMS.Server.Controllers
         [AllowAnonymous]
         public ActionResult Index()
         {
-            return View();
+            if (User.IsInRole("user"))
+            {
+                return View("UserIndex");
+            }
+            else if (User.IsInRole("mentor"))
+            {
+                return View("MentorIndex");
+            }
+            else if (User.IsInRole("admin"))
+            {
+                return View("AdminIndex");
+            }
+            else
+            {
+                return View();
+            }
         }
     }
 }

@@ -434,6 +434,10 @@
     <Content Include="Views\UserTask\Index.cshtml" />
     <Content Include="Views\UserTask\Create.cshtml" />
     <Content Include="Views\UserTask\Details.cshtml" />
+    <Content Include="Views\Home\AdminIndex.cshtml" />
+    <Content Include="Views\Home\MentorIndex.cshtml" />
+    <Content Include="Views\UserProfile\MentorIndex.cshtml" />
+    <Content Include="Views\Home\UserIndex.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

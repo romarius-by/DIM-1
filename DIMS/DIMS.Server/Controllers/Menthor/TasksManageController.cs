@@ -37,6 +37,7 @@ namespace DIMS.Server.Controllers.Menthor
             return View(taskListViewModel);
         }
 
+        [Authorize(Roles = "admin, mentor")]
         [Route("create")]
         public ActionResult Create()
         {
@@ -52,6 +53,7 @@ namespace DIMS.Server.Controllers.Menthor
         }
 
         [HttpPost]
+        [Authorize(Roles = "admin, mentor")]
         [Route("create")]
         [ValidateAntiForgeryToken]
         public ActionResult Create(TaskViewModel taskViewModel, UserTaskViewModel userTaskViewModel)
@@ -93,6 +95,7 @@ namespace DIMS.Server.Controllers.Menthor
             return View(taskManagePageViewModel);
         }
 
+        [Authorize(Roles = "admin, mentor")]
         [Route("edit/{id}")]
         public ActionResult Edit(int id)
         {
@@ -116,6 +119,7 @@ namespace DIMS.Server.Controllers.Menthor
         }
 
         [HttpPost]
+        [Authorize(Roles = "admin, mentor")]
         [Route("edit/{id}")]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(TaskManagePageViewModel taskManagePageViewModel, int id)
@@ -176,6 +180,7 @@ namespace DIMS.Server.Controllers.Menthor
         }
 
         [HttpGet]
+        [Authorize(Roles = "admin, mentor")]
         [Route("delete/{id}")]
         public ActionResult Delete(int id)
         {
@@ -201,6 +206,7 @@ namespace DIMS.Server.Controllers.Menthor
         }
 
         [HttpPost]
+        [Authorize(Roles = "admin, mentor")]
         [Route("delete/{id?}")]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int? id)
@@ -218,6 +224,7 @@ namespace DIMS.Server.Controllers.Menthor
         }
 
         [HttpGet]
+        [Authorize(Roles = "admin, mentor")]
         [Route("details/{id}")]
         public ActionResult Details(int id)
         {
